@@ -5,16 +5,7 @@
   		 		<li class="navbar-text"><span class="logo">WebFinance</span></li>
   		 	</ul>
   		 	<ul class="navbar-nav nav pull-right">
-  		 		<li><%=link_to'Quick Demo', demo_path%></li>	
-          <% if session[:username]%>
-            <%if User.find_by_username( session[:username])%>
-               <li><%= link_to 'Profile', profile_url(session[:username])%></li> 
-               <li><%= link_to 'Sign Out', logout_url, method: :delete%></li>
-            <%end%>
-          <%else%>                
-            	  <li><%= link_to 'Sign In', login_url%></li>
-                <li><%= link_to 'Sign Up', signup_url%></li> 
-          <%end%>
+
          </ul>
          </nav>
      </div>
