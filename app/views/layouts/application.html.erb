@@ -1,14 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Webfinance</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <title>WebFinance App|<%=yield :title%></title>
+
+  <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true%>
+
+  <%= javascript_include_tag 'jquery-ui-1.10.4.custom'%> <!-- vendor plugin js file-->
+  
+  <%= javascript_include_tag "jquery-1.4.2.min", "rails", "highcharts" %>
+  
   <%= csrf_meta_tags %>
+  <!-- [if lt IE 9]>
+  	<script src="http://html5shim.googlecode.com/svn/trunk/html15.js"></script>
+  <![endif]-->
+  <style>
+ 	body {
+    		height: 100%;
+    		position:relative;
+	}
+	html{
+		height:100%;
+	}
+  </style>
 </head>
 <body>
 
-<%= yield %>
+<div style="height:100%">
+	<header height="50%" class="navbar-default navbar-inverse navbar-static-top" role="navigation">    	         
+		<%=render 'layouts/header'%>       
+	</header>
 
+	<div style="height:80%;overflow:scroll; overflow-x:hidden; padding-bottom:0px">
+	
+		<div class="row" style="margin: 0 auto;">
+    
+    <!-- insert the cut code here -->
+      
+		</div>
+	
+	</div>
+	<footer height="10%" class="navbar-default navbar-inverse navbar-fixed-bottom" role="navigation">             
+		<%=render "layouts/footer2"%>       
+	</footer>
+</div>
 </body>
 </html>
