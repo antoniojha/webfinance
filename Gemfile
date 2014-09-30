@@ -7,6 +7,8 @@ gem 'rails', '4.1.5'
 # Use sqlite3 as the database for Active Record
 group :development, :test do
 gem 'sqlite3'
+
+gem 'rspec-rails'
 end
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
@@ -45,7 +47,20 @@ gem 'spring',        group: :development
 gem 'bootstrap-sass'
 gem 'sprockets'
 
-
+group :test do
+  gem 'capybara'
+  gem 'launchy'
+  gem 'spork', "> 0.9.0.rc"
+  gem 'factory_girl_rails'
+  gem 'selenium-webdriver', '2.35.1'
+    # the following gems will speed up rspec testing
+  gem 'spork-rails'
+  gem 'guard-rspec'
+  gem 'guard-spork'
+  gem 'childprocess'
+  gem 'database_cleaner'
+  gem "rack_session_access"
+end
 group :production do
   gem 'pg', '0.15.1'
   gem 'rails_12factor', '0.0.2'
