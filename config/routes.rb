@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-   root 'welcome#index'
+  
 
   controller :static_pages do
     get "demo" => :demo
@@ -13,4 +13,5 @@ Rails.application.routes.draw do
     get "faq" => :faq
     get "blog" => :blog
   end
+  root 'static_pages#home'
 end

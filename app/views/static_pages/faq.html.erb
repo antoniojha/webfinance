@@ -1,0 +1,23 @@
+<% content_for :title do%>|Faq <%end%>
+<div align="left">
+<h2>FAQ page</h2>
+<h1>Importing spreadsheet</h1>
+Spreadsheet of the following format can be imported:<br>
+<ul>
+	<li>.xls file</li>
+	<li>.xlsx file</li>
+	<li>.csv file</li>
+</ul>
+For .xls and .xlsx files one can use Microsoft Excel to enter data<br>
+The first row of the Excel table has to specifiy the following header: <br>
+id, title, description, price, transaction_date(or transaction_date_d) and category<br>
+<p>Note: if you intend to have transaction date in Date Format, please put transaction_date_d as header.
+   If you intend to have it in String Format, please put transaction_date as header.</p>
+
+It should be noted that id is optional. If id column is not made, then new transaction will be automatically created. <br>
+Otherwise, the data correspond to the row will be updated.<br>
+Your Excel columns should look like following:<br>
+<%=image_tag "excel_example.jpg"%>
+Various banks allow you to download your bank transaction in spreadsheet format.<br>
+<%=link_to 'Chase', 'http://help.bookkeeping.godaddy.com/entries/22242916-Download-a-CSV-from-Chase-Bank'%>
+</div>

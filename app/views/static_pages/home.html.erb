@@ -1,0 +1,8 @@
+<%content_for :title do%>|Home<%end%>
+<h1>Home</h1>
+<div class="jumbotron">
+  <p>Welcome to WebFinance, the website designed to help you success in your financial planning!</p>
+  <p><%= button_to 'Learn more',about_path, {:class=>"btn btn-primary btn-lg", :method=>'get'}%></p>
+  <p>What are you waiting for? Signup to try it for yourself!</p>
+  <p><%= button_to 'Sign Up', signup_path, {:class=>"btn btn-primary btn-lg", :method=>'get'}%></p>
+</div>
