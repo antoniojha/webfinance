@@ -8,13 +8,13 @@ describe "StaticPages" do
     it {should have_content('Home')}
     it {should have_title("WebFinance App|Home")}
     it "should have right links" do
-      expect(page).to have_link("About")
-      click_link "About"
-      expect(page).to have_title("WebFinance App|About")
-      
       expect(page).to have_link("Contact")
       click_link "Contact"
       expect(page).to have_title("WebFinance App|Contact")
+      
+      expect(page).to have_link("About")
+      click_link "About"
+      expect(page).to have_title("WebFinance App|About")
       
       expect(page).to have_link("Home")
       click_link "Home"
@@ -45,15 +45,15 @@ describe "StaticPages" do
     expect(page).to have_content("Sign Up")
     end
   end
-  describe "Demo page" do
-    before {visit demo_path}
-    it {should have_content('Demo')}  
-    it {should have_title("WebFinance App|Demo")}   
-  end
   describe "About page" do
     before {visit about_path}
     it {should have_content('About')}
     it {should have_title("WebFinance App|About")}  
+  end
+  describe "Demo page" do
+    before {visit demo_path}
+    it {should have_content('Demo')}  
+    it {should have_title("WebFinance App|Demo")}   
   end
   describe "Contact page" do
     before {visit contact_path}
