@@ -3,7 +3,14 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  
+   controller :sessions do
+    get 'login'=> :new
+    get 'signin'=> :create
+    delete 'logout'=> :destroy
+   end
+  controller :users do
+    get 'signup'=> :new
+  end
 
   controller :static_pages do
     get "demo" => :demo
