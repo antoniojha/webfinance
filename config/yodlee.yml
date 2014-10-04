@@ -1,7 +1,7 @@
 development:
   base_url: https://rest.developer.yodlee.com/services/srest/restserver/v1.0
-  username: sbCobjohndoe
-  password: 1234abc5-1234-1ab2-a12c-e1ab23cdef4f
+  username: sbCobantoniojha
+  password: e385305e-5657-4217-93bf-7070c9e46431
   register_users: false
 
 test:
