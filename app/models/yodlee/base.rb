@@ -33,6 +33,7 @@ module Yodlee
           }
         }) 
       self.current_session_started=Time.zone.now
+      # the last line returns the new session token
       self.current_session_token=response.cobrandConversationCredentials.sessionToken
     end
         
