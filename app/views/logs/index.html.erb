@@ -1,0 +1,14 @@
+<table>
+  <tr>
+    <td>Time</td>
+    <td>Code</td>
+    <td>EndPoint</td>
+    <td>Action</td>
+  </tr>
+<% @logs.each do |l| %>
+  <tr>
+    <td><%=l.create_at%></td>
+    <td><%=l.response_code%></td>
+    <td><%=l.endpoint%></td>
+    <td><%=button_to 'Detail',:method=>'get'%></td>
+<%end%>

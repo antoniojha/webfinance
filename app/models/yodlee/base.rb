@@ -10,6 +10,8 @@ module Yodlee
       method = opts[:method].to_s.downcase
       response = self.class.send(method, opts[:endpoint], query: opts[:params])
       data=response.parsed_response
+      log_query(opts.merge({response:data, code:response.code}))  
+        
       if response.success?
         if[TrueClass, FalseClass, Fixnum].include?(data.class)
           data
@@ -47,5 +49,15 @@ module Yodlee
     def fresh_token?
       current_session_token && current_session_started && current_session_started >=90.minutes.ago
     end    
+        
+    def log_query opts
+       Log.create!(
+         :method=> opts[:method],
+         :endpoint=>opts[:endpoint],
+         :params=>opts[:params].to_json,
+         :response=>opts[:response].to_json,
+         :response_code=>opts[:code]  
+         )
+     end   
   end
 end
