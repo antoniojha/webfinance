@@ -14,4 +14,6 @@ Rails.application.routes.draw do
     get "blog" => :blog
   end
   root 'static_pages#home'
+  
+  resources :logs
 end

@@ -1,4 +1,5 @@
-<table>
+<h1> Yodlee API</h1>
+<table width="50%" style="text-align:center;">
   <tr>
     <td>Time</td>
     <td>Code</td>
@@ -7,8 +8,10 @@
   </tr>
 <% @logs.each do |l| %>
   <tr>
-    <td><%=l.create_at%></td>
+    <td><%=l.created_at%></td>
     <td><%=l.response_code%></td>
     <td><%=l.endpoint%></td>
-    <td><%=button_to 'Detail',:method=>'get'%></td>
+    <td><%=button_to 'Detail',log_url(l),:method=>'get'%></td>
+  </tr>
 <%end%>
+</table>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141005135911) do
+ActiveRecord::Schema.define(version: 20141009002908) do
 
   create_table "advance_searches", force: true do |t|
     t.string   "keyword"
@@ -106,6 +106,8 @@ ActiveRecord::Schema.define(version: 20141005135911) do
     t.string   "auth_token"
     t.string   "email_confirmation_token"
     t.datetime "email_confirmation_sent_at"
+    t.string   "yodlee_username"
+    t.string   "yodlee_password"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
