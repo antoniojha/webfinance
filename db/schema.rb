@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 
-=======
-# encoding: UTF-8
->>>>>>> yodlee
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -29,8 +25,6 @@ ActiveRecord::Schema.define(version: 20141009002908) do
     t.string   "hidden_value"
   end
 
-<<<<<<< HEAD
-=======
   create_table "banks", force: true do |t|
     t.integer  "content_service_id"
     t.string   "content_service_display_name"
@@ -52,8 +46,6 @@ ActiveRecord::Schema.define(version: 20141009002908) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
->>>>>>> yodlee
   create_table "recur_budgets", force: true do |t|
     t.string   "title"
     t.decimal  "price"
@@ -114,18 +106,13 @@ ActiveRecord::Schema.define(version: 20141009002908) do
     t.string   "auth_token"
     t.string   "email_confirmation_token"
     t.datetime "email_confirmation_sent_at"
-<<<<<<< HEAD
-=======
     t.string   "yodlee_username"
     t.string   "yodlee_password"
->>>>>>> yodlee
+
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["username"], name: "index_users_on_username", unique: true
 
 end
-<<<<<<< HEAD
 
-=======
->>>>>>> yodlee
