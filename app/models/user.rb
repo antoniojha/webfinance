@@ -5,11 +5,9 @@ class User < ActiveRecord::Base
       self.yodlee_username="user#{id}@your-app-name.com"
       self.yodlee_password=Yodlee::Misc.password_generator
       save!
-    end
-    
+    end  
   end
   def yodlee
     @yodlee ||= Yodlee::User.new(self)
   end
-  
 end

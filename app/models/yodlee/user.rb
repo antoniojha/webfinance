@@ -4,7 +4,11 @@ module Yodlee
     def initialize user
       @user=user
     end
+    def token
+      @token ||= login
+    end
     def register 
+    #  email=user.yodlee_username+'@gmail.com'
       response=query({
         :endpoint=>'/jsonsdk/UserRegistration/register3',
         :method=> :POST,
@@ -13,9 +17,10 @@ module Yodlee
           :'userCredentials.loginName'=> user.yodlee_username,
           :'userCredentials.password'=> user.yodlee_password,
           :'userCredentials.objectInstanceType'=>'com.yodlee.ext.login.PasswordCredentials',
-          :'userProfile.emailAddress'=> user.yodlee_username      
+          :'userProfile.emailAddress'=> user.yodlee_username    
           }     
         })
+  
       @token=response.userContext.conversationCredentials.sessionToken
     end
     def login
@@ -24,16 +29,13 @@ module Yodlee
         :method=> :POST,
         :params=> {
           :cobSessionToken =>cobrand_token,
-          :login => user.yodlee.user_name,
-          :password => user.yodlee.password
-          }
-        
+          :login => user.yodlee_username,
+          :password => user.yodlee_password
+          }        
         })
       @token=response.userContext.conversationCredentials.sessionToken
     end
-    def token
-      @token ||= login
-    end
+
     def destroy
       response=query({
         :endpoint=>'/jsonsdk/UserRegistration/unregister',
