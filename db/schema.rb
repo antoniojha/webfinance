@@ -1,4 +1,4 @@
-
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,8 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+ActiveRecord::Schema.define(version: 20141011001149) do
 
-ActiveRecord::Schema.define(version: 20141009002908) do
+  create_table "accounts", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "bank_id"
+    t.integer  "yodlee_id"
+    t.integer  "status_code",  default: 801
+    t.datetime "last_refresh"
+    t.text     "last_mfa"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "accounts", ["bank_id"], name: "index_accounts_on_bank_id"
+  add_index "accounts", ["user_id"], name: "index_accounts_on_user_id"
 
   create_table "advance_searches", force: true do |t|
     t.string   "keyword"
@@ -46,6 +59,7 @@ ActiveRecord::Schema.define(version: 20141009002908) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
   create_table "recur_budgets", force: true do |t|
     t.string   "title"
     t.decimal  "price"
@@ -108,11 +122,9 @@ ActiveRecord::Schema.define(version: 20141009002908) do
     t.datetime "email_confirmation_sent_at"
     t.string   "yodlee_username"
     t.string   "yodlee_password"
-
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["username"], name: "index_users_on_username", unique: true
 
 end
-

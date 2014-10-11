@@ -32,6 +32,7 @@ class UsersController < ApplicationController
         session[:user_id]=@user.id
         # method can be found in User model
         @user.send_email_confirmation
+        @user.yodlee.register if Yodlee::Config.register_users
         format.html { redirect_to confirmation_url}
         format.json { render action: 'show', status: :created, location: @user }
       else
@@ -58,7 +59,9 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    @user.yodlee.destroy if Yodlee::Config.register_users
     @user.destroy
+    reset_session
     respond_to do |format|
       format.html { redirect_to users_url }
       format.json { head :no_content }
