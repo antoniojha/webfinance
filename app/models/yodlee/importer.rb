@@ -22,7 +22,7 @@ module Yodlee
       end
     end
     
- #   private
+    private
     
     def all_content_services
       query({
