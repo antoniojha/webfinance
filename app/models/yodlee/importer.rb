@@ -22,15 +22,15 @@ module Yodlee
       end
     end
     
-    private
+ #   private
     
     def all_content_services
       query({
-        :endpoint=> '/jsonsdk/ContentServiceTraversal/getAllContentServices',
-        :method=> :POST,
-        :params=> {
+        :endpoint => '/jsonsdk/ContentServiceTraversal/getAllContentServices',
+        :method => :POST,
+        :params => {
           :cobSessionToken=> cobrand_token,
-          :noTrim=> true
+          :notrim=> true
         }
       })
     end

@@ -18,6 +18,7 @@ module Yodlee
     end
     def parse_creds creds
       all_fields=bank.yodlee.login_requirements.componentList
+      if false
       creds.each_with_index.inject({}) do |sum,(cred,index)|
         key, value=cred
         field=all_fields.find{|f| f.valueIdentifier==key}
@@ -27,8 +28,9 @@ module Yodlee
 isEscaped isMFA isOptionalMFA).each do |attr|
           sum[:"credentialFields[#{index}].#{attr}"]=field.send{attr}
         end
-        sum
+        sum      
       end  
+      end
     end
     def create creds 
       response=query({
@@ -44,9 +46,9 @@ isEscaped isMFA isOptionalMFA).each do |attr|
           }.merge(parse_creds(creds))
       })
       if response
-        account.update_attributes!(yodlee_id: response.primitiveObj)
-        refresh
-        ping
+      #  account.update_attributes!(yodlee_id: response.primitiveObj)
+       # refresh
+       # ping
       end
     end
     def refresh
