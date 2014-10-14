@@ -30,7 +30,7 @@ module Yodlee
         :method => :POST,
         :params => {
           :cobSessionToken=> cobrand_token,
-          :notrim=> true
+          :notrim=> false
         }
       })
     end

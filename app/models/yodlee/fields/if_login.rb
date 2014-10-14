@@ -1,6 +1,6 @@
 module Yodlee
   module Fields
-    class Text < BaseField
+    class IfLogin < BaseField
       def render
         "<input class='string #{requirement}' id='#{name}' name='#{name}' size='#{size}'
         type='text' maxlength='#{maxlength}' value='#{value}'/>"
@@ -8,11 +8,3 @@ module Yodlee
     end
   end
 end
-
-      
-      
-      
-      
-      
-      
-      

@@ -37,8 +37,11 @@ module Yodlee
       end
       def name
         name=field.valueIdentifier
+
         if @wrapper.present?
           @wrapper + '['+name+']'
+        else
+          name
         end
       end
     end
