@@ -5,7 +5,7 @@ module Yodlee
       @account=account
     end
     def bank
-      account.bank
+      @bank ||= account.bank
     end
     def user
       @user ||= account.user
@@ -23,9 +23,8 @@ module Yodlee
         field=all_fields.find{|f| f.valueIdentifier==key}
         sum[:"credentialFields[#{index}].fieldType.typeName"]=field.fieldType.typeName
         sum[:"credentialFields[#{index}].value"]=value
-        %w(displayName helpText maxlength name size valueIdentifier valueMask isEditable isOptional
-isEscaped isMFA isOptionalMFA).each do |attr|
-          sum[:"credentialFields[#{index}].#{attr}"]=field.send{attr}
+        %w(displayName helpText maxlength name size valueIdentifier valueMask isEditable isOptional isEscaped isMFA isOptionalMFA).each do |attr|
+          sum[:"credentialFields[#{index}].#{attr}"]=field.send(attr)
         end
         sum      
       end  
@@ -57,7 +56,7 @@ isEscaped isMFA isOptionalMFA).each do |attr|
           :cobSessionToken => cobrand_token,
           :userSessionToken => token,
           :params => {
-            :cobSessionToken => cobran_token,
+            :cobSessionToken => cobrand_token,
             :userSessionToken => token,
             :itemId => item_id,
             :'refreshParameters.refreshMode.refreshMode'=>'NORMAL',
