@@ -3,7 +3,6 @@ module Yodlee
     def content_services *type
       # types allowed: :all, OR specific type(s), :bank, :credits, :miles, :loans etc
       all_content_services.each do |bank|
-        
         container =bank.containerInfo.containerName.to_sym
         next unless Array(type).include?(container) || type == :all
         
@@ -21,7 +20,16 @@ module Yodlee
         )
       end
     end
-    
+    def content_service
+      ::Bank.all.each do |bank|
+        id=bank.content_service_id
+        response=single_content_service(id)
+        bank.update_attributes!(
+          :content_service_display_name=> response.contentServiceDisplayName,
+          :site_display_name=>response.siteDisplayName
+        )
+      end
+    end
     private
     
     def all_content_services
@@ -33,7 +41,19 @@ module Yodlee
           :notrim=> false
         }
       })
+    end   
+    def single_content_service (contentServiceId)
+      query({
+        :endpoint => '/jsonsdk/ContentServiceTraversal/getContentServiceInfo1',
+        :method => :POST,
+        :params => {
+          :cobSessionToken=> cobrand_token,
+          :contentServiceId=>contentServiceId,
+          :reqSpecifier=>1,
+          :notrim=> true
+        }
+      })      
     end
-    
+     
   end
 end
