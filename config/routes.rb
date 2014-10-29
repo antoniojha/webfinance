@@ -25,6 +25,11 @@ Rails.application.routes.draw do
   resources :logs
   resources :users
   resources :select_banks
- # get "select_banks/bank_login" => :bank_login
+  controller :select_banks do
+    get "next_page1"=> :next_page1
+  end
+
+
+  
   match '/bank_login',  to: 'select_banks#bank_login', via: :get
 end
