@@ -26,9 +26,19 @@ module Yodlee
         response=single_content_service(id)
         bank.update_attributes!(
           :content_service_display_name=> response.contentServiceDisplayName,
-          :site_display_name=>response.siteDisplayName
+          :site_display_name=>response.siteDisplayName,
+          :home_url=> response.homeUrl
         )
       end
+    end
+    def import_one_content_service(id)
+          response=single_content_service(id)
+          bank=::Bank.find_by_content_service_id(id)
+          bank.update_attributes!(
+          :content_service_display_name=> response.contentServiceDisplayName,
+          :site_display_name=>response.siteDisplayName,
+          :home_url=> response.homeUrl
+        )
     end
     private
     

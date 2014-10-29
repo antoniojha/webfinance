@@ -1,0 +1,5 @@
+
+<%=form_tag do%>
+  <%=select_tag "bank_id", options_for_select(@banks.collect{|u| [u.content_service_display_name, u.content_service_id]}),:prompt => "--   select your bank--"%>
+<%=button_tag "Next"%>
+<%end%>
