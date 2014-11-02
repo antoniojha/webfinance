@@ -7,9 +7,9 @@ module Yodlee
       @wrapper=opts[:wrapper]
     end
     def render
-      @fields.componentList.map do |element|
+      fields.componentList.map do |element|
         type=element.fieldType.typeName.downcase.classify
-        Yodlee::Fields.const_get(type).new(field: element, wrapper: wrapper).render
+        Yodlee::Fields.const_get(type).new(field: element, wrapper: wrapper).render #it's field not fields!
       end.join('').squish
     end
   end

@@ -12,9 +12,8 @@ class SelectBanksController < ApplicationController
   
   def next_page1
     respond_to do |format|
-      if !(params[:bank_id].empty?)
-        format.html{redirect_to bank_login_url(:bank_id=>params[:bank_id])}
-   
+      if !(params[:content_service_id].empty?)
+        format.html{redirect_to bank_login_url(:content_service_id=>params[:content_service_id])}
       else
         format.html{
           set_banks
@@ -24,9 +23,15 @@ class SelectBanksController < ApplicationController
       end
     end
   end
+  def next_page2
+    respond_to do |format|
+      params[:LOGIN]
+      params[:PASSWORD]
+    end    
+  end
   def bank_login
-    @bank=Bank.find_by_content_service_id(params[:bank_id])
-    @input_form=@bank.yodlee.form
+    @bank=Bank.find_by_content_service_id(params[:content_service_id])
+    @input_form=@bank.yodlee.form(wrapper: 'account')
   end
   private
   def set_banks

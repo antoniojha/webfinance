@@ -22,6 +22,7 @@ module Yodlee
     end
     def content_service
       ::Bank.all.each do |bank|
+        next unless bank.content_service_display_name == nil
         id=bank.content_service_id
         response=single_content_service(id)
         bank.update_attributes!(

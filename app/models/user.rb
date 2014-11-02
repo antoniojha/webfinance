@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  after_create :set_yodlee_credentials
+  has_secure_password
   def set_yodlee_credentials
     if Yodlee::Config.register_users
       self.yodlee_username="user#{id}@your-app-name.com"
@@ -10,5 +10,6 @@ class User < ActiveRecord::Base
   def yodlee
     @yodlee ||= Yodlee::User.new(self)
   end
+  
 end
 

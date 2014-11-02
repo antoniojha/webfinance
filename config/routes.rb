@@ -28,7 +28,11 @@ Rails.application.routes.draw do
   controller :select_banks do
     get "next_page1"=> :next_page1
   end
-
+  controller :sessions do
+    get 'login'=> :new
+    get 'signin'=> :create
+    delete 'logout'=> :destroy
+  end
 
   
   match '/bank_login',  to: 'select_banks#bank_login', via: :get

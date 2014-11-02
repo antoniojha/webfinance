@@ -1,2 +1,7 @@
+<h1><%=@bank.content_service_display_name%></h1> 
 <h1>Bank Login</h1>
-<%=@input_form.html_safe%>
+
+<%=form_tag('/next_page2', method: "get") do%>
+  <%=@input_form.html_safe%>
+  <%=submit_tag "Login"%>
+<%end%>
