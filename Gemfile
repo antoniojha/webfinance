@@ -54,8 +54,7 @@ group :development,:test do
   gem 'sqlite3'
   gem 'rspec-rails'
   gem 'guard-rspec'
-  #Use thin as the server as mongrel is outdated with Ruby v1.9.3
-  #gem 'thin'
+  gem 'database_cleaner'
   #Please add the following to your Gemfile to avoid polling for changes:
   require 'rbconfig'
   if RbConfig::CONFIG['target_os'] =~ /mswin|mingw|cygwin/i
@@ -73,7 +72,6 @@ group :test do
   gem 'spork-rails'
   gem 'guard-spork'
   gem 'childprocess'
-  gem 'database_cleaner'
   gem "rack_session_access"
 end
 
