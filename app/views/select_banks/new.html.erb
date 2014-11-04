@@ -1,5 +1,6 @@
 <h1>Select Bank Account</h1>
 <p id="notice"><%= notice %></p>
+
 <%=form_tag('/next_page1', method: "get") do%>
 <%=select_tag "content_service_id", options_for_select(@banks.collect{|u| [u.content_service_display_name, u.content_service_id]}),:prompt => "--   select your bank--"%>
 <%=button_tag "Next"%>

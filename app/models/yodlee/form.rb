@@ -9,8 +9,9 @@ module Yodlee
     def render
       fields.componentList.map do |element|
         type=element.fieldType.typeName.downcase.classify
-        Yodlee::Fields.const_get(type).new(field: element, wrapper: wrapper).render #it's field not fields!
+        Yodlee::Fields.const_get(type).new(field: element, wrapper: wrapper).render(percent:20) #it's field not fields!
       end.join('').squish
     end
+    
   end
 end

@@ -26,8 +26,10 @@ Rails.application.routes.draw do
   resources :users
   resources :select_banks
   controller :select_banks do
-    get "next_page1"=> :next_page1
+    get 'next_page1' => :next_page1
+    get 'next_page2' => :next_page2
   end
+  
   controller :sessions do
     get 'login'=> :new
     get 'signin'=> :create
@@ -36,4 +38,5 @@ Rails.application.routes.draw do
 
   
   match '/bank_login',  to: 'select_banks#bank_login', via: :get
+  match '/account',  to: 'select_banks#account', via: :get
 end

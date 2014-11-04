@@ -8,11 +8,14 @@ module Yodlee
         @wrapper=opts[:wrapper]
       end
 
-      def render
-        "<div class='field'>
-        <label>#{label} #{asterisk}</label>
-        #{input}
-        </div>" if required?
+      def render opts
+        percent = opts.fetch(:percent, 50)
+       # percent=opts[:percent]
+        
+        "<table width=#{percent}%><tr width=100%><td width=50%>
+        <label>#{label} #{asterisk}</label></td>
+<td width=50%>#{input}</td>
+        </tr></table>" if required?
       end
       def label
         field.displayName

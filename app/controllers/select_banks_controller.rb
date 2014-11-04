@@ -1,7 +1,7 @@
 class SelectBanksController < ApplicationController
   #before_action :set_banks, only: [:new]
   def new
-    @banks=Bank.all.order(:content_service_display_name)
+    set_banks
   end
   
   def index
@@ -13,6 +13,7 @@ class SelectBanksController < ApplicationController
   def next_page1
     respond_to do |format|
       if !(params[:content_service_id].empty?)
+        @bank=Bank.find_by_content_service_id(params[:content_service_id])
         format.html{redirect_to bank_login_url(:content_service_id=>params[:content_service_id])}
       else
         format.html{
@@ -25,8 +26,22 @@ class SelectBanksController < ApplicationController
   end
   def next_page2
     respond_to do |format|
-      params[:LOGIN]
-      params[:PASSWORD]
+      login_info=params[:account][:LOGIN]
+      password_info=params[:account][:PASSWORD]
+      user=User.first
+      bank=Bank.find_by_content_service_id(params[:content_service_id])
+      account=Account.create!(user:user, bank:bank)
+      account.yodlee.create({"LOGIN"=> login_info, "PASSWORD"=> password_info})
+      if(account)
+        @status=account.reload.status_code
+        format.html{redirect_to account_url}
+      else
+        format.html{
+          flash[:notice]="Login or Password Invalid"
+          render action: 'next_page1'
+          }
+      end
+      
     end    
   end
   def bank_login
@@ -35,10 +50,11 @@ class SelectBanksController < ApplicationController
   end
   private
   def set_banks
-    if Bank.all.count > 1
-    @banks=Bank.all.order(:content_service_display_name)
+    if Bank.all.count > 0
+      @banks=Bank.all.order(:content_service_display_name)
     else
-    @banks=Bank.first
+      @banks=[]
+      @banks[0]=Bank.new
     end
   end
 end
