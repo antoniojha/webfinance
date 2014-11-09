@@ -33,17 +33,22 @@ class SelectBanksController < ApplicationController
       account=Account.create!(user:user, bank:bank)
       account.yodlee.create({"LOGIN"=> login_info, "PASSWORD"=> password_info})
       if(account)
-        @status=account.reload.status_code
-        format.html{redirect_to account_url}
+        session[:account_id]=account.id
+        format.html{redirect_to account_url, :account_id=>account.id}
       else
         format.html{
           flash[:notice]="Login or Password Invalid"
           render action: 'next_page1'
           }
-      end
-      
+      end      
     end    
   end
+  def account
+    account=Account.last
+    @data=account.yodlee.transaction_data
+  #  @personal_data=account.yodlee.transaction_data_view(@raw_data.searchIdentifier)
+  end
+  
   def bank_login
     @bank=Bank.find_by_content_service_id(params[:content_service_id])
     @input_form=@bank.yodlee.form(wrapper: 'account')

@@ -106,7 +106,7 @@ module Yodlee
         :params => {
           :cobSessionToken => cobrand_token,
           :userSessionToken => token,
-          :'transactionSearchRequest.containerType'=>'ALL',
+          :'transactionSearchRequest.containerType'=>'BANK',
           :'transactionSearchRequest.higherFetchLimit'=>500,
           :'transactionSearchRequest.lowerFetchLimit'=>1,
           :'transactionSearchRequest.resultRange.endNumber'=>100,
@@ -119,9 +119,21 @@ module Yodlee
           :'transactionSearchRequest.searchFilter.postDateRange.fromDate'=>1.year.ago.strftime('%m-%d-%Y'),
           :'transactionSearchRequest.searchFilter.postDateRange.toDate'=>Time.zone.now.strftime('%m-%d-%Y'),
           :'transactionSearchRequest.searchFilter.transactionSplitType'=> 'ALL_TRANSACTION'
-          }
-        
+          }    
         })
+    end
+    def transaction_data_view(searchIdentifier)
+      query({
+        :endpoint => '/jsonsdk/TransactionSearchService/getUserTransactions',
+        :method => :POST,
+        :params => {
+          :cobSessionToken => cobrand_token,
+          :userSessionToken => token,
+          :'searchFetchRequest.searchIdentifier.identifier' => searchIdentifier,
+          :'searchFetchRequest.searchResultRange.startNumber' => 1,
+          :'searchFetchRequest.searchResultRange.endNumber' => 100
+        }  
+      })
     end
     
   end
