@@ -11,11 +11,13 @@ module Yodlee
       def render opts
         percent = opts.fetch(:percent, 50)
        # percent=opts[:percent]
+    #   "<label>#{label} #{asterisk}</label>#{input}<br>" if required?
         
-        "<table width=#{percent}%><tr width=100%><td width=50%>
+        "<table width=#{percent}%><tr width=100%><td width=50% align='right'>
         <label>#{label} #{asterisk}</label></td>
-<td width=50%>#{input}</td>
+        <td width=50% align='left'>#{input}</td>
         </tr></table>" if required?
+        
       end
       def label
         field.displayName

@@ -11,7 +11,31 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery-ui
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap
 //= require_tree .
+$(document).ready(function(){
+
+
+//   $('#bank_login').validate();
+  $('#bank_login').validate({
+    rules: {
+      LOGIN: {
+        required:true
+      }
+    },
+    messages: {
+      LOGIN:{
+        required: "Please specify your name"
+      }
+    }
+  });
+
+  
+  /*if ($('#bank_login').length){
+    $('#bank_login').validate(({  rules: {    name: 'required'  });
+    alert("testing");
+  }*/
+});

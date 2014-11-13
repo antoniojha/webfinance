@@ -1,3 +1,4 @@
+
 module Yodlee
   class Account < Base
     attr_reader :account
@@ -42,10 +43,10 @@ module Yodlee
           :'credentialFields.enclosedType'=> 'com.yodlee.common.FieldInfoSingle'     
           }.merge(parse_creds(creds))
       })
-      if response
+      if response.body
         account.update_attributes!(yodlee_id: response.primitiveObj)
         refresh
-        ping
+        ping   
       end
     end
     def refresh
@@ -93,13 +94,16 @@ module Yodlee
           :'itemIds[0]'=> item_id      
           }
         })
+     
       if response && response = response.find{|a| a.itemId==item_id}
         account.status_code=response.statusCode
         account.last_refresh=Time.at(response.lastUpdateAttemptTime)
         account.save
+      else
+        nil
       end     
     end
-    def transaction_data
+    def transaction_data(account=nil)
       query({
         :endpoint => '/jsonsdk/TransactionSearchService/executeUserSearchRequest',
         :method => :POST,
@@ -109,7 +113,7 @@ module Yodlee
           :'transactionSearchRequest.containerType'=>'BANK',
           :'transactionSearchRequest.higherFetchLimit'=>500,
           :'transactionSearchRequest.lowerFetchLimit'=>1,
-          :'transactionSearchRequest.resultRange.endNumber'=>100,
+          :'transactionSearchRequest.resultRange.endNumber'=>500,
           :'transactionSearchRequest.resultRange.startNumber'=>1,
           :'transactionSearchRequest.searchClients.clientId'=>1,
           :'transactionSearchRequest.searchClients.clientName'=>'DataSearchService',
@@ -118,7 +122,8 @@ module Yodlee
           :'transactionSearchRequest.searchFilter.currencyCode'=>'USD',
           :'transactionSearchRequest.searchFilter.postDateRange.fromDate'=>1.year.ago.strftime('%m-%d-%Y'),
           :'transactionSearchRequest.searchFilter.postDateRange.toDate'=>Time.zone.now.strftime('%m-%d-%Y'),
-          :'transactionSearchRequest.searchFilter.transactionSplitType'=> 'ALL_TRANSACTION'
+          :'transactionSearchRequest.searchFilter.transactionSplitType'=> 'ALL_TRANSACTION',
+          :'transactionSearchRequest.searchFilter.itemAccountId.identifier' => account
           }    
         })
     end
@@ -134,6 +139,22 @@ module Yodlee
           :'searchFetchRequest.searchResultRange.endNumber' => 100
         }  
       })
+    end
+    def get_accounts()
+      query({
+        :endpoint=>'/jsonsdk/DataService/getItemSummaryForItem1',
+        :method=> :POST,
+        :params => {
+          :cobSessionToken => cobrand_token,
+          :userSessionToken => token,
+          :itemId => item_id,
+          :'dex.startLevel'=>0,
+          :'dex.endLevel' =>0,
+          :'dex.extentLevels[0]' => 4,
+          :'dex.extentLevels[1]' => 4
+          }
+        
+        })
     end
     
   end
