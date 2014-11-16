@@ -1,3 +1,30 @@
 // Place all the styles related to the profiles controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.navbar .menu{
+    width: 100%;
+    text-align:center;
+       color: red !important;
+   > li {
+    float:none;
+    display: inline-block;
+   }
+  > li a{
+   // color: black !important;
+  }
+  >li a:hover{
+  color: black !important;
+  text-decoration: underline;
+  }
+} 
+
+.box {
+  width:49%;
+  display:inline-block;  
+}
+#panel-heading2{
+  background-color: orange !important;
+}
+.panel-heading{
+  font-size: 2em !important;
+}

@@ -4,6 +4,11 @@ FactoryGirl.define do
     email  "foo@example.com"
     password "SecretPassword1?"
     password_confirmation "SecretPassword1?"
+    budget_cat false
+    accounts_cat false
+    alarm_cat false
+    social_cat false
+    planning_cat false
   end
   
   factory :bank, class: Bank do 

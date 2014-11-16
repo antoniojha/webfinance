@@ -11,6 +11,17 @@
  * file per style scope.
  *
  *= require_tree .
+ *= require profiles
+ *= require users
  *= require_self
  */
 @import "bootstrap";
+
+html, body {
+
+    overflow-x: hidden;
+    align: center;
+}
+.home{
+  text-align: center;
+}

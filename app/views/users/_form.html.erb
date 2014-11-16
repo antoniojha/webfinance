@@ -2,7 +2,6 @@
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
       <ul>
       <% @user.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
@@ -14,7 +13,7 @@
   <tr>
   	<td width="70%" align="right">
 	  <table width="70%">
-  		<tr>
+    <tr>
   			<td width="50%"><%= f.label :username %>: <span style="color:red"><i>(case insensitive)</i></span></td>
     		<td width="50%"><%= f.text_field :username,{:class=>'form-control'} %></td>
   		</tr>

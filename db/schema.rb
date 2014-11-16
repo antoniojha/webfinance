@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141101144802) do
+ActiveRecord::Schema.define(version: 20141116140641) do
 
   create_table "accounts", force: true do |t|
     t.integer  "user_id"
@@ -122,6 +122,13 @@ ActiveRecord::Schema.define(version: 20141101144802) do
     t.datetime "email_confirmation_sent_at"
     t.string   "yodlee_username"
     t.string   "yodlee_password"
+    t.boolean  "budget_cat"
+    t.boolean  "accounts_cat"
+    t.boolean  "alarm_cat"
+    t.boolean  "social_cat"
+    t.boolean  "planning_cat"
+    t.string   "first_name"
+    t.string   "last_name"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
