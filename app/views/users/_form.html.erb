@@ -13,6 +13,17 @@
   <tr>
   	<td width="70%" align="right">
 	  <table width="70%">
+
+  	<tr>
+      <td><%= f.label 'First Name' %>: <span style="color:red"><i>(case insensitive)</i></span></td>
+      <td><%= f.text_field :first_name,{:class=>'form-control'} %></td>
+	  </tr>
+    <tr class="blank_row"></tr>
+  	<tr>
+      <td><%= f.label 'Last Name' %>: <span style="color:red"><i>(case insensitive)</i></span></td>
+      <td><%= f.text_field :last_name,{:class=>'form-control'} %></td>
+	  </tr>  
+    <tr class="blank_row"></tr>  
     <tr>
   			<td width="50%"><%= f.label :username %>: <span style="color:red"><i>(case insensitive)</i></span></td>
       <td width="50%"><%= f.text_field :username,{:class=>'form-control', :title=>"Please enter username"} %></td>
