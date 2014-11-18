@@ -32,7 +32,18 @@ $(document).ready(function(){
       }
     }
   });
-
+  $('#new_user').validate({
+    rules: {
+      user_username:{
+        required:true
+      }
+    },
+    messages: {
+      user_username:{
+        required: "Please specify your name"
+      }
+    }
+  });
   
   /*if ($('#bank_login').length){
     $('#bank_login').validate(({  rules: {    name: 'required'  });

@@ -81,6 +81,8 @@ group :production do
   gem 'pg'#PostgreSQL
   gem 'rails_12factor' #used by Heroku to serve static assets such as images and stylesheets.
 
+  # a better webserver than WebBrick to handle big traffic
+  gem 'unicorn'
 end
 
 # Use Uglifier as compressor for JavaScript assets
