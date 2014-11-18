@@ -20,6 +20,7 @@ $(document).ready(function(){
 
 
 //   $('#bank_login').validate();
+  if $('#bank_login').length >0{
   $('#bank_login').validate({
     rules: {
       LOGIN: {
@@ -32,6 +33,8 @@ $(document).ready(function(){
       }
     }
   });
+  }
+  if $('new_user').length >0{
   $('#new_user').validate({
     rules: {
       user_username:{
@@ -44,9 +47,5 @@ $(document).ready(function(){
       }
     }
   });
-  
-  /*if ($('#bank_login').length){
-    $('#bank_login').validate(({  rules: {    name: 'required'  });
-    alert("testing");
-  }*/
+  }
 });
