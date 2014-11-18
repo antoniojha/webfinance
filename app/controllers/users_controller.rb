@@ -34,7 +34,7 @@ class UsersController < ApplicationController
         # method can be found in User model
     #    @user.send_email_confirmation
      #   @user.yodlee.register if Yodlee::Config.register_users
-        format.html { redirect_to new_select_bank_url}
+        format.html { redirect_to @user}
         format.json { render action: 'show', status: :created, location: @user }
       else
         format.html { render action: 'new' }
