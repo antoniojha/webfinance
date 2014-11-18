@@ -20,7 +20,7 @@ $(document).ready(function(){
 
 
 //   $('#bank_login').validate();
-  if $('#bank_login').length >0{
+  if ($('#bank_login').length>0){
   $('#bank_login').validate({
     rules: {
       LOGIN: {
@@ -34,7 +34,7 @@ $(document).ready(function(){
     }
   });
   }
-  if $('new_user').length >0{
+  if ($('new_user').length>0){
   $('#new_user').validate({
     rules: {
       user_username:{
