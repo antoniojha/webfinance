@@ -41,5 +41,6 @@ Rails.application.routes.draw do
 
   match '/confirmation', to:'email_confirmation#new',via:'get'
   resources :email_confirmation
-
+  get 'profiles/home'
+  match '/profile', to: 'profiles#new', via: 'get'
 end

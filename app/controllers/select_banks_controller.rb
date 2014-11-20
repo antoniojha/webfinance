@@ -19,7 +19,7 @@ class SelectBanksController < ApplicationController
       else
         format.html{
           set_banks
-          flash[:notice]='Please select a bank'
+          flash[:success]='Please select a bank'
           render action:'new'
           }
       end

@@ -20,7 +20,7 @@ $(document).ready(function(){
 
 
 //   $('#bank_login').validate();
-  alert("testing");
+
   if ($('#bank_login').length>0){
   $('#bank_login').validate({
     rules: {
