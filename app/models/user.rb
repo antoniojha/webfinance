@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   validates :username, presence: true, length:{within:7..50}
   validates :email, presence: true, format: {with:VALID_EMAIL_REGEX}
   validates :password, presence: true, format: {with:VALID_PASSWORD_REGEX}, on: :create
-  validates_uniqueness_of :username
+  validates_uniqueness_of :username, :case_sensitive => false
   validates_uniqueness_of :email
   #ensure all email address are saved lower case
   before_save{self.email=email.downcase}

@@ -39,6 +39,7 @@ Rails.application.routes.draw do
     delete 'logout'=> :destroy
   end
 
-  
+  match '/confirmation', to:'email_confirmation#new',via:'get'
+  resources :email_confirmation
 
 end

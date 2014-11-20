@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 describe User do
   describe "Creating User" do
     before { @user=User.new(username:"Example User", email:"example@example.com", password: "Example_password12?", password_confirmation: "Example_password12?")}

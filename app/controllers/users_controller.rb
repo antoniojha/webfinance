@@ -32,9 +32,9 @@ class UsersController < ApplicationController
       if @user.save
         session[:user_id]=@user.id
         # method can be found in User model
-    #    @user.send_email_confirmation
+        @user.send_email_confirmation
      #   @user.yodlee.register if Yodlee::Config.register_users
-        format.html { redirect_to @user}
+        format.html { redirect_to confirmation_url}
         format.json { render action: 'show', status: :created, location: @user }
       else
         format.html { render action: 'new' }

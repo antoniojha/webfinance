@@ -36,4 +36,16 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  
+  config.action_mailer.default_url_options={:host=>"http://pink-white-harbor-39-150689.use1.nitrousbox.com/"}
+  #Set up for Gmail for SMTP
+  config.action_mailer.smtp_settings={
+    address: 'smtp.gmail.com',
+    port: 587,
+    domain: 'gmail.com',
+    enable_starttls_auto: true,
+    authentication: 'plain',
+    user_name: 'antoniojha@gmail.com',
+    password: '6004Aj??'
+  }
 end

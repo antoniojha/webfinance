@@ -20,16 +20,23 @@ $(document).ready(function(){
 
 
 //   $('#bank_login').validate();
+  alert("testing");
   if ($('#bank_login').length>0){
   $('#bank_login').validate({
     rules: {
       LOGIN: {
+        required:true
+      },
+      PASSWORD:{
         required:true
       }
     },
     messages: {
       LOGIN:{
         required: "Please specify your name"
+      },
+      PASSWORD:{
+        required: "Please enter password"                    
       }
     }
   });

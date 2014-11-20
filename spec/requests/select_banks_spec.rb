@@ -40,8 +40,9 @@ describe "select_bank page series" do
     
     it "should render to bank_login page with error if no username or password is entered" do
       click_button "Login"
-      expect(page).to have_content("Bank Login")
-      expect(page).to have_content("Login or Password Invalid")
+      expect(page).to have_content("Please specify your name")
+    #  expect(page).to have_content("Bank Login")
+    #  expect(page).to have_content("Login or Password Invalid")
     end
 
   end
