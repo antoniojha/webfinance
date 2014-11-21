@@ -42,7 +42,7 @@ class SelectBanksController < ApplicationController
 #      @response=response.status
 #      format.html{render action: 'error_page'}
       
-      if(!response.body.empty?)
+      if response
         session[:account_id]=account.id
         format.html{redirect_to account_url, :account_id=>account.id}
       else
