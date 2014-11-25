@@ -1,9 +1,9 @@
 <h1><%=@bank.content_service_display_name%></h1> 
 <h1>Bank Login</h1>
 <div id="error" title=""><%=notice%></div>
-<%=form_tag('/next_page2', method: "get", id: 'bank_login') do%>
+<%=form_tag(action:'create',id: 'bank_login') do%>
 <%=@input_form.html_safe%><br>
-<div class="button"><%=submit_tag "Login"%></div>
+<div id="bank_login_button"><%=submit_tag "Login"%></div>
 
 <%= hidden_field_tag 'content_service_id', params[:content_service_id]%> 
 <%end%>

@@ -22,7 +22,7 @@ describe "select_bank page series" do
     end
   end
 
-  describe "render to select_bank/bank_login page with notice(error) if incorrect field is filled" do
+  describe "Login Page" do
     let(:bank){FactoryGirl.build(:chasebank)}
     before do     
       FactoryGirl.create(:chasebank)
@@ -44,6 +44,10 @@ describe "select_bank page series" do
     #  expect(page).to have_content("Bank Login")
     #  expect(page).to have_content("Login or Password Invalid")
     end
-
+    it "should display account if correct username and password is entered" do
+      fill_in "LOGIN", :with => 'antoniojha1'
+      fill_in "PASSWORD", :with => '5577jha'
+      expect(page).to have_content('Accounts at Chase')
+    end
   end
 end

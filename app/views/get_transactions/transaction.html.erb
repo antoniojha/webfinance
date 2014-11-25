@@ -1,0 +1,28 @@
+Account page<br>
+
+<table class="account_table">
+  <tr>
+    <td>Date</td>
+    <td>Type</td>
+    <td>Description</td>
+    <td>Debit</td>
+    <td>Credit</td>
+    <td>Balance</td>
+  </tr>
+
+  <%@total_data.searchResult.transactions.each do |d|%>
+
+  <tr class=<%=cycle('odd_line','even_line')%>>
+    <td><%=Date.parse(d.postDate).strftime('%m/%d/%Y')%></td>
+    <td><%=d.transactionType%></td>
+    <td><%=d.description.description%></td>
+    <% if d.transactionBaseType =="credit"%>
+    <td></td><td> <%=d.amount.amount%></td>
+    <% elsif d.transactionBaseType=="debit"%>
+    <td> <%=d.amount.amount%></td><td></td>  
+    <% end %>
+    <td><%=d.account.accountBalance.amount%></td>
+
+  </tr>
+  <%end%>
+</table>
