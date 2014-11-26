@@ -1,6 +1,7 @@
 require 'timeout'
 class SelectBanksController < ApplicationController
   #before_action :set_banks, only: [:new]
+  rescue_from ActiveRecord::RecordNotFound, with: :invalid_bank
   def new
     set_banks
   end
@@ -8,7 +9,6 @@ class SelectBanksController < ApplicationController
   def next_page1
     respond_to do |format|
       if !(params[:content_service_id].empty?)
-        @bank=Bank.find_by_content_service_id(params[:content_service_id])
         format.html{redirect_to bank_login_url(:content_service_id=>params[:content_service_id])}
       else
         format.html{
@@ -83,9 +83,13 @@ class SelectBanksController < ApplicationController
   def bank_login
     set_login
   end
+  def invalid_bank
+    logger.error "Attempt to access invalid bank with content_service_id #{params[:content_service_id]}"
+    redirect_to new_select_bank_url, notice: "Invalid Bank"
+  end
   private
   def set_login
-    @bank=Bank.find_by_content_service_id(params[:content_service_id])
+    @bank=Bank.find_by_content_service_id!(params[:content_service_id])
     @input_form=@bank.yodlee.form
 
   end

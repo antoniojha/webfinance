@@ -44,9 +44,11 @@ describe "select_bank page series" do
     #  expect(page).to have_content("Bank Login")
     #  expect(page).to have_content("Login or Password Invalid")
     end
+    # varies in a bank to bank basis
     it "should display account if correct username and password is entered" do
       fill_in "LOGIN", :with => 'antoniojha1'
       fill_in "PASSWORD", :with => '5577jha'
+      click_button "Login"
       expect(page).to have_content('Accounts at Chase')
     end
   end

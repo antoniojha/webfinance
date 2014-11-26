@@ -9,20 +9,29 @@ Account page<br>
     <td>Credit</td>
     <td>Balance</td>
   </tr>
-
-  <%@total_data.searchResult.transactions.each do |d|%>
+  <%balance=@total_data.transactions.first.account.accountBalance.amount%>
+  <%@total_data.transactions.each do |d|%>
 
   <tr class=<%=cycle('odd_line','even_line')%>>
     <td><%=Date.parse(d.postDate).strftime('%m/%d/%Y')%></td>
     <td><%=d.transactionType%></td>
     <td><%=d.description.description%></td>
-    <% if d.transactionBaseType =="credit"%>
-    <td></td><td> <%=d.amount.amount%></td>
-    <% elsif d.transactionBaseType=="debit"%>
-    <td> <%=d.amount.amount%></td><td></td>  
+    <% cat_id=d.category.categoryTypeId%>
+    <% if (cat_id==2)||(cat_id==5)%>
+      <% amount=d.amount.amount%>
+    <% elsif (cat_id==3)||(cat_id==4) %>
+      <% amount=d.amount.amount*(-1)%>
     <% end %>
-    <td><%=d.account.accountBalance.amount%></td>
-
+    <% if d.transactionBaseType =="credit"%>
+    
+    <td></td><td> <%=amount%></td>
+    <% elsif d.transactionBaseType=="debit"%>
+    <td> <%=amount%></td><td></td>  
+    <% end %>
+    
+    <td><%=balance.round(2)%></td>
+    <%balance=balance-amount%>
   </tr>
   <%end%>
 </table>
+

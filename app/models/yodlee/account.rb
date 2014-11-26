@@ -11,6 +11,7 @@ module Yodlee
     def user
       @user ||= account.user
     end
+    
     def item_id
       account.yodlee_id
     end
@@ -49,6 +50,49 @@ module Yodlee
         ping   
       end
     end
+    
+    def get_accounts()
+      query({
+        :endpoint=>'/jsonsdk/DataService/getItemSummaryForItem1',
+        :method=> :POST,
+        :params => {
+          :cobSessionToken => cobrand_token,
+          :userSessionToken => token,
+          :itemId => item_id,
+          :'dex.startLevel'=>0,
+          :'dex.endLevel' =>0,
+          :'dex.extentLevels[0]' => 4,
+          :'dex.extentLevels[1]' => 4
+          }   
+        })
+    end
+    
+    def get_all_transactions(item_account_id)
+      end_number=100
+      start_number=1  
+      h=1
+      begin    
+        higher_limit=500*h
+        lower_limit=500*(h-1)+1
+        response=transaction_data(item_account_id,higher_limit,lower_limit, end_number,start_number)
+        total_data=response.searchResult
+        i=1 
+        higher=100
+        while (higher< response.numberOfHits) do  
+          lower=(i-1)*100+1
+          higher=i*100
+          identifier=response.searchIdentifier
+          data=transaction_data_view(identifier, lower,higher)
+          total_data=total_data.merge(data)
+          i=i+1
+        end 
+        h=h+1
+      end while (higher_limit < response.countOfAllTransaction)
+      total_data
+    end
+      
+    private
+    
     def refresh
       query({
         :endpoint =>'/jsonsdk/Refresh/startRefresh7',
@@ -103,14 +147,14 @@ module Yodlee
         nil
       end     
     end
-    def transaction_data(account=nil,higher_limit=500,lower_limit=1, end_number=100, start_number=1)
+      def transaction_data(item_account_id=nil,higher_limit=500,lower_limit=1, end_number=100, start_number=1)
       query({
         :endpoint => '/jsonsdk/TransactionSearchService/executeUserSearchRequest',
         :method => :POST,
         :params => {
           :cobSessionToken => cobrand_token,
           :userSessionToken => token,
-          :'transactionSearchRequest.containerType'=>'BANK',
+          :'transactionSearchRequest.containerType'=>'All',
           :'transactionSearchRequest.higherFetchLimit'=>higher_limit,
           :'transactionSearchRequest.lowerFetchLimit'=>lower_limit,
           :'transactionSearchRequest.resultRange.endNumber'=>end_number,
@@ -123,11 +167,11 @@ module Yodlee
           :'transactionSearchRequest.searchFilter.postDateRange.fromDate'=>1.year.ago.strftime('%m-%d-%YT00:00:00.000Z'),
           :'transactionSearchRequest.searchFilter.postDateRange.toDate'=>Time.zone.now.strftime('%m-%d-%YT00:00:00.000Z'),
           :'transactionSearchRequest.searchFilter.transactionSplitType'=> 'ALL_TRANSACTION',
-          :'transactionSearchRequest.searchFilter.itemAccountId.identifier' => account
+          :'transactionSearchRequest.searchFilter.itemAccountId.identifier' => item_account_id
           }    
         })
     end
-    def transaction_data_view(start_number=1,end_number=100)
+    def transaction_data_view(searchIdentifier, start_number=1,end_number=100)
       query({
         :endpoint => '/jsonsdk/TransactionSearchService/getUserTransactions',
         :method => :POST,
@@ -139,23 +183,6 @@ module Yodlee
           :'searchFetchRequest.searchResultRange.endNumber' => end_number
         }  
       })
-    end
-    def get_accounts()
-      query({
-        :endpoint=>'/jsonsdk/DataService/getItemSummaryForItem1',
-        :method=> :POST,
-        :params => {
-          :cobSessionToken => cobrand_token,
-          :userSessionToken => token,
-          :itemId => item_id,
-          :'dex.startLevel'=>0,
-          :'dex.endLevel' =>0,
-          :'dex.extentLevels[0]' => 4,
-          :'dex.extentLevels[1]' => 4
-          }
-        
-        })
-    end
-    
+    end 
   end
 end

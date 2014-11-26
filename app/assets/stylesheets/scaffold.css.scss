@@ -35,9 +35,6 @@ div {
   }
 }
 
-#notice {
-  color: green;
-}
 .field_with_errors {
   @extend .has-error;
   .form-control {
