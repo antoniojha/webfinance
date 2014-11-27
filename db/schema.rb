@@ -72,20 +72,19 @@ ActiveRecord::Schema.define(version: 20141116140641) do
   end
 
   create_table "spendings", force: true do |t|
-    t.string   "title"
+    t.datetime "transaction_date"
+    t.string   "type"
     t.text     "description"
+    t.decimal  "amount"
+    t.decimal  "balance"
     t.string   "image_url"
-    t.decimal  "price"
-    t.string   "transaction_date"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "picture_file_name"
     t.string   "picture_content_type"
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
     t.integer  "user_id"
-    t.string   "category"
-    t.datetime "transaction_date_d"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "temp_budget_plans", force: true do |t|

@@ -2,6 +2,7 @@ require 'timeout'
 class SelectBanksController < ApplicationController
   #before_action :set_banks, only: [:new]
   rescue_from ActiveRecord::RecordNotFound, with: :invalid_bank
+  rescue_from NoMethodError, with: :invalid_login
   def new
     set_banks
   end
@@ -32,6 +33,7 @@ class SelectBanksController < ApplicationController
     end  
   end
   def create    
+    session[:content_service_id]=params[:content_service_id]
     login_info=params[:LOGIN]
     password_info=params[:PASSWORD]
     user=User.first
@@ -40,9 +42,10 @@ class SelectBanksController < ApplicationController
     begin 
       timeout(20) do
         response=account.yodlee.create({"LOGIN"=> login_info, "PASSWORD"=> password_info})
+
       end
     rescue Timeout::Error
-      render action: 'error_page'
+      query_timeout
     end
 #      @response=response.status
 #      format.html{render action: 'error_page'}
@@ -75,6 +78,8 @@ class SelectBanksController < ApplicationController
         @accountTypes[index][0]=@accountTypes[index][0].upcase
         @accountNums << a.accountNumber
       end
+    else
+      invalid_login
     end
   #  
    # @personal_data=account.yodlee.transaction_data_view(@raw_data.searchIdentifier)
@@ -86,6 +91,14 @@ class SelectBanksController < ApplicationController
   def invalid_bank
     logger.error "Attempt to access invalid bank with content_service_id #{params[:content_service_id]}"
     redirect_to new_select_bank_url, notice: "Invalid Bank"
+  end
+  def query_timeout
+    logger.error "Attempt to access bank content_service_id #{session[:content_service_id]} with invalid login info"
+redirect_to bank_login_url(:content_service_id=>session[:content_service_id]), notice: "Query Timeout. Try again later."
+  end
+  def invalid_login
+    logger.error "Attempt to access bank content_service_id #{session[:content_service_id]} with invalid login info"
+    redirect_to bank_login_url(:content_service_id=>session[:content_service_id]), notice: "Invalid Login Info"
   end
   private
   def set_login

@@ -9,6 +9,8 @@ FactoryGirl.define do
     alarm_cat false
     social_cat false
     planning_cat false
+    yodlee_username "sbMemantoniojha21"
+    yodlee_password "sbMemantoniojha21#123"
   end
   
   factory :bank, class: Bank do 
