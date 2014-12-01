@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141116140641) do
+ActiveRecord::Schema.define(version: 20141201115724) do
+
+  create_table "account_items", force: true do |t|
+    t.integer  "account_id"
+    t.integer  "item_account_id"
+    t.string   "account_display_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "acct_type"
+    t.integer  "account_number"
+  end
+
+  add_index "account_items", ["account_id"], name: "index_account_items_on_account_id"
 
   create_table "accounts", force: true do |t|
     t.integer  "user_id"
@@ -73,7 +85,6 @@ ActiveRecord::Schema.define(version: 20141116140641) do
 
   create_table "spendings", force: true do |t|
     t.datetime "transaction_date"
-    t.string   "type"
     t.text     "description"
     t.decimal  "amount"
     t.decimal  "balance"
@@ -82,10 +93,13 @@ ActiveRecord::Schema.define(version: 20141116140641) do
     t.string   "picture_content_type"
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
-    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "category"
+    t.integer  "account_item_id"
   end
+
+  add_index "spendings", ["account_item_id"], name: "index_spendings_on_account_item_id"
 
   create_table "temp_budget_plans", force: true do |t|
     t.decimal  "budget_amount",        precision: 8, scale: 2

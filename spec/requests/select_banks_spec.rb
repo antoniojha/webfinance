@@ -51,11 +51,21 @@ describe "select_bank page series" do
       expect(page).to have_content("Invalid Login Info")
     end
     # varies in a bank to bank basis
+    before do
+
+    end
+    
     it "should display account if correct username and password is entered" do
       fill_in "LOGIN", :with => 'antoniojha1'
       fill_in "PASSWORD", :with => '5577jha'
-      click_button "Login"
-      expect(page).to have_content('Accounts at')
+      expect {click_button "Login"}.to change(Account, :count).by(1)
+   #   expect {click_button "Login"}.to change(ItemAccount, :count).by(2)
+      expect(page).to have_content('Accounts at')    
+    end
+    it "should create Item Account upon successful login" do
+      fill_in "LOGIN", :with => 'antoniojha1'
+      fill_in "PASSWORD", :with => '5577jha'
+      expect {click_button "Login"}.to change(AccountItem, :count).by(2)
     end
   end
 end

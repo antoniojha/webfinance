@@ -38,7 +38,7 @@ class SelectBanksController < ApplicationController
     password_info=params[:PASSWORD]
     user=User.first
     bank=Bank.find_by_content_service_id(params[:content_service_id])
-    account=Account.create!(user:user, bank:bank)
+    account=Account.where(user:user, bank:bank).first_or_create
     begin 
       timeout(20) do
         response=account.yodlee.create({"LOGIN"=> login_info, "PASSWORD"=> password_info})
@@ -65,7 +65,6 @@ class SelectBanksController < ApplicationController
   def account  
     account=Account.find_by_id(params[:account_id])
     @account=account
-   # account=Account.last
     @itemAccountIds=[]
     @accountTypes=[]
     @accountNums=[]
@@ -77,6 +76,7 @@ class SelectBanksController < ApplicationController
         @accountTypes<< a.acctType
         @accountTypes[index][0]=@accountTypes[index][0].upcase
         @accountNums << a.accountNumber
+        AccountItem.where(account:account,item_account_id:a.itemAccountId,account_display_name:a.accountDisplayName.defaultNormalAccountName,acct_type:a.acctType,account_number:a.accountNumber).first_or_create
       end
     else
       invalid_login

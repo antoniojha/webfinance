@@ -85,14 +85,27 @@ module Yodlee
         end 
         h=h+1
       end while (higher_limit < response.countOfAllTransaction)
-      spendings={}
-      total_data.each do |d|
-        spendings<<Spending.new(d)
-       end
-      spendings
+
+      total_data
     end
-      
+                 
+      def self.save_to_spendings(response, account_item)
+      response.transactions.each do |h|
+        h1=h.postDate
+        h2=h.transactionType
+        h3=h.description.description
+        cat_id=h.category.categoryTypeId
+        if (cat_id==2)||(cat_id==5)
+          h4=h.amount.amount
+        elsif (cat_id==3)||(cat_id==4)
+          h4=h.amount.amount*(-1)
+        end
+        hash={transaction_date:h1, category:h2,description:h3,amount:h4}
+        account_item.create_spending(hash)
+      end
+    end  
     private
+      
     def parse_creds creds
       if creds
         all_fields=bank.yodlee.login_requirements.componentList
@@ -175,6 +188,7 @@ module Yodlee
       end
       
     end
+      #traversing through transaction and store each chunk (500 maximum) in cache plus parse the first 100 transaction
       def transaction_data(item_account_id=nil,higher_limit=500,lower_limit=1, end_number=100, start_number=1)
         if cobrand_token && token
           query({
@@ -203,6 +217,7 @@ module Yodlee
           nil
         end
     end
+      # Traverse through each 100 transaction until finishing parsing transactions in cache (500 maximum)
     def transaction_data_view(searchIdentifier, start_number=1,end_number=100)
       if searchIdentifier
         query({
