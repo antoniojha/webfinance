@@ -4,32 +4,32 @@ class SessionsController < ApplicationController
   end
 
   def create
-    #@user2=User.find_by(username: params[:username])
-    @user=User.find_by(username: params[:username])
+    user=User.find_by(username: params[:session][:username].downcase)
     
     respond_to do |format|
-      if @user && @user.authenticate(params[:password])
-        if @user.email_authen==true
-          session[:auth_token]=@user.auth_token
-          session[:user_id]=@user.id
-          session[:username]=@user.username
-          format.html { redirect_to profile_url(@user.username)}
+      if user && user.authenticate(params[:session][:password])
+        if user.email_authen==true
+          log_in(user)
+          if params[:session][:remember]
+            remember user
+          end
+          format.html { redirect_to user}
         else
           #  resend email confirmation with a new token if user try to sign in without first authenticating email during sign up
-          session[:user_id]=@user.id
-          @user.send_email_confirmation
+          user.send_email_confirmation
           format.html { redirect_to confirmation_url}
         end
       else
-        flash.now[:notice]="Invalid user/password combination"
+        flash.now[:danger]="Invalid user/password combination"
         format.html {  render 'new'}
       end
     end
   end
 
   def destroy
-    session[:user_id]=nil
-    session[:username]=nil
+    log_out
     redirect_to login_url, notice: "Logged Out"
   end
+  private
+
 end

@@ -1,11 +1,12 @@
 class User < ActiveRecord::Base
+  attr_accessor :auth_token
   # used for password digest to confirm two passwords entered match
   has_secure_password
   has_many :accounts, dependent: :destroy
 #  has_many :spendings, dependent: :destroy
 #  has_many :temp_budget_plans, dependent: :destroy
   
-  before_create{generate_token(:auth_token)}
+#  before_create{generate_token(:auth_token)}
 
   # taken from Michael Hartl's tutorial
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -21,17 +22,14 @@ class User < ActiveRecord::Base
   before_save{self.email=email.downcase}
   #ensure all username address are saved lower case
   before_save{self.username=username.downcase}  
-  
+  def yodlee
+    @yodlee ||= Yodlee::User.new(self)
+  end
   def send_email_confirmation
     generate_token(:email_confirmation_token)
     self.email_confirmation_sent_at=Time.zone.now
     save!
     EmailConfirmationMailer.send_email_confirm(self).deliver
-  end
-  def generate_token(column)
-    begin
-      self[column]=SecureRandom.urlsafe_base64
-    end while User.exists?(column=>self[column])
   end
   def set_yodlee_credentials
     if Yodlee::Config.register_users
@@ -40,9 +38,26 @@ class User < ActiveRecord::Base
       save!
     end  
   end
-  def yodlee
-    @yodlee ||= Yodlee::User.new(self)
+
+    # Returns the hash digest of the given string.
+  def User.digest(string)
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
+                                                  BCrypt::Engine.cost
+    BCrypt::Password.create(string, cost: cost)
   end
-  
+  def remember
+    self.auth_token=SecureRandom.urlsafe_base64
+    update_attribute(:auth_token_digest, User.digest(auth_token))
+  end
+  def authenticated?(auth_token)
+    BCrypt::Password.new(auth_token_digest).is_password? (auth_token)
+  end
+  private
+  def generate_token(column)
+    begin
+      self[column]=SecureRandom.urlsafe_base64
+    end while User.exists?(column=>self[column])
+  end
+
 end
 

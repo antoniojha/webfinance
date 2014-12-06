@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141201115724) do
+ActiveRecord::Schema.define(version: 20141206145936) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -130,7 +130,7 @@ ActiveRecord::Schema.define(version: 20141201115724) do
     t.boolean  "email_authen"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "auth_token"
+    t.string   "auth_token_digest"
     t.string   "email_confirmation_token"
     t.datetime "email_confirmation_sent_at"
     t.string   "yodlee_username"

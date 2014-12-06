@@ -20,8 +20,11 @@ module Yodlee
     end
 
     def create creds 
-      if cobrand_token && token && (bank.content_service_id) && (!creds.fetch("LOGIN").empty?) && (!creds.fetch("PASSWORD").empty?)
-        
+
+        response=nil
+        if false
+       # cobrand_token && token && (bank.content_service_id) && (!creds.fetch("LOGIN").empty?) && (!creds.fetch("PASSWORD").empty?)
+
         response=query({
           :endpoint=>'/jsonsdk/ItemManagement/addItemForContentService1',
           :method => :POST,
@@ -34,14 +37,13 @@ module Yodlee
             :'credentialFields.enclosedType'=> 'com.yodlee.common.FieldInfoSingle'     
             }.merge(parse_creds(creds))
         })
+        
         if response
           account.update_attributes!(yodlee_id: response.primitiveObj)
           refresh
           ping   
         end
-      else
-        nil
-      end
+        end
     end
     
     def get_accounts()
@@ -55,7 +57,7 @@ module Yodlee
             :itemId => item_id,
             :'dex.startLevel'=>0,
             :'dex.endLevel' =>0,
-            :'dex.extentLevels[0]' => 4,
+            :'dex.extentLevels[0]' => 0,
             :'dex.extentLevels[1]' => 4
             }   
           })
@@ -89,7 +91,7 @@ module Yodlee
       total_data
     end
                  
-      def self.save_to_spendings(response, account_item)
+    def self.save_to_spendings(response, account_item)
       response.transactions.each do |h|
         h1=h.postDate
         h2=h.transactionType
@@ -101,7 +103,7 @@ module Yodlee
           h4=h.amount.amount*(-1)
         end
         hash={transaction_date:h1, category:h2,description:h3,amount:h4}
-        account_item.create_spending(hash)
+        account_item.spendings.create(hash)
       end
     end  
     private

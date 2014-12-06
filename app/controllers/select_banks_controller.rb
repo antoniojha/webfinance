@@ -42,7 +42,6 @@ class SelectBanksController < ApplicationController
     begin 
       timeout(20) do
         response=account.yodlee.create({"LOGIN"=> login_info, "PASSWORD"=> password_info})
-
       end
     rescue Timeout::Error
       query_timeout
@@ -52,7 +51,8 @@ class SelectBanksController < ApplicationController
     account_id=account.reload.id
     respond_to do |format|
       if response
-        format.html{redirect_to account_url(:account_id=>account_id)}
+        format.html{redirect_to "http://www.google.com"}
+     #   format.html{redirect_to account_url(:account_id=>account_id)}
       else
         format.html{
           flash.now[:notice]="Login or Password Invalid"
@@ -76,7 +76,7 @@ class SelectBanksController < ApplicationController
         @accountTypes<< a.acctType
         @accountTypes[index][0]=@accountTypes[index][0].upcase
         @accountNums << a.accountNumber
-        AccountItem.where(account:account,item_account_id:a.itemAccountId,account_display_name:a.accountDisplayName.defaultNormalAccountName,acct_type:a.acctType,account_number:a.accountNumber).first_or_create
+          AccountItem.where(account:account,item_account_id:a.itemAccountId,account_display_name:a.accountDisplayName.defaultNormalAccountName,acct_type:a.acctType,account_number:a.accountNumber).first_or_create
       end
     else
       invalid_login
@@ -100,10 +100,17 @@ redirect_to bank_login_url(:content_service_id=>session[:content_service_id]), n
     logger.error "Attempt to access bank content_service_id #{session[:content_service_id]} with invalid login info"
     redirect_to bank_login_url(:content_service_id=>session[:content_service_id]), notice: "Invalid Login Info"
   end
+  def invalid error_page
+    logger.error "Some Error happened in the process, please try again"
+    redirect_to bank_login_url(:content_service_id=>session[:content_service_id]), notice: "Some Error Occurred!"
+  end
   private
   def set_login
     @bank=Bank.find_by_content_service_id!(params[:content_service_id])
     @input_form=@bank.yodlee.form
+    unless @input_form
+      i
+    end
 
   end
   def set_banks

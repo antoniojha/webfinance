@@ -20,6 +20,11 @@ describe "select_bank page series" do
       expect(page).to have_content("Select Bank Account")
       expect(page).to have_content("Please select a bank")
     end
+    it "should redirect to select_bank/new page if one tries to enter directly in url address" do
+      get bank_login_path
+  #    expect(page).to have_content("Invalid Bank")
+      response.body.should include("Select Bank Account")
+    end
   end
 
   describe "Login Page" do
@@ -39,9 +44,8 @@ describe "select_bank page series" do
     end
     
     it "should render to bank_login page with error if no username or password is entered" do
+      # add js testing here in the future
       click_button "Login"
-    #  expect(page).to have_content("Please specify your name")
-    #  expect(page).to have_content("Bank Login")
       expect(page).to have_content("Invalid Login Info")
     end
     it "should render to bank_login page with error if invalid username or password is entered" do
@@ -51,21 +55,29 @@ describe "select_bank page series" do
       expect(page).to have_content("Invalid Login Info")
     end
     # varies in a bank to bank basis
-    before do
-
-    end
-    
+    if false
     it "should display account if correct username and password is entered" do
       fill_in "LOGIN", :with => 'antoniojha1'
       fill_in "PASSWORD", :with => '5577jha'
       expect {click_button "Login"}.to change(Account, :count).by(1)
-   #   expect {click_button "Login"}.to change(ItemAccount, :count).by(2)
       expect(page).to have_content('Accounts at')    
+      #    save_and_open_page <-- save another tiime to make this work
     end
     it "should create Item Account upon successful login" do
       fill_in "LOGIN", :with => 'antoniojha1'
       fill_in "PASSWORD", :with => '5577jha'
       expect {click_button "Login"}.to change(AccountItem, :count).by(2)
+    end
+    end
+    it "should not allow user logging in if an account has been created" do
+   #    fill_in "LOGIN", :with => 'antoniojha1'
+   #    fill_in "PASSWORD", :with => '5577jha'
+   #    click_button "Login"
+       get bank_login_url, :content_service_id => bank.content_service_id
+       expect(page).to have_content(bank.content_service_display_name)
+       post_via_redirect bank_login_url, :content_service_id => bank.content_service_id,:LOGIN=>'antoniojha1', :PASSWORD=>"5577jha"
+  #     click_button "Login"
+       expect(page).to have_content('Accounts at') 
     end
   end
 end

@@ -1,4 +1,20 @@
 <h1>Login to WebFinance</h1>
-<p id="notice"><%=flash[:notice]%></p>
-
-<%= link_to 'New User?', signup_path%>
+<%= form_for :session, url:signin_path do |f|%>
+	
+	<table width="50%">
+		<tr>
+      <td width="30%"><%= f.label :username%></td>
+			<td width="70%"><%= f.text_field :username, {:class=>'form-control'}%></td>
+		</tr>
+		<tr class="blank_row"></tr>
+		<tr>
+			<td><%= f.label :password, 'Password:'%></td>
+			<td><%= f.password_field :password, {:class=>'form-control'}%></td>
+		</tr>
+		<tr class="blank_row"></tr>
+		<tr>
+			<td><%= f.submit "Login", :class=>'btn btn-primary'%></td>
+      <td>Remember Password? <%= check_box_tag(:remember) %><br> New User? <%= link_to 'Sign Up Now!', signup_path%></td>
+		</tr>
+	</table>
+<% end %>

@@ -14,6 +14,10 @@ describe User do
       it{expect(@user.email_confirmation_token).should_not be_blank}
       it{expect(@user.email_confirmation_sent_at).should_not be_blank}
     end
+    describe "auth_token" do
+      before{@user.save}
+      it{expect(@user.auth_token).should_not be_blank}
+    end
     describe "test when name is not entered" do
       before {@user.username=" "}
       it {should_not be_valid}

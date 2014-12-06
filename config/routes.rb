@@ -35,7 +35,7 @@ Rails.application.routes.draw do
 #  match '/account',  to: 'select_banks#account', via: :get
   controller :sessions do
     get 'login'=> :new
-    get 'signin'=> :create
+    post 'signin'=> :create
     delete 'logout'=> :destroy
   end
 

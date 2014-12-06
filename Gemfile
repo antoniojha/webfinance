@@ -49,7 +49,7 @@ group :development,:test do
   # shows error for asset-pipeline in production that is usually not shown in development
  # gem 'sprockets_better_errors'
   # Use rpsec-rails for development testing
- 
+  gem 'launchy'
   gem 'rconsole', '~> 0.1.0'
   gem 'sqlite3'
   gem 'rspec-rails'
@@ -64,10 +64,10 @@ group :development,:test do
 end
 group :test do
   gem 'capybara'
-  gem 'launchy'
+  gem 'capybara-webkit'
   gem 'spork', "> 0.9.0.rc"
   gem 'factory_girl_rails'
-  gem 'selenium-webdriver', '2.35.1'
+  gem 'selenium-webdriver'
     # the following gems will speed up rspec testing
   gem 'spork-rails'
   gem 'guard-spork'

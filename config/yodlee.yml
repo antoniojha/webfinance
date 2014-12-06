@@ -1,13 +1,13 @@
 development:
   base_url: https://rest.developer.yodlee.com/services/srest/restserver/v1.0
-  username: sbCobantoniojha2
-  password: b8f24b71-7cbf-4ed5-8ab9-26ba89aa8c8f
+  username: sbCobantoniojha3
+  password: c7ac6d4e-0178-493c-bdcb-d8147eafbddf
   register_users: false
 
 test:
   base_url: https://rest.developer.yodlee.com/services/srest/restserver/v1.0
-  username: sbCobantoniojha2
-  password: b8f24b71-7cbf-4ed5-8ab9-26ba89aa8c8f
+  username: sbCobantoniojha3
+  password: c7ac6d4e-0178-493c-bdcb-d8147eafbddf
   register_users: false
 
 production:
