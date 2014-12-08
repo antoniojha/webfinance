@@ -13,12 +13,14 @@ describe "user sign in" do
       fill_in "Password", :with=>@user.password 
       click_button "Login"
       expect(page).to have_content('Email Confirmation')
+      expect(last_email.to).to include (@user.email)
     end
     describe "sign in/out" do
       before do 
         @user.update_attributes(email_authen:'true')
         fill_in "Username", :with=>@user.username
         fill_in "Password", :with=>@user.password 
+        check 'session_remember'
         click_button "Login"
       end
       it "should sign in after use confirmed email" do
@@ -27,6 +29,7 @@ describe "user sign in" do
         expect(page).not_to have_link('Sign In')
         expect(page).not_to have_link('Sign Up')     
       end
+
       describe "sign out" do
         
         before{click_link 'Log Out'}
@@ -34,6 +37,12 @@ describe "user sign in" do
           expect(page).to have_link('Sign In')
           expect(page).to have_selector('div.alert.alert-notice.notice',text:"Logged Out")
           expect(page).to have_content('Sign In')
+        end
+        it "simulate a user clicking logout in a second window" do
+          # this will be implemented in the future
+       #   delete "/logout"
+       #   expect(response.status).to eq(302)
+       #   response.should redirect_to(login_path)
         end
       end
     end  

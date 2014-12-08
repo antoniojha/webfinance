@@ -45,13 +45,18 @@ class User < ActiveRecord::Base
                                                   BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
   end
+  def authenticated?(auth_token)
+    return false if auth_token_digest.nil?
+    BCrypt::Password.new(auth_token_digest).is_password? (auth_token)
+  end
   def remember
     self.auth_token=SecureRandom.urlsafe_base64
     update_attribute(:auth_token_digest, User.digest(auth_token))
   end
-  def authenticated?(auth_token)
-    BCrypt::Password.new(auth_token_digest).is_password? (auth_token)
+  def forget
+    update_attribute(:auth_token_digest,nil)
   end
+
   private
   def generate_token(column)
     begin

@@ -10,9 +10,7 @@ class SessionsController < ApplicationController
       if user && user.authenticate(params[:session][:password])
         if user.email_authen==true
           log_in(user)
-          if params[:session][:remember]
-            remember user
-          end
+          params[:session][:remember]=='1' ? remember(user) : forget(user)
           format.html { redirect_to user}
         else
           #  resend email confirmation with a new token if user try to sign in without first authenticating email during sign up
@@ -27,9 +25,9 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    log_out
+    log_out if logged_in?
     redirect_to login_url, notice: "Logged Out"
   end
-  private
+
 
 end

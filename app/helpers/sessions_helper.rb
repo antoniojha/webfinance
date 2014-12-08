@@ -17,18 +17,26 @@ module SessionsHelper
     # or replace above with @current_user||=User.find_by(id:session[:user_id])
     elsif cookies.signed[:user_id]
       user=User.find_by(id:cookies.signed[:user_id])
-      if user.authenticated?(cookies.signed[:auth_token])
-        @current_user=user
+      if user && user.authenticated?(cookies.signed[:auth_token])
         log_in user
+        @current_user=user 
       end
     end
-      
   end
-  def logged_in
-    !current_user.nil?
+  def logged_in?
+    !(current_user.nil?)
   end
   def log_out
+    # this order is very importatn first delete cookies and then session. Otherwise current_user would be called and session[:user_id] would be restored. 
+    forget(current_user)
     session[:user_id]=nil
     @current_user=nil
+  end
+  def forget(user)
+#   if logged_in?
+      user.forget
+#    end
+    cookies.delete(:user_id)
+    cookies.delete(:auth_token)
   end
 end

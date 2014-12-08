@@ -14,10 +14,7 @@ describe User do
       it{expect(@user.email_confirmation_token).should_not be_blank}
       it{expect(@user.email_confirmation_sent_at).should_not be_blank}
     end
-    describe "auth_token" do
-      before{@user.save}
-      it{expect(@user.auth_token).should_not be_blank}
-    end
+
     describe "test when name is not entered" do
       before {@user.username=" "}
       it {should_not be_valid}
@@ -149,5 +146,8 @@ describe User do
       user.send_email_confirmation
       expect(last_email.to).to include (user.email)
     end 
+    it "authenticaed? it should return false for a user with nil auth_token digest" do
+      expect(user.authenticated?('')).to eq false
+    end
   end
 end
