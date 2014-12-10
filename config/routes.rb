@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     get 'signup'=> :new
   end
 
+  
   controller :static_pages do
     get "demo" => :demo
     get "contact" => :contact
@@ -24,6 +25,7 @@ Rails.application.routes.draw do
   
   resources :logs
   resources :users
+  
   resources :select_banks
   controller :select_banks do
     get 'next_page1' => :next_page1
