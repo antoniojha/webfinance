@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
    controller :sessions do
     get 'login'=> :new
-    get 'signin'=> :create
+    post 'signin'=> :create
     delete 'logout'=> :destroy
    end
   controller :users do
@@ -35,11 +35,6 @@ Rails.application.routes.draw do
   end
 #    match '/bank_login',  to: 'select_banks#bank_login', via: :get
 #  match '/account',  to: 'select_banks#account', via: :get
-  controller :sessions do
-    get 'login'=> :new
-    post 'signin'=> :create
-    delete 'logout'=> :destroy
-  end
 
   match '/confirmation', to:'email_confirmation#new',via:'get'
   resources :email_confirmation

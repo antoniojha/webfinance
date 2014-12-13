@@ -28,7 +28,7 @@ describe "Users Signup" do
       expect(page).to have_content('Sign Up')
       click_button "Create Account"
       expect(page).to have_content('error')
-      expect(page).to have_selector(:css,'div#error_explanation', :text=>'prohibited this user from being saved')
+      expect(page).to have_selector(:css,'div.alert.alert-danger', :text=>'The form contains')
     end
   end
   

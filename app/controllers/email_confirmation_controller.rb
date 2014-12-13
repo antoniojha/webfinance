@@ -1,4 +1,5 @@
 class EmailConfirmationController < ApplicationController
+  skip_before_action :authorize_login, only: [:new,:edit]
   def new    
     @user=User.find_by_id(params[:user_id])
   end

@@ -8,13 +8,19 @@ describe "user sign in" do
       expect(page).to have_content('Login')
 
     end
-    it "shouldn't sign in but direct to Email Confirmation page b/c user's has not confirmed email yet" do  
+    describe "sign in when user's has not confirmed email yet" do
+      before do
+      #  @user.update_attributes(email_authen:'false')
       fill_in "Username", :with=>@user.username
       fill_in "Password", :with=>@user.password 
       click_button "Login"
-      expect(page).to have_content('Email Confirmation')
-      expect(last_email.to).to include (@user.email)
-    end
+      end
+      it  "shouldn't sign in but direct to Email Confirmation page" do   
+      
+        expect(page).to have_content('Email Confirmation')
+        expect(last_email.to).to eq (@user.email)
+      end
+    end 
     describe "sign in/out" do
       before do 
         @user.update_attributes(email_authen:'true')

@@ -41,7 +41,7 @@ describe "StaticPages" do
     before {visit login_path}
     it {should have_content('Login')}
     it "should have right link" do
-    click_link "New User?"
+    click_link "Sign Up Now!"
     expect(page).to have_content("Sign Up")
     end
   end
@@ -60,15 +60,6 @@ describe "StaticPages" do
     it {should have_content('Contact')} 
     it {should have_title("WebFinance App|Contact")}  
   end
-  describe "Header" do
-    before {visit root_path}
-    it "should have profile link when not signed in" do
-      expect(page).to have_link("Profile")
-    end
-    it "should direct to profiles/home page when profile link is clicked" do
-      click_link "Profile"
-      expect(page).to have_content("Your Profile")
-    end
-  end
+
 end
 

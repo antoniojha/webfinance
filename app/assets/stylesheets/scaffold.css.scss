@@ -39,9 +39,12 @@ div {
   @extend .has-error;
   .form-control {
     color: red;
+  //  border-color: red;
   }
 }
-
+.error-message{
+  width: 70%;
+}
 #error_explanation {
   width: 450px;
   border: 2px solid red;
