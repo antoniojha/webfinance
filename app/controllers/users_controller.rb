@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   skip_before_action :authorize_login, only: [:new,:create]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
+  before_action :correct_user, only:[:edit,:update,:destroy,:show]
   # GET /users
   # GET /users.json
   def index
@@ -11,7 +12,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    
+    @path=request.fullpath
   end
 
   # GET /users/new
@@ -59,11 +60,11 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    @user.yodlee.destroy if Yodlee::Config.register_users
+  #  @user.yodlee.destroy if Yodlee::Config.register_users
     @user.destroy
     reset_session
     respond_to do |format|
-      format.html { redirect_to users_url }
+      format.html { redirect_to login_url }
       format.json { head :no_content }
     end
   end
@@ -82,6 +83,12 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:first_name, :last_name,:username, :email, :password, :password_confirmation)
+    end
+    def correct_user
+      @user=User.find(params[:id])
+      unless @user== current_user
+        redirect_to user_url(current_user), notice: "Access Denied"
+      end
     end
 
 end

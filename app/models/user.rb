@@ -13,9 +13,9 @@ class User < ActiveRecord::Base
   validates :username, presence: true
   validates :email, presence: true 
   validates :email, allow_blank:true, format: {with:VALID_EMAIL_REGEX}
-  validates :password, presence: true, on: :create
-  validates :password_confirmation, presence: true, on: :create
-  validates :password, allow_blank:true, length: { in: 7..20 },format: {with:VALID_PASSWORD_REGEX}
+  validates :password, presence: true
+  validates :password_confirmation, presence: true
+  validates :password, allow_blank:true, length: { in: 7..40 },format: {with:VALID_PASSWORD_REGEX}
   validates_uniqueness_of :username, :case_sensitive => false
   validates_uniqueness_of :email, :case_sensitive => false
   #ensure all email address are saved lower case
@@ -26,10 +26,12 @@ class User < ActiveRecord::Base
     @yodlee ||= Yodlee::User.new(self)
   end
   def send_email_confirmation
-    generate_token(:email_confirmation_token)
-    save!
+    generate_token(:email_confirmation_token)  
     update_attribute(:email_confirmation_sent_at,Time.zone.now)
-  
+   #calling save! will render validation error for submitting blank password. Why though? 
+   # self.email_confirmation_sent_at=Time.zone.now
+   # save!
+    
     EmailConfirmationMailer.send_email_confirm(self).deliver
   end
   def set_yodlee_credentials
@@ -62,6 +64,7 @@ class User < ActiveRecord::Base
   def generate_token(column)
     begin
      # update_attribute(column,SecureRandom.urlsafe_base64)
+      #saves the user directly instead of just assigning it
       self[column]=SecureRandom.urlsafe_base64
     end while User.exists?(column=>self[column])
   end

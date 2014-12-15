@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   skip_before_action :authorize_login, only: [:new, :create,:destroy]
+  skip_before_action :remember_location, only: [:new]
   def new
   end
 
@@ -11,7 +12,7 @@ class SessionsController < ApplicationController
         if user.email_authen==true
           log_in(user)
           params[:session][:remember]=='1' ? remember(user) : forget(user)
-          format.html { redirect_to user}
+          format.html { friendly_redirect user}
         else
           #  resend email confirmation with a new token if user try to sign in without first authenticating email during sign up
           user.send_email_confirmation

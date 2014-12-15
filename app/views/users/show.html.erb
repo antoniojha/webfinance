@@ -1,8 +1,8 @@
-<% provide(:title,@user.first_name)%>
+<% content_for :title do %>|<%=@user.first_name%><%end%>
 <div align="left">
   <h3><%=@user.first_name%> <%=@user.last_name%></h3>
 
 <hr class="divider"> 
   <%=gravatar_for(@user, :size=>100)%>
-  
+  <%=@path%>
 </div>

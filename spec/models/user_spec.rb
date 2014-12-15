@@ -84,7 +84,7 @@ describe User do
     #check
     describe "when password is too long" do
       before do
-        @user.password="A!1"+"a"*20
+        @user.password="A!1"+"a"*40
         @user.password_confirmation=@user.password
       end
       it "should not be valid" do

@@ -18,7 +18,7 @@ describe "user sign in" do
       it  "shouldn't sign in but direct to Email Confirmation page" do   
       
         expect(page).to have_content('Email Confirmation')
-        expect(last_email.to).to eq (@user.email)
+        expect(last_email.to).to include(@user.email)
       end
     end 
     describe "sign in/out" do

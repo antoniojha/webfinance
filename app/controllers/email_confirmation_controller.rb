@@ -11,8 +11,7 @@ class EmailConfirmationController < ApplicationController
       if(!@user)
         redirect_to login_url, alert: "Email authentication didn't go through, try again!"
       else
-        @user.email_authen=true
-        if @user.save
+        if @user.update_attribute(:email_authen, true)
           log_in(@user)
           remember @user
           redirect_to @user, notice: "Email is now authenticated!"

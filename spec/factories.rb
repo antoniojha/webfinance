@@ -2,6 +2,8 @@ FactoryGirl.define do
   factory :user do
     username "testing1234"
     email  "foo@example.com"
+    first_name 'first_name'
+    last_name 'last_name'
     password "SecretPassword1?"
     password_confirmation "SecretPassword1?"
     budget_cat false
@@ -13,7 +15,20 @@ FactoryGirl.define do
     yodlee_username "sbMemantoniojha21"
     yodlee_password "sbMemantoniojha21#123"
   end
-  
+  factory :other_user, class: User do
+    username "other_testing1234"
+    email  "other_foo@example.com"
+    password "other_SecretPassword1?"
+    password_confirmation "other_SecretPassword1?"
+    budget_cat false
+    accounts_cat false
+    alarm_cat false
+    social_cat false
+    planning_cat false
+    email_authen false
+    yodlee_username "sbMemantoniojha21"
+    yodlee_password "sbMemantoniojha21#123"      
+  end
   factory :bank, class: Bank do 
     id 13041
     content_service_id 3190

@@ -23,6 +23,7 @@ module SessionsHelper
       end
     end
   end
+
   def logged_in?
     !(current_user.nil?)
   end
@@ -38,5 +39,12 @@ module SessionsHelper
 #    end
     cookies.delete(:user_id)
     cookies.delete(:auth_token)
+  end
+  def friendly_redirect(default)
+    redirect_to (session[:return_to] || default) 
+  #  session[:return_to]=nil
+  end
+  def remember_desired_location
+    session[:return_to]=request.fullpath
   end
 end
