@@ -78,16 +78,6 @@ describe "Authentication" do
             expect(page).to have_content("Update Profile")
           end
         end
-        describe "should redirect show when it's incorrect user" do
-          before {visit user_path(wrong_user)}
-          
-          let(:str){"WebFinance App|"+user.first_name}
-          
-          it "visit Users#show page" do
-            expect(page).to have_content("Access Denied")
-            expect(page).to have_title(str)
-          end  
-        end      
         describe "should redirect edit when it's incorrect user" do
           before {visit edit_user_path(wrong_user)}
           

@@ -30,10 +30,17 @@ describe "user sign in" do
         click_button "Login"
       end
       it "should sign in after use confirmed email" do
+        # test header
         expect(page).to have_link('Account')
         expect(page).to have_link('Log Out')
+        expect(page).to have_link('Profile')
+        expect(page).to have_link('Private Setting')
+        expect(page).to have_link('All Users')
         expect(page).not_to have_link('Sign In')
-        expect(page).not_to have_link('Sign Up')     
+        expect(page).not_to have_link('Sign Up') 
+        # test menu
+        expect(page).to have_link('Personal Info')
+        expect(page).to have_link('Finance Profile')
       end
 
       describe "sign out" do
@@ -43,6 +50,11 @@ describe "user sign in" do
           expect(page).to have_link('Sign In')
           expect(page).to have_selector('div.alert.alert-notice.notice',text:"Logged Out")
           expect(page).to have_content('Sign In')
+          # test header
+          expect(page).not_to have_content('Account')
+          # test menu
+          expect(page).not_to have_link('Personal Info')
+          expect(page).not_to have_link('Finance Profile')
         end
         it "simulate a user clicking logout in a second window" do
           # this will be implemented in the future

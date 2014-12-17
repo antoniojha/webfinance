@@ -1,0 +1,36 @@
+<h1>Transaction Detail</h1>
+<p>
+  <%=image_tag @spending.picture.url(:small)%>
+</p>
+<p>
+  <strong>Transaction date:</strong>
+  <%= @spending.transaction_date %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @spending.description %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @spending.amount %>
+</p>
+
+<p>
+  <strong>Picture updated at:</strong>
+  <%= @spending.picture_updated_at %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @spending.category %>
+</p>
+
+<p>
+  <strong>Account item:</strong>
+  <%= @spending.account_item_id %>
+</p>
+
+<%= link_to 'Edit', edit_spending_path(@spending) %> |
+<%= link_to 'Back', spendings_path %>

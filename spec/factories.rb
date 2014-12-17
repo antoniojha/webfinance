@@ -49,4 +49,11 @@ FactoryGirl.define do
     home_url 'http://www.chase.com/'
     container 'bank'
   end
+  factory :spending do
+    transaction_date "2014-12-16"
+    description "Lunch"
+    amount "100"
+    category "1"
+    picture (Rails.root+"spec/fixtures/images/Ruby_on_Rails.jpg").open
+  end
 end

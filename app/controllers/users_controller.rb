@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   skip_before_action :authorize_login, only: [:new,:create]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  before_action :correct_user, only:[:edit,:update,:destroy,:show]
+  before_action :correct_user, only:[:edit,:update,:destroy]
   # GET /users
   # GET /users.json
   def index
@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @path=request.fullpath
+
   end
 
   # GET /users/new

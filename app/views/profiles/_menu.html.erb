@@ -1,5 +1,5 @@
 <ul class="nav nav-list">
-  <li><%= link_to 'Personal Info', '#'%></li>
+  <li><%= link_to 'Personal Info', profiles_home_path%></li>
   <li><%= link_to 'Finance Profile', '#'%></li>
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Saved Plans<b class="caret"></b></a>
@@ -9,7 +9,7 @@
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Spending<b class="caret"></b></a>
     <ul class="dropdown-menu">
-      <li><%= link_to 'Add Transaction','#'%></li>
+      <li><%= link_to 'Add Transaction',new_spending_path%></li>
       <li><%= link_to 'View Transactions', '#'%></li>
       <li><%= link_to 'Import Transactions', '#'%></li>
     </ul>

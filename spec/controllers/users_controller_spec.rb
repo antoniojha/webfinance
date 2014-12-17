@@ -39,11 +39,7 @@ RSpec.describe UsersController, :type => :controller do
       expect(flash.empty?).to eq false
       expect(response).to redirect_to(user_url(@user2))
     end
-    it "should redirect show when not the right user" do
-      get :show, :id=>@user.id
-      expect(flash.empty?).to eq false
-      expect(response).to redirect_to(user_url(@user2))      
-    end
+
     it "should redirect destroy when not the right user" do
       delete :destroy, :id=>@user.id
       expect(flash.empty?).to eq false

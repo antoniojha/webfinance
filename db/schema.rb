@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141206145936) do
+ActiveRecord::Schema.define(version: 20141217002930) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -93,10 +93,10 @@ ActiveRecord::Schema.define(version: 20141206145936) do
     t.string   "picture_content_type"
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "category"
     t.integer  "account_item_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "spendings", ["account_item_id"], name: "index_spendings_on_account_item_id"

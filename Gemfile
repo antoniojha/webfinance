@@ -22,6 +22,8 @@ gem 'paperclip-compression'
 # This provides standardized interface to access a variety of spreadsheet format
 gem 'roo'
 
+# this allows for flexible time entry
+gem 'chronic'
 
 gem 'aws-sdk'
 gem 'cocaine'

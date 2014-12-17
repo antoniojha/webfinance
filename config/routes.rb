@@ -40,6 +40,5 @@ Rails.application.routes.draw do
   resources :email_confirmation
   get 'profiles/home'
   match '/profile', to: 'profiles#new', via: 'get'
-  
-  resources :get_transactions
+  resources :spendings
 end

@@ -1,0 +1,42 @@
+<%= form_for @spending, :html=>{:multipart=>true} do |f| %>
+  <% if @spending.errors.any? %>
+    <div class="alert alert-danger error-message">
+      <h2>The form contains <%= pluralize(@spending.errors.count, "error") %></h2>
+      <ul>
+      	<% @spending.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      	<% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="form-group">
+  	<div class="field">
+		<%= f.label "Category:"%>
+		<%= f.select :category, Order::BUDGET_TYPES, {prompt: 'Select a budget type'}, {:class=>'form-control'}%>
+  	</div>
+  	<div class="field">
+    	<%= f.label "Description:" %><br>
+    	<%= f.text_area :description, :class=>"form-control" %>
+  	</div>
+  	<div class="field">
+    	<%= f.label "Transaction Date:" %><i>(m/d/y)</i><br>
+      <div class="input-group">
+        <%= f.text_field :transaction_date_string, :class=>"form-control"%>
+      <div class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></div>
+      </div>
+ 	  </div>
+  	<div class="field">
+  		<%= f.label "Upload Receipt:"%><br>
+  		<%= f.file_field :picture%>
+  	</div>
+ 
+  		<%= f.label "Price:"%><br>
+  	<div class="input-group">
+  		<span class="input-group-addon">$</span> 
+	    	<%= f.text_field :amount, :class=>"form-control" %>
+  	</div><br>
+  </div>
+  <div class="actions">
+    <%= f.submit 'Add Transaction',:class=>"btn btn-primary" %>
+  </div>
+<% end %>
