@@ -5,7 +5,7 @@ class SpendingsController < ApplicationController
   # GET /spendings
   # GET /spendings.json
   def index
-    @spendings = Spending.all
+    @spendings = Spending.all.where(user_id:current_user.id)
   end
 
   # GET /spendings/1
@@ -43,7 +43,7 @@ class SpendingsController < ApplicationController
   def update
     respond_to do |format|
       if @spending.update(spending_params)
-        format.html { redirect_to @spending, notice: 'Spending was successfully updated.' }
+        format.html { redirect_to spendings_url, notice: 'Spending was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

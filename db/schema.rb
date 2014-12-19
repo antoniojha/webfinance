@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141217002930) do
+ActiveRecord::Schema.define(version: 20141219111059) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 20141217002930) do
     t.integer  "account_item_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   add_index "spendings", ["account_item_id"], name: "index_spendings_on_account_item_id"

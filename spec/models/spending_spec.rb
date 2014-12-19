@@ -17,17 +17,20 @@ RSpec.describe Spending, :type => :model do
       it{should respond_to(:picture_file_name)}
       it{should respond_to(:picture_content_type)}
       it{should respond_to(:picture_file_size)}
+      it{should respond_to(:user_id)}
       it{should be_valid}
     end
     describe "test virtual attribute transaction date string" do
-      before do
-        @spending.transaction_date_string="tomorrow"
-        @spending.save!
-      end
-      let(:date){Date.tomorrow}
-      #check
-      it "chronic gem should work" do
-        expect(@spending.transaction_date.strftime('%F')).to eq (date.strftime('%Y-%m-%d'))
+      describe "test chronic gem" do
+        before do
+          @spending.transaction_date_string="tomorrow"
+          @spending.save!
+        end
+        let(:date){Date.tomorrow}
+        #check
+        it "should work" do
+          expect(@spending.transaction_date.strftime('%F')).to eq (date.strftime('%Y-%m-%d'))
+        end
       end
     end
     #check
@@ -60,6 +63,7 @@ RSpec.describe Spending, :type => :model do
       before {@spending.picture=(Rails.root+"spec/fixtures/images/test.html").open}
       it {should_not be_valid}
     end
+    #check
     it "should round amount to the second decimal digit" do
       @spending.amount=100.195
       @spending.save!

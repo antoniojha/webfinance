@@ -1,10 +1,14 @@
+<%provide :title, '|Spending Show' %>
 <h1>Transaction Detail</h1>
+<div class='spending_display'>
 <p>
+  <% if @spending.picture_file_name%>
   <%=image_tag @spending.picture.url(:small)%>
+  <% end %>
 </p>
 <p>
   <strong>Transaction date:</strong>
-  <%= @spending.transaction_date %>
+  <%= @spending.transaction_date.strftime('%m/%d/%Y') %>
 </p>
 
 <p>
@@ -18,19 +22,10 @@
 </p>
 
 <p>
-  <strong>Picture updated at:</strong>
-  <%= @spending.picture_updated_at %>
-</p>
-
-<p>
   <strong>Category:</strong>
   <%= @spending.category %>
 </p>
 
-<p>
-  <strong>Account item:</strong>
-  <%= @spending.account_item_id %>
-</p>
-
 <%= link_to 'Edit', edit_spending_path(@spending) %> |
 <%= link_to 'Back', spendings_path %>
+</div>

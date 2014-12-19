@@ -1,19 +1,13 @@
-<h1>Listing spendings</h1>
+<%require 'date'%>
+<%provide :title, '|All Spendings' %>
+<h1>All Spendings</h1>
 
-<table>
+<table width='80%'>
   <thead>
     <tr>
       <th>Transaction date</th>
       <th>Description</th>
       <th>Amount</th>
-      <th>Balance</th>
-      <th>Image url</th>
-      <th>Picture file name</th>
-      <th>Picture content type</th>
-      <th>Picture file size</th>
-      <th>Picture updated at</th>
-      <th>Category</th>
-      <th>Account item</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -21,20 +15,13 @@
   <tbody>
     <% @spendings.each do |spending| %>
       <tr>
-        <td><%= spending.transaction_date %></td>
+        <td><%= spending.transaction_date.strftime('%m/%d/%Y') %></td>
         <td><%= spending.description %></td>
         <td><%= spending.amount %></td>
-        <td><%= spending.balance %></td>
-        <td><%= spending.image_url %></td>
-        <td><%= spending.picture_file_name %></td>
-        <td><%= spending.picture_content_type %></td>
-        <td><%= spending.picture_file_size %></td>
-        <td><%= spending.picture_updated_at %></td>
-        <td><%= spending.category %></td>
-        <td><%= spending.account_item %></td>
-        <td><%= link_to 'Show', spending %></td>
-        <td><%= link_to 'Edit', edit_spending_path(spending) %></td>
-        <td><%= link_to 'Destroy', spending, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <%= link_to 'Detail', spending %> &nbsp
+          <%= link_to 'Edit', edit_spending_path(spending) %> &nbsp
+          <%= link_to 'Destroy', spending, method: :delete, data: { confirm: 'Are you sure to delete this?' } %>            </td>
       </tr>
     <% end %>
   </tbody>

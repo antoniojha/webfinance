@@ -1,4 +1,5 @@
 require 'chronic'
+
 class Spending < ActiveRecord::Base
   belongs_to :account_item
   has_attached_file :picture, :styles => { :small => "150x150>" }
@@ -15,4 +16,5 @@ class Spending < ActiveRecord::Base
   def transaction_date_string=(transaction_date_str)
     self.transaction_date=Chronic.parse(transaction_date_str)
   end
+
 end

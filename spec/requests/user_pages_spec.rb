@@ -38,7 +38,7 @@ RSpec.describe "UserEdits", :type => :request do
     end
     it "should list each user" do
       User.all.each do |user|
-        expect(page).to have_selector(:css,'td',text:user.username)
+        expect(page).to have_selector(:css,'td',text:user.first_name)
       end
     end
     

@@ -9,3 +9,9 @@ end
 def set_email_auth_true(user)
   user.update_attributes(email_authen:true)
 end
+
+def create_spending(user)
+  @spending=FactoryGirl.build(:spending)
+  @spending.user_id=user.id
+  @spending.save
+end
