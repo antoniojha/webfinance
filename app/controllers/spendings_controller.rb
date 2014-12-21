@@ -1,3 +1,4 @@
+
 class SpendingsController < ApplicationController
   skip_before_action :authorize_login, only: [:new,:create,:index,:show]
   before_action :set_spending, only: [:show, :edit, :update, :destroy]
@@ -5,12 +6,15 @@ class SpendingsController < ApplicationController
   # GET /spendings
   # GET /spendings.json
   def index
-    @spendings = Spending.all.where(user_id:current_user.id)
+      @spendings = Spending.all.where(user_id:current_user.id).paginate(:page => params[:page])
+  #  @spendings=Spending.paginate(user_id:current_user.id)
   end
 
   # GET /spendings/1
   # GET /spendings/1.json
   def show
+    @prev=Spending.where(user_id:current_user.id).where('id < ?', @spending.id).last
+    @next=Spending.where(user_id:current_user.id).where('id > ?', @spending.id).first
   end
 
   # GET /spendings/new
@@ -70,6 +74,6 @@ class SpendingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def spending_params
-      params.require(:spending).permit(:transaction_date_string, :description, :amount, :balance, :image_url, :picture, :category, :account_item_id)
+      params.require(:spending).permit(:transaction_date_string, :description, :amount, :balance, :image_url, :picture, :category, :account_item_id,:user_id)
     end
 end

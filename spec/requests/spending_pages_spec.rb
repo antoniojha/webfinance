@@ -10,8 +10,9 @@ RSpec.describe "Spendings", :type => :request do
   describe "Spending index" do
     before do
       @spending=create_spending(@user)
+      @spending1=create_spending(@user2)
       @spending2=create_spending(@user2)
-
+      @spending3=create_spending(@user2)
       visit spendings_path 
     end
     it "should list spendings" do
@@ -26,6 +27,11 @@ RSpec.describe "Spendings", :type => :request do
     #check
     it "should display spendings that belong to each user" do
       expect(page).not_to have_content('different description')
+    end
+    it "if there is adjacent spending show page should have previous and next button to navigate" do
+      visit spending_path(@spending2)
+      expect(page).to have_link('Next')
+      expect(page).to have_link('Prev')
     end
   end
   describe "Spending Show" do

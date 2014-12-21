@@ -31,18 +31,19 @@ module SessionsHelper
     # this order is very importatn first delete cookies and then session. Otherwise current_user would be called and session[:user_id] would be restored. 
     forget(current_user)
     session[:user_id]=nil
+    session[:return_to]=nil
     @current_user=nil
   end
   def forget(user)
-#   if logged_in?
+   if logged_in?
       user.forget
-#    end
+    end
     cookies.delete(:user_id)
     cookies.delete(:auth_token)
   end
   def friendly_redirect(default)
     redirect_to (session[:return_to] || default) 
-  #  session[:return_to]=nil
+    session[:return_to]=nil
   end
   def remember_desired_location
     session[:return_to]=request.fullpath

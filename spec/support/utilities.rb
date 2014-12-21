@@ -14,4 +14,5 @@ def create_spending(user)
   @spending=FactoryGirl.build(:spending)
   @spending.user_id=user.id
   @spending.save
+  @spending
 end

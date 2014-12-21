@@ -1,31 +1,32 @@
 <%provide :title, '|Spending Show' %>
+<% if @prev %>
+<a href=<%=spending_path(@prev)%>><span class="glyphicon glyphicon-arrow-left"></span>Prev</a>
+<%end%>
+<% if @next %>
+<a href=<%=spending_path(@next)%>><span class="glyphicon glyphicon-arrow-right"></span>Next</a>
+<%end%>
 <h1>Transaction Detail</h1>
-<div class='spending_display'>
-<p>
   <% if @spending.picture_file_name%>
-  <%=image_tag @spending.picture.url(:small)%>
+    <%=image_tag @spending.picture.url(:small)%>
   <% end %>
-</p>
-<p>
-  <strong>Transaction date:</strong>
-  <%= @spending.transaction_date.strftime('%m/%d/%Y') %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @spending.description %>
-</p>
-
-<p>
-  <strong>Amount:</strong>
-  <%= @spending.amount %>
-</p>
-
-<p>
-  <strong>Category:</strong>
-  <%= @spending.category %>
-</p>
-
+<table class='spending_display'>
+  <tr>
+    <td><strong>Transaction date:</strong></td>
+    <td><%= @spending.transaction_date.strftime('%m/%d/%Y') %></td>
+  </tr>
+  <tr>
+    <td><strong>Description:</strong></td>
+    <td><%= @spending.description %></td>
+  </tr>
+  <tr>
+    <td><strong>Amount:</strong></td>
+    <td><%= @spending.amount %></td>
+  </tr>
+  <tr>
+    <td><strong>Category:</strong></td>
+    <td><%= @spending.category %></td>
+  </tr>
+</table>
+<br>
 <%= link_to 'Edit', edit_spending_path(@spending) %> |
 <%= link_to 'Back', spendings_path %>
-</div>

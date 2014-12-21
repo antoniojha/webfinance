@@ -2,16 +2,33 @@ require 'rails_helper'
 describe User do
   describe "Creating User" do
     before do
-      @user=User.new(username:"example user", email:"example@example.com", password: "Example_password12?", password_confirmation: "Example_password12?")
+      @user=User.new(first_name:"firstname",last_name:"lastname", username:"example user", email:"example@example.com", password: "Example_password12?", password_confirmation: "Example_password12?")
     end
     subject {@user}
+    it {should respond_to(:first_name)}
+    it {should respond_to(:last_name)}
     it {should respond_to(:username)}
     it {should respond_to(:email)}
     it {should respond_to(:password_digest)}
     it {should respond_to(:password)}
     it {should respond_to(:password_confirmation)}
+    it {should respond_to(:admin)}
     it {should be_valid}
-
+    it {should_not be_admin}
+    describe "with admin attribute set to true" do
+      before do
+        @user.toggle!(:admin)
+      end
+      it {should be_admin}
+    end
+    describe "shouldn't save when firstname is not entered" do
+      before {@user.first_name=""}
+      it {should_not be_valid}
+    end
+    describe "shouldn't save when firstname is not entered" do
+      before {@user.last_name=""}
+      it {should_not be_valid}
+    end
     #check
     describe "shouldn't save when name is not entered" do
       before {@user.username=""}

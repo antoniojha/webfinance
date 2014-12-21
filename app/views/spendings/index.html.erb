@@ -1,32 +1,44 @@
 <%require 'date'%>
 <%provide :title, '|All Spendings' %>
-<h1>All Spendings</h1>
-
-<table width='80%'>
+<h1>All Transactions</h1>
+<%= will_paginate @spendings, inner_window:1, outer_window:1%>
+<table class='spendings_display'>
+  <col width="10%">
+  <col width="20%">
+  <col width="40%">
+  <col width="20%">
+  <col width="10%">
+ 
   <thead>
     <tr>
-      <th>Transaction date</th>
-      <th>Description</th>
-      <th>Amount</th>
-      <th colspan="3"></th>
+      <td><strong>Item #</strong></td>
+      <td><strong>Transaction date</strong></td>
+      <td><strong>Description</strong></td>
+      <td><strong>Amount</strong></td>
+      <td><%= link_to '<i class="glyphicon glyphicon-plus"></i>'.html_safe, new_spending_path %></td>
     </tr>
   </thead>
-
+  
   <tbody>
-    <% @spendings.each do |spending| %>
-      <tr>
+    <% @spendings.each_with_index do |spending,i| %>
+    <tr class=<%=cycle('odd_line','even_line')%>>
+        <td><a href=<%=spending_url(spending)%>><%=i+1%></a></td>
         <td><%= spending.transaction_date.strftime('%m/%d/%Y') %></td>
         <td><%= spending.description %></td>
         <td><%= spending.amount %></td>
         <td>
-          <%= link_to 'Detail', spending %> &nbsp
-          <%= link_to 'Edit', edit_spending_path(spending) %> &nbsp
-          <%= link_to 'Destroy', spending, method: :delete, data: { confirm: 'Are you sure to delete this?' } %>            </td>
+          <div style="float:right;">
+            <%= link_to '<i class="glyphicon glyphicon-remove"></i>'.html_safe, spending, method: :delete, data:{confirm: 'Are you sure to delete this transaction?'}%>
+          </div>
+     
+            <%= link_to 'Edit', edit_spending_path(spending)%>
+
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
+  <%= will_paginate @spendings, inner_window:1, outer_window:1%>
 <br>
 
-<%= link_to 'New Spending', new_spending_path %>
+

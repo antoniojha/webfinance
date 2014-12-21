@@ -18,6 +18,8 @@ FactoryGirl.define do
   factory :other_user, class: User do
     username "other_testing1234"
     email  "other_foo@example.com"
+    first_name 'other_first_name'
+    last_name 'other_last_name'
     password "other_SecretPassword1?"
     password_confirmation "other_SecretPassword1?"
     budget_cat false

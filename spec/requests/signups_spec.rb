@@ -5,6 +5,8 @@ describe "Users Signup" do
     let(:user){ FactoryGirl.build(:user)}
     before do
       visit signup_path
+      fill_in "user_first_name", :with=>user.first_name
+      fill_in "user_last_name", :with=>user.last_name
       fill_in "Username", :with=>user.username
       fill_in "Email", :with=>user.email
       fill_in "Password", :with=>user.password

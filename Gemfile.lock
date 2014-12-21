@@ -132,6 +132,8 @@ GEM
     mime-types (1.25.1)
     mini_portile (0.6.0)
     minitest (5.4.2)
+    money (6.4.0)
+      i18n (>= 0.6.4, <= 0.7.0.beta1)
     multi_json (1.10.1)
     multi_xml (0.5.5)
     nokogiri (1.6.3.1)
@@ -309,6 +311,7 @@ DEPENDENCIES
   jquery-turbolinks
   jquery-ui-rails
   launchy
+  money
   paperclip
   paperclip-compression
   pauldix-feedzirra

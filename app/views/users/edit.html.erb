@@ -1,7 +1,13 @@
 <%provide(:title,"|Edit User")%>
-<h1>Update Profile</h1>
+<%= render 'menu_top'%>
+<div style="clear:both;border-top:2px solid;"></div>
+<h3>Update Profile</h3>
+<div style="width:70%">
+  <div class="gravatar_edit">
+      <%= gravatar_for @user %>
+  </div>  
+  <a href="http://gravatar.com/emails" target=_blank>change</a>
+</div><br>
 <%=render 'form'%>
-<div class="gravatar_edit">
-    <%= gravatar_for @user %>
-     <a href="http://gravatar.com/emails" target=_blank>change</a>
-</div>
+
+<%=button_tag "Delete User",:class=>'btn btn-success'%>

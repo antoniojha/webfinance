@@ -4,7 +4,30 @@
 .form-group{
   width: 50%;
 }
+
+// used in spending/show page
 .spending_display{
   width:40%;
-  text-align: left;
+}
+
+.spending_display td{
+  padding:5px;
+}
+// used in spending/index page
+.spendings_display{
+  width:80%;
+  text-align:center;
+}
+.spendings_display td{
+  padding:0px;
+}
+.spendings_display a{
+  color: black;
+  &:visited {
+    color: black;
+  }
+  &:hover {
+    color: blue;
+    font-weight: bold;
+  }
 }

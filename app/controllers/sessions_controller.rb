@@ -12,6 +12,7 @@ class SessionsController < ApplicationController
         if user.email_authen==true
           log_in(user)
           params[:session][:remember]=='1' ? remember(user) : forget(user)
+       #   format.html{ redirect_to "http://www.google.com"}
           format.html { friendly_redirect user}
         else
           #  resend email confirmation with a new token if user try to sign in without first authenticating email during sign up

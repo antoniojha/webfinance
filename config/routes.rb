@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   controller :users do
     get 'signup'=> :new
   end
-
+  match '/remove', to:'users#remove',via:'get'
   
   controller :static_pages do
     get "demo" => :demo

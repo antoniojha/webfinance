@@ -10,11 +10,10 @@ class User < ActiveRecord::Base
   # the following uses Regex (lookahead assertion) to ensure there is at least a lower case and upper case letter,
   # a digit, and a special character (non-word character)
   VALID_PASSWORD_REGEX= /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)/
-  validates :username, presence: true
+  validates :first_name,:last_name,:username, presence: true
   validates :email, presence: true 
   validates :email, allow_blank:true, format: {with:VALID_EMAIL_REGEX}
-  validates :password, presence: true
-  validates :password_confirmation, presence: true
+  validates :password, :password_confirmation, presence: true, on: :create
   validates :password, allow_blank:true, length: { in: 7..40 },format: {with:VALID_PASSWORD_REGEX}
   validates_uniqueness_of :username, :case_sensitive => false
   validates_uniqueness_of :email, :case_sensitive => false

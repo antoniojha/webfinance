@@ -11,7 +11,8 @@ gem 'hashie'
 
 # This gem is used for rss feed parsing
 gem 'pauldix-feedzirra'
-
+# gem for manipulating different currency
+gem 'money'
 # THis is used for ???
 gem 'iconv'
 
