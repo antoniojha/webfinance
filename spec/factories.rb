@@ -14,6 +14,9 @@ FactoryGirl.define do
     email_authen false
     yodlee_username "sbMemantoniojha21"
     yodlee_password "sbMemantoniojha21#123"
+    factory :admin do
+      admin true
+    end
   end
   factory :other_user, class: User do
     username "other_testing1234"
@@ -30,6 +33,14 @@ FactoryGirl.define do
     email_authen false
     yodlee_username "sbMemantoniojha21"
     yodlee_password "sbMemantoniojha21#123"      
+  end
+  factory :all_users, class:User do
+    sequence(:first_name){|n| "First Name#{n}"}
+    sequence(:last_name){|n| "Last Name#{n}"}
+    sequence(:username){|n| "Person #{n}"}
+    sequence(:email){|n| "person_#{n}@example.com"}
+    password "SecretPassword1?"
+    password_confirmation "SecretPassword1?"
   end
   factory :bank, class: Bank do 
     id 13041

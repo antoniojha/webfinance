@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.order(:username)
+    @users = User.order(:username).paginate(:page => params[:page])
   end
 
   # GET /users/1
@@ -61,11 +61,30 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
   #  @user.yodlee.destroy if Yodlee::Config.register_users
-    @user.destroy
-    reset_session
+    user=User.find_by(username: params[:user][:username].downcase)
+    if is_admin_remove?
+      remove_user=User.find(params[:remove_user][:id])
+    end
+    
     respond_to do |format|
-      format.html { redirect_to login_url }
-      format.json { head :no_content }
+      if user && user.authenticate(params[:user][:password])
+        if is_admin_remove?
+          remove_user.destroy
+        else
+          user.destroy
+        end
+     #   reset_session
+        flash[:notice]="Your profile is successfully removed!"
+        if current_user.admin?
+          format.html{redirect_to users_url}
+        else
+          format.html { redirect_to login_url}
+        end
+        format.json { head :no_content }
+      else
+        flash[:danger]="Invalid user/password combinations"
+        format.html {  redirect_to remove_url}
+      end
     end
   end
   
@@ -73,8 +92,12 @@ class UsersController < ApplicationController
     @user=User.find(session[:user_id])
   end
   def remove
+    @user=User.find(current_user.id)
   end
-  
+  def admin_remove
+    @user=User.find(current_user.id)
+    @user_delete=User.find(params[:id])
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -91,5 +114,7 @@ class UsersController < ApplicationController
         redirect_to user_url(current_user), notice: "Access Denied"
       end
     end
-
+  def is_admin_remove?
+    params[:remove_user] ? true : false
+  end
 end

@@ -1,5 +1,5 @@
 
-<%= form_for :session, url:signin_path do |f|%>
+<%= form_for @user,:html => { :method => :delete }  do |f|%>
 	
 	<table width="70%">
 		<tr>
@@ -16,7 +16,9 @@
 		<tr class="blank_row"></tr>
 		<tr>
       <td><%= f.submit "Delete Profile", :class=>'btn btn-danger'%></td>
-      
+      <% if @user_delete%>
+      <%=hidden_field :remove_user, :id, :value=>@user_delete.id%>
+      <%end%>
 		</tr>
 
 	</table>

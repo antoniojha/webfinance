@@ -8,11 +8,12 @@ Rails.application.routes.draw do
     post 'signin'=> :create
     delete 'logout'=> :destroy
    end
+  resources :users
   controller :users do
     get 'signup'=> :new
   end
   match '/remove', to:'users#remove',via:'get'
-  
+  match'/admin/remove/:id', to:'users#admin_remove', via:'get', as: 'admin_remove'
   controller :static_pages do
     get "demo" => :demo
     get "contact" => :contact
@@ -24,7 +25,6 @@ Rails.application.routes.draw do
   root 'static_pages#home'
   
   resources :logs
-  resources :users
   
   resources :select_banks
   controller :select_banks do

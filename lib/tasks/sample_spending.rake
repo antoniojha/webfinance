@@ -13,7 +13,7 @@ namespace :db do
         description="test#{n+1}"
         category=1
         amount=100
-        user_id=1
+        user_id=101
         Spending.create!(transaction_date_string:transaction_date_string,description:description,category:category,amount:amount,user_id:user_id)
       end
     end

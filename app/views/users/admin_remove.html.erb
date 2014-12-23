@@ -1,0 +1,8 @@
+<% provide :title, "Admin Remove"%>
+<div style="clear:both;border-top:2px solid;"></div>
+<h1>Remove User</h1>
+<div align="left" style="text-indent: 15%;">
+  <p>Please entered your login information in order to delete <%= @user_delete.username %>'s' profile:</p>
+</div>
+<%= render 'remove_form'%><br>
+<%= link_to 'Back', users_path%>
