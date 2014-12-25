@@ -1,0 +1,39 @@
+<% content_for :right do %>
+<div align="left" id="advance_search_form">
+	<br><br>
+	<%= form_for(@advance_search,url:{controller:"advance_search",action:"create"},method:"post") do |f| %>
+  		<table>
+			<tr>
+				<td><strong>From:</strong></td>
+				<td><div class="input-group">
+							<%= f.text_field :start_date_string, :class=>"form-control"%> 
+							<div class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></div>
+						</div>
+				</td>
+			</tr>
+			<tr class="blank_row"></tr>
+			<tr>
+				<td><strong>To:</strong></td>
+				<td><div class="input-group date"><%= f.text_field :end_date_string, :class=>"form-control"%> 
+					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+					</div>
+				</td>
+			</tr>
+		</table><br>
+		<strong>Search Title:</strong>
+		<p><div><%=f.text_field :keyword,:class=>"form-control"%></div></p>
+		<strong>Price Range:</strong>
+		
+		<table>
+			<tr>
+				<td width="45%"><div class="input-group"><span class="input-group-addon">$</span><%=f.text_field :minimum_price,{size:7,class:"form-control"}%></div></td>
+				<td width="5%"><div align="center"> - </div></td>
+				<td width="50%"><div class="input-group"><span class="input-group-addon">$</span><%=f.text_field :maximum_price,{size:7,class:"form-control"}%></div></td>		
+			</tr>
+      <tr class="blank_row"></tr>
+    </table>
+		<%=f.hidden_field :hidden_value, :value=>'true'%>	
+<%= f.submit "Search", :class=>'btn btn-success'%>	
+  	<% end %>
+</div>	
+<%end%>

@@ -9,9 +9,9 @@ RSpec.describe "Spendings", :type => :request do
   
   describe "Spending index" do
     before do
-      @spending=create_spending(@user)
-      @spending1=create_spending(@user2)
-      @spending2=create_spending(@user2)
+      @spending1=create_spending(@user)
+      @spending2=create_spending(@user)
+      @spending3=create_spending(@user)
       @spending3=create_spending(@user2)
       visit spendings_path 
     end
@@ -20,8 +20,8 @@ RSpec.describe "Spendings", :type => :request do
       expect(page).to have_selector(:css, 'td',text:@spending.description)
     end
     it "should have link to show each spending" do
-      expect(page).to have_link('Detail')
-      click_link('Detail')
+      expect(page).to have_link('1',href:spending_url(@spending1.id))
+      click_link('1')
       expect(page).to have_content('Transaction Detail')
     end
     #check
@@ -30,8 +30,25 @@ RSpec.describe "Spendings", :type => :request do
     end
     it "if there is adjacent spending show page should have previous and next button to navigate" do
       visit spending_path(@spending2)
+      expect(page).to have_content('Transaction Detail')
       expect(page).to have_link('Next')
       expect(page).to have_link('Prev')
+    end
+    describe "should toggle if title is clicked" do
+      before do
+        click_link("Description")
+      end
+      describe "should first be ascending order" do
+        specify{URI.parse(current_url).request_uri.should include "direction=asc&sort=description"}
+        describe "should then be descending order" do
+          before{click_link("Description")}
+          specify{URI.parse(current_url).request_uri.should include "direction=desc&sort=description"}
+          describe" shouldl then be ascending order again" do
+            before{click_link("Description")}
+            specify{URI.parse(current_url).request_uri.should include "direction=asc&sort=description"}
+          end
+        end
+      end   
     end
   end
   describe "Spending Show" do

@@ -1,44 +1,13 @@
 <%require 'date'%>
-<%provide :title, '|All Spendings' %>
-<h1>All Transactions</h1>
-<%= will_paginate @spendings, inner_window:1, outer_window:1%>
-<table class='spendings_display'>
-  <col width="10%">
-  <col width="20%">
-  <col width="40%">
-  <col width="20%">
-  <col width="10%">
- 
-  <thead>
-    <tr>
-      <td><strong>Item #</strong></td>
-      <td><strong>Transaction date</strong></td>
-      <td><strong>Description</strong></td>
-      <td><strong>Amount</strong></td>
-      <td><%= link_to '<i class="glyphicon glyphicon-plus"></i>'.html_safe, new_spending_path %></td>
-    </tr>
-  </thead>
-  
-  <tbody>
-    <% @spendings.each_with_index do |spending,i| %>
-    <tr class=<%=cycle('odd_line','even_line')%>>
-        <td><a href=<%=spending_url(spending)%>><%=i+1%></a></td>
-        <td><%= spending.transaction_date.strftime('%m/%d/%Y') %></td>
-        <td><%= spending.description %></td>
-        <td><%= spending.amount %></td>
-        <td>
-          <div style="float:right;">
-            <%= link_to '<i class="glyphicon glyphicon-remove"></i>'.html_safe, spending, method: :delete, data:{confirm: 'Are you sure to delete this transaction?'}%>
-          </div>
-     
-            <%= link_to 'Edit', edit_spending_path(spending)%>
+<script type="text/javascript" src="pagination.js"></script>
 
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-  <%= will_paginate @spendings, inner_window:1, outer_window:1%>
-<br>
+<%provide :title, '|All Spendings' %>
+<div style="min-height:350px; border-right:solid 1px;">
+  <h1>All Transactions</h1>
+  <%=render 'search_form'%>
+  <div id="spendings" >
+    <%=render 'spendings'%>
+  </div>
+</div>
 
 

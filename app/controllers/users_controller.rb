@@ -69,15 +69,22 @@ class UsersController < ApplicationController
     respond_to do |format|
       if user && user.authenticate(params[:user][:password])
         if is_admin_remove?
-          remove_user.destroy
+          name=remove_user.username 
+          remove_user.destroy unless remove_user.admin?
         else
-          user.destroy
+          user.destroy unless user.admin?
         end
      #   reset_session
-        flash[:notice]="Your profile is successfully removed!"
+        
         if current_user.admin?
+          if is_admin_remove?
+            flash[:notice]=name+"'s profile is successfully removed!"
+          elsif user.admin?
+            flash[:danger]="Not allowed. You can't remove the admin profile!"
+          end
           format.html{redirect_to users_url}
         else
+          flash[:notice]="Your profile is successfully removed!"
           format.html { redirect_to login_url}
         end
         format.json { head :no_content }

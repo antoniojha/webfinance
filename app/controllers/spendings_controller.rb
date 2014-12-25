@@ -1,12 +1,18 @@
 
 class SpendingsController < ApplicationController
+  helper_method :sort_column, :sort_direction
   skip_before_action :authorize_login, only: [:new,:create,:index,:show]
   before_action :set_spending, only: [:show, :edit, :update, :destroy]
 
   # GET /spendings
   # GET /spendings.json
   def index
-      @spendings = Spending.all.where(user_id:current_user.id).paginate(:page => params[:page])
+    if params[:id]
+      retrieve_search
+    else
+      @advance_search = AdvanceSearch.new
+      @spendings = Spending.all.where(user_id:current_user.id).paginate(:page => params[:page]).order(sort_column+" "+sort_direction)
+    end
   #  @spendings=Spending.paginate(user_id:current_user.id)
   end
 
@@ -76,4 +82,18 @@ class SpendingsController < ApplicationController
     def spending_params
       params.require(:spending).permit(:transaction_date_string, :description, :amount, :balance, :image_url, :picture, :category, :account_item_id,:user_id)
     end
+  def retrieve_search
+    @advance_search=AdvanceSearch.find(params[:id])    
+    @spendings=@advance_search.transactions.where(:user_id=>session[:user_id]).paginate(page:params[:page])
+    if @spendings.count>0
+      @start_date=@spendings.last.transaction_date_string
+      @end_date=@spendings.first.transaction_date_string
+    end
+  end
+  def sort_column
+    Spending.column_names.include?(params[:sort]) ? params[:sort] : "transaction_date"
+  end
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
 end

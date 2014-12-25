@@ -10,7 +10,7 @@ class Spending < ActiveRecord::Base
  #round to the second decimal digit  
   before_save{self.amount=amount.round(2)}  
   def transaction_date_string
-    transaction_date.to_s
+    transaction_date.strftime("%m/%d/%Y")
   end
   def transaction_date_string=(transaction_date_str)
     self.transaction_date=Chronic.parse(transaction_date_str)
