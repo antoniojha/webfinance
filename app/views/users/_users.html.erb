@@ -1,0 +1,15 @@
+<%= will_paginate @users, inner_window:1, outer_window:1%>
+<table class='index-table'>
+  <% @users.each do |user|%>
+  <tr>
+    <td width='15%'><%=gravatar_for(user, :size=>50)%></td>
+    <td width='55%'><a href=<%=user_path(user)%>><%=user.first_name%> <%=user.last_name%></a>&nbsp &nbsp
+      <% if current_user.admin? && !current_user?(user)%>
+        <%=link_to 'delete', admin_remove_path(user)%>
+      <%end%>
+    
+    </td>  
+  </tr>
+  <%end%>
+</table> 
+<%= will_paginate @users, inner_window:1, outer_window:1%>
