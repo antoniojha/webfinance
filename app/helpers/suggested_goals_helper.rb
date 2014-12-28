@@ -1,0 +1,2 @@
+module SuggestedGoalsHelper
+end

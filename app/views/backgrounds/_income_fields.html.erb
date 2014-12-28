@@ -1,0 +1,17 @@
+ <tr>
+      <td><%=builder.label :income, "Income #{builder.index+1}" %></td>
+      <td></td>     
+    </tr>
+    <tr>
+      <td><%=builder.label :description%></td>
+      <td><%=builder.text_field :description, :class=>"form-control"%></td>
+    </tr>
+    <tr>
+      <td><%=builder.label :amount%></td>
+      <td><%=builder.text_field :amount, :class=>"form-control"%></td>
+    </tr>
+    <tr>
+      <td><%=builder.label :category%></td>
+      <td><%=builder.select :category, Order::INCOME_TYPES, {prompt:"what type of income?"},{:class=>"form-control"}%>
+      </td>
+    </tr>

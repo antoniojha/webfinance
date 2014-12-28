@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   # used for password digest to confirm two passwords entered match
   has_secure_password
   has_many :accounts, dependent: :destroy
+  has_one :background, dependent: :destroy 
 #  has_many :spendings, dependent: :destroy
 #  has_many :temp_budget_plans, dependent: :destroy
 

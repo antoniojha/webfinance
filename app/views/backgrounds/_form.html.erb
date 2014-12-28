@@ -1,0 +1,57 @@
+<%=form_for @background do |f| %>
+  <table id="background_table" width='60%'>
+    <tr>
+      <td width='40%'><%=f.label :background%></td>
+      <td width='60%'></td>
+    </tr>
+    <tr>
+      <td><%=f.label 'Date of Birth'%></td>
+      <td><%=f.text_field :dob_string, :class=>"form-control"%></td>
+    </tr>
+    <tr>
+      <td><%=f.label 'relationship status'%></td>
+      <td>Single?<%=radio_button("background", "married", true)%>
+        Married?<%=radio_button("background", "married", false)%></td>
+    </tr>
+    <tr>
+      <td><%=f.label 'how many dependents?'%></td>
+      <td><%=f.text_field :children, :class=>"form-control"%></td>
+    </tr>
+    <tr>
+      <td><%=f.label 'State of Resident'%></td>
+      <td><%=f.text_field :state, :class=>"form-control"%></td>
+    </tr>
+    <tr class="blank_row"><td></td><td></td></tr>
+    <%= f.fields_for :savings do |builder|%>
+    <%=render 'saving_fields', builder: builder%>
+    <%end%>
+    <tr class="blank_row"><td></td><td></td></tr>
+    <%= f.fields_for :debts do |builder|%>
+    <%=render 'debt_fields', builder: builder%>
+    <%end%>
+    <tr class="blank_row"><td></td><td></td></tr>
+    <%= f.fields_for :incomes do |builder|%>
+    <%=render 'income_fields', builder: builder%>
+    <%end%>
+    <tr class='blank_row'><td></td><td></td></tr>
+    <tr>
+      <td><%=f.label "Expenses"%></td>
+      <td></td>
+    </tr>
+    <%= f.fields_for :fixed_expenses do |builder|%>
+    <%= render 'fixed_expense_fields', builder: builder%>
+    <%end%>
+    <%= f.fields_for :optional_expenses do |builder|%>
+    <%= render 'optional_expense_fields', builder: builder%>
+    <%end%>
+    <tr class='blank_row'><td></td><td></td></tr>
+    <tr>
+      <% if @background.new_record?%>
+      <td><%= f.submit "Submit" %></td>
+      <%else%>
+      <td><%= f.submit "Update" %></td>
+      <%end%>
+      <td></td>
+    </tr>
+  </table>
+<%end%>

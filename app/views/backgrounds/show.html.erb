@@ -1,0 +1,17 @@
+<p>Date of Birth: <%=@background.dob%></p>
+<p>Married?: <%=@background.married%></p>
+<p>How many children? <%=@background.children%></p>
+<%@background.incomes.each_with_index do |income,i|%>
+Income<%=i+1%>.<br>
+<p> description: <%=income.description%></p>
+<p> amount: <%=income.amount%></p>
+<p> category: <%=income.category%></p>
+<%end%>
+<%@background.savings.each_with_index do |saving,i|%>
+Saving<%=i+1%>.<br>
+<p> Institution Name: <%=saving.institution_name%></p>
+<p> Description: <%=saving.description%></p>
+<p> Amount: <%=saving.amount%></p>
+<p> Category: <%=saving.category%></p>
+<%end%>
+<%=link_to 'Edit', edit_background_path(@background)%>

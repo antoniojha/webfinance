@@ -1,0 +1,21 @@
+  <tr>
+      <td><%=builder.label :saving, "Saving #{builder.index+1}" %></td>
+      <td></td>     
+    </tr>
+    <tr>
+      <td><%=builder.label :institution_name, "Institution Name"%></td>
+      <td><%=builder.text_field :institution_name, :class=>"form-control"%></td>
+    </tr>
+    <tr>
+      <td><%=builder.label :description%></td>
+      <td><%=builder.text_field :description, :class=>"form-control"%></td>
+    </tr>
+    <tr>
+      <td><%=builder.label :amount%></td>
+      <td><%=builder.text_field :amount, :class=>"form-control"%></td>
+    </tr>
+    <tr>
+      <td><%=builder.label :category%></td>
+      <td><%=builder.select :category, Order::SAVING_TYPES, {prompt:"what's the purpose of saving?"},{:class=>"form-control"}%>
+      </td>
+    </tr>

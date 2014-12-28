@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141221124636) do
+ActiveRecord::Schema.define(version: 20141227205610) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -50,6 +50,28 @@ ActiveRecord::Schema.define(version: 20141221124636) do
     t.string   "hidden_value"
   end
 
+  create_table "backgrounds", force: true do |t|
+    t.string   "state"
+    t.datetime "dob"
+    t.boolean  "married"
+    t.integer  "children"
+    t.boolean  "has_retirement_plan",    default: false
+    t.boolean  "has_emergency_plan",     default: false
+    t.boolean  "has_protection_plan",    default: false
+    t.boolean  "has_estate_plan",        default: false
+    t.boolean  "has_education_plan",     default: false
+    t.decimal  "total_optional_expense"
+    t.decimal  "total_fixed_expense"
+    t.decimal  "total_income"
+    t.decimal  "total_saving"
+    t.decimal  "total_debt"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+  end
+
+  add_index "backgrounds", ["user_id"], name: "index_backgrounds_on_user_id"
+
   create_table "banks", force: true do |t|
     t.integer  "content_service_id"
     t.string   "content_service_display_name"
@@ -62,6 +84,58 @@ ActiveRecord::Schema.define(version: 20141221124636) do
     t.datetime "updated_at"
   end
 
+  create_table "debts", force: true do |t|
+    t.string   "institution_name"
+    t.string   "description"
+    t.decimal  "amount"
+    t.decimal  "interest_rate"
+    t.integer  "background_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "debts", ["background_id"], name: "index_debts_on_background_id"
+
+  create_table "fixed_expenses", force: true do |t|
+    t.string   "description"
+    t.string   "company"
+    t.decimal  "amount"
+    t.datetime "transaction_date"
+    t.boolean  "alarm"
+    t.integer  "category"
+    t.integer  "insurance_category"
+    t.integer  "background_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fixed_expenses", ["background_id"], name: "index_fixed_expenses_on_background_id"
+
+  create_table "goals", force: true do |t|
+    t.string   "description"
+    t.decimal  "amount"
+    t.datetime "start_date"
+    t.datetime "maturity_date"
+    t.boolean  "completed"
+    t.integer  "priority"
+    t.integer  "background_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "goals", ["background_id"], name: "index_goals_on_background_id"
+
+  create_table "incomes", force: true do |t|
+    t.string   "description"
+    t.decimal  "amount"
+    t.integer  "category"
+    t.integer  "background_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "incomes", ["background_id"], name: "index_incomes_on_background_id"
+
   create_table "logs", force: true do |t|
     t.string   "endpoint"
     t.string   "method"
@@ -71,6 +145,35 @@ ActiveRecord::Schema.define(version: 20141221124636) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "optional_expenses", force: true do |t|
+    t.string   "description"
+    t.decimal  "amount"
+    t.integer  "category"
+    t.integer  "background_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "optional_expenses", ["background_id"], name: "index_optional_expenses_on_background_id"
+
+  create_table "plans", force: true do |t|
+    t.string   "description"
+    t.integer  "category"
+    t.datetime "start_date"
+    t.datetime "maturity_date"
+    t.integer  "year_duration"
+    t.decimal  "start_amount"
+    t.decimal  "goal_amount"
+    t.decimal  "monthly_cost"
+    t.decimal  "monthly_return"
+    t.decimal  "interest_rate"
+    t.integer  "goal_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "plans", ["goal_id"], name: "index_plans_on_goal_id"
 
   create_table "recur_budgets", force: true do |t|
     t.string   "title"
@@ -82,6 +185,20 @@ ActiveRecord::Schema.define(version: 20141221124636) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "savings", force: true do |t|
+    t.string   "institution_name"
+    t.string   "description"
+    t.decimal  "amount"
+    t.integer  "category"
+    t.integer  "background_id"
+    t.integer  "plan_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "savings", ["background_id"], name: "index_savings_on_background_id"
+  add_index "savings", ["plan_id"], name: "index_savings_on_plan_id"
 
   create_table "spendings", force: true do |t|
     t.datetime "transaction_date"
@@ -101,6 +218,18 @@ ActiveRecord::Schema.define(version: 20141221124636) do
   end
 
   add_index "spendings", ["account_item_id"], name: "index_spendings_on_account_item_id"
+
+  create_table "suggested_goals", force: true do |t|
+    t.string   "description"
+    t.decimal  "amount"
+    t.integer  "category"
+    t.datetime "maturity_date"
+    t.integer  "background_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "suggested_goals", ["background_id"], name: "index_suggested_goals_on_background_id"
 
   create_table "temp_budget_plans", force: true do |t|
     t.decimal  "budget_amount",        precision: 8, scale: 2

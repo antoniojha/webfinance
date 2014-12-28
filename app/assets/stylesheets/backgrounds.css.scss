@@ -1,0 +1,16 @@
+// Place all the styles related to the Backgrounds controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#background_table 
+{
+  .blank_row{
+    height: 20px;
+    td{
+      border-bottom: 1px solid black;
+    }
+  }
+  tr td{
+    padding:5px;
+  }
+}

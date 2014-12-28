@@ -1,0 +1,2 @@
+class DebtsController < ApplicationController
+end

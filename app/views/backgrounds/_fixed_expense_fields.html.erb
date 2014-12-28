@@ -1,0 +1,25 @@
+    <tr>
+      <td><%=builder.label :fixed_expense, "Fixed Expense #{builder.index+1}" %></td>
+      <td></td>     
+    </tr>
+    <tr>
+      <td><%=builder.label :description%></td>
+      <td><%=builder.text_field :description, :class=>"form-control"%></td>
+    </tr>
+    <tr>
+      <td><%=builder.label :company, "Company Name"%></td>
+      <td><%=builder.text_field :company, :class=>"form-control"%></td>
+    </tr>
+    <tr>
+      <td><%=builder.label :amount%></td>
+      <td><%=builder.text_field :amount, :class=>"form-control"%></td>
+    </tr>
+    <tr>
+      <td><%=builder.label :transaction_date, "Transaction Date"%></td>
+      <td><%=builder.text_field :transaction_date_string, :class=>"form-control"%></td>
+    </tr>
+    <tr>
+      <td><%=builder.label :category%></td>
+      <td><%=builder.select :category, Order::FIXED_EXPENSE_TYPES, {prompt:"For what type of expense?"},{:class=>"form-control"}%>
+      </td>
+    </tr>

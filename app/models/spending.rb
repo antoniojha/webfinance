@@ -15,5 +15,13 @@ class Spending < ActiveRecord::Base
   def transaction_date_string=(transaction_date_str)
     self.transaction_date=Chronic.parse(transaction_date_str)
   end
-
+  def self.to_csv(options={})
+    column_names=%w[transaction_date description amount category]
+    CSV.generate(options) do |csv|
+      csv << column_names
+      all.each do |spending|
+        csv << spending.attributes.values_at(*column_names)
+      end
+    end
+  end
 end

@@ -7,13 +7,18 @@ class SpendingsController < ApplicationController
   # GET /spendings
   # GET /spendings.json
   def index
-    if params[:id]
+    if params[:id]  # this id parameter is used to pull up AdvanceSearch
       retrieve_search
     else
       @advance_search = AdvanceSearch.new
       @spendings = Spending.all.where(user_id:current_user.id).paginate(:page => params[:page]).order(sort_column+" "+sort_direction)
+      respond_to do |format|
+        format.html
+        format.csv{send_data @spendings.to_csv}
+        format.xls
+        format.js
+      end
     end
-  #  @spendings=Spending.paginate(user_id:current_user.id)
   end
 
   # GET /spendings/1

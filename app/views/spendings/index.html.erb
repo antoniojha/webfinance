@@ -4,7 +4,13 @@
 <%provide :title, '|All Spendings' %>
 <div style="min-height:350px; border-right:solid 1px;">
   <h1>All Transactions</h1>
+  
   <%=render 'search_form'%>
+  <p align="left" style="text-indent: 10%;">
+    Download:
+    <%=link_to "CSV", spendings_path(format:'csv')%>
+    <%=link_to "Excel", spendings_path(format:'xls')%>
+  </p>
   <div id="spendings" >
     <%=render 'spendings'%>
   </div>

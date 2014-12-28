@@ -1,0 +1,2 @@
+class SuggestedGoalsController < ApplicationController
+end
