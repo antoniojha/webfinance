@@ -1,3 +1,4 @@
+
 <%=form_for @background do |f| %>
   <table id="background_table" width='60%'>
     <tr>
@@ -21,29 +22,37 @@
       <td><%=f.label 'State of Resident'%></td>
       <td><%=f.text_field :state, :class=>"form-control"%></td>
     </tr>
-    <tr class="blank_row"><td></td><td></td></tr>
     <%= f.fields_for :savings do |builder|%>
     <%=render 'saving_fields', builder: builder%>
     <%end%>
-    <tr class="blank_row"><td></td><td></td></tr>
+    <%= render partial:'add_link', locals:{name: "Add Saving"}%>
+    
     <%= f.fields_for :debts do |builder|%>
     <%=render 'debt_fields', builder: builder%>
     <%end%>
-    <tr class="blank_row"><td></td><td></td></tr>
+    <%= render partial:'add_link', locals:{name: "Add Debt"}%>
     <%= f.fields_for :incomes do |builder|%>
     <%=render 'income_fields', builder: builder%>
     <%end%>
-    <tr class='blank_row'><td></td><td></td></tr>
-    <tr>
-      <td><%=f.label "Expenses"%></td>
-      <td></td>
-    </tr>
+    <%= render partial:'add_link', locals:{name: "Add Income"}%>
+    <tbody class="expense_title">
+      <tr class='blank_row'><td></td><td></td></tr>
+      <tr>
+        <td><%=f.label "Expenses"%></td>
+        <td></td>
+      </tr>
+    </tbody>
     <%= f.fields_for :fixed_expenses do |builder|%>
     <%= render 'fixed_expense_fields', builder: builder%>
     <%end%>
+    <%= render partial:'add_link', locals:{name:"Add Fixed Expense"}%>
+    
     <%= f.fields_for :optional_expenses do |builder|%>
     <%= render 'optional_expense_fields', builder: builder%>
+    
     <%end%>
+    <%= render partial:'add_link', locals:{name:"Add Optional Expense"}%>
+    
     <tr class='blank_row'><td></td><td></td></tr>
     <tr>
       <% if @background.new_record?%>

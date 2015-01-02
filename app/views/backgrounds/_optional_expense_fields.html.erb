@@ -1,17 +1,27 @@
-    <tr>
-      <td><%=builder.label :optional_expense, "Optional Expense #{builder.index+1}" %></td>
-      <td></td>     
-    </tr>
-    <tr>
-      <td><%=builder.label :description%></td>
-      <td><%=builder.text_field :description, :class=>"form-control"%></td>
-    </tr>
-    <tr>
-      <td><%=builder.label :amount%></td>
-      <td><%=builder.text_field :amount, :class=>"form-control"%></td>
-    </tr>
-    <tr>
-      <td><%=builder.label :category%></td>
-      <td><%=builder.select :category, Order::EXPENSE_TYPES, {prompt:"For what type of expense?"},{:class=>"form-control"}%>
-      </td>
-    </tr>
+<tbody id=<%="optional_expense_field_#{builder.index}"%>>
+  <tr>
+    <td><div class="title"><%="Optional Expense #{builder.index+1}" %></div></td>
+    <td></td>     
+  </tr>
+  <tr>
+    <td><%=builder.label :description%></td>
+    <td><%=builder.text_field :description, :class=>"form-control"%></td>
+  </tr>
+  <tr>
+    <td><%=builder.label :amount%></td>
+    <td><%=builder.text_field :amount, :class=>"form-control"%></td>
+  </tr>
+  <tr>
+    <td><%=builder.label :category%></td>
+    <td><%=builder.select :category, Order::EXPENSE_TYPES, {prompt:"For what type of expense?"},{:class=>"form-control"}%>
+    </td>
+  </tr>
+  <tr>
+    <td><%=builder.hidden_field :_destroy%></td>
+    <% if builder.index==0%>
+    <td align="right"></td>
+    <%else%>
+    <td align="right"><%=render partial:'remove_link', locals:{name:"remove optional_expense"}%></td>
+    <%end%>
+  </tr>
+</tbody>

@@ -1,25 +1,34 @@
-    <tr>
-      <td><%=builder.label :fixed_expense, "Fixed Expense #{builder.index+1}" %></td>
-      <td></td>     
-    </tr>
-    <tr>
-      <td><%=builder.label :description%></td>
-      <td><%=builder.text_field :description, :class=>"form-control"%></td>
-    </tr>
-    <tr>
-      <td><%=builder.label :company, "Company Name"%></td>
-      <td><%=builder.text_field :company, :class=>"form-control"%></td>
-    </tr>
-    <tr>
-      <td><%=builder.label :amount%></td>
-      <td><%=builder.text_field :amount, :class=>"form-control"%></td>
-    </tr>
-    <tr>
-      <td><%=builder.label :transaction_date, "Transaction Date"%></td>
-      <td><%=builder.text_field :transaction_date_string, :class=>"form-control"%></td>
-    </tr>
-    <tr>
-      <td><%=builder.label :category%></td>
-      <td><%=builder.select :category, Order::FIXED_EXPENSE_TYPES, {prompt:"For what type of expense?"},{:class=>"form-control"}%>
-      </td>
-    </tr>
+<tbody id=<%="fixed_expense_field_#{builder.index}"%>>
+  <tr>
+    <td><div class="title"><%="Fixed Expense #{builder.index+1}" %></div></td>
+    <td></td>     
+  </tr>
+  <tr>
+    <td><%=builder.label :description%></td>
+    <td><%=builder.text_field :description, :class=>"form-control"%></td>
+  </tr>
+  <tr>
+    <td><%=builder.label :company, "Company Name"%></td>
+    <td><%=builder.text_field :company, :class=>"form-control"%></td>
+  </tr>
+  <tr>
+    <td><%=builder.label :amount%></td>     <td><%=builder.text_field :amount, :class=>"form-control"%></td>
+  </tr>
+  <tr>
+    <td><%=builder.label :transaction_date, "Transaction Date"%></td>
+    <td><%=builder.text_field :transaction_date_string, :class=>"form-control"%></td>
+  </tr>
+  <tr>
+    <td><%=builder.label :category%></td>
+    <td><%=builder.select :category, Order::FIXED_EXPENSE_TYPES, {prompt:"For what type of expense?"},{:class=>"form-control"}%>
+    </td>
+  </tr>
+  <tr>
+    <td><%=builder.hidden_field :_destroy%></td>
+    <% if builder.index==0%>
+    <td align="right"></td>
+    <%else%>
+    <td align="right"><%=render partial:'remove_link', locals:{name:"remove fixed_expense"}%></td>
+    <%end%>
+  </tr>
+</tbody>

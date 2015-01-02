@@ -20,4 +20,5 @@ module ApplicationHelper
       return "col-md-2"
     end
   end
+
 end

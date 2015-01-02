@@ -17,8 +17,6 @@
 //= require bootstrap
 //= require_tree .
 $(document).ready(function(){
-
-
 //   $('#bank_login').validate();
 
   if ($('#bank_login').length>0){

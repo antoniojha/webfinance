@@ -1,0 +1,6 @@
+<tbody id=<%=name.split(" ",2).last.gsub(" ","_")%>>
+<tr>
+  <td><%=link_to ('<i class="glyphicon glyphicon-plus"></i>'+name).html_safe, {controller: 'backgrounds',action: 'add_assoc', name: name}, class:'add_association'%></td>
+  <td></td>
+</tr>
+</tbody>

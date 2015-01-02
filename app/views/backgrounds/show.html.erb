@@ -1,17 +1,41 @@
-<p>Date of Birth: <%=@background.dob%></p>
+
+<p>Date of Birth: <%=@background.dob_string%></p>
 <p>Married?: <%=@background.married%></p>
 <p>How many children? <%=@background.children%></p>
-<%@background.incomes.each_with_index do |income,i|%>
-Income<%=i+1%>.<br>
-<p> description: <%=income.description%></p>
-<p> amount: <%=income.amount%></p>
-<p> category: <%=income.category%></p>
-<%end%>
+
 <%@background.savings.each_with_index do |saving,i|%>
 Saving<%=i+1%>.<br>
 <p> Institution Name: <%=saving.institution_name%></p>
 <p> Description: <%=saving.description%></p>
 <p> Amount: <%=saving.amount%></p>
-<p> Category: <%=saving.category%></p>
+<p> Category: <%=saving.cat_name%></p>
+<%end%>
+<%@background.debts.each_with_index do |debt,i|%>
+Debt<%=i+1%>.<br>
+<p> Institution Name: <%=debt.institution_name%></p>
+<p> Description: <%=debt.description%></p>
+<p> Amount: <%=debt.amount%></p>
+<p> Interest Rate: <%=debt.interest_rate%></p>
+<%end%>
+<%@background.incomes.each_with_index do |income,i|%>
+Income<%=i+1%>.<br>
+<p> description: <%=income.description%></p>
+<p> amount: <%=income.amount%></p>
+<p> category: <%=income.cat_name%></p>
+<%end%>
+<%@background.fixed_expenses.each_with_index do |e,i|%>
+Fixed Expense<%=i+1%>.<br>
+<p> Description: <%=e.description%></p>
+<p> Company: <%=e.company%></p>
+<p> Amount: <%=e.amount%></p>
+<p> Transaction Date: <%=e.transaction_date%></p>
+<p> Alarm: <%=e.alarm%></p>
+<p> Category: <%=e.cat_name%></p>
+<%end%>
+<%@background.optional_expenses.each_with_index do |e,i|%>
+Optional Expense<%=i+1%>.<br>
+<p> Description: <%=e.description%></p>
+<p> Amount: <%=e.amount%></p>
+<p> Category: <%=e.cat_name%></p>
 <%end%>
 <%=link_to 'Edit', edit_background_path(@background)%>

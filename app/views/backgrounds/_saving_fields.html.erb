@@ -1,21 +1,32 @@
+<tbody id=<%="saving_field_#{builder.index}"%>>
+  <tr class="blank_row"><td></td><td></td></tr>
   <tr>
-      <td><%=builder.label :saving, "Saving #{builder.index+1}" %></td>
-      <td></td>     
-    </tr>
-    <tr>
-      <td><%=builder.label :institution_name, "Institution Name"%></td>
-      <td><%=builder.text_field :institution_name, :class=>"form-control"%></td>
-    </tr>
-    <tr>
-      <td><%=builder.label :description%></td>
-      <td><%=builder.text_field :description, :class=>"form-control"%></td>
-    </tr>
-    <tr>
-      <td><%=builder.label :amount%></td>
-      <td><%=builder.text_field :amount, :class=>"form-control"%></td>
-    </tr>
-    <tr>
-      <td><%=builder.label :category%></td>
-      <td><%=builder.select :category, Order::SAVING_TYPES, {prompt:"what's the purpose of saving?"},{:class=>"form-control"}%>
-      </td>
-    </tr>
+    <td><div class="title"><%= "Saving #{builder.index.to_i+1}" %></div></td>
+    <td></td>    
+  </tr>
+  <tr>
+    <td><%=builder.label :institution_name, "Institution Name"%></td>
+    <td><%=builder.text_field :institution_name, :class=>"form-control"%></td>
+  </tr>
+  <tr>
+    <td><%=builder.label :description%></td>
+    <td><%=builder.text_field :description, :class=>"form-control"%></td>
+  </tr>
+  <tr>
+    <td><%=builder.label :amount%></td>
+    <td><%=builder.text_field :amount, :class=>"form-control"%></td>
+  </tr>
+  <tr>
+    <td><%=builder.label :category%></td>
+    <td><%=builder.select :category, Order::SAVING_TYPES, {prompt:"what's the purpose of saving?"},{:class=>"form-control"}%>
+    </td>
+  </tr>
+  <tr>
+    <td><%=builder.hidden_field :_destroy%></td>
+    <% if builder.index==0%>
+    <td align="right"></td>
+    <%else%>
+    <td align="right"><%=render partial:'remove_link', locals:{name:"remove saving"}%></td>
+    <%end%>
+  </tr>
+</tbody>

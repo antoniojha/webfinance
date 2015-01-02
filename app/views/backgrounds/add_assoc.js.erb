@@ -1,0 +1,31 @@
+<% n=@n-2%>
+<% n1=@n-1%>
+$field=$('#<%=@assoc%>_field_0').clone();
+
+var str=$field.find(".title").text();
+var repl=str.replace(1,<%=@n%>);
+$field.find(".title").text(repl);
+
+var str=$field.closest("tbody").attr("id");
+var repl=str.replace(0,<%=n1%>);
+$field.closest("tbody").attr("id",repl);
+
+$field.find( "input" ).each(function( index ) {
+  var str=$( this ).attr("id");
+  var repl=str.replace(0,<%=n1%>);
+  console.log( index + ": " + repl );
+  $(this).attr("id",repl);
+});
+$field.find("label").each(function( index ) {
+  var str=$(this).attr("for");
+  var repl=str.replace(0,<%=n1%>);
+  console.log( index + ": " + repl );
+  $(this).attr("for",repl);
+});
+
+$field.find("td[align=right]").html("<%=escape_javascript(render(partial:'remove_link', locals:{name:@remove_name}))%>");
+<% @name=@name.split(" ",2).last%>
+
+<% @assoc=@assoc.titleize.gsub(" ","_")%>
+$('#<%=@assoc%>').before($field);
+

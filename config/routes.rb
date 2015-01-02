@@ -5,6 +5,10 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   resources :advance_search
   resources :backgrounds
+  controller :backgrounds do
+    get 'add_assoc'=> :add_assoc
+    get 'remove_assoc'=> :remove_assoc
+  end
   controller :sessions do
     get 'login'=> :new
     post 'signin'=> :create
