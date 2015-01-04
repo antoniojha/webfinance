@@ -23,17 +23,17 @@
    <Row>
     <Cell><Data ss:Type="String">Transaction Date</Data></Cell>
     <Cell><Data ss:Type="String">Description</Data></Cell>
-    <Cell><Data ss:Type="String">amount</Data></Cell>
-    <Cell><Data ss:Type="String">category</Data></Cell>
+    <Cell><Data ss:Type="String">Amount</Data></Cell>
+    <Cell><Data ss:Type="String">Category</Data></Cell>
    </Row>
    
-   <%@spendings.each do |spending|%>
+    <%@export_spendings.each do |spending|%>
    <Row>
      <Cell ss:StyleID="s16"><Data ss:Type="DateTime"><%=spending.transaction_date.xmlschema.chop<<".000"%></Data></Cell>
      <Cell><Data ss:Type="String"><%=spending.description%></Data></Cell>
     <Cell><Data ss:Type="Number"><%=spending.amount%></Data></Cell>
     
-    <Cell><Data ss:Type="String"><%=spending.category%></Data></Cell>   
+    <Cell><Data ss:Type="Number"><%=spending.category%></Data></Cell>   
    </Row>
    <%end%>
   </Table>

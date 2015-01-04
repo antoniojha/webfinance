@@ -38,6 +38,8 @@ class BackgroundsController < ApplicationController
     end    
   end
   def edit
+    build_instance_assoc
+
   end
   def create
     @background=Background.new(background_params)
@@ -46,6 +48,7 @@ class BackgroundsController < ApplicationController
       if @background.save
         format.html{redirect_to @background}
       else
+        build_instance_assoc
         format.html{render 'new'}
       end
     end
@@ -114,5 +117,13 @@ class BackgroundsController < ApplicationController
       session[:assoc]="optional_expense"
     end
   end
-
+  def build_instance_assoc
+    methods=%w[incomes debts savings optional_expenses fixed_expenses]
+    methods.each do |method|
+      if (@background.send(method).count==0)
+        @background.send(method).build
+      end
+    end
+    session[:saving_i]=session[:debt_i]=session[:income_i]=session[:optional_expense_i]=session[:fixed_expense_i]=1
+  end
 end

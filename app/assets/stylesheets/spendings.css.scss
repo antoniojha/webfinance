@@ -6,20 +6,17 @@
 }
 
 // used in spending/show page
-.spending_display{
-  width:40%;
-}
 
-.spending_display td{
-  padding:5px;
-}
+
+
 // used in spending/index page
 .spendings_display{
-  width:80%;
+  width:100%;
   text-align:center;
+
 }
 .spendings_display td{
-  padding:0px;
+  padding-right:5px;
 }
 .spendings_display a{
   color: black;

@@ -69,4 +69,43 @@ FactoryGirl.define do
     category "1"
     picture (Rails.root+"spec/fixtures/images/Ruby_on_Rails.jpg").open
   end
+  factory :background, class: Background do
+    dob_string "09/18/1987"
+    married "true"
+    children "4"
+    state "NY"
+  end
+  factory :saving, class: Saving do
+    institution_name "Chase"
+    description "checking"
+    amount "1000"
+    category "1"
+    association :background
+  end
+  factory :debt, class: Debt do
+    institution_name "Student Loan"
+    description "loan"
+    amount "1000"
+    interest_rate "10"
+    association :background
+  end
+  factory :income, class: Income do
+    description "DEP"
+    amount "1000"
+    category "1"
+    association :background
+  end
+  factory :fixed_expense, class: FixedExpense do
+    description "mortgage"
+    amount "1000"
+    company "Pennymac"
+    transaction_date_string "01/02/2015"
+    category "1"
+    association :background
+  end
+  factory :optional_expense, class: OptionalExpense do
+    description "movies"
+    amount "100"
+    category "1"
+  end
 end

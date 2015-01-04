@@ -11,9 +11,9 @@
   <thead>
     <tr>
       <td><strong>Item #</strong></td>
-      <td><strong><%= sortable_link("transaction_date")%></strong></td>
-      <td><strong><%= sortable_link("description")%></strong></td>
-      <td><strong><%= sortable_link('amount')%></strong></td>
+      <td><strong><%= sortable_link("transaction_date",nil,@page_num)%></strong></td>
+      <td><strong><%= sortable_link("description",nil,@page_num)%></strong></td>
+      <td><strong><%= sortable_link("amount",nil,@page_num)%></strong></td>
       <td><%= link_to '<i class="glyphicon glyphicon-plus"></i>'.html_safe, new_spending_path %></td>
     </tr>
   </thead>
@@ -37,4 +37,5 @@
     <% end %>
   </tbody>
 </table>
+
   <%= will_paginate @spendings, inner_window:1, outer_window:1%>

@@ -47,4 +47,8 @@ Rails.application.routes.draw do
   get 'profiles/home'
   match '/profile', to: 'profiles#new', via: 'get'
   resources :spendings
+  resources :transaction_imports
+  controller :transaction_imports do
+    get 'import' => :new
+  end
 end

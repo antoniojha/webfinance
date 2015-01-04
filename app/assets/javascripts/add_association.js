@@ -3,4 +3,5 @@ $(function(){
     $.get(this.href, null, null, 'script');
     return false;
   });
+  return false;
 });

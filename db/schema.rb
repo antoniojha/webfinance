@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141227205610) do
+ActiveRecord::Schema.define(version: 20150103160206) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -88,7 +88,7 @@ ActiveRecord::Schema.define(version: 20141227205610) do
     t.string   "institution_name"
     t.string   "description"
     t.decimal  "amount"
-    t.decimal  "interest_rate"
+    t.decimal  "interest_rate",    default: 0.0
     t.integer  "background_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -210,7 +210,7 @@ ActiveRecord::Schema.define(version: 20141227205610) do
     t.string   "picture_content_type"
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
-    t.string   "category"
+    t.integer  "category",             limit: 255
     t.integer  "account_item_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -273,6 +273,7 @@ ActiveRecord::Schema.define(version: 20141227205610) do
     t.string   "first_name"
     t.string   "last_name"
     t.boolean  "admin",                      default: false
+    t.string   "time_zone"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

@@ -1,26 +1,37 @@
 
 <%=form_for @background do |f| %>
+  <% if @background.errors.any? %>
+    <div class="alert alert-danger error-message">
+      <h2>The form contains <%= pluralize(@background.errors.count, "error") %></h2>
+      <ul>
+        <% @background.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      	<% end %>
+      </ul>
+    </div>
+  <% end %>
   <table id="background_table" width='60%'>
     <tr>
       <td width='40%'><%=f.label :background%></td>
-      <td width='60%'></td>
+      <td width='30%'></td>
+      <td width='30%'></td>
     </tr>
     <tr>
       <td><%=f.label 'Date of Birth'%></td>
-      <td><%=f.text_field :dob_string, :class=>"form-control"%></td>
+      <td colspan="2"><%=f.text_field :dob_string, :class=>"form-control"%></td>
     </tr>
     <tr>
       <td><%=f.label 'relationship status'%></td>
-      <td>Single?<%=radio_button("background", "married", true)%>
-        Married?<%=radio_button("background", "married", false)%></td>
+      <td>Single?<%=radio_button("background", "married", true)%></td>
+      <td>Married?<%=radio_button("background", "married", false)%></td>
     </tr>
     <tr>
       <td><%=f.label 'how many dependents?'%></td>
-      <td><%=f.text_field :children, :class=>"form-control"%></td>
+      <td colspan="2"><%=f.text_field :children, :class=>"form-control"%></td>
     </tr>
     <tr>
       <td><%=f.label 'State of Resident'%></td>
-      <td><%=f.text_field :state, :class=>"form-control"%></td>
+      <td colspan="2"><%=f.text_field :state, :class=>"form-control"%></td>
     </tr>
     <%= f.fields_for :savings do |builder|%>
     <%=render 'saving_fields', builder: builder%>
@@ -39,7 +50,7 @@
       <tr class='blank_row'><td></td><td></td></tr>
       <tr>
         <td><%=f.label "Expenses"%></td>
-        <td></td>
+        <td colspan="2"></td>
       </tr>
     </tbody>
     <%= f.fields_for :fixed_expenses do |builder|%>
@@ -60,7 +71,7 @@
       <%else%>
       <td><%= f.submit "Update" %></td>
       <%end%>
-      <td></td>
+      <td colspan="2"></td>
     </tr>
   </table>
 <%end%>

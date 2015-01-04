@@ -11,10 +11,12 @@ class SpendingsController < ApplicationController
       retrieve_search
     else
       @advance_search = AdvanceSearch.new
-      @spendings = Spending.all.where(user_id:current_user.id).paginate(:page => params[:page]).order(sort_column+" "+sort_direction)
+      @spendings = Spending.all.where(user_id:current_user.id).order(sort_column+" "+sort_direction).paginate(:page => params[:page])
+      @export_spendings = Spending.all.where(user_id:current_user.id)
+      @page_num=1
       respond_to do |format|
         format.html
-        format.csv{send_data @spendings.to_csv}
+        format.csv{send_data @export_spendings.to_csv}
         format.xls
         format.js
       end
@@ -76,7 +78,10 @@ class SpendingsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
+  def import
+    @import_params=%w(id title description price category transaction_date)
+    @transaction_import=TransactionImport.new
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_spending
@@ -99,6 +104,6 @@ class SpendingsController < ApplicationController
     Spending.column_names.include?(params[:sort]) ? params[:sort] : "transaction_date"
   end
   def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
   end
 end

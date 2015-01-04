@@ -6,10 +6,17 @@
   <h1>All Transactions</h1>
   
   <%=render 'search_form'%>
-  <p align="left" style="text-indent: 10%;">
+  <p>
+    <div style="float:left;">
     Download:
     <%=link_to "CSV", spendings_path(format:'csv')%>
     <%=link_to "Excel", spendings_path(format:'xls')%>
+    </div>
+  
+    <div style="float:right; padding-right:10px;">
+    Upload:
+      <%=link_to "Import Excel File", import_path%>
+    </div>
   </p>
   <div id="spendings" >
     <%=render 'spendings'%>

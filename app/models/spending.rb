@@ -24,4 +24,7 @@ class Spending < ActiveRecord::Base
       end
     end
   end
+  def cat_name
+    Order::EXPENSE_TYPES[category-1][0] unless category.blank?
+  end
 end
