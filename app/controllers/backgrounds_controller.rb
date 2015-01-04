@@ -24,7 +24,6 @@ class BackgroundsController < ApplicationController
 
     @assoc=get_assoc
     @n=track_association_number
-
     respond_to do |format|
       format.html{render 'new'}
       format.js
