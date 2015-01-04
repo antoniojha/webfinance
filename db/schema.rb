@@ -210,7 +210,7 @@ ActiveRecord::Schema.define(version: 20150103160206) do
     t.string   "picture_content_type"
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
-    t.integer  "category",             limit: 255
+    t.integer  "category"
     t.integer  "account_item_id"
     t.datetime "created_at"
     t.datetime "updated_at"
