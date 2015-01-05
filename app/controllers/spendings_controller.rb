@@ -1,4 +1,5 @@
-
+require 'time'
+require 'date'
 class SpendingsController < ApplicationController
   helper_method :sort_column, :sort_direction
   skip_before_action :authorize_login, only: [:new,:create,:index,:show]
@@ -12,8 +13,8 @@ class SpendingsController < ApplicationController
     else
       @advance_search = AdvanceSearch.new
       @spendings = Spending.all.where(user_id:current_user.id).order(sort_column+" "+sort_direction).paginate(:page => params[:page])
-      @export_spendings = Spending.all.where(user_id:current_user.id)
-      @page_num=1
+      # add functionality where only the element displayed in page will be sorted
+      
       respond_to do |format|
         format.html
         format.csv{send_data @export_spendings.to_csv}

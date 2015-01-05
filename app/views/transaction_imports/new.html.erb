@@ -1,6 +1,11 @@
 <h1>Import Transaction</h1>
 
 <div align="left">
+<h4>Please read the following before importing your records.</h4>
+<p> Each row uploaded from the excel file will create a new transaction record in the system. If there are rows that are repeated, it will also be created. If the same file is uploaded multiple times, same row will be created multiple times.</p>
+  <p> The file has four columns: <strong>Transaction Date, Description, Amount, Category </strong></p> 
+<p> Header <strong>Transaction Date, Description, Amount, Category</strong> has to be provided in the first row of the excel file.</p>
+  <p> Below is the data format for each field:</p>
 <ul>
 	<%Spending.columns.each do |column|%>
 		<%if @import_params.include?column.name%>	
@@ -10,10 +15,18 @@
 		<%end%>
 	<%end%>		
 </ul>
-
-<p> If an <strong>id</strong> is provided it will update the data. Otherwise, new data will be created.</p>
-<p> Like entering normal <strong>transaction, description, amount, category and transaction_date(String or Date format)</strong> has to be provided in the header.</p>
+  
+  <p> Category should be entered in integer. Below is the category type correspond to each integer:</p>
+<ul>
+  <li><strong>Food Expense</strong> -1</li>
+  <li><strong>Finance Expense</strong> -2</li>
+  <li><strong>Shopping Expense</strong> -3</li>
+  <li><strong>Transportation Expense</strong> -4</li>
+  <li><strong>Entertainment Expense</strong> -5</li>
+  <li><strong>Other Expense</strong> -6</li>
+</ul>
 <p> For detail instruction please visit <%=link_to 'here', faq_path%>.</p>
+  <p> For template please <%=link_to "Click Here",template_path(format:'xls')%></p>
 <%= form_for @transaction_import do |f|%>
 	<% if @transaction_import.errors.any?%>
 		<div id="error_explanation">

@@ -27,18 +27,6 @@
     <Cell><Data ss:Type="String">Category</Data></Cell>
    </Row>
    
-    <%@spendings.each do |spending|%>
-   <Row>
-     <%time=spending.transaction_date.in_time_zone.xmlschema%>
-     <%str=time.split("-").last%>
-     <%str="-"+str%>
-     <Cell ss:StyleID="s62"><Data ss:Type="String"><%=time.chomp(str)<<".000"%></Data></Cell>
-     <Cell><Data ss:Type="String"><%=spending.description%></Data></Cell>
-    <Cell><Data ss:Type="Number"><%=spending.amount%></Data></Cell>
-    
-    <Cell><Data ss:Type="Number"><%=spending.category%></Data></Cell>   
-   </Row>
-   <%end%>
   </Table>
  </Worksheet>
 </Workbook>

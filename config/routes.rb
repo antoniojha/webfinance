@@ -50,5 +50,6 @@ Rails.application.routes.draw do
   resources :transaction_imports
   controller :transaction_imports do
     get 'import' => :new
+    get 'template' => :template
   end
 end

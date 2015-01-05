@@ -1,5 +1,5 @@
 module SpendingsHelper
-  def sortable_link(column,title=nil,page_num=1)
+  def sortable_link(column,title=nil)
     title||=column.titleize
     direction=(column==sort_column && sort_direction=='asc') ? "desc" : "asc"
     
@@ -10,6 +10,6 @@ module SpendingsHelper
         image=image_tag("glyphicons-601-chevron-up.png",size:"10x10")
       end
     end
-    link_to (title+"#{image}").html_safe,{page:page_num,sort:column,direction:direction}
+    link_to (title+"#{image}").html_safe,{sort:column,direction:direction}
   end
 end

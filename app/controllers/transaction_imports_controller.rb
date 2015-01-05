@@ -12,7 +12,11 @@ class TransactionImportsController < ApplicationController
       render :new
     end
   end
-
+  def template
+    respond_to do |format|
+      format.xls
+    end
+  end
   def transaction_import_params
     params.require(:transaction_import).permit(:file)
   end  
