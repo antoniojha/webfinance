@@ -3,6 +3,13 @@ class Debt < ActiveRecord::Base
   validates :institution_name, :description, :amount, :category, :interest_rate, presence: true, unless: :empty_field
   validates :amount,numericality:{greater_than: 0.0 }, allow_blank:true
   validates :interest_rate, numericality:{greater_than_or_equal_to: 0,less_than_or_equal_to:100}, allow_blank:true
+  def interest_rate_smart
+    if interest_rate==0
+      nil
+    else
+      interest_rate
+    end
+  end
   def cat_name
     Order::DEBT_TYPES[category-1][0] unless category.blank?
   end

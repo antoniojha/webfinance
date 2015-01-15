@@ -15,6 +15,10 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap
+//= require add_association
+//= require remove_association
+//= require pagination
+//= raphael
 //= require_tree .
 
 

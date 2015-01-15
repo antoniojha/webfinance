@@ -56,11 +56,9 @@ class BackgroundsController < ApplicationController
         @background.update(background_params)
         format.html{redirect_to edit_background_url(@background)}
       elsif params[:finish_button]
-        @background.next_step
         if @background.update(background_params)
           format.html{redirect_to @background, notice:"Successfully completed uploading personal info!"}
         else
-          @background.prev_step
           build_before_render(assoc_field)
           format.html{render "edit"}
         end
