@@ -87,6 +87,7 @@ FactoryGirl.define do
     description "loan"
     amount "1000"
     interest_rate "10"
+    category "1"
     association :background
   end
   factory :income, class: Income do
@@ -106,6 +107,11 @@ FactoryGirl.define do
   factory :optional_expense, class: OptionalExpense do
     description "movies"
     amount "100"
+    category "1"
+  end
+  factory :propertee, class: Propertee do
+    description "house"
+    amount "10000"
     category "1"
   end
 end

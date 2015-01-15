@@ -1,0 +1,5 @@
+<% provide :title, '|financial planning page 2'%>
+    <%= f.fields_for :incomes do |builder|%>
+    <%=render 'income_fields', builder: builder%>
+    <%end%>
+    <%= render partial:'add_link', locals:{name: "Add Income"}%>

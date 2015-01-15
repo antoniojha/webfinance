@@ -1,0 +1,19 @@
+
+<% provide :title, '|financial planning page 1'%>
+    <tr>
+      <td><%=f.label 'Date of Birth'%><%=asterisk_html%></td>
+      <td colspan="2"><%=f.text_field :dob_string, :class=>"form-control"%></td>
+    </tr>
+    <tr>
+      <td><%=f.label 'relationship status'%><%=asterisk_html%></td>
+      <td>Single?<%=radio_button("background", "married", "false")%></td>
+      <td>Married?<%=radio_button("background", "married", "true")%></td>
+    </tr>
+    <tr>
+      <td><%=f.label 'how many dependents?'%><%=asterisk_html%></td>
+      <td colspan="2"><%=f.text_field :children, :class=>"form-control"%></td>
+    </tr>
+    <tr>
+      <td><%=f.label 'State of Resident'%><%=asterisk_html%></td>
+      <td colspan="2"><%=f.select :state, Order::US_STATES, {prompt:"Please Select State"},{:class=>"form-control"}%></td>
+    </tr>

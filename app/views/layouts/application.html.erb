@@ -6,6 +6,8 @@
   <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true%>
   <%= javascript_include_tag "jquery.validate.min.js" %>  
+  <script type="text/javascript" src="/assets/raphael.js"></script>
+<script type="text/javascript" src="/assets/jquery.usmap.js"></script>
   <%= csrf_meta_tags %>
   <!-- [if lt IE 9]>
   	<script src="http://html5shim.googlecode.com/svn/trunk/html15.js"></script>
@@ -29,6 +31,7 @@
       <%end%>
     </div>
     <div id='col_middle' class=<%=column_width_middle%> align="center">
+      
       <% flash.each do|message_type, message|%>
       <div class="alert alert-<%=message_type%> <%=message_type%>"><%=message%></div>
       <%end%>

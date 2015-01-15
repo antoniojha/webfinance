@@ -1,0 +1,29 @@
+<tbody class="property_field">
+
+  <tr>
+    <td><div class="title"><%="Property #{builder.index+1}" %></div></td>
+    <td colspan="2"></td>     
+  </tr>
+  <tr>
+    <td><%=builder.label :category%></td>
+    <td colspan="2"><%=builder.select :category, Order::PROPERTY_TYPES, {prompt:"What kind of property?"},{:class=>"form-control"}%>
+    </td>
+  </tr>
+  <tr>
+    <td><%=builder.label :fixed_expense_id, "Associated Fixed Expense"%></td>
+    <td colspan="2"><%=builder.select :fixed_expense_id, Order::return_fixed_expense(@background,"propertee"), {prompt:"Select Fixed Expense"},{:class=>"form-control"}%>
+    </td>
+  </tr>  
+  <tr>
+    <td><%=builder.label :description%></td>
+    <td colspan="2"><%=builder.text_field :description, :class=>"form-control"%></td>
+  </tr>
+  <tr>
+    <td><%=builder.label :amount%></td>     
+    <td colspan="2"><%=builder.text_field :amount, :class=>"form-control"%></td>
+  </tr>
+  <tr>
+    <td><%=builder.hidden_field :_destroy%></td>
+    <td align="right" colspan="2"><%=render partial:'remove_link', locals:{name:"remove property"}%></td>
+  </tr>
+</tbody>

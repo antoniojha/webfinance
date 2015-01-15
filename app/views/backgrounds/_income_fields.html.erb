@@ -1,9 +1,15 @@
-<tbody id=<%="income_field_#{builder.index}"%>>
-  <tr class="blank_row"><td></td><td></td></tr>
+<tbody class="income_field">
+
   <tr>
     <td><div class="title"><%="Income #{builder.index+1}" %></div></td>
     <td colspan="2"></td>     
   </tr>
+  <tr>
+    <td><%=builder.label :category%></td>
+    <td colspan="2"><%=builder.select :category, Order::INCOME_TYPES, {prompt:"what type of income?"},{:class=>"form-control"}%>
+    </td>
+  </tr>
+
   <tr>
     <td><%=builder.label :description%></td>
     <td colspan="2"><%=builder.text_field :description, :class=>"form-control"%></td>
@@ -13,16 +19,7 @@
     <td colspan="2"><%=builder.text_field :amount, :class=>"form-control"%></td>
   </tr>
   <tr>
-    <td><%=builder.label :category%></td>
-    <td colspan="2"><%=builder.select :category, Order::INCOME_TYPES, {prompt:"what type of income?"},{:class=>"form-control"}%>
-    </td>
-  </tr>
-  <tr>
     <td><%=builder.hidden_field :_destroy%></td>
-    <% if builder.index==0%>
-    <td align="right" colspan="2"></td>
-    <%else%>
     <td align="right" colspan="2"><%=render partial:'remove_link', locals:{name:"remove income"}%></td>
-    <%end%>
   </tr>
 </tbody>

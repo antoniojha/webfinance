@@ -1,3 +1,13 @@
+<div class="progress">
+  <%n=@background.current_field.last%>
+  <%per=n.to_i(10) *100/ 7 %>
+  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%=per%>%;">
+   
+  <%=n%>/ 7 
+  </div>
+</div>
+
+<%=render @background.current_instruction_field%>
 
 <%=form_for @background do |f| %>
   <% if @background.errors.any? %>
@@ -10,68 +20,27 @@
       </ul>
     </div>
   <% end %>
-  <table id="background_table" width='60%'>
-    <tr>
-      <td width='40%'><%=f.label :background%></td>
-      <td width='30%'></td>
-      <td width='30%'></td>
-    </tr>
-    <tr>
-      <td><%=f.label 'Date of Birth'%></td>
-      <td colspan="2"><%=f.text_field :dob_string, :class=>"form-control"%></td>
-    </tr>
-    <tr>
-      <td><%=f.label 'relationship status'%></td>
-      <td>Single?<%=radio_button("background", "married", true)%></td>
-      <td>Married?<%=radio_button("background", "married", false)%></td>
-    </tr>
-    <tr>
-      <td><%=f.label 'how many dependents?'%></td>
-      <td colspan="2"><%=f.text_field :children, :class=>"form-control"%></td>
-    </tr>
-    <tr>
-      <td><%=f.label 'State of Resident'%></td>
-      <td colspan="2"><%=f.text_field :state, :class=>"form-control"%></td>
-    </tr>
-    <%= f.fields_for :savings do |builder|%>
-    <%=render 'saving_fields', builder: builder%>
-    <%end%>
-    <%= render partial:'add_link', locals:{name: "Add Saving"}%>
-    
-    <%= f.fields_for :debts do |builder|%>
-    <%=render 'debt_fields', builder: builder%>
-    <%end%>
-    <%= render partial:'add_link', locals:{name: "Add Debt"}%>
-    <%= f.fields_for :incomes do |builder|%>
-    <%=render 'income_fields', builder: builder%>
-    <%end%>
-    <%= render partial:'add_link', locals:{name: "Add Income"}%>
-    <tbody class="expense_title">
-      <tr class='blank_row'><td></td><td></td></tr>
-      <tr>
-        <td><%=f.label "Expenses"%></td>
-        <td colspan="2"></td>
-      </tr>
-    </tbody>
-    <%= f.fields_for :fixed_expenses do |builder|%>
-    <%= render 'fixed_expense_fields', builder: builder%>
-    <%end%>
-    <%= render partial:'add_link', locals:{name:"Add Fixed Expense"}%>
-    
-    <%= f.fields_for :optional_expenses do |builder|%>
-    <%= render 'optional_expense_fields', builder: builder%>
-    
-    <%end%>
-    <%= render partial:'add_link', locals:{name:"Add Optional Expense"}%>
-    
-    <tr class='blank_row'><td></td><td></td></tr>
-    <tr>
-      <% if @background.new_record?%>
-      <td><%= f.submit "Submit" %></td>
-      <%else%>
-      <td><%= f.submit "Update" %></td>
+    <table id="background_table">
+    <tbody id="remove"></tbody>
+    <%=render @background.current_field, f:f%>
+
+    <% if @background.new_record?%>
+      <td></td>
+      <td></td>
+      <td><%= f.submit "Next" %></td>       
+    <%else%>
+      <td></td>
+      <% if @background.current_field=="debt_7"%>
+      <td><%=f.submit "Prev", name:"back_button"%></td>
+      <td><%= f.submit "Finish",name:"finish_button" %></td> 
+      <% elsif @background.current_field=="background_1"%>
+      <td></td>
+      <td><%= f.submit "Next"%></td> 
+      <% else%>
+      <td><%=f.submit "Prev", name:"back_button"%></td>
+      <td><%= f.submit "Next" %></td>  
       <%end%>
-      <td colspan="2"></td>
+    <%end%>     
     </tr>
   </table>
 <%end%>

@@ -1,0 +1,9 @@
+<% provide :title, '|financial planning page 4'%>
+    <tr>
+       <td><%=f.label "Expenses"%></td>
+       <td colspan="2"></td>
+    </tr>  
+    <%= f.fields_for :optional_expenses do |builder|%>
+    <%= render 'optional_expense_fields', builder: builder%>  
+    <%end%>
+    <%= render partial:'add_link', locals:{name:"Add Optional Expense"}%>  

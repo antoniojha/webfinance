@@ -1,0 +1,5 @@
+<% provide :title, '|financial planning page 5'%>
+<%= f.fields_for :savings do |builder|%>
+    <%=render 'saving_fields', builder: builder%>
+    <%end%>
+    <%= render partial:'add_link', locals:{name: "Add Saving"}%>

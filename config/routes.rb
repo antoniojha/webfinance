@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     get 'add_assoc'=> :add_assoc
     get 'remove_assoc'=> :remove_assoc
   end
+  resources :goals
   controller :sessions do
     get 'login'=> :new
     post 'signin'=> :create

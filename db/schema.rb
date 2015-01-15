@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150103160206) do
+ActiveRecord::Schema.define(version: 20150113010431) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 20150103160206) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.string   "current_step"
   end
 
   add_index "backgrounds", ["user_id"], name: "index_backgrounds_on_user_id"
@@ -92,6 +93,8 @@ ActiveRecord::Schema.define(version: 20150103160206) do
     t.integer  "background_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "category"
+    t.integer  "fixed_expense_id"
   end
 
   add_index "debts", ["background_id"], name: "index_debts_on_background_id"
@@ -175,6 +178,18 @@ ActiveRecord::Schema.define(version: 20150103160206) do
 
   add_index "plans", ["goal_id"], name: "index_plans_on_goal_id"
 
+  create_table "propertees", force: true do |t|
+    t.string   "description"
+    t.decimal  "amount"
+    t.integer  "category"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "background_id"
+    t.integer  "fixed_expense_id"
+  end
+
+  add_index "propertees", ["background_id"], name: "index_propertees_on_background_id"
+
   create_table "recur_budgets", force: true do |t|
     t.string   "title"
     t.decimal  "price"
@@ -195,6 +210,7 @@ ActiveRecord::Schema.define(version: 20150103160206) do
     t.integer  "plan_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "fixed_expense_id"
   end
 
   add_index "savings", ["background_id"], name: "index_savings_on_background_id"
@@ -210,7 +226,7 @@ ActiveRecord::Schema.define(version: 20150103160206) do
     t.string   "picture_content_type"
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
-    t.integer  "category"
+    t.integer  "category",             limit: 255
     t.integer  "account_item_id"
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -1,39 +1,40 @@
-<% n=@n-2%>
-<% n1=@n-1%>
-$field=$('#<%=@assoc%>_field_0').clone();
-// change title
-var str=$field.find(".title").text();
-var repl=str.replace(1,<%=@n%>);
-$field.find(".title").text(repl);
-// change tbody id
-var str=$field.closest("tbody").attr("id");
-var repl=str.replace(0,<%=n1%>);
-$field.closest("tbody").attr("id",repl);
+alert(<%=session[:saving_i]%>);
+var len=$('.<%=@assoc%>_field').length;
+if (len>0){  
+  <% n=@assoc_num-2%>
+  <% n1=@assoc_num-1%>
+ //$field from jquery application.js
+  $field=$base_field.clone();
+  var str=$field.find(".title").text();
+  var repl=str.replace(/\d+/g,<%=@assoc_num%>);
+  $field.find(".title").text(repl);
 
-// change all input id and erase all values
-$field.find( "input" ).each(function( index ) {
-  var str=$( this ).attr("id");
-  var repl=str.replace(0,<%=n1%>);
-  $(this).attr("id",repl);
-  str=$(this).attr("name");
-  repl=str.replace(0,<%=n1%>);
-  $(this).attr("name",repl);
-  $(this).val(null);
-//  console.log( index + ": " + repl );
-});
+  // change all input id and erase all values
+  $field.find( "input" ).each(function( index ) {
+    var str=$( this ).attr("id");
+    var repl=str.replace(/\d+/g,<%=n1%>);
+    $(this).attr("id",repl);
+    str=$(this).attr("name");
+    repl=str.replace(/\d+/g,<%=n1%>);
+    $(this).attr("name",repl);
+  //  console.log( index + ": " + repl );
+  });
 
-//change all label
-$field.find("label").each(function( index ) {
-  var str=$(this).attr("for");
-  var repl=str.replace(0,<%=n1%>);
-  console.log( index + ": " + repl );
-  $(this).attr("for",repl);
-});
+  //change all label
+  $field.find("label").each(function( index ) {
+    var str=$(this).attr("for");
+    var repl=str.replace(/\d+/g,<%=n1%>);
+  //  console.log( index + ": " + repl );
+    $(this).attr("for",repl);
+  });
 
-// add remove link
-$field.find("td[align=right]").html("<%=escape_javascript(render(partial:'remove_link', locals:{name:@remove_name}))%>");
-<% @name=@name.split(" ",2).last%>
+  // add remove link
+  $field.find("td[align=right]").html("<%=escape_javascript(render(partial:'remove_link', locals:{name:@remove_name}))%>");
 
-<% @assoc=@assoc.titleize.gsub(" ","_")%>
-$('#<%=@assoc%>').before($field);
-
+  <% @assoc=@assoc.titleize.gsub(" ","_")%>
+  $('#<%=@assoc%>').before($field);
+}
+else{
+  $form=$('#background_form');
+  $form.html("<%=escape_javascript(render('form'))%>");
+}

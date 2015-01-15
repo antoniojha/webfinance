@@ -20,5 +20,7 @@ module ApplicationHelper
       return "col-md-2"
     end
   end
-
+  def asterisk_html
+    "<span class='asterisk'>*</span>".html_safe
+  end
 end

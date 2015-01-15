@@ -1,7 +1,21 @@
+
 <%content_for :title do%>|Home<%end%>
-<h1>Home</h1>
+
+<h1>WebFinance</h1> 
+<h4>The Future of Financial Planning begins with a few clicks of a button.</h4>
 <div class="jumbotron">
-  <p>Welcome to WebFinance, the website designed to help you success in your financial planning!</p>
+  <p>Welcome to WebFinance, the website designed to help you succeed in your financial planning!</p>
+  <p>We will guide you in your financial planning based on the information you provided.</p>
+  <p>Sign up and you can also connect to others who share your financial goals and also financial advisors.</p>
+  <p>We will match you with the right financial broker for you based on your financial status.</p>
+
+</div>
+<h4>Look up users and brokers in your state.</h4>
+<div id="map" style="width: 350px; height: 250px;"></div>
+<div id="clicked-state"></div>
+
+<div class="jumbotron">
+
   <p><%= button_to 'Learn more',about_path, {:class=>"btn btn-primary btn-lg", :method=>'get'}%></p>
   <p>What are you waiting for? Signup to try it for yourself!</p>
   <p><%= button_to 'Sign Up', new_user_path, {:class=>"btn btn-primary btn-lg", :method=>'get'}%></p>

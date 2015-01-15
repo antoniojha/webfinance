@@ -16,9 +16,13 @@
 //= require turbolinks
 //= require bootstrap
 //= require_tree .
-$(document).ready(function(){
-//   $('#bank_login').validate();
 
+
+ready=function(){
+//   $('#bank_login').validate();
+  //**important- $field will be used in controller/backgrounds/add_assoc.js.erb
+  $base_field=$("tbody[class*='field']").last().clone();
+  
   if ($('#bank_login').length>0){
   $('#bank_login').validate({
     rules: {
@@ -53,4 +57,7 @@ $(document).ready(function(){
     }
   });
   }
-});
+  // initiates map jquery
+  $('#map').usmap({});
+}
+$(document).ready(ready);

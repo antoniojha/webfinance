@@ -1,8 +1,9 @@
 class FixedExpense < ActiveRecord::Base
   belongs_to :background
-  validate :transaction_date_before_today
+  validate :transaction_date_this_month
   validates :amount,numericality:{greater_than: 0.0 },allow_blank: true
-  validates :description, :company, :amount, :transaction_date,:category, presence: true, unless: :empty_field
+  validates :description, :amount, :transaction_date,:category, presence: true, unless: :empty_field
+  validates :company, presence: true, unless: :empty_field
   def transaction_date_string
     transaction_date.strftime('%m/%d/%Y') unless transaction_date.blank?
   end
@@ -12,9 +13,9 @@ class FixedExpense < ActiveRecord::Base
   def cat_name
     Order::FIXED_EXPENSE_TYPES[category-1][0] unless category.blank?
   end
-  def transaction_date_before_today
-    if transaction_date && transaction_date > Time.zone.today
-      errors.add(:transaction_date, "transaction date has to be before today's date")
+  def transaction_date_this_month
+    if transaction_date && transaction_date.month != Time.zone.today.month
+      errors.add(:transaction_date, "transaction date has to be in this month")
     end
   end
   def empty_field

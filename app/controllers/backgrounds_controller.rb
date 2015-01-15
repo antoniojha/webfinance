@@ -1,19 +1,7 @@
 class BackgroundsController < ApplicationController
-  before_action :set_background, only:[:show, :edit, :update,:new_association]
+  before_action :set_background, only:[:show, :edit, :update, :add_assoc]
   def new
     @background=Background.new
-
-    2.times do 
-      @background.incomes.build
-      @background.debts.build
-      @background.savings.build
-      @background.optional_expenses.build
-      
-    end
-    4.times {@background.fixed_expenses.build}
-    
-    session[:saving_i]=session[:debt_i]=session[:income_i]=session[:optional_expense_i]=2
-    session[:fixed_expense_i]=4
     
     respond_to do |format|
       format.html
@@ -21,43 +9,70 @@ class BackgroundsController < ApplicationController
     end
   end
   def add_assoc
-
+    @test=params[:name]
     @assoc=get_assoc
-    @n=track_association_number
+    @assoc_num=track_association_number
+    build_name=@assoc+"s"
+    if (@assoc_num)==1
+      @background.send(build_name).build
+    end
     respond_to do |format|
       format.html{render 'new'}
       format.js
     end
   end
   def remove_assoc
-    @n=track_association_number
+    @assoc_num=track_association_number
     respond_to do |format|
       format.html{render 'new'}
       format.js
     end    
   end
   def edit
-    build_instance_assoc
+    current_field=@background.current_field
+    assoc_field=current_field[0..-3]+"s"
+    build_after_redirect(assoc_field)
 
   end
   def create
     @background=Background.new(background_params)
     respond_to do |format|
-    
+      @background.next_step
       if @background.save
-        format.html{redirect_to @background}
+        format.html{redirect_to edit_background_url(@background)}
       else
-        build_instance_assoc
+        @background.prev_step
         format.html{render 'new'}
       end
     end
   end
   def update
-    respond_to do |format| 
-      if @background.update(background_params)
-        format.html{redirect_to @background, notice: "Background was succesfully updated"}
+    current_field=@background.current_field
+    assoc_field=current_field[0..-3]+"s"
+    respond_to do |format|
+      if params[:back_button]
+        @background.prev_step
+        @background.save
+        @background.update(background_params)
+        format.html{redirect_to edit_background_url(@background)}
+      elsif params[:finish_button]
+        @background.next_step
+        if @background.update(background_params)
+          format.html{redirect_to @background, notice:"Successfully completed uploading personal info!"}
+        else
+          @background.prev_step
+          build_before_render(assoc_field)
+          format.html{render "edit"}
+        end
       else
-        format.html{render "edit"}
+        @background.next_step
+        if @background.update(background_params) 
+          format.html{redirect_to edit_background_url(@background)}     
+        else
+          @background.prev_step
+          build_before_render(assoc_field)
+          format.html{render "edit"}
+        end
       end
     end
   end
@@ -66,7 +81,7 @@ class BackgroundsController < ApplicationController
   end
   private
   def background_params
-    params.require(:background).permit(:state, :dob_string, :married, :children, :income, savings_attributes:[:institution_name, :description, :amount, :category,:_destroy,:id],debts_attributes:[:institution_name,:description,:amount,:interest_rate,:_destroy,:id],incomes_attributes:[:description, :amount, :category,:_destroy,:id], fixed_expenses_attributes:[:description, :company, :amount, :transaction_date_string, :category,:_destroy,:id], optional_expenses_attributes:[:description, :amount, :category,:_destroy,:id])
+    params.require(:background).permit(:state, :dob_string, :married, :children, :income, savings_attributes:[:institution_name, :description, :amount, :category,:_destroy,:id],debts_attributes:[:institution_name,:description,:amount,:interest_rate,:category,:_destroy,:id],incomes_attributes:[:description, :amount, :category,:_destroy,:id], fixed_expenses_attributes:[:description, :company, :amount, :transaction_date_string, :category,:_destroy,:id], optional_expenses_attributes:[:description, :amount, :category,:_destroy,:id], propertees_attributes:[:description,:amount,:category,:id])
   end
   def set_background
     @background=Background.find(params[:id])
@@ -86,9 +101,13 @@ class BackgroundsController < ApplicationController
     elsif name=="Add Fixed Expense"
       @remove_name="remove fixed_expense"
       session[:fixed_expense_i]+=1
+    elsif name=="Add Property"
+      @remove_name="remove property"
+      session[:property_i]+=1  
     elsif name=="Add Optional Expense"
       @remove_name="remove optional_expense"
       session[:optional_expense_i]+=1
+    #   
     elsif name=="remove saving"
       session[:saving_i]-=1      
     elsif name=="remove debt"
@@ -99,10 +118,13 @@ class BackgroundsController < ApplicationController
       session[:fixed_expense_i]-=1
     elsif name=="remove optional_expense"
       session[:optional_expense_i]-=1
+    elsif name=="remove property"
+      session[:property_i]-=1
     end
   end
   def get_assoc
     name=params[:name] unless params[:name].blank?
+
     @name=name
     if name=="Add Saving"
       session[:assoc]="saving"
@@ -114,15 +136,24 @@ class BackgroundsController < ApplicationController
       session[:assoc]="fixed_expense"
     elsif name.include?"Add Optional Expense"
       session[:assoc]="optional_expense"
+    elsif name.include?"Add Property"
+      session[:assoc]="property"  
     end
   end
-  def build_instance_assoc
-    methods=%w[incomes debts savings optional_expenses fixed_expenses]
-    methods.each do |method|
-      if (@background.send(method).count==0)
-        @background.send(method).build
-      end
+  def build_before_render(assoc_field)
+    @background.send(assoc_field).build 
+session[:saving_i]=session[:debt_i]=session[:income_i]=session[:optional_expense_i]=session[:fixed_expense_i]=session[:property_i]=@background.send(assoc_field).length 
+    # length method gives number of associated object that has not been saved
+  end
+  def build_after_redirect(assoc_field)
+    # called just in case if the a particular associated field does not have any object created. This ensures that it will create the default amount of associated object.
+    unless assoc_field=="backgrounds"  
+      if (@background.send(assoc_field).count==0)
+   session[:saving_i]=session[:debt_i]=session[:income_i]=session[:optional_expense_i]=session[:property_i]=session[:fixed_expense_i]=1
+
+        @background.send(assoc_field).build
+      else       session[:saving_i]=session[:debt_i]=session[:income_i]=session[:optional_expense_i]=session[:fixed_expense_i]=session[:property_i]=@background.send(assoc_field).count
+      end   
     end
-    session[:saving_i]=session[:debt_i]=session[:income_i]=session[:optional_expense_i]=session[:fixed_expense_i]=1
   end
 end

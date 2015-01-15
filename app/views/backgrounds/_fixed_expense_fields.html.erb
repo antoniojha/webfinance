@@ -1,8 +1,14 @@
-<tbody id=<%="fixed_expense_field_#{builder.index}"%>>
+<tbody class="fixed_expense_field">
+
   <tr>
     <td><div class="title"><%="Fixed Expense #{builder.index+1}" %></div></td>
     <td colspan="2"></td>     
   </tr>
+  <tr>
+    <td><%=builder.label :category%></td>
+    <td colspan="2"><%=builder.select :category, Order::FIXED_EXPENSE_TYPES, {prompt:"For what type of expense?"},{:class=>"form-control"}%>
+    </td>
+  </tr>  
   <tr>
     <td><%=builder.label :description%></td>
     <td colspan="2"><%=builder.text_field :description, :class=>"form-control"%></td>
@@ -20,16 +26,7 @@
     <td colspan="2"><%=builder.text_field :transaction_date_string, :class=>"form-control"%></td>
   </tr>
   <tr>
-    <td><%=builder.label :category%></td>
-    <td colspan="2"><%=builder.select :category, Order::FIXED_EXPENSE_TYPES, {prompt:"For what type of expense?"},{:class=>"form-control"}%>
-    </td>
-  </tr>
-  <tr>
     <td><%=builder.hidden_field :_destroy%></td>
-    <% if builder.index==0%>
-    <td align="right" colspan="2"></td>
-    <%else%>
     <td align="right" colspan="2"><%=render partial:'remove_link', locals:{name:"remove fixed_expense"}%></td>
-    <%end%>
   </tr>
 </tbody>

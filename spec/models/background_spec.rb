@@ -22,6 +22,10 @@ describe Background do
       before{@background.married=""}
       it{should_not be_valid}
     end
+    describe "should save when married is false" do # this is a common mistake when the field is boolean and set to false
+      before{@background.married=false}
+      it{should be_valid}
+    end
     describe "shouldn't save when children(how many dependent) is not entered" do
       before{@background.children=""}
       it{should_not be_valid}
@@ -53,6 +57,14 @@ describe Background do
           expect(@background.save).to eq false
         end
       end
+
+      describe "when all the attributes are correct" do
+        it "should be valid" do
+          @background.savings.build(@valid_params)
+          expect(@background.save).to eq true
+        end
+      end 
+
       describe "when all the attributes are missing" do
         it "should be valid" do         
           @background.savings.build(@valid_params)
@@ -65,9 +77,9 @@ describe Background do
     describe "Debt" do
       before do
         @debt=FactoryGirl.build :debt, background:@background
-        @valid_params={institution_name:"valid",description:"valid",amount:"100", interest_rate:"10"}
-        @valid_params2={institution_name:"",description:"",amount:"",interest_rate:""}
-        @invalid_params={institution_name:"",description:"valid",amount:"100",interest_rate:"10"}
+        @valid_params={institution_name:"valid",description:"valid",amount:"100", interest_rate:"10",category:"1"}
+        @valid_params2={institution_name:"",description:"",amount:"",interest_rate:"",category:""}
+        @invalid_params={institution_name:"",description:"valid",amount:"100",interest_rate:"10",category:"1"}
       end
       subject{@debt}
       it {should respond_to(:institution_name)}
@@ -85,6 +97,10 @@ describe Background do
       describe "should't save if interest is less than 0" do
         before{@debt.interest_rate="-1"}
         it{should_not be_valid}
+      end
+      describe "shouldn't save if interest is more than 100" do
+        before{@debt.interest_rate="101"}
+        it {should_not be_valid}
       end
       describe "should save if interest is equal 0" do
         before{@debt.interest_rate="0"}
@@ -160,18 +176,11 @@ describe Background do
         before{@f_expense.amount="-100"}
         it{should_not be_valid}
       end
-      describe "shouldn't save if transaction date is in the future" do
-        before{@f_expense.transaction_date=Time.zone.tomorrow}
+      describe "shouldn't save if transaction date is not in this month" do
+        before{@f_expense.transaction_date=Time.zone.today+1.month}
         it{should_not be_valid}
       end
-      describe "shouldn't save when transaction date is in the future" do
-        before{@f_expense.transaction_date_string=Time.zone.tomorrow.strftime('%m/%d/%Y')}
-        it{should_not be_valid}
-      end
-      describe "should't save if amount is less than 0" do
-        before{@f_expense.amount="-100"}
-        it{should_not be_valid}
-      end
+
       describe "when one of the attribute is missing" do
         it "shouldn't be valid" do
           @background.fixed_expenses.build(@invalid_params)
@@ -204,6 +213,40 @@ describe Background do
       it {should respond_to(:category)}
       describe "shouldn't save if amount is less than 0" do
         before{@o_expense.amount="-100"}
+        it{should_not be_valid}
+      end
+      describe "when one of the attribute is missing" do
+        it "shouldn't be valid" do
+          @background.optional_expenses.build(@invalid_params)
+          expect(@background.save).to eq false
+        end
+      end
+      describe "when all the attributes are correct" do
+        it "should be valid" do
+          @background.optional_expenses.build(@valid_params)
+          expect(@background.save).to eq true     
+        end
+      end   
+      describe "when all the attributes are missing" do
+        it "should be valid" do         
+          @background.optional_expenses.build(@valid_params2)
+          expect(@background.save).to eq true
+        end
+      end  
+    end
+    describe "Propertee" do
+      before do
+        @propertee=FactoryGirl.build :propertee, background:@background
+        @valid_params={description:"valid",amount:"100",category:"1"}
+        @valid_params2={description:"",amount:"",category:""}
+        @invalid_params={description:"",amount:"100",category:"1"}
+      end
+      subject{@propertee}
+      it {should respond_to(:description)}
+      it {should respond_to(:amount)}
+      it {should respond_to(:category)}
+      describe "shouldn't save if amount is less than 0" do
+        before{@propertee.amount="-100"}
         it{should_not be_valid}
       end
       describe "when one of the attribute is missing" do

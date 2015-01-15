@@ -1,9 +1,18 @@
-<tbody id=<%="debt_field_#{builder.index}"%>>
-  <tr class="blank_row"><td></td><td></td></tr>
+<tbody class="debt_field">
   <tr>
     <td><div class="title"><%="Debt #{builder.index+1}"%></div></td>
     <td colspan="2"></td>     
   </tr>
+  <tr>
+    <td><%=builder.label :category%></td>
+    <td colspan="2"><%=builder.select :category, Order::DEBT_TYPES, {prompt:"What kind of debt?"},{:class=>"form-control"}%>
+    </td>
+  </tr>
+  <tr>
+    <td><%=builder.label :fixed_expense_id, "Associated Fixed Expense"%></td>
+    <td colspan="2"><%=builder.select :fixed_expense_id, Order::return_fixed_expense(@background,"debt"), {prompt:"Select Fixed Expense"},{:class=>"form-control"}%>
+    </td>
+  </tr>  
   <tr>
     <td><%=builder.label :institution_name, "Institution Name"%></td>
     <td colspan="2"><%=builder.text_field :institution_name, :class=>"form-control"%></td>
@@ -22,10 +31,7 @@
   </tr>
   <tr>
     <td><%=builder.hidden_field :_destroy%></td>
-    <% if builder.index==0%>
-    <td align="right" colspan="2"></td>
-    <%else%>
     <td align="right" colspan="2"><%=render partial:'remove_link', locals:{name:"remove debt"}%></td>
-    <%end%>
+
   </tr>
 </tbody>

@@ -1,7 +1,13 @@
-<tbody id=<%="optional_expense_field_#{builder.index}"%>>
+<tbody class="optional_expense_field">
+
   <tr>
     <td><div class="title"><%="Optional Expense #{builder.index+1}" %></div></td>
     <td colspan="2"></td>     
+  </tr>
+  <tr>
+    <td><%=builder.label :category%></td>
+    <td colspan="2"><%=builder.select :category, Order::EXPENSE_TYPES, {prompt:"For what type of expense?"},{:class=>"form-control"}%>
+    </td>
   </tr>
   <tr>
     <td><%=builder.label :description%></td>
@@ -12,16 +18,7 @@
     <td colspan="2"><%=builder.text_field :amount, :class=>"form-control"%></td>
   </tr>
   <tr>
-    <td><%=builder.label :category%></td>
-    <td colspan="2"><%=builder.select :category, Order::EXPENSE_TYPES, {prompt:"For what type of expense?"},{:class=>"form-control"}%>
-    </td>
-  </tr>
-  <tr>
     <td><%=builder.hidden_field :_destroy%></td>
-    <% if builder.index==0%>
-    <td align="right" colspan="2"></td>
-    <%else%>
     <td align="right" colspan="2"><%=render partial:'remove_link', locals:{name:"remove optional_expense"}%></td>
-    <%end%>
   </tr>
 </tbody>

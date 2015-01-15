@@ -1,0 +1,11 @@
+<% provide :title, '|financial planning page 3'%>
+    <tr>
+       <td><%=f.label "Expenses"%></td>
+       <td colspan="2"></td>
+    </tr>
+
+    <%= f.fields_for :fixed_expenses do |builder|%>
+    <%= render 'fixed_expense_fields', builder: builder%>
+    <%end%>
+    <%= render partial:'add_link', locals:{name:"Add Fixed Expense"}%>
+   
