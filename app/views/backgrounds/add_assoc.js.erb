@@ -1,5 +1,6 @@
 alert("It's working");
 var len=$('.<%=@assoc%>_field').length;
+alert(len);
 if (len>0){  
   <% n=@assoc_num-2%>
   <% n1=@assoc_num-1%>
@@ -32,6 +33,7 @@ if (len>0){
   $field.find("td[align=right]").html("<%=escape_javascript(render(partial:'remove_link', locals:{name:@remove_name}))%>");
 
   <% @assoc=@assoc.titleize.gsub(" ","_")%>
+  alert($field.html);
   $('#<%=@assoc%>').before($field);
 }
 else{
