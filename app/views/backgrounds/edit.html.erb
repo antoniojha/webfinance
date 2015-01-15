@@ -1,5 +1,9 @@
 <h1>Financial Planning</h1>
-
+<script>
+  $(document).ready(function(){
+   $base_field=$("tbody[class*='field']").last().clone();
+  });
+</script>
 <div id="background_form">
   <%=render 'form'%>
 </div>

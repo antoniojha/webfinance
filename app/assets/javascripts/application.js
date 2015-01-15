@@ -25,8 +25,7 @@
 ready=function(){
 //   $('#bank_login').validate();
   //**important- $field will be used in controller/backgrounds/add_assoc.js.erb
-  $base_field=$("tbody[class*='field']").last().clone();
-  
+ 
   if ($('#bank_login').length>0){
   $('#bank_login').validate({
     rules: {
