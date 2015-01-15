@@ -5,6 +5,7 @@ if (len>0){
   <% n=@assoc_num-2%>
   <% n1=@assoc_num-1%>
  //$field from jquery application.js
+  alert($base_field.html);
   $field=$base_field.clone();
   var str=$field.find(".title").text();
   var repl=str.replace(/\d+/g,<%=@assoc_num%>);
