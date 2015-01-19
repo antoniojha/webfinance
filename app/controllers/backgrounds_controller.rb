@@ -115,55 +115,31 @@ class BackgroundsController < ApplicationController
   def track_association_number
     name=params[:name] unless params[:name].blank?
     @name=name
-    if name=="Add Saving"
-      @remove_name="remove saving"
-      session[:saving_i]+=1
-    elsif name=="Add Debt"
-      @remove_name="remove debt"
-      session[:debt_i]+=1
-    elsif name=="Add Income"
-      @remove_name="remove income"
-      session[:income_i]+=1
-    elsif name=="Add Fixed Expense"
-      @remove_name="remove fixed_expense"
-      session[:fixed_expense_i]+=1
-    elsif name=="Add Property"
-      @remove_name="remove property"
-      session[:property_i]+=1  
-    elsif name=="Add Optional Expense"
-      @remove_name="remove optional_expense"
-      session[:optional_expense_i]+=1
-    #   
-    elsif name=="remove saving"
-      session[:saving_i]-=1      
-    elsif name=="remove debt"
-      session[:debt_i]-=1
-    elsif name=="remove income"
-      session[:income_i]-=1
-    elsif name=="remove fixed_expense"
-      session[:fixed_expense_i]-=1
-    elsif name=="remove optional_expense"
-      session[:optional_expense_i]-=1
-    elsif name=="remove property"
-      session[:property_i]-=1
+    session_names=[:saving_i, :debt_i, :income_i, :fixed_expense_i, :property_i, :optional_expense_i]
+    names=["Add Saving", "Add Debt", "Add Income", "Add Fixed Expense", "Add Property", "Add Optional Expense"]
+    remove_names=["remove saving","remove debt","remove income", "remove fixed_expense","remove property", "remove optional_expense"]
+
+    add_i=add_names.index(name)
+    remove_i=remove_names.index(name)
+    if add_i
+      @remove_name=remove_names[add_i]
+      session[session_names[add_i]]+=1
+      return session[session_names[add_i]]
+    end
+    if remove_i
+      return session[session_names[remove_i]]-=1
     end
   end
+  def add_names
+    ["Add Saving", "Add Debt", "Add Income", "Add Fixed Expense", "Add Property", "Add Optional Expense"]
+  end
   def get_assoc
-    name=params[:name] unless params[:name].blank?
-
+    session_assocs=["saving", "debt","income","fixed_expense", "optional_expense" "property"]
+    name=params[:name] unless params[:name].blank?  
     @name=name
-    if name=="Add Saving"
-      session[:assoc]="saving"
-    elsif name=="Add Debt"
-      session[:assoc]="debt"
-    elsif name=="Add Income"
-      session[:assoc]="income"
-    elsif name.include?"Add Fixed Expense"
-      session[:assoc]="fixed_expense"
-    elsif name.include?"Add Optional Expense"
-      session[:assoc]="optional_expense"
-    elsif name.include?"Add Property"
-      session[:assoc]="property"  
+    add_i=add_names.index(name)
+    if add_i
+      return session[:assoc]=session_assocs[add_i]
     end
   end
   def build_before_render(assoc_field)
