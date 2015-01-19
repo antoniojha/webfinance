@@ -19,7 +19,7 @@ class FixedExpense < ActiveRecord::Base
     end
   end
   def empty_field
-    if (description.blank? && company.blank? && amount.blank? && transaction_date.blank? && category.blank?)
+    if (description.blank? && company.blank? && amount.blank? && transaction_date.blank? && category.blank?) || (_destroy==true)
       return true
     else
       return false

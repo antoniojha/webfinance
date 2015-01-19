@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150113010431) do
+ActiveRecord::Schema.define(version: 20150119180907) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -60,15 +60,20 @@ ActiveRecord::Schema.define(version: 20150113010431) do
     t.boolean  "has_protection_plan",    default: false
     t.boolean  "has_estate_plan",        default: false
     t.boolean  "has_education_plan",     default: false
-    t.decimal  "total_optional_expense"
-    t.decimal  "total_fixed_expense"
-    t.decimal  "total_income"
-    t.decimal  "total_saving"
-    t.decimal  "total_debt"
+    t.decimal  "total_optional_expense", default: 0.0
+    t.decimal  "total_fixed_expense",    default: 0.0
+    t.decimal  "total_income",           default: 0.0
+    t.decimal  "total_saving",           default: 0.0
+    t.decimal  "total_debt",             default: 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
     t.string   "current_step"
+    t.integer  "year"
+    t.integer  "month"
+    t.decimal  "networth",               default: 0.0
+    t.decimal  "netspend",               default: 0.0
+    t.boolean  "completed"
   end
 
   add_index "backgrounds", ["user_id"], name: "index_backgrounds_on_user_id"

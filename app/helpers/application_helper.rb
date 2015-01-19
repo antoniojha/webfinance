@@ -1,3 +1,5 @@
+include ActionView::Helpers::NumberHelper
+
 module ApplicationHelper
   def column_width_right
     if current_controller=='spendings'
@@ -22,5 +24,10 @@ module ApplicationHelper
   end
   def asterisk_html
     "<span class='asterisk'>*</span>".html_safe
+  end
+  def money(amount)
+    if amount.is_a? Numeric
+      number_to_currency(amount)
+    end
   end
 end

@@ -7,7 +7,7 @@ class Saving < ActiveRecord::Base
     Order::SAVING_TYPES[category-1][0] unless category.blank?
   end
   def empty_field
-    if (institution_name.blank? && description.blank? && amount.blank? && category.blank?)
+    if (institution_name.blank? && description.blank? && amount.blank? && category.blank?) || (_destroy=="true")
       return true
     else
       return false

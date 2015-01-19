@@ -74,6 +74,8 @@ FactoryGirl.define do
     married "true"
     children "4"
     state "NY"
+    month "1"
+    year "2015"
   end
   factory :saving, class: Saving do
     institution_name "Chase"

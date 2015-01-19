@@ -1,0 +1,13 @@
+
+<ol class="breadcrumb" align="left">
+  <%if @background.new_record?%>
+  <% elsif !@background.completed%>
+  <% (0..session[:last_step_in]).each do |i|%>
+  <li><%=link_to_field(@background,Background::nav_links[i],i+1)%></li>
+    <%end%>
+  <% else%>
+    <% (0..(@background.steps.size-1)).each do |i|%>
+  <li><%=link_to_field(@background,Background::nav_links[i],i+1)%></li>
+    <%end%>
+  <%end%>
+</ol>

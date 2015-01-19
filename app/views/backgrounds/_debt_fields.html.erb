@@ -27,7 +27,7 @@
   </tr>
   <tr>
     <td><%=builder.label :interest_rate, "Interest Rate"%></td>
-    <td colspan="2"><%=builder.text_field :interest_rate_smart, :class=>"form-control"%>
+    <td colspan="2"><%=builder.text_field :interest_rate, :value => builder.object.interest_rate.eql?(0) ? '' : builder.object.interest_rate, :class=>"form-control"%>
   </tr>
   <tr>
     <td><%=builder.hidden_field :_destroy%></td>

@@ -1,8 +1,15 @@
 <%provide :title, "|Background summary"%>
+<h1>Your Plan in <%=Time.zone.today.strftime("%B, %Y")%></h1>
 <p>Date of Birth: <%=@background.dob_string%></p>
-<p>Married?: <%=@background.married%></p>
-<p>How many children? <%=@background.children%></p>
-
+<p>Relationship Status: <%=@background.married==true ? "married" : "single"%></p>
+<p>Number of Dependent: <%=@background.children%></p>
+<p>Total Income:<%=money(@background.total_income)%></p>
+<p>Total Fixed Expense:<%=money(@background.total_fixed_expense)%></p>
+<p>Total Optional Expense:<%=money(@background.total_optional_expense)%></p>
+<p>Total Saving:<%=money(@background.total_saving)%></p>
+<p>Total Debt:<%=money(@background.total_debt)%></p>
+<p>Networth: <%=money(@background.networth)%></p>
+<p>Net Spening:<%=money(@background.netspend)%></p>
 <%@background.savings.each_with_index do |saving,i|%>
 Saving<%=i+1%>.<br>
 <p> Institution Name: <%=saving.institution_name%></p>

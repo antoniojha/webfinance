@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   controller :backgrounds do
     get 'add_assoc'=> :add_assoc
     get 'remove_assoc'=> :remove_assoc
+    get 'info'=> :info
+    get 'direct_to'=> :direct_to
   end
   resources :goals
   controller :sessions do

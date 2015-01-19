@@ -1,3 +1,5 @@
+
+<% if false%>
 <div class="progress">
   <%n=@background.current_field.last%>
   <%per=n.to_i(10) *100/ 7 %>
@@ -6,10 +8,13 @@
   <%=n%>/ 7 
   </div>
 </div>
-
+<%end%>
 <%=render @background.current_instruction_field%>
 
+<%=render "nav_link"%>
+
 <%=form_for @background do |f| %>
+
   <% if @background.errors.any? %>
     <div class="alert alert-danger error-message">
       <h2>The form contains <%= pluralize(@background.errors.count, "error") %></h2>

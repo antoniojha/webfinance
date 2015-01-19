@@ -16,3 +16,8 @@ def create_spending(user)
   @spending.save
   @spending
 end
+
+def background_nav_link(i)
+  names=["1. Background", "2. Income","3. Fixed Expense","4. Optional Expense","5. Saving","6. Property","7. Debt"]
+  names[i-1]
+end
