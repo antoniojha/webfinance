@@ -1,6 +1,6 @@
 class BackgroundsController < ApplicationController
   include BackgroundsHelper
-  before_action :set_background, only:[:show, :edit, :update, :add_assoc, :direct_to]
+  before_action :set_background, only:[:show, :edit, :update, :add_assoc, :direct_to,:destroy]
   def new
     @background=Background.new
     start_step_session(@background)
@@ -96,6 +96,15 @@ class BackgroundsController < ApplicationController
   end
   def show
    
+  end
+  def index
+    @backgrounds=current_user.backgrounds
+  end
+  def destroy
+    @background.delete
+    respond_to do |format|
+      format.html{redirect_to current_user, notice: "Background of this month was succesfully deleted"}
+    end
   end
   private
   def background_params
