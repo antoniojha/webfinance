@@ -9,7 +9,11 @@ module BackgroundsHelper
       session[:last_step_in]=1
     end
   end
+  # it will update last_step_in session to be the latest step. If a new session is open, it will be equated to the last saved step.
   def update_step_session(background)
+    if session[:last_step_in]==nil
+      session[:last_step_in]=background.current_step_int
+    end
     if background.current_step_int > session[:last_step_in]
       session[:last_step_in]=background.current_step_int
     end

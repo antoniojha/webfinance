@@ -65,12 +65,26 @@ RSpec.describe "BackgroundPages", :type => :request do
         expect(page).to have_button "Next"
         expect(page).to have_button "Prev"
       end
+      it "should delete object" do
+        expect{click_button "Next"}.to change(Income,:count).by(1)
+        click_button("Prev")
+        expect(page).to have_link("remove")
+        find(:xpath, "//input[@id='background_incomes_attributes_0__destroy']").set true
+        expect(find("#background_incomes_attributes_0__destroy", :visible => false).value).to eq "true"
+        expect{click_button "Next"}.to change(Income,:count).by(-1) 
+      end
       it "should display error if one of the field is missing" do
         fill_in "background_incomes_attributes_0_description", with:""
         click_button "Next"
         expect(page).to have_content('error')
         expect(page).to have_selector(:css,'div.alert.alert-danger', :text=>'The form contains')
-       
+      end
+      it "should delete record even if one of the field is missing and may raise error" do
+        expect{click_button "Next"}.to change(Income,:count).by(1)
+        click_button("Prev")
+        fill_in "background_incomes_attributes_0_description", with:""
+        find(:xpath, "//input[@id='background_incomes_attributes_0__destroy']").set true
+        expect{click_button "Next"}.to change(Income,:count).by(-1) 
       end
       it "should submit/create object and go to the next page" do
      
@@ -201,16 +215,7 @@ RSpec.describe "BackgroundPages", :type => :request do
                 expect{click_button "Next"}.to change(Propertee,:count).by(1)
                 expect(page.title).to eq("WebFinance App|financial planning page 7")
               end
-              it "should delete object" do
-                expect{click_button "Next"}.to change(Propertee,:count).by(1)
-                click_button("Prev")
-                expect(page).to have_link("remove")
-                expect(page.title).to eq("WebFinance App|financial planning page 6") 
-                find(:xpath, "//input[@id='background_propertees_attributes_0__destroy']").set true
-                expect(find("#background_propertees_attributes_0__destroy", :visible => false).value).to eq "true"
-                expect{click_button "Next"}.to change(Propertee,:count).by(-1) 
-                expect(page.title).to eq("WebFinance App|financial planning page 7")
-              end
+
               describe "Background Pages- the 7th page (Debt)" do
                 before do
                   # click the next button on 6th page
@@ -226,6 +231,7 @@ RSpec.describe "BackgroundPages", :type => :request do
                   expect(page).to have_button "Prev"
                   expect(page).not_to have_button "Next"
                 end
+
                 it "should display error if one of the field is missing" do
                   fill_in "background_debts_attributes_0_description", with:""
                   expect{click_button "Finish"}.to change(Debt,:count).by(0)

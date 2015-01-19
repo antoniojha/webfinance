@@ -81,7 +81,6 @@ class BackgroundsController < ApplicationController
           build_before_render(assoc_field)
           format.html{render "edit"}
         end
-
       else
         @background.next_step
         if @background.update(background_params) 
