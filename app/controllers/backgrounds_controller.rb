@@ -48,6 +48,7 @@ class BackgroundsController < ApplicationController
     @background=user.backgrounds.build(background_params)
     @background.month=Time.zone.today.month
     @background.year=Time.zone.today.year
+    start_step_session(@background)
     respond_to do |format|
       @background.next_step
       if @background.save
