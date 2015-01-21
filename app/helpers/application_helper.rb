@@ -30,4 +30,15 @@ module ApplicationHelper
       number_to_currency(amount)
     end
   end
+  def smart_image(user,scenario=1)
+    if user.picture_file_name
+      if scenario == 1
+        image_tag user.picture.url(:small), class: "img-thumbnail"
+      elsif scenario ==2
+        image_tag user.picture.url(:medium), class: "img-thumbnail"
+      end
+    else
+      image_tag "place_holder.jpg",size:"100x100", class: "img-thumbnail", alt:"Please upload picture"
+    end
+  end
 end

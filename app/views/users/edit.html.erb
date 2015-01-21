@@ -2,10 +2,22 @@
 <%= render 'menu_top'%>
 <div style="clear:both;border-top:2px solid;"></div>
 <h3>Update Profile</h3>
-<div style="width:70%">
-  <div class="gravatar_edit">
-      <%= gravatar_for @user %>
-  </div>  
-  <a href="http://gravatar.com/emails" target=_blank>change</a>
-</div><br>
+<%= form_for @user, :html => { :multipart => true } do |f| %>
+<table style=" text-align:left;width:70%">
+  <tr>
+    <td style="width:50%;">
+      <%=smart_image(@user,2)%>
+
+    </td>
+    <td style="width:50%;">
+    </td>
+  </tr>
+  <tr>
+    <td><%= f.file_field :picture %></td>
+    <td><%= f.submit 'submit' %></td>
+  </tr>
+</table>
+<%end%>
+<br>
+<%=render "picture_form"%>
 <%=render 'form'%>

@@ -1,4 +1,4 @@
-<%= form_for(@user) do |f| %>
+<%= form_for @user, :html => { :multipart => true }  do |f| %>
   <% if @user.errors.any? %>
 
     <div class="alert alert-danger error-message">
@@ -11,40 +11,36 @@
     </div>
 
   <% end %>
-  <table width="100%">
-  <tr>
-  	<td width="70%" align="right">
-	  <table width="70%">
-
-  	<tr>
-      <td><%= f.label 'First Name' %> </td>
+  <table width="70%">
+    <tr>
+      <td><%= f.label 'First Name' %><%=asterisk_html%> </td>
       <td><%= f.text_field :first_name,{:class=>'form-control'} %></td>
 	  </tr>
     <tr class="blank_row"></tr>
   	<tr>
-      <td><%= f.label 'Last Name' %> </td>
+      <td><%= f.label 'Last Name' %><%=asterisk_html%> </td>
       <td><%= f.text_field :last_name,{:class=>'form-control'} %></td>
 	  </tr>  
     <tr class="blank_row"></tr>  
     <tr>
-  			<td width="50%"><%= f.label :username %> <span style="color:red"><i>(case insensitive)</i></span></td>
+  			<td width="50%"><%= f.label :username %> <span style="color:red"><i>(case insensitive)</i><%=asterisk_html%></span></td>
       <td width="50%"><%= f.text_field :username,{:class=>'form-control', :title=>"Please enter username"} %></td>
-  		</tr>
+    </tr>
 		<tr class="blank_row"></tr>
-  		<tr>
-  			<td><%= f.label :email %> <span style="color:red"><i>(case insensitive)</i></span></td>
-  			<td><%= f.text_field :email,{:class=>'form-control'} %></td>
-	  	</tr>
+  	<tr>
+  		<td><%= f.label :email %> <span style="color:red"><i>(case insensitive)</i></span><%=asterisk_html%></td>
+  		<td><%= f.text_field :email,{:class=>'form-control'} %></td>
+	  </tr>
 		<tr class="blank_row"></tr>
-    	<tr>
-    		<td><%= f.label :password %></td>
-    		<td><%= f.password_field :password,{:class=>'form-control'} %></td>
-    	</tr>
+    <tr>
+    	<td><%= f.label :password %><%=asterisk_html%></td>
+    	<td><%= f.password_field :password,{:class=>'form-control'} %></td>
+    </tr>
 		<tr class="blank_row"></tr>
-    	<tr>
-    		<td><%= f.label :password_confirmation %></td>
-    		<td><%= f.password_field :password_confirmation,{:class=>'form-control'} %></td>
-    	</tr>
+    <tr>
+    	<td><%= f.label :password_confirmation %><%=asterisk_html%></td>
+    	<td><%= f.password_field :password_confirmation,{:class=>'form-control'} %></td>
+    </tr>
 		<tr class="blank_row"></tr>
 		<tr>
 			<td></td>
@@ -54,18 +50,5 @@
       <td><%= f.submit 'Update Account', :class=>"btn btn-primary" %></td>
       <%end%>
 		</tr>
-  	  </table>
-  	</td>
-    <td width="30%">
-  		<table width="100%">
-  			<tr>
-  				<td width="100%"><div id="password_description" class="alert alert-info">
-    	Pick a password with at least a lower case and upper case letter,
-    	a digit, and a special character (non-word character) with at least 7 characters	
-    			</div></td>
-  			</tr> 		
-		</table>
-	</td>
-  </tr>
   </table>
 <% end %>

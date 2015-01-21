@@ -2,6 +2,7 @@
 <%= form_for @user,:html => { :method => :delete }  do |f|%>
 	
 	<table width="70%">
+
 		<tr>
       <td width="20%"><%= f.label :username%></td>
 			<td width="65%"><%= f.text_field :username, {:class=>'form-control'}%></td>

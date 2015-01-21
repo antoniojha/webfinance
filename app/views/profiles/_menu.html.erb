@@ -32,7 +32,7 @@
       <% if current_month_has_plan?%>
       <li><%= link_to "View this month's plan", background_path(current_month_plan)%></li>
       <li><%=link_to "Edit this month's plan", edit_background_path(current_month_plan)%></li>
-      <li><%=link_to "Delete this month's plan", background_path(current_month_plan), method: "delete"%></li>
+      <li><%=link_to "Delete this month's plan", background_path(current_month_plan), method: "delete",data:{confirm: "Are you sure to delete this month's plan?"}%></li>
       <% else%>
       <li><%= link_to "Start Planning",new_background_path%></li>
       <%end%>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150119180907) do
+ActiveRecord::Schema.define(version: 20150119233147) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -295,6 +295,10 @@ ActiveRecord::Schema.define(version: 20150119180907) do
     t.string   "last_name"
     t.boolean  "admin",                      default: false
     t.string   "time_zone"
+    t.string   "picture_file_name"
+    t.string   "picture_content_type"
+    t.integer  "picture_file_size"
+    t.datetime "picture_updated_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
