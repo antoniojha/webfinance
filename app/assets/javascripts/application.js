@@ -15,7 +15,10 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap
-
+//= require add_association
+//= require remove_association
+//= require pagination
+//= require raphael
 //= jquery.Jcrop
 //= jquery.Jcrop.min
 //= require_tree .
