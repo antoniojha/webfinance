@@ -1,0 +1,7 @@
+<%=form_tag({controller:"plans",action:"start"},method:"get") do %>
+  <%=select_tag "category",options_for_select(Order::PLAN_TYPES), {prompt: 'Select a plan type',class:'form-control'}%>
+  <br>
+  <div style="text-align:left;">
+  <%= submit_tag 'Create Plan', :class=>"btn btn-primary" %>
+</div>
+<%end%>

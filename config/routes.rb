@@ -4,6 +4,17 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   resources :advance_search
+  resources :protection_plans
+  resources :plans
+  controller :plans do
+
+    get "debt_2"=> :debt_2
+    get "emergency_3"=> :emergency_3
+    get "retirement_4"=> :retirement_4
+    get "education_5"=> :education_5
+    get "saving_6"=> :saving_6
+    get "start"=>:start
+  end
   resources :backgrounds
   controller :backgrounds do
     get 'add_assoc'=> :add_assoc
@@ -20,7 +31,9 @@ Rails.application.routes.draw do
   resources :users
   controller :users do
     get 'signup'=> :new
+    get 'crop'=> :crop
   end
+  resources :protection_plans
   match '/remove', to:'users#remove',via:'get'
   match'/admin/remove/:id', to:'users#admin_remove', via:'get', as: 'admin_remove'
   controller :static_pages do

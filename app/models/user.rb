@@ -1,8 +1,11 @@
 class User < ActiveRecord::Base
   attr_accessor :auth_token
+  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
+  
+  
   # used for password digest to confirm two passwords entered match
   has_secure_password
-  has_attached_file :picture, :styles => { :medium => "200x200>",:small=>"100x100>",  :large => "500x500>" }
+  has_attached_file :picture, :styles => { :medium => "200x200#",:large=>"500x500>"},:processors => [:cropper]
   has_many :accounts, dependent: :destroy
   has_many :backgrounds, dependent: :destroy 
 #  has_many :spendings, dependent: :destroy
@@ -33,6 +36,18 @@ class User < ActiveRecord::Base
       return false
     end
   end
+  def cropping?
+    !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
+  end
+  def reprocess_picture
+    picture.reprocess!
+  end
+  
+  def picture_geometry(style = :original)
+    @geometry ||= {}
+    @geometry[style] ||= Paperclip::Geometry.from_file(picture.path(style))
+  end
+  
   def yodlee
     @yodlee ||= Yodlee::User.new(self)
   end
@@ -72,13 +87,13 @@ class User < ActiveRecord::Base
   end
 
   private
-  def generate_token(column)
-    begin
-     # update_attribute(column,SecureRandom.urlsafe_base64)
-      #saves the user directly instead of just assigning it
-      self[column]=SecureRandom.urlsafe_base64
-    end while User.exists?(column=>self[column])
-  end
+    def generate_token(column)
+      begin
+       # update_attribute(column,SecureRandom.urlsafe_base64)
+        #saves the user directly instead of just assigning it
+        self[column]=SecureRandom.urlsafe_base64
+      end while User.exists?(column=>self[column])
+    end
 
 end
 

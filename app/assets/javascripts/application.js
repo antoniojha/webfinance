@@ -10,19 +10,23 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+
 //= require jquery
 //= require jquery-ui
+//= require jquery-ui/tooltip
 //= require jquery_ujs
 //= require turbolinks
-//= require bootstrap
+
 //= require add_association
 //= require remove_association
 //= require pagination
 //= require raphael
-//= jquery.Jcrop
-//= jquery.Jcrop.min
-//= require_tree .
+//= require jquery.usmap
 
+//= require jquery.Jcrop.min
+
+//= require_tree .
+//= require bootstrap
 
 ready=function(){
 //   $('#bank_login').validate();
@@ -63,6 +67,21 @@ ready=function(){
   });
   }
   // initiates map jquery
-  $('#map').usmap({});
+ // $('#map').usmap();
+  
+
+  $( "#hello" ).dialog({ 
+    autoOpen: false,  
+    open: function() {
+        $(this).closest(".ui-dialog")
+        .find(".ui-dialog-titlebar-close")
+        .removeClass("ui-dialog-titlebar-close")
+        .html("<span class='ui-button-icon-primary ui-icon ui-icon-closethick'></span>");
+    }
+  });
+  $( "#say_it" ).click(function() {
+  $( "#hello" ).dialog( "open" );
+
+});
 }
 $(document).ready(ready);

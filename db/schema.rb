@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150119233147) do
+ActiveRecord::Schema.define(version: 20150126204041) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -74,6 +74,11 @@ ActiveRecord::Schema.define(version: 20150119233147) do
     t.decimal  "networth",               default: 0.0
     t.decimal  "netspend",               default: 0.0
     t.boolean  "completed"
+    t.decimal  "total_mortgage",         default: 0.0
+    t.decimal  "total_education",        default: 0.0
+    t.decimal  "total_protection_need",  default: 0.0
+    t.decimal  "other_debt",             default: 0.0
+    t.decimal  "income_need",            default: 0.0
   end
 
   add_index "backgrounds", ["user_id"], name: "index_backgrounds_on_user_id"
@@ -194,6 +199,19 @@ ActiveRecord::Schema.define(version: 20150119233147) do
   end
 
   add_index "propertees", ["background_id"], name: "index_propertees_on_background_id"
+
+  create_table "protection_plans", force: true do |t|
+    t.decimal  "total_need",    default: 0.0
+    t.integer  "start_year"
+    t.integer  "start_month"
+    t.integer  "end_year"
+    t.integer  "end_month"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "background_id"
+  end
+
+  add_index "protection_plans", ["background_id"], name: "index_protection_plans_on_background_id"
 
   create_table "recur_budgets", force: true do |t|
     t.string   "title"

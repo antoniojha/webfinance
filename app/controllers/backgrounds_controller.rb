@@ -70,14 +70,13 @@ class BackgroundsController < ApplicationController
         # doesn't display error if validation fails
         format.html{redirect_to edit_background_url(@background)}
       elsif params[:finish_button]
-        @background.next_step
         @background.sum_attributes
+        @background.calc_protection_need
         @background.is_complete
         if @background.update(background_params)      
           end_step_session
           format.html{redirect_to @background, notice:"Successfully completed uploading personal info!"}
         else
-          @background.prev_step
           build_before_render(assoc_field)
           format.html{render "edit"}
         end
@@ -115,9 +114,8 @@ class BackgroundsController < ApplicationController
   def track_association_number
     name=params[:name] unless params[:name].blank?
     @name=name
-    session_names=[:saving_i, :debt_i, :income_i, :fixed_expense_i, :property_i, :optional_expense_i]
-    names=["Add Saving", "Add Debt", "Add Income", "Add Fixed Expense", "Add Property", "Add Optional Expense"]
-    remove_names=["remove saving","remove debt","remove income", "remove fixed_expense","remove property", "remove optional_expense"]
+    session_names=[:saving_i, :debt_i, :income_i, :fixed_expense_i, :optional_expense_i,:property_i]
+    remove_names=["remove saving","remove debt","remove income", "remove fixed_expense", "remove optional_expense","remove property"]
 
     add_i=add_names.index(name)
     remove_i=remove_names.index(name)
@@ -131,10 +129,10 @@ class BackgroundsController < ApplicationController
     end
   end
   def add_names
-    ["Add Saving", "Add Debt", "Add Income", "Add Fixed Expense", "Add Property", "Add Optional Expense"]
+    ["Add Saving", "Add Debt", "Add Income", "Add Fixed Expense", "Add Optional Expense", "Add Property"]
   end
   def get_assoc
-    session_assocs=["saving", "debt","income","fixed_expense", "optional_expense" "property"]
+    session_assocs=["saving", "debt","income","fixed_expense", "optional_expense", "property"]
     name=params[:name] unless params[:name].blank?  
     @name=name
     add_i=add_names.index(name)
@@ -150,9 +148,10 @@ session[:saving_i]=session[:debt_i]=session[:income_i]=session[:optional_expense
   def build_after_redirect(assoc_field)
     # called just in case if the a particular associated field does not have any object created. This ensures that it will create the default amount of associated object.
     unless assoc_field=="backgrounds"  
+      @background.send(assoc_field).build
       if (@background.send(assoc_field).count==0)
  session[:saving_i]=session[:debt_i]=session[:income_i]=session[:optional_expense_i]=session[:property_i]=session[:fixed_expense_i]=1
-        @background.send(assoc_field).build
+        
       else       session[:saving_i]=session[:debt_i]=session[:income_i]=session[:optional_expense_i]=session[:fixed_expense_i]=session[:property_i]=@background.send(assoc_field).count
       end   
     end

@@ -1,48 +1,119 @@
 <%provide :title, "|Background summary"%>
-<h1>Your Plan in <%=Time.zone.today.strftime("%B, %Y")%></h1>
-<p>Date of Birth: <%=@background.dob_string%></p>
-<p>Relationship Status: <%=@background.married==true ? "married" : "single"%></p>
-<p>Number of Dependent: <%=@background.children%></p>
-<p>Total Income:<%=money(@background.total_income)%></p>
-<p>Total Fixed Expense:<%=money(@background.total_fixed_expense)%></p>
-<p>Total Optional Expense:<%=money(@background.total_optional_expense)%></p>
-<p>Total Saving:<%=money(@background.total_saving)%></p>
-<p>Total Debt:<%=money(@background.total_debt)%></p>
-<p>Networth: <%=money(@background.networth)%></p>
-<p>Net Spening:<%=money(@background.netspend)%></p>
-<%@background.savings.each_with_index do |saving,i|%>
-Saving<%=i+1%>.<br>
-<p> Institution Name: <%=saving.institution_name%></p>
-<p> Description: <%=saving.description%></p>
-<p> Amount: <%=saving.amount%></p>
-<p> Category: <%=saving.cat_name%></p>
-<%end%>
-<%@background.debts.each_with_index do |debt,i|%>
-Debt<%=i+1%>.<br>
-<p> Institution Name: <%=debt.institution_name%></p>
-<p> Description: <%=debt.description%></p>
-<p> Amount: <%=debt.amount%></p>
-<p> Interest Rate: <%=debt.interest_rate%></p>
-<%end%>
-<%@background.incomes.each_with_index do |income,i|%>
-Income<%=i+1%>.<br>
-<p> description: <%=income.description%></p>
-<p> amount: <%=income.amount%></p>
-<p> category: <%=income.cat_name%></p>
-<%end%>
-<%@background.fixed_expenses.each_with_index do |e,i|%>
-Fixed Expense<%=i+1%>.<br>
-<p> Description: <%=e.description%></p>
-<p> Company: <%=e.company%></p>
-<p> Amount: <%=e.amount%></p>
-<p> Transaction Date: <%=e.transaction_date%></p>
-<p> Alarm: <%=e.alarm%></p>
-<p> Category: <%=e.cat_name%></p>
-<%end%>
-<%@background.optional_expenses.each_with_index do |e,i|%>
-Optional Expense<%=i+1%>.<br>
-<p> Description: <%=e.description%></p>
-<p> Amount: <%=e.amount%></p>
-<p> Category: <%=e.cat_name%></p>
-<%end%>
+
+
+<div class="panel panel-default" style="width:50%;float:left;">
+   <% if @background.completed%>
+  <div class="panel-heading">Your Plan in <%=Time.zone.today.strftime("%B, %Y")%></div>
+   
+  <table class="table">
+    <tr>
+      <td>Total Income/Month:</td>
+      <td><%=money(@background.total_income)%></td>
+    </tr>
+    <tr>
+      <td>Total Fixed Expense/Month:</td>
+      <td><%=money(@background.total_fixed_expense)%></td>
+    </tr>
+    <tr>
+      <td>Total Optional Expense/Month:</td>
+      <td><%=money(@background.total_optional_expense)%></td>
+    </tr>
+    <tr>
+      <td>Net Spending/Month:</td>
+      <td><%=money(@background.netspend)%></td>
+    </tr>
+    <tr class="active">
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Total Saving:</td>
+      <td><%=money(@background.total_saving)%></td>
+    </tr>
+    <tr>
+      <td>Total Debt:</td>
+      <td><%=money(@background.total_debt)%></td>
+    </tr>
+    <tr>
+      <td>Networth:</td> 
+      <td><%=money(@background.networth)%></td>
+    </tr>
+  </table>
+   <%if @background.incomes.count>0%>
+  <div class="panel-heading">Incomes</div>
+  <%end%>
+  <table class="table">
+    <%@background.incomes.each_with_index do |income,i|%>
+    <tr>
+      <td width="40%"> <%=income.description%></td>
+      <td width="40%"> <%=income.cat_name%></td>
+      <td width="20%"> <%=money(income.amount)%></td>
+    </tr>
+    <%end%>
+  </table>
+  <%if @background.fixed_expenses.count>0%>
+  <div class="panel-heading">Fixed Expenses</div>
+  <%end%>
+  <table class="table">
+    <%@background.fixed_expenses.each_with_index do |e,i|%>
+    <tr>
+      <td width="40%"> <%=e.description%></td>
+      <td width="40%"> <%=e.cat_name%></td>
+      <td width="20%"> <%=money(e.amount)%></td>
+    </tr>
+    <%end%>
+  </table>
+  <%if @background.optional_expenses.count>0%>
+  <div class="panel-heading">Optional Expenses</div>
+  <%end%>
+  <table class="table">
+    <%@background.optional_expenses.each_with_index do |e,i|%>
+    <tr>
+      <td width="40%"><%=e.description%></td>
+      <td width="40%"><%=e.cat_name%></td>
+      <td width="20%"><%=money(e.amount)%></td> 
+    </tr>
+    <%end%>    
+  </table>
+  <%if @background.savings.count>0%>
+  <div class="panel-heading">Savings</div>
+  <%end%>
+  <table class="table">
+    <%@background.savings.each_with_index do |saving,i|%>
+    <tr>
+      <td width="40%"><%=saving.institution_name%></td>
+      <td width="40%"><%=saving.cat_name%></td>
+      <td width="20%"><%=money(saving.amount)%></td>
+    </tr>
+    <%end%>
+  </table> 
+  <%if @background.debts.count>0%>
+  <div class="panel-heading">Debts</div>
+  <%end%>
+  <table class="table">
+    <%@background.debts.each_with_index do |debt,i|%>
+    <tr>
+      <td width="80%"> <%=debt.institution_name%></td>
+      <td width="20%"> <%=money(debt.amount)%></td>
+    </tr>
+    <%end%>
+  </table>
+
+
+
+  <%else%>
+    <div class="panel-heading">Your Background Information has not been completed yet.</div>
+    
+  <%end%>
+</div>
+<div class="panel panel-default" style="width:50%;float:right;">
+  <div class="panel-heading">Your Plan in <%=Time.zone.today.strftime("%B, %Y")%></div>
+  <div class="list-group">
+  <a href="#" class="list-group-item">You don't have an emergency plan!</a>
+  <a href="#" class="list-group-item">You don't have a protection plan!</a>
+  <a href="#" class="list-group-item">You have a debt to manage!</a>
+  <a href="#" class="list-group-item">You don't have a retirement plan!</a>
+  </div>
+
+</div>
 <%=link_to 'Edit', edit_background_path(@background)%>

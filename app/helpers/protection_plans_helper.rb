@@ -1,0 +1,2 @@
+module ProtectionPlansHelper
+end

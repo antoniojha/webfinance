@@ -8,7 +8,10 @@ class Background < ActiveRecord::Base
   has_many :optional_expenses, dependent: :destroy  
   has_many :fixed_expenses, dependent: :destroy 
   has_many :propertees, dependent: :destroy
+  has_many :protection_plans, dependent: :destroy
+  
   before_save :current_field
+  
   accepts_nested_attributes_for :incomes, :allow_destroy => true, reject_if: :all_blank  
   accepts_nested_attributes_for :fixed_expenses, :allow_destroy => true, reject_if: :all_blank
   accepts_nested_attributes_for :optional_expenses, :allow_destroy => true, reject_if: :all_blank    
@@ -25,7 +28,9 @@ class Background < ActiveRecord::Base
     ["1. Background", "2. Income","3. Fixed Expense","4. Optional Expense","5. Saving","6. Property","7. Debt"]
   end
   def sum_attributes
-    array1=array2=array3=array4=array5=[]
+
+    
+    array1,array2,array3,array4,array5=[[],[],[],[],[]]
     self.incomes.each{|t| array1 << t.amount}
     income_total=array1.sum   
     self.total_income= (income_total==nil) ? 0 : income_total
@@ -50,6 +55,32 @@ class Background < ActiveRecord::Base
     self.networth=saving_total-debt_total
     
   end
+  def calc_protection_need
+    array1,array2,array3=[[],[],[]]
+    self.debts.each{|t| 
+      if t.cat_name=="Mortgage Loan"
+        array1 << t.amount
+      end  
+    }
+    self.total_mortgage=array1.sum
+
+    self.debts.each{|t| 
+      if t.cat_name!="Mortgage Loan"
+        array2 << t.amount
+      end
+    }
+    self.other_debt=array2.sum
+    
+    self.incomes.each{|t|
+      if t.cat_name=="Pay Check"
+        array3 << t.amount
+      end   
+    }
+    self.income_need=(array3.sum)*10*12
+    
+    self.total_protection_need=array1.sum+array2.sum+array3.sum*10*12
+  end
+
   def dob_string
     dob.strftime('%m/%d/%Y') unless dob.blank?
   end

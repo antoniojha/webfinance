@@ -49,6 +49,9 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(user_params)
         if params[:user][:picture].blank?
+          if @user.cropping?
+            @user.reprocess_picture
+          end
           format.html { redirect_to @user, notice: 'User was successfully updated.' }
           format.json { head :no_content }
         else
@@ -98,7 +101,7 @@ class UsersController < ApplicationController
       end
     end
   end
-  
+
   def email_confirmation
     @user=User.find(session[:user_id])
   end
@@ -117,7 +120,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:first_name, :last_name,:username, :email, :password, :password_confirmation,:picture)
+      params.require(:user).permit(:first_name, :last_name,:username, :email, :password, :password_confirmation,:picture, :crop_x,:crop_y,:crop_w,:crop_h)
     end
     def correct_user
       @user=User.find(params[:id])

@@ -28,12 +28,14 @@ module ApplicationHelper
   def money(amount)
     if amount.is_a? Numeric
       number_to_currency(amount)
+    else
+      number_to_currency(0)
     end
   end
   def smart_image(user,scenario=1)
     if user.picture_file_name
       if scenario == 1
-        image_tag user.picture.url(:small), class: "img-thumbnail"
+        image_tag user.picture.url(:medium),size:"100x100", class: "img-thumbnail"
       elsif scenario ==2
         image_tag user.picture.url(:medium), class: "img-thumbnail"
       end

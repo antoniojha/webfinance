@@ -4,7 +4,9 @@ class Order <ActiveRecord::Base
   INCOME_TYPES=[["Pay Check",1],["Rental Income",2],["Gov Benefit",3],["Investment Income",4],["Interest Income",5], ["Tax Return",6]]
   FIXED_EXPENSE_TYPES=[["Insurance",1],["Loan",2],["Utility",3],["Services",4], ["Rental",5],["Credit Card Payment",6],["Investment",7],["Other",8]]
   PROPERTY_TYPES=[["Real Estate",1],["Vehicle",2],["Other Personal Property",3]]
-  DEBT_TYPES=[["Loan",1],["Credit Card",2],["Other",3]]
+  DEBT_TYPES=[["Student Loan",1],["Mortgage Loan",2],["Other Loan",3],["Credit Card",4]]
+  PLAN_TYPES=[["Protection Plan",1],["Debt Management",2],["Emergency Fund",3],["Retirement Plan",4],["Education Fund",5],["Saving up",6]]
+  PROTECTION_TYPES=[["Life Insurance",1],["Disability Insurnace",2]]
   US_STATES=
     [
       ['Alabama', 'AL'],

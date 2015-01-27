@@ -1,3 +1,4 @@
+
 /*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
@@ -13,7 +14,9 @@
  *= require_tree .
  *= require profiles
  *= require users
+ *= require jquery.Jcrop
  *= require_self
+ *= require jquery-ui
  */
 @import "bootstrap-sprockets"; // check https://github.com/twbs/bootstrap-sass#a-ruby-on-rails for more info
 @import "bootstrap";
@@ -47,5 +50,9 @@ html, body {
 .asterisk{
   font-weight: bold;
   color: red;
+}
+.blank_row
+{
+  height: 20px;
 }
 // bootstrap color taken from http://getbootstrap.com/customize/
