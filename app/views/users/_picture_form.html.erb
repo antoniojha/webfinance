@@ -1,0 +1,16 @@
+<%= form_for @user, :html => { :multipart => true } do |f| %>
+<table style=" text-align:left;width:70%">
+  <tr>
+    <td style="width:50%;">
+      <%=smart_image(@user,2)%>
+
+    </td>
+    <td style="width:50%;">
+    </td>
+  </tr>
+  <tr>
+    <td><%= f.file_field :picture %></td>
+    <td><%= f.submit 'submit' %></td>
+  </tr>
+</table>
+<%end%>

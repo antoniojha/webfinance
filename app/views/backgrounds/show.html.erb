@@ -31,6 +31,10 @@
       <td><%=money(@background.total_saving)%></td>
     </tr>
     <tr>
+      <td>Total Property Value:</td>
+      <td><%=money(@background.total_property)%></td>
+    </tr>
+    <tr>
       <td>Total Debt:</td>
       <td><%=money(@background.total_debt)%></td>
     </tr>
@@ -87,6 +91,18 @@
     </tr>
     <%end%>
   </table> 
+  <%if @background.propertees.count>0%>
+  <div class="panel-heading">Properties</div>
+  <%end%>
+  <table class="table">
+    <%@background.propertees.each_with_index do |property,i|%>
+    <tr>
+      <td width="40%"><%=property.description%></td>
+      <td width="40%"><%=property.cat_name%></td>
+      <td width="20%"><%=money(property.amount)%></td>
+    </tr>
+    <%end%>
+  </table>   
   <%if @background.debts.count>0%>
   <div class="panel-heading">Debts</div>
   <%end%>
@@ -106,14 +122,8 @@
     
   <%end%>
 </div>
-<div class="panel panel-default" style="width:50%;float:right;">
-  <div class="panel-heading">Your Plan in <%=Time.zone.today.strftime("%B, %Y")%></div>
-  <div class="list-group">
-  <a href="#" class="list-group-item">You don't have an emergency plan!</a>
-  <a href="#" class="list-group-item">You don't have a protection plan!</a>
-  <a href="#" class="list-group-item">You have a debt to manage!</a>
-  <a href="#" class="list-group-item">You don't have a retirement plan!</a>
-  </div>
+<div style="width:50%;float:right;">
+  
 
 </div>
 <%=link_to 'Edit', edit_background_path(@background)%>

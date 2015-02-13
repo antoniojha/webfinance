@@ -8,17 +8,16 @@ class User < ActiveRecord::Base
   has_attached_file :picture, :styles => { :medium => "200x200#",:large=>"500x500>"},:processors => [:cropper]
   has_many :accounts, dependent: :destroy
   has_many :backgrounds, dependent: :destroy 
-#  has_many :spendings, dependent: :destroy
+  has_many :spendings, dependent: :destroy
 #  has_many :temp_budget_plans, dependent: :destroy
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  # the following uses Regex (lookahead assertion) to ensure there is at least a lower case and upper case letter,
-  # a digit, and a special character (non-word character)
+  # the following uses Regex (lookahead assertion) to ensure there is at least a lower case and upper case letter, a digit, and a special character (non-word character)
   VALID_PASSWORD_REGEX= /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)/
-  validates :first_name,:last_name,:username, presence: true, unless: :empty_field 
+  validates :first_name,:last_name,:username, presence: true, on: :create
   validates :email, presence: true 
   validates :email, allow_blank:true, format: {with:VALID_EMAIL_REGEX}
-  validates :password, :password_confirmation, presence: true, on: :create
+  validates :password_confirmation, presence: true, on: :create
   validates :password, allow_blank:true, length: { in: 7..40 },format: {with:VALID_PASSWORD_REGEX}
   validates_uniqueness_of :username, :case_sensitive => false
   validates_uniqueness_of :email, :case_sensitive => false
@@ -28,14 +27,7 @@ class User < ActiveRecord::Base
   #ensure all username address are saved lower case
   before_save{self.username=username.downcase}  
   
-  #empty_field allows a separate form to be submitted to upload picture
-  def empty_field
-    if (first_name.blank? && last_name.blank? && username.blank?)
-      return true
-    else
-      return false
-    end
-  end
+
   def cropping?
     !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
   end

@@ -2,7 +2,7 @@ module SessionsHelper
   def log_in(user)
     session[:user_id]=user.id
   end
-  def remember(user)
+  def remember(user) # generate and saves auth_token_digest in user
     user.remember
     cookies.permanent.signed[:user_id]=user.id
     cookies.permanent.signed[:auth_token]=user.auth_token

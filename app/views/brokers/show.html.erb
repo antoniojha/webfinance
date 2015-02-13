@@ -1,0 +1,21 @@
+<h3><%=@broker.first_name.capitalize%> <%=@broker.last_name.capitalize%></h3>
+<hr class="divider"> 
+<%=smart_image(@broker,3)%>
+<div style="clear:both;">
+<div align="left" style="float:left;">
+  <p><b>Company:</b> <%=@broker.institution_name%></p>
+  <p><b>Phone Number (Work):</b> <%=@broker.phone_number_work%></p>
+  <p><b>Phone Number (Cell):</b> <%=@broker.phone_number_cell%></p>
+  <p><b>Email:</b> <%=@broker.email %></p>
+  <p><b>Address:</b><%=@broker.address%><p>
+  <p><b>License(s):</b></p>
+  <ul>
+    <%@broker.licenses.each do |l|%>
+    <li><%=Order::LICENSE_TYPES[l.license_type.to_i-1][0]%>: License# <%=l.license_number%></li>
+    <%end%>
+  </ul>
+</div>
+<div style="float:right;">
+<%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@broker.latitude}%2C#{@broker.longitude}" %>
+</div>
+  <div style="clear:both;">

@@ -20,6 +20,7 @@
 //= require add_association
 //= require remove_association
 //= require pagination
+//= require protection_plans
 //= require raphael
 //= require jquery.usmap
 

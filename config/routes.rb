@@ -4,7 +4,9 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   resources :advance_search
+  resources :broker_search
   resources :protection_plans
+
   resources :plans
   controller :plans do
 
@@ -13,7 +15,7 @@ Rails.application.routes.draw do
     get "retirement_4"=> :retirement_4
     get "education_5"=> :education_5
     get "saving_6"=> :saving_6
-    get "start"=>:start
+    get "start"=> :start
   end
   resources :backgrounds
   controller :backgrounds do
@@ -22,6 +24,15 @@ Rails.application.routes.draw do
     get 'info'=> :info
     get 'direct_to'=> :direct_to
   end
+  resources :brokers
+  controller :brokers do
+    get "broker/new2"=> :new2
+    get "broker/finish"=> :finish
+    get "broker/review_index"=> :review_index
+    get "close_finish"=> :close_finish
+  end
+  resources :status_sessions, only: [:new,:create,:destroy,:show]
+  
   resources :goals
   controller :sessions do
     get 'login'=> :new
@@ -33,9 +44,9 @@ Rails.application.routes.draw do
     get 'signup'=> :new
     get 'crop'=> :crop
   end
-  resources :protection_plans
   match '/remove', to:'users#remove',via:'get'
   match'/admin/remove/:id', to:'users#admin_remove', via:'get', as: 'admin_remove'
+  
   controller :static_pages do
     get "demo" => :demo
     get "contact" => :contact
@@ -68,4 +79,5 @@ Rails.application.routes.draw do
     get 'import' => :new
     get 'template' => :template
   end
+  resources :broker_imports
 end

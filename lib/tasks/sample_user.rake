@@ -2,6 +2,7 @@ if false
 namespace :db do
   desc "Fill database with users"
     task populate: :environment do
+      User.each(&:delete_all)
       admin=User.create!(
         first_name:"Antonio",
         last_name:"Jha",
@@ -13,8 +14,9 @@ namespace :db do
         admin: true
       )
       99.times do |n|
-        firstname="Example"
-        lastname="Example"
+        name=Faker::Name.name
+        first_name=name.split[0]
+        last_name=name.split[1]
         username=Faker::Name.name
         first_name=username
         email="example#{n+1}@example.com"

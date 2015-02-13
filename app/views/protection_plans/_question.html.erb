@@ -1,0 +1,70 @@
+<div>
+  <p>Please answer the following questions to assess which type of life insurance you may need:</p>
+  <input type="button" id="start" value="Start">
+  <div id="question" class="well well-lg" style="display:none;">
+  <form>
+    <ol>
+    <div id="question1">
+      <div class="content">
+       1. How much income do you have left over after expense each month to be spent on your insurance policy?
+        <ol type="a">
+          <li><input type="radio" name="question_1" value="1" checked>I have much money left to be put in. </li>
+          <li><input type="radio" name="question_1" value="2">I don’t have that much money left, I’m looking for something minimal. </li>
+          <li><input type="radio" name="question_1" value="3">	I am looking for something in between. </li>
+        </ol>
+      </div>
+      <input type="button" class="next" value="Next">
+    </div>
+    <div class="question"> 
+      <div class="content">
+        2. Do you prefer fixed or flexible premium/policy?
+        <ol type="a">
+          <li><input type="radio" name="question_2" value="1" checked>Flexible.</li>
+          <li><input type="radio" name="question_2" value="2">Fixed. </li>
+        </ol>
+      </div>
+      <input type="button" class="previous" value="Prev"><input type="button" class="next" value="Next">
+    </div>
+    <div class="question">  
+      <div class="content">
+      3. When you have money left over, would you like to:
+        <ol type="a">
+          <li><input type="radio" name="question_3" value="1" checked>Save it. </li>
+          <li><input type="radio" name="question_3" value="2">Invest it. </li>
+          <li><input type="radio" name="question_3" value="3">Spend it. </li>
+        </ol>
+      </div>
+      <input type="button" class="previous" value="Prev"><input type="button" class="next" value="Next">
+    </div>
+    <div class="question"> 
+      <div class="content">
+      4. What additional feature would you like your insurance policy to have?
+        <ol type="a">
+          <li><input type="radio" name="question_4" value="1" checked>Only saving. </li>
+          <li><input type="radio" name="question_4" value="2">Accrue more money through interest.  </li>
+          <li><input type="radio" name="question_4" value="3">Used both as a saving and earn interest. </li>
+          <li><input type="radio" name="question_4" value="4">Pure protection. </li>
+        </ol>
+      </div>
+      <input type="button" class="previous" value="Prev"><input type="button" class="next" value="Next">
+    </div>
+    <div class="question">
+      <div class="content">
+      5. What kind of interest accruing method do you prefer?  
+        <ol type="a">
+          <li><input type="radio" name="question_5" value="1" checked>Through investment, which bears a higher risk. </li> 
+          <li><input type="radio" name="question_5" value="2">Through financial index or a guaranteed minimum rate and has a lower risk. </li> 
+          <li><input type="radio" name="question_5" value="3">No risks at all.</li> 
+        </ol>
+      </div>
+      <input type="button" class="previous" value="Prev">
+      <input type="button" id="submit" value="Submit">
+
+    </div>
+    </ol>
+    
+  </form>
+  </div>
+</div>
+<div id="explanation" class="well well-lg" style="display:none;">
+</div>

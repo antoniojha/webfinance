@@ -116,4 +116,21 @@ FactoryGirl.define do
     amount "10000"
     category "1"
   end
+  
+  factory :license, class: License do
+    picture (Rails.root+"spec/fixtures/pdfs/example_license.pdf").open
+    license_type "1"
+    license_number "123456789"
+    
+  end
+  factory :no_picture_license, class: License do
+    license_type "1"
+    license_number "123456789"  
+  end
+  factory :doc_license, class: License do
+    picture (Rails.root+"spec/fixtures/pdfs/test.docx").open
+    license_type "1"
+    license_number "123456789"
+    
+  end
 end

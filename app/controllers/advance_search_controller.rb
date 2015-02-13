@@ -5,7 +5,7 @@ class AdvanceSearchController < ApplicationController
 
     respond_to do |format|
       if @advance_search.save
-        format.html { redirect_to spendings_url(:id=>@advance_search), notice: 'Advance search was successfully created.'}
+        format.html { redirect_to spendings_url(:id=>@advance_search)
       else
         format.html { render action: 'index', danger: 'Unsuccessful search' }
       end

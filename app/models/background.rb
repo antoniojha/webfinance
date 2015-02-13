@@ -9,28 +9,32 @@ class Background < ActiveRecord::Base
   has_many :fixed_expenses, dependent: :destroy 
   has_many :propertees, dependent: :destroy
   has_many :protection_plans, dependent: :destroy
+  has_many :education_expenses, dependent: :destroy
   
   before_save :current_field
-  
+  before_save :sum_attributes
+  before_update :calc_protection_need
   accepts_nested_attributes_for :incomes, :allow_destroy => true, reject_if: :all_blank  
   accepts_nested_attributes_for :fixed_expenses, :allow_destroy => true, reject_if: :all_blank
   accepts_nested_attributes_for :optional_expenses, :allow_destroy => true, reject_if: :all_blank    
   accepts_nested_attributes_for :savings, :allow_destroy => true, reject_if: :all_blank  
   accepts_nested_attributes_for :propertees, :allow_destroy => true, reject_if: :all_blank  
   accepts_nested_attributes_for :debts, :allow_destroy => true, reject_if: :all_blank  
-
+  accepts_nested_attributes_for :education_expenses, :allow_destroy => true, reject_if: :all_blank  
+  
   validates :dob_string, :children, :state, :year,:month, presence: true
   validates :married, :inclusion => {:in => [true, false]}
 
   validate :dob_before_today
   validates :month, uniqueness: {scope:[:user_id, :year],message:"Plan for this month has been created already"}
+  serialize :protection_search, Array
   def self.nav_links 
-    ["1. Background", "2. Income","3. Fixed Expense","4. Optional Expense","5. Saving","6. Property","7. Debt"]
+    ["1. Background", "2. Income","3. Fixed Expense","4. Optional Expense","5. Saving","6. Property","7. Debt","8. Education"]
   end
   def sum_attributes
 
     
-    array1,array2,array3,array4,array5=[[],[],[],[],[]]
+    array1,array2,array3,array4,array5,array6=[[],[],[],[],[],[]]
     self.incomes.each{|t| array1 << t.amount}
     income_total=array1.sum   
     self.total_income= (income_total==nil) ? 0 : income_total
@@ -50,13 +54,18 @@ class Background < ActiveRecord::Base
     self.fixed_expenses.each{|t| array5 << t.amount}
     fix_expense_total=array5.sum
     self.total_fixed_expense= (fix_expense_total==nil) ? 0 : fix_expense_total  
+
+    self.propertees.each{|t| array6 << t.amount}
+    propertee_total=array6.sum
+    self.total_property= (propertee_total==nil) ? 0 : propertee_total  
     
-    self.netspend=income_total-fix_expense_total-opt_expense_total
-    self.networth=saving_total-debt_total
+    self.netspend=self.total_income-self.total_fixed_expense-self.total_optional_expense
+   
+    self.networth=self.total_saving+self.total_property-self.total_debt
     
   end
   def calc_protection_need
-    array1,array2,array3=[[],[],[]]
+    array1,array2,array3,array4=[[],[],[],[]]
     self.debts.each{|t| 
       if t.cat_name=="Mortgage Loan"
         array1 << t.amount
@@ -78,7 +87,11 @@ class Background < ActiveRecord::Base
     }
     self.income_need=(array3.sum)*10*12
     
-    self.total_protection_need=array1.sum+array2.sum+array3.sum*10*12
+    self.education_expenses.each{|t|
+      array4 << t.education_cost
+    }
+    self.total_education=array4.sum
+    self.total_protection_need=array1.sum+array2.sum+array3.sum*10*12+array4.sum
   end
 
   def dob_string
@@ -121,17 +134,17 @@ class Background < ActiveRecord::Base
     end
   end
   def skip_to_step(i)
-    i=i.to_i%7-1
+    i=i.to_i%8-1
     self.current_step=steps[i]
   end
   def is_complete
     self.completed=true
   end
   def steps
-    %w[background_1 income_2 fixed_expense_3 optional_expense_4 saving_5 propertee_6 debt_7]
+    %w[background_1 income_2 fixed_expense_3 optional_expense_4 saving_5 propertee_6 debt_7 education_expense_8]
   end
     
   def form_instruction_fields
-    %w[instruction_1 instruction_2 instruction_3 instruction_4 instruction_5 instruction_6 instruction_7]
+    %w[instruction_1 instruction_2 instruction_3 instruction_4 instruction_5 instruction_6 instruction_7 instruction_8]
   end
 end

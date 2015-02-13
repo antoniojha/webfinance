@@ -35,15 +35,15 @@
       <td><%= f.submit "Next" %></td>       
     <%else%>
       <td></td>
-      <% if @background.current_field=="debt_7"%>
-      <td><%=f.submit "Prev", name:"back_button"%></td>
-      <td><%= f.submit "Finish",name:"finish_button" %></td> 
+      <% if @background.current_field=="education_expense_8"%>
+      <td><%= f.submit "Save",name:"save" %></td>
+      <td><%=f.submit "Prev", name:"back_button"%><%= f.submit "Finish",name:"finish_button" %></td> 
       <% elsif @background.current_field=="background_1"%>
-      <td></td>
+      <td><%= f.submit "Save",name:"save" %></td>
       <td><%= f.submit "Next"%></td> 
       <% else%>
-      <td><%=f.submit "Prev", name:"back_button"%></td>
-      <td><%= f.submit "Next" %></td>  
+      <td><%= f.submit "Save",name:"save" %></td>
+      <td><%=f.submit "Prev", name:"back_button"%><%= f.submit "Next" %></td>  
       <%end%>
     <%end%>     
     </tr>

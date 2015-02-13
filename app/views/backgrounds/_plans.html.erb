@@ -1,0 +1,61 @@
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script>
+    var text1="Investment means buying an assets that may grow overtime. This is more risky than savings that you may lose all the money you put in. But as the risk is higher so is the potential rate of return.";
+    var text2="Saving plan is any plan that allows you to accrue money through interest or tax benefit that does not have risk. Saving plan can be a type of retirment plan, education plan a Certificate of Deposit at a bank or money at a bank account";
+    var text3="Emergency Fund is an amount of money that is available to fall back on in case of unexpected circumstances.";
+    var text4="Debt management is to reduce any outstanding debts over time to help the debtor regain control of finances.";
+    var text5="Financial protection is manage potential risks to mitigate potential overwhelming cost of various risks. The solution for this is to obtain insurance such as life insurance, health insurance, property insurance, disbility insurance...etc.";
+
+  $(function() {
+    $( document ).tooltip({
+      position: { my: "left+70 center", at: "right center" },
+      items: "[data-1], [data-2], [data-3], [data-4], [data-5]",
+       content: function() {
+        var element = $( this );
+        if ( element.is( "[data-1]" ) ) {
+          return text1;
+        }
+        if ( element.is( "[data-2]" ) ) {
+          return text2;
+        }
+        else if ( element.is( "[data-3]" ) ) {
+          return text3;
+        }
+        else if ( element.is( "[data-4]" ) ) {
+          return text4;
+        }
+        else if ( element.is( "[data-5]" ) ) {
+          return text5;
+        }
+      }
+    });
+  });
+  </script>
+<div align="left">
+<p>Building a solid financial portfolio requires solid foundations.</p>
+<p> Below is different level of financial strategies we think is essential in having a successful financial future.</p>
+
+</div>
+<h4>You currently need the following:<h4> 
+<div style="width:20%;background-color:#5cb85c;height:50px;padding-top:20px;">
+  <a href="#" data-1="" style="color:white;">1. INVESTMENT</a>
+</div>
+<div style="width:27.5%;background-color:#5bc0de;height:50px;padding-top:20px;">
+  <a href="#" data-2="" style="color:white;">2. SAVING PLAN</a>
+</div>
+<div style="width:35%;background-color:#337ab7;height:50px;padding-top:20px;">
+  <a href="#" data-3="" style="color:white;">3. EMERGENCY FUND</a>
+</div>
+<div style="width:42.5%;background-color:#f0ad4e;height:50px;padding-top:20px;">
+  <a href="#" data-4="" style="color:white;">4. DEBT MANAGEMENT</a>
+</div>
+<div style="width:50%;background-color:#d9534f;height:50px;padding-top:20px;">
+  <a href="#" data-5="" style="color:white;">5. PROTECTION</a>
+</div>
+  <p>Note: Bottom layer has the higher priority.</p> 
+  <p>This only serves as a basic guide of various type of financial planning.</p>
+  
+<h4>Select your desired plan</h4>
+<div style="width:50%;">
+<%=render "form"%>
+</div>

@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   before_action :correct_user, only:[:edit,:update,:destroy]
+  include ProfilesHelper
   # GET /users
   # GET /users.json
   def index
@@ -12,7 +13,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-
+    @plan=current_month_plan
   end
 
   # GET /users/new

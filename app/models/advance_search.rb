@@ -30,16 +30,16 @@ class AdvanceSearch < ActiveRecord::Base
     ["spendings.description LIKE ?", "%#{keyword}%"] unless keyword.blank?
   end
   def minimum_price_conditions
-  ["spendings.amount >= ?", minimum_price] unless minimum_price.blank?
+    ["spendings.amount >= ?", minimum_price] unless minimum_price.blank?
   end
   def maximum_price_conditions
-  ["spendings.amount <= ?", maximum_price] unless maximum_price.blank?
+    ["spendings.amount <= ?", maximum_price] unless maximum_price.blank?
   end
   def start_date_conditions
-  ["spendings.transaction_date >= ?", start_date] unless start_date.blank?  
+    ["spendings.transaction_date >= ?", start_date] unless start_date.blank?  
   end
   def end_date_conditions
-  ["spendings.transaction_date <= ?", end_date] unless end_date.blank?   
+    ["spendings.transaction_date <= ?", end_date] unless end_date.blank?   
   end
   def conditions
     [conditions_clauses.join(' AND '), *conditions_options]

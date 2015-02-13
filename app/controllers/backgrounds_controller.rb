@@ -1,5 +1,6 @@
 class BackgroundsController < ApplicationController
   include BackgroundsHelper
+  
   before_action :set_background, only:[:show, :edit, :update, :add_assoc, :direct_to,:destroy]
   def new
     @background=Background.new
@@ -70,8 +71,7 @@ class BackgroundsController < ApplicationController
         # doesn't display error if validation fails
         format.html{redirect_to edit_background_url(@background)}
       elsif params[:finish_button]
-        @background.sum_attributes
-        @background.calc_protection_need
+      
         @background.is_complete
         if @background.update(background_params)      
           end_step_session
@@ -79,6 +79,18 @@ class BackgroundsController < ApplicationController
         else
           build_before_render(assoc_field)
           format.html{render "edit"}
+        end
+      elsif params[:save]
+        if @background.update(background_params)
+          format.html{redirect_to edit_background_url(@background)}
+        else
+          format.html{render "edit"}
+        end
+      elsif params[:protection]
+        if @background.update(background_params)
+          format.html{redirect_to brokers_url}
+        else
+          format.html{render new_protection_plan_path}
         end
       else
         @background.next_step
@@ -93,7 +105,7 @@ class BackgroundsController < ApplicationController
     end
   end
   def show
-   
+    
   end
   def index
     @backgrounds=current_user.backgrounds
@@ -106,7 +118,7 @@ class BackgroundsController < ApplicationController
   end
   private
   def background_params
-    params.require(:background).permit(:state, :dob_string, :married, :children, :income,savings_attributes:[:institution_name, :description, :amount, :category,:_destroy,:id],debts_attributes:[:institution_name,:description,:amount,:interest_rate,:category,:_destroy,:id],incomes_attributes:[:description, :amount, :category,:_destroy,:id], fixed_expenses_attributes:[:description, :company, :amount, :transaction_date_string, :category,:_destroy,:id], optional_expenses_attributes:[:description, :amount, :category,:_destroy,:id], propertees_attributes:[:description,:amount,:category,:_destroy,:id])
+    params.require(:background).permit(:state, :dob_string, :married, :children, :income,{:protection_search => []},:other_debt, :income_need, :total_mortgage, :total_education, savings_attributes:[:institution_name, :description, :amount, :category,:_destroy,:id],incomes_attributes:[:description, :amount, :category,:_destroy,:id], fixed_expenses_attributes:[:description, :company, :amount, :transaction_date_string, :category,:_destroy,:id], optional_expenses_attributes:[:description, :amount, :category,:_destroy,:id], propertees_attributes:[:description,:amount,:category,:_destroy,:id],debts_attributes:[:institution_name,:description,:amount,:interest_rate,:category,:_destroy,:id],education_expenses_attributes:[:age,:education_cost,:description,:id])
   end
   def set_background
     @background=Background.find(params[:id])
@@ -141,14 +153,28 @@ class BackgroundsController < ApplicationController
     end
   end
   def build_before_render(assoc_field)
+    unless assoc_field=="education_expenses"
     @background.send(assoc_field).build 
 session[:saving_i]=session[:debt_i]=session[:income_i]=session[:optional_expense_i]=session[:fixed_expense_i]=session[:property_i]=@background.send(assoc_field).length 
     # length method gives number of associated object that has not been saved
+    end
   end
   def build_after_redirect(assoc_field)
     # called just in case if the a particular associated field does not have any object created. This ensures that it will create the default amount of associated object.
     unless assoc_field=="backgrounds"  
-      @background.send(assoc_field).build
+      if assoc_field=="education_expenses"
+        # education expense field doesn't have add or remove field feature
+        num=@background.children
+        diff=num-@background.education_expenses.count
+        diff.times{
+          @background.send(assoc_field).build
+        }
+        if num ==0
+          @no_education=true
+        end
+      else
+        @background.send(assoc_field).build
+      end
       if (@background.send(assoc_field).count==0)
  session[:saving_i]=session[:debt_i]=session[:income_i]=session[:optional_expense_i]=session[:property_i]=session[:fixed_expense_i]=1
         

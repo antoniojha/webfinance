@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   include SessionsHelper
+  before_action :delete_temp_broker
   before_action :remember_location, except:[:create,:update,:destroy] # this comes before authorize_login to be executed first
   before_action :authorize_login, except: [:about, :contact, :demo, :home, :blog, :faq]
   rescue_from ActiveRecord::RecordNotFound, with: :invalid_user
@@ -12,6 +13,16 @@ class ApplicationController < ActionController::Base
     logger.error "Attempt to access user id#{session[:user_id]} that's not existing"
     redirect_to login_url, notice: "Invalid User"
   end
+  def delete_temp_broker
+    if cookies[:temp_broker_id]
+      broker=Broker.find(cookies[:temp_broker_id])  
+      if broker
+        broker.delete
+      end
+      cookies.delete(:temp_broker_id)
+    end
+  end
+
   def authorize_login
     unless logged_in?
       flash[:danger]="Please login"

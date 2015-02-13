@@ -2,9 +2,15 @@ class ProtectionPlansController < ApplicationController
   
   include ProfilesHelper
   before_action :set_protection_plan, only: [:edit, :show]
-  def new
+  def index
     @background=current_month_plan
-    @protection_plan=@background.protection_plans.build
+    @protection_plan=ProtectionPlan.new
+    if @background.nil?
+      redirect_to new_background_url, notice: "Please first create a financial profile."
+    end  
+  end
+  def new
+
   end
   def edit
     
@@ -21,7 +27,7 @@ class ProtectionPlansController < ApplicationController
   def show
   end
   def protection_plan_params
-    params.require(:protection_plan).permit(:income,:debt,:education,:mortgage,:start_year,:start_month, :end_year,:end_month)
+    params.require(:protection_plan).permit(:protection_need)
   end
   private
   def set_protection_plan

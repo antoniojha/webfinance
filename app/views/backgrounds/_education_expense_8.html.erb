@@ -1,0 +1,8 @@
+<% provide :title, '|financial planning page 8'%>
+<h3>Education Costs</h3>
+<%= f.fields_for :education_expenses do |builder|%>
+<%=render 'education_fields', builder: builder%>
+<%end%>
+<% if @no_education%>
+<h4>You have indicated that you have no dependent. Please skip this section.</h4>
+<%end%>

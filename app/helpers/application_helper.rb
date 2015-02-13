@@ -4,6 +4,8 @@ module ApplicationHelper
   def column_width_right
     if current_controller=='spendings'
       return "col-md-3"
+    elsif current_controller=='brokers' && controller.action_name=="index"
+      return "col-md-3"
     else
       return "col-md-2"
     end
@@ -11,6 +13,8 @@ module ApplicationHelper
   def column_width_middle
     if current_controller=='spendings'
       return "col-md-6"
+    elsif current_controller=='brokers' && controller.action_name=="index"
+      return "col-md-7"
     else
       return "col-md-8"
     end
@@ -18,6 +22,8 @@ module ApplicationHelper
   def column_width_left
     if current_controller=='spendings'
       return "col-md-3"
+    elsif current_controller=='brokers' && controller.action_name=="index"
+      return "col-md-2"  
     else
       return "col-md-2"
     end
@@ -40,7 +46,13 @@ module ApplicationHelper
         image_tag user.picture.url(:medium), class: "img-thumbnail"
       end
     else
-      image_tag "place_holder.jpg",size:"100x100", class: "img-thumbnail", alt:"Please upload picture"
+      if scenario ==3
+        image_tag "place_holder.jpg",size:"200x200", class: "img-thumbnail", alt:"Please upload picture"
+      else
+        image_tag "place_holder.jpg",size:"100x100", class: "img-thumbnail", alt:"Please upload picture"
+      end
     end
+  end
+  def smart_image_broker(broker,scenario)
   end
 end

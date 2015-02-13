@@ -9,6 +9,8 @@ gem 'rails', '4.1.5'
 gem 'httparty'
 gem 'hashie'
 
+gem 'geocoder'
+
 # This gem is used for rss feed parsing
 gem 'pauldix-feedzirra'
 # gem for manipulating different currency

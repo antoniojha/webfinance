@@ -1,0 +1,16 @@
+
+<%= will_paginate @brokers, inner_window:1, outer_window:1%>
+<table>
+  <% @brokers.each_with_index do |broker,index|%>
+    <% if index%2==0%>
+    <tr>
+    <%end%>
+    <td width='15%'><%= smart_image(broker)%></td>
+      <td width='35%'><a href=<%=broker_path(broker)%>><%=broker.first_name.capitalize%> <%=broker.last_name.capitalize%></a>&nbsp &nbsp 
+    </td>  
+    <% if index%2==1%>
+    </tr>
+    <%end%>
+  <%end%>
+</table> 
+<%= will_paginate @brokers, inner_window:1, outer_window:1%>

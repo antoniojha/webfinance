@@ -16,4 +16,5 @@ class EmailConfirmationMailer < ActionMailer::Base
     @user=user
     mail to: user.email, subject: 'Welcome to WebFinance'
   end
+
 end

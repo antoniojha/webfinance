@@ -1,3 +1,4 @@
+if false
 namespace :db do
   desc "Fill database with users"
     task populate: :environment do
@@ -17,4 +18,5 @@ namespace :db do
         Spending.create!(transaction_date_string:transaction_date_string,description:description,category:category,amount:amount,user_id:user_id)
       end
     end
+end
 end

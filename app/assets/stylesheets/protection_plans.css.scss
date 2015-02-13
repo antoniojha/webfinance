@@ -1,3 +1,24 @@
 // Place all the styles related to the protection_plans controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.check_box{
+  width: 20px;
+  height: 20px;
+}
+
+.check_box_container{
+  padding:5px;
+  vertical-align: text-top;
+}
+.question{
+  display:none;
+  .content{
+    height:100px;
+  }
+}
+#question1{
+
+  .content{
+    height:100px;
+  }
+}

@@ -21,11 +21,11 @@ describe User do
       end
       it {should be_admin}
     end
-    describe "shouldn't save when firstname is not entered" do
+    describe "shouldn't save when first name is not entered" do
       before {@user.first_name=""}
       it {should_not be_valid}
     end
-    describe "shouldn't save when firstname is not entered" do
+    describe "shouldn't save when last name is not entered" do
       before {@user.last_name=""}
       it {should_not be_valid}
     end
@@ -181,7 +181,7 @@ describe User do
       expect(last_email.to).to include (user.email)
     end 
     #check
-    it "authenticaetd? it should return false for a user with nil auth_token digest" do
+    it "authenticated? it should return false for a user with nil auth_token digest" do
       expect(user.authenticated?('')).to eq false
       user.remember
       expect(user.authenticated?(user.auth_token)).to eq true

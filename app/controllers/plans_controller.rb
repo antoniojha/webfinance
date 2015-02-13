@@ -7,7 +7,7 @@ class PlansController < ApplicationController
   def start
     respond_to do |format|
       if params[:category]
-        plan_urls=[new_protection_plan_url, debt_2_url, emergency_3_url, retirement_4_url, education_5_url, saving_6_url]
+        plan_urls=[protection_plans_url, debt_2_url, emergency_3_url, retirement_4_url, education_5_url, saving_6_url]
         plan_url=plan_urls[params[:category].to_i-1]
         format.html{redirect_to plan_url}
       else

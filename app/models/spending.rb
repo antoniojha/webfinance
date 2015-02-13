@@ -1,6 +1,6 @@
 
 class Spending < ActiveRecord::Base
-  belongs_to :account_item
+  belongs_to :user
   has_attached_file :picture, :styles => { :small => "150x150>" }
   VALID_DATE_FORMAT=/\A(\d\d|\d)(\/)(\d\d|\d)(\/)(\d\d\d\d|\d\d)\z/
   validates :description, :amount, :category, presence: true

@@ -1,0 +1,27 @@
+
+<%= form_for @broker do |f|%>
+  <table width="70%">  
+
+     <%= f.fields_for :licenses, :html => { :multipart => true } do |builder|%>  
+      <tr>
+        <td><%= builder.label Order::LICENSE_TYPES[builder.object.license_type.to_i-1][0]%></td>
+        <td><%= builder.hidden_field :license_type, value:builder.object.license_type%></td>
+      </tr>
+      <tr>
+        <td><%=builder.label :license_number%></td>
+        <td><%=builder.text_field :license_number,:class=>"form-control"%></td>
+      </tr>
+      <tr>
+        <td><%=builder.label :picture, "Upload License PDF"%></td>
+        <td><%=builder.file_field :picture, :class=>"form-control"%></td>
+      </tr>
+      <tr class="blank_row"><tr>
+       
+
+    <%end%>
+    <tr>
+      <td><%=f.submit "Prev", name:"prev", :class=>"btn btn-success"%></td>
+      <td><%=f.submit "Submit",name:"submit", :class=>"btn btn-success"%></td>
+    </tr>
+  </table>
+<%end%>

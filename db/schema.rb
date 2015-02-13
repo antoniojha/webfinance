@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150126204041) do
+ActiveRecord::Schema.define(version: 20150213045202) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -79,6 +79,8 @@ ActiveRecord::Schema.define(version: 20150126204041) do
     t.decimal  "total_protection_need",  default: 0.0
     t.decimal  "other_debt",             default: 0.0
     t.decimal  "income_need",            default: 0.0
+    t.string   "protection_search"
+    t.decimal  "total_property",         default: 0.0
   end
 
   add_index "backgrounds", ["user_id"], name: "index_backgrounds_on_user_id"
@@ -95,6 +97,51 @@ ActiveRecord::Schema.define(version: 20150126204041) do
     t.datetime "updated_at"
   end
 
+  create_table "broker_imports", force: true do |t|
+  end
+
+  create_table "broker_searches", force: true do |t|
+    t.string   "name"
+    t.string   "license_types"
+    t.string   "city"
+    t.string   "state"
+    t.decimal  "distance_away"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "brokers", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "institution_name"
+    t.string   "phone_number_work"
+    t.string   "email"
+    t.string   "password_digest"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "phone_number_cell"
+    t.float    "longitude"
+    t.float    "latitude"
+    t.string   "street"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.string   "picture_file_name"
+    t.string   "picture_content_type"
+    t.integer  "picture_file_size"
+    t.datetime "picture_updated_at"
+    t.boolean  "approved",                   default: false
+    t.string   "username"
+    t.string   "license_type"
+    t.boolean  "submitted",                  default: false
+    t.string   "confirmation_number_digest"
+    t.datetime "submitted_at"
+    t.string   "web"
+    t.string   "work_ext"
+  end
+
+  add_index "brokers", ["confirmation_number_digest"], name: "index_brokers_on_confirmation_number_digest"
+
   create_table "debts", force: true do |t|
     t.string   "institution_name"
     t.string   "description"
@@ -108,6 +155,17 @@ ActiveRecord::Schema.define(version: 20150126204041) do
   end
 
   add_index "debts", ["background_id"], name: "index_debts_on_background_id"
+
+  create_table "education_expenses", force: true do |t|
+    t.decimal  "education_cost"
+    t.string   "description"
+    t.integer  "background_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "age"
+  end
+
+  add_index "education_expenses", ["background_id"], name: "index_education_expenses_on_background_id"
 
   create_table "fixed_expenses", force: true do |t|
     t.string   "description"
@@ -148,6 +206,21 @@ ActiveRecord::Schema.define(version: 20150126204041) do
   end
 
   add_index "incomes", ["background_id"], name: "index_incomes_on_background_id"
+
+  create_table "licenses", force: true do |t|
+    t.integer  "broker_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "picture_file_name"
+    t.string   "picture_content_type"
+    t.integer  "picture_file_size"
+    t.datetime "picture_updated_at"
+    t.integer  "license_type",         limit: 255
+    t.string   "license_number"
+    t.boolean  "approved",                         default: false
+  end
+
+  add_index "licenses", ["broker_id"], name: "index_licenses_on_broker_id"
 
   create_table "logs", force: true do |t|
     t.string   "endpoint"
@@ -257,6 +330,7 @@ ActiveRecord::Schema.define(version: 20150126204041) do
   end
 
   add_index "spendings", ["account_item_id"], name: "index_spendings_on_account_item_id"
+  add_index "spendings", ["user_id"], name: "index_spendings_on_user_id"
 
   create_table "suggested_goals", force: true do |t|
     t.string   "description"
@@ -288,8 +362,6 @@ ActiveRecord::Schema.define(version: 20150126204041) do
   end
 
   create_table "transaction_imports", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|
@@ -317,6 +389,9 @@ ActiveRecord::Schema.define(version: 20150126204041) do
     t.string   "picture_content_type"
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
+    t.string   "address"
+    t.float    "longitude"
+    t.float    "latitude"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
