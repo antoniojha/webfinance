@@ -1,0 +1,26 @@
+<!-- the same copy foudn in brokers folder in view-->
+<%= will_paginate @brokers, inner_window:1, outer_window:1%>
+<table>
+  <% @brokers.each_with_index do |broker,index|%>
+    <% if index%2==0%>
+    <tr>
+    <%end%>
+    <td width='15%'><%= smart_image(broker)%></td>
+      <td width='35%'><a href=<%=broker_path(broker)%>><%=broker.first_name.capitalize%> <%=broker.last_name.capitalize%></a>
+      <% if @broker_search.license_types%>
+        <% if current_user.associated_with?(broker,@broker_search.license_types)%>
+        <p style="color:green;">Quote Requested<span class="glyphicon glyphicon-ok" aria-hidden="true"></span></p>
+        <% quote_relation=quote_relation(current_user,broker,@broker_search.license_types)%>
+        <p class="cancel"><%=link_to "cancel", {controller:"quote_relations", action:"destroy",id:quote_relation.id,broker_search_id:@broker_search.id,remote:true},{:method => :delete}%></p>
+        <%else%>
+          <%=quote_button(@broker_search, broker)%>
+        <%end%>
+      <%end%>
+        
+    </td>  
+    <% if index%2==1%>
+    </tr>
+    <%end%>
+  <%end%>
+</table> 
+<%= will_paginate @brokers, inner_window:1, outer_window:1%>

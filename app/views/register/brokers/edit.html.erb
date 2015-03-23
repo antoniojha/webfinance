@@ -1,0 +1,9 @@
+<div style="float:left;">
+  <%=button_to "Save and Close",register_close_finish_url,{method: :get,:class=>"btn btn-success"}%>
+</div>
+<div style="clear:both;"></div>
+<h1>New Account</h1>
+<%=render "error"%>
+<div id=<%=@broker.current_field%>>
+<%=render @broker.current_field%>
+</div>

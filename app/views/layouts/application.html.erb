@@ -27,8 +27,10 @@
 
   <div align="center" class="body1">
     <div id='col_left' class=<%=column_width_left%> align="center">
-      <%if logged_in?%>
+      <%=yield :left%>
+      <%if user_logged_in?%>
       <%=render "profiles/menu"%>
+      
       <%end%>
     </div>
     <div id='col_middle' class=<%=column_width_middle%> align="center">
@@ -36,6 +38,7 @@
       <% flash.each do|message_type, message|%>
       <div class="alert alert-<%=message_type%> <%=message_type%>"><%=message%></div>
       <%end%>
+      <%=session[:return_to]%>
       <%=yield %>
     </div>
 

@@ -11,6 +11,8 @@ gem 'hashie'
 
 gem 'geocoder'
 
+gem 'facebox-rails'
+
 # This gem is used for rss feed parsing
 gem 'pauldix-feedzirra'
 # gem for manipulating different currency

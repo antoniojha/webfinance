@@ -5,7 +5,7 @@
   		 		<li class="navbar-text"><span class="logo">WebFinance</span></li>
   		 	</ul>
   		 	<ul class="navbar-nav nav pull-right">
-          <% if logged_in?%>
+          <% if user_logged_in?%>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               Account <b class="caret"></b>
@@ -15,12 +15,36 @@
               <li><%= link_to 'Private Setting', edit_user_path(current_user)%></li>
               <li><%= link_to 'All Users', users_path%></li>
               <li class="divider"></li>
-              <li><%= link_to 'Log Out',logout_path, method: "delete"%></li>
+              <li><%= link_to 'Log Out',user_logout_path, method: "delete"%></li>
             </ul>
           </li>
+          <%elsif broker_logged_in?%>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              Account <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li><%= link_to 'Broker Profile', current_broker %></li>
+              <li><%= link_to 'Private Setting', edit_broker_path(current_broker)%></li>
+              <li><%= link_to 'All Users', users_path%></li>
+              <li class="divider"></li>
+              <li><%= link_to 'Log Out',broker_logout_path, method: "delete"%></li>
+            </ul>
+          </li>          
           <%else%>
-          <li><%= link_to 'Sign In', login_path %></li>
+          <li><%= link_to 'Sign In', user_login_path %></li>
           <li><%= link_to 'Sign Up', signup_path %></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              Financial Reps <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Why Sign Up?","#"%></li>
+              <li><%= link_to "Login", broker_login_path %></li>
+              <li><%= link_to "Sign Up", register_signup_path %></li>
+              <li><%= link_to "Registration Status",new_status_session_url%></li>
+             </ul>
+          </li>
           <%end%>
         </ul>
      

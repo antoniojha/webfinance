@@ -1,9 +1,9 @@
-  <% if @broker.errors.any? %>
+<% if @broker.errors.any? %>
 
     <div class="alert alert-danger error-message">
       <h2>The form contains <%= pluralize(@broker.errors.count, "error") %></h2>
       <ul>
-      <% @broker.errors.full_messages.each do |msg| %>
+        <% @broker.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>

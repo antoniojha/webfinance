@@ -1,0 +1,6 @@
+<h1>View Backgrounds</h1>
+<%@backgrounds.each do |background|%>
+
+<p>Background in <%=background.created_at.strftime("%B, %Y")%>&nbsp&nbsp<%=link_to "View", background%></p>
+
+<%end%>

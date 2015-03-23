@@ -1,0 +1,25 @@
+<% content_for :title do %>|User Login<%end%>
+<h1>Login to WebFinance</h1>
+<%= form_for :session, url:user_signin_path do |f|%>
+	
+	<table width="70%">
+		<tr>
+      <td width="20%"><%= f.label :username%></td>
+			<td width="65%"><%= f.text_field :username, {:class=>'form-control'}%></td>
+      <td width="15%"></td>
+		</tr>
+		<tr class="blank_row"></tr>
+		<tr>
+			<td><%= f.label :password, 'Password:'%></td>
+      <td><%= f.password_field :password, {:class=>'form-control'}%></td>
+      <td></td>
+		</tr>
+		<tr class="blank_row"></tr>
+		<tr>
+			<td><%= f.submit "Login", :class=>'btn btn-primary'%></td>
+      <td colspan="2"><%= f.check_box(:remember) %> &nbsp Remember login on this computer? &nbsp &nbsp &nbsp &nbsp New User? <%= link_to 'Sign Up Now!', signup_path%></td>
+		</tr>
+
+	</table>
+
+<% end %>

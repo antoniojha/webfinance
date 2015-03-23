@@ -168,8 +168,8 @@ describe Broker do
       before do
         @broker.submit
       end
-      it "should generate, save confirmation_number_digest" do
-        expect(@broker.confirmation_number_digest).to be_present
+      it "should generate, save confirmation_number" do
+        expect(@broker.confirmation_number).to be_present
 
       end
       it "should send email to broker" do
@@ -180,7 +180,24 @@ describe Broker do
         expect(@broker.submitted_at).to be_present        
       end
     end
-    describe "Licenses" do
+    describe "Appointment Association" do
+      before do
+        @broker.save     @product=Product.create(name:"test",description:"test",product_type:1,firm_id:1)
+      end
+      it "appoint method should work" do
+        expect{@broker.appoint(@product)}.to change(Appointment, :count).by(1)
+      end
+      it "unappoint method should work" do
+        @broker.appoint(@product)
+        expect{@broker.unappoint(@product)}.to change(Appointment, :count).by(-1)
+      end
+      it "appointed_with? should work" do
+        expect(@broker.appointed_with?(@product)).to eq false
+        @broker.appoint(@product)
+        expect(@broker.appointed_with?(@product)).to eq true
+      end
+    end
+    describe "Associated Licenses" do
       before do
         @license=FactoryGirl.build :license, broker:@broker
       end

@@ -1,0 +1,2 @@
+class FirmsController < ApplicationController
+end

@@ -1,0 +1,57 @@
+
+<table width="100%">
+  <tr>
+    <td width="30%">Name</td>
+    <td width="70%"><%=@broker.first_name.capitalize%> <%=@broker.last_name.capitalize%> <%= link_to "View", @broker.identification.url(:original, false), :target => "_blank" %>
+      </p></td>
+  </tr>
+  <tr>
+    <td>Firm</td>
+    <td><%=@broker.institution_name.capitalize%> </td>
+  </tr>
+  <tr>
+    <td>Address</td>
+    <td><p><%=@broker.street%></p><p><%=@broker.city%>,<%=@broker.state%></p></td>
+  </tr>
+  <tr>
+    <td>Phone:</td>
+    <td><p>Work:<%=phone_num_display(@broker.phone_number_work)%><%if @broker.work_ext.present?%>(ext):<%=@broker.work_ext%><%end%></p> 
+      <% if @broker.phone_number_cell.present?%>
+      <p>Cell:<%=phone_num_display(@broker.phone_number_cell)%></p>
+      <%end%>
+    </td>
+  </tr>  
+  <tr>
+    <td> Url:</td>
+    <td><%=@broker.web%></td>
+  </tr>
+  <tr>
+    <td>Username:</td>
+    <td><%=@broker.username%></td>
+  </tr>
+  <tr>
+    <td>Email:</td>
+    <td><%=@broker.email%></td>
+  </tr>
+  <tr>
+    <td>Licenses:</td>
+    <td>
+        <%@broker.licenses.each do |license|%>
+        <p>
+        <%=Order::LICENSE_TYPES[license.license_type-1][0]%>
+          <%= link_to "View", license.picture.url(:original, false), :target => "_blank" %>
+        </p>
+        <%end%>
+    </td>
+  </tr>
+  <tr>
+    <td>Products:</td>
+    <td>
+      <ol>
+        <%@broker.products.each do |product|%>
+        <li><%=product.firm.name%>: <%=product.name%></li>
+        <%end%>
+      </ol>
+    </td>
+  </tr>
+</table>

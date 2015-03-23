@@ -8,6 +8,7 @@ class Order <ActiveRecord::Base
   PLAN_TYPES=[["Protection Plan",1],["Debt Management",2],["Emergency Fund",3],["Retirement Plan",4],["Education Fund",5],["Saving up",6]]
   PROTECTION_TYPES=[["Life Insurance",1],["Disability Insurnace",2]]
   LICENSE_TYPES=[["Life Insurance Agent",1],["Health Insurance Agent",2],["Series 6",3],["Series 7",4]]
+  LICENSE_TYPES_HASH={"1"=>"Life Insurance Agent","2"=>"Health Insurance Agent","3"=>"Series 6","4"=>"Series 7"}
   LENGTH_UNITS=[["mile",1],["kilometer",2]]
   US_STATES=
     [

@@ -1,0 +1,32 @@
+<%provide :title, "|Register Page 3"%>
+<script>
+  $(document).ready(function(){
+    
+    $(document).delegate(".select","change",function(){
+      val=$(this).val();
+      $.ajax({
+        url: "product_lookup",
+        type: "GET",
+        data: {"firm_id": val,"broker_id":<%=@broker.id%>},
+      });
+    });        
+  });
+
+</script>
+<h3>Please enter your financial products</h3>
+<div id="form3_select">
+  <%=render "form3_select"%>
+</div>
+<div id="product_list">
+  <%=render "product_list"%>
+</div>
+
+<%= form_for @broker,:url => url_for(:controller => 'register/brokers',:action=> 'update') do |f|%>
+  <table width="70%">
+    <tr class="blank_row"></tr>
+    <tr>
+      <td width="30%"><%=f.submit "Prev", name:"prev", :class=>"btn btn-primary"%></td>
+      <td width="70%"><%=f.submit "Finish",name:"next",:class=>"btn btn-primary"%></td>
+    </tr>
+  </table>
+<%end%>

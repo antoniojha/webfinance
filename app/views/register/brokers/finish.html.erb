@@ -1,0 +1,18 @@
+<%provide :title, "|Broker Initial Confirmation"%>
+<div style="float:left;">
+  <%=button_to "Save and Close",broker_close_finish_url,{method: :get,:class=>"btn btn-success"}%>
+</div>
+<div style="clear:both;"></div>
+<h3>Confirmation</h3>
+<div align="left">
+  <p>Dear, <%=@broker.first_name.capitalize%></p>
+Thank you for registering. Please give us a couple of days to process through the forms. You will be notified through your email or you can access this page to check your status.
+
+  <p> Your confirmation number is <%=@broker.confirmation_number%>.</p>
+<p> You can use this <%=link_to "site", new_status_session_url%> to look up your status. </p>
+<p> A copy of this confirmation page is sent to your email.</p>
+  
+</div>
+<hr class="divider"> 
+<h4>Your Application Submitted</h4>
+<%=render "summary"%>

@@ -1,4 +1,4 @@
-class BackgroundsController < ApplicationController
+class BackgroundsController < User::AuthenticatedController
   include BackgroundsHelper
   
   before_action :set_background, only:[:show, :edit, :update, :add_assoc, :direct_to,:destroy]
@@ -11,7 +11,7 @@ class BackgroundsController < ApplicationController
     end
   end
   def add_assoc
-    @test=params[:name]
+   
     @assoc=get_assoc
     @assoc_num=track_association_number
     build_name=@assoc+"s"
@@ -30,7 +30,9 @@ class BackgroundsController < ApplicationController
       format.js
     end    
   end
-
+  def life_insurance_info
+    
+  end
   def edit
     if params[:step]
       i=params[:step]
@@ -118,7 +120,7 @@ class BackgroundsController < ApplicationController
   end
   private
   def background_params
-    params.require(:background).permit(:state, :dob_string, :married, :children, :income,{:protection_search => []},:other_debt, :income_need, :total_mortgage, :total_education, savings_attributes:[:institution_name, :description, :amount, :category,:_destroy,:id],incomes_attributes:[:description, :amount, :category,:_destroy,:id], fixed_expenses_attributes:[:description, :company, :amount, :transaction_date_string, :category,:_destroy,:id], optional_expenses_attributes:[:description, :amount, :category,:_destroy,:id], propertees_attributes:[:description,:amount,:category,:_destroy,:id],debts_attributes:[:institution_name,:description,:amount,:interest_rate,:category,:_destroy,:id],education_expenses_attributes:[:age,:education_cost,:description,:id])
+    params.require(:background).permit(:state, :dob_string, :gender, :married, :children, :income,{:protection_search => []},:other_debt, :income_need, :total_mortgage, :total_education, savings_attributes:[:institution_name, :description, :amount, :category,:_destroy,:id],incomes_attributes:[:description, :amount, :category,:_destroy,:id], fixed_expenses_attributes:[:description, :company, :amount, :transaction_date_string, :category,:_destroy,:id], optional_expenses_attributes:[:description, :amount, :category,:_destroy,:id], propertees_attributes:[:description,:amount,:category,:_destroy,:id],debts_attributes:[:institution_name,:description,:amount,:interest_rate,:category,:_destroy,:id],education_expenses_attributes:[:age,:education_cost,:description,:id])
   end
   def set_background
     @background=Background.find(params[:id])

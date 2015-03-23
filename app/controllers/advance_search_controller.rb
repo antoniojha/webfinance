@@ -1,4 +1,4 @@
-class AdvanceSearchController < ApplicationController
+class AdvanceSearchController < User::AuthenticatedController
 
   def create
     @advance_search = AdvanceSearch.new(advance_search_params)

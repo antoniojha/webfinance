@@ -2,7 +2,9 @@ require 'rails_helper'
 describe User do
   describe "Creating User" do
     before do
-      @user=User.new(first_name:"firstname",last_name:"lastname", username:"example user", email:"example@example.com", password: "Example_password12?", password_confirmation: "Example_password12?")
+      @user=User.new( username:"example user", email:"example@example.com", password: "Example_password12?", password_confirmation: "Example_password12?")
+      @user2=User.new(username:"example user2", email:"example2@example.com",password:"Example_password12?",password_confirmation:"Example_password12?",first_name:"firstname",last_name:"lastname", phone_number:"1"*10)
+      @user2.save
     end
     subject {@user}
     it {should respond_to(:first_name)}
@@ -21,16 +23,20 @@ describe User do
       end
       it {should be_admin}
     end
-    describe "shouldn't save when first name is not entered" do
-      before {@user.first_name=""}
-      it {should_not be_valid}
+    describe "when first name is not entered" do
+      before {@user2.first_name=""}
+      it "shouldn't save" do
+        expect(@user2).not_to be_valid
+      end
     end
-    describe "shouldn't save when last name is not entered" do
-      before {@user.last_name=""}
-      it {should_not be_valid}
+    describe "when last name is not entered" do
+      before {@user2.last_name=""}
+      it "shouldn't save" do
+        expect(@user2).not_to be_valid
+      end
     end
     #check
-    describe "shouldn't save when name is not entered" do
+    describe "shouldn't save when username is not entered" do
       before {@user.username=""}
       it {should_not be_valid}
     end
@@ -70,17 +76,16 @@ describe User do
     #check
     describe "when password is different from password_confirmation" do 
       before do
-        @user2=@user.dup
-        @user2.password_confirmation= ""
+        @user3=@user.dup
+        @user3.password_confirmation= ""
       end 
       it "should not be valid" do
-        @user2.save
-        expect(@user2).not_to be_valid
+        @user3.save
+        expect(@user3).not_to be_valid
       end
-      it "now with the same password ther user should be valid" do
-        @user2.password_confirmation=@user2.password
-        @user2.save
-        expect(@user2).to be_valid
+      it "now with the same password the user should be valid" do
+        @user3.password_confirmation=@user3.password
+        expect(@user3).to be_valid
       end
     end
     #check
@@ -185,6 +190,12 @@ describe User do
       expect(user.authenticated?('')).to eq false
       user.remember
       expect(user.authenticated?(user.auth_token)).to eq true
+    end
+  end
+  describe "associate and disassocite with broker through QuoteRelations" do
+    before do
+      @user=FactoryGirl.create(:user)
+      @broker=FactoryGirl.create(:broker)
     end
   end
 end

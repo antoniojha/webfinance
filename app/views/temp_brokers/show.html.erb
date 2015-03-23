@@ -1,0 +1,47 @@
+<h3>Change Request</h3>
+<%if @temp_broker.edit_type==1%>
+<p><%=cap(@broker.first_name)%> to <%=cap(@temp_broker.first_name)%></p>
+<p><%=cap(@broker.last_name)%> to <%=cap(@temp_broker.last_name)%></p>
+<p><%=abrev_display(@temp_broker.identification_file_name,20)%>
+  <%= link_to "View", @temp_broker.identification.url(:original, false), :target => "_blank" %>
+</p>
+<%elsif @temp_broker.edit_type==2%>
+<div style="float:left;">
+<%@licenses.each do |l|%>
+<table>
+  <tr>
+    <td><%=Order::LICENSE_TYPES_HASH[l.license_type.to_s]%></td>
+  </tr>
+  <tr>
+    <td><%=l.license_number%></td>
+  </tr>
+  <tr>
+    <td><%=l.states%></td>
+  </tr>
+  <tr>
+    <td><b>Uploaded File:</b><%=abrev_display(l.picture_file_name,20)%>
+      <%= link_to "View", l.picture.url(:original, false), :target => "_blank" %></td>
+  </tr>
+</table>
+<%end%>
+</div>
+<div style="float:right;">
+  <%@temp_licenses.each do |l|%>
+<table>
+  <tr>
+    <td><%=Order::LICENSE_TYPES_HASH[l.license_type.to_s]%></td>
+  </tr>
+  <tr>
+    <td><%=l.license_number%></td>
+  </tr>
+  <tr>
+    <td><%=l.states%></td>
+  </tr>
+  <tr>
+    <td><b>Uploaded File:</b><%=abrev_display(l.picture_file_name,20)%>
+      <%= link_to "View", l.picture.url(:original, false), :target => "_blank" %></td>
+  </tr>
+</table>
+<%end%>
+</div>
+<%end%>

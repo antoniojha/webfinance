@@ -1,14 +1,18 @@
 class StatusSessionsController < ApplicationController
-  include StatusSessionsHelper
+  include BrokersHelper
+  skip_before_action :authorize_login
   def create
-    broker=Broker.find_by(email: params[:status_session][:email])
-    broker=Broker.find_by(confirmation_number: params[:status_session][:confirmation_number])
+    broker=Broker.find_by(email: params[:status_session][:email].downcase)
     respond_to do |format|
-      if broker && broker.authenticated?(params[:status_session][:confirmation_number])
-        status_log_in(broker)
-        format.html{redirect_to status_session_path(broker)}
+      if broker && broker.authenticate(params[:status_session][:password])
+        broker_log_in(broker)
+        if broker.status
+          format.html{redirect_to register_broker_status_url(id:broker)}
+        else
+          format.html{redirect_to edit_register_broker_url(id:broker)}
+        end
       else
-        flash.now[:danger]="Couldn't find your record, please make sure you have the right confirmation."
+        flash.now[:danger]="Couldn't find your record, please make sure you have the right information."
         format.html{render "new"}
       end
     end

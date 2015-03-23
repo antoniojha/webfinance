@@ -17,6 +17,7 @@
  *= require jquery.Jcrop
  *= require_self
  *= require jquery-ui
+
  */
 @import "bootstrap-sprockets"; // check https://github.com/twbs/bootstrap-sass#a-ruby-on-rails for more info
 @import "bootstrap";
@@ -25,6 +26,18 @@ html, body {
 
     overflow-x: hidden;
     align: center;
+}
+.odd_line{
+  background-color:#9999FF;
+}
+.comments_table{
+  tr{
+    td,th{
+      border:1px solid;
+      text-align: center;
+    }
+    
+  }
 }
 .home{
   text-align: center;

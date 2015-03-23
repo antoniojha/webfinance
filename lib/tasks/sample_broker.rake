@@ -1,5 +1,6 @@
+if false
 namespace :db do
-  desc "Fill database with users"
+  desc "Fill database with brokers"
     task populate: :environment do
       50.times do |n|
         name=Faker::Name.name
@@ -42,4 +43,5 @@ namespace :db do
         end
       end
     end
+end
 end

@@ -1,102 +1,155 @@
-class BrokersController < ApplicationController
-  include BrokersHelper
-  skip_before_action :authorize_login, only: [:new,:edit, :new2,:create,:update,:finish,:close_finish, :index]
-  before_action :set_broker, only:[:show, :edit, :update,:new2]
-  skip_before_action :delete_temp_broker, only: [:new,:edit,:update,:create,:new2]  
- # before_action :authorize_status_login
- # skip_before_action :authorize_status_login, only:[:status_lookup]
- # before_action :prevent_resubmit, only:[:edit, :update]
-  def new
-    @broker=Broker.new
-  end
+class BrokersController < Broker::AuthenticatedController
+  
+  skip_before_action :authorize_broker_login, only:[:show,:index]
+  before_action :set_broker, only:[:show,:edit,:update,:edit2]
+  before_action :direct_to_user_edit, only:[:index]
+  
+
+  #edit form for individual registered broker  
   def edit
-    
+    @temp_broker=@broker.temp_brokers.find_by(edit_type:1)
 
   end
-  def prevent_resubmit
-    broker=Broker.find(params[:id])
-    if broker.submitted==true
-      flash[:danger]="Form already submitted"
-      redirect_to new_status_session_url
-    end
-  end
-  def authorize_status_login
+  def edit2
     
-    unless logged_in? 
-      flash[:danger]="Please login"
-      redirect_to new_status_session_url
-    end
   end
 
-  def new2
-    if @broker.licenses.count==0
-      @broker.build_licenses
+  def update
+ 
+    keys=%w[first_name last_name institution_name identification license_type]
+    keys2=%w[license_type license_number picture]
+    params["broker"].each do |key, value|
+      if keys.include?(key)
+        @broker.send("#{key}=", value)
+      end
+
+    end
+
+    attributes_changed=@broker.changed
+
+    if params[:edit1]
+      if attributes_changed.include?("first_name") || attributes_changed.include?("last_name")
+       @temp_broker=@broker.temp_brokers.new(broker_params_temp)
+       @temp_broker.edit_type=1
+        unless attributes_changed.include?("identification_file_name")
+          # if first name or last name is changed, force user to input a new id field
+          @temp_broker.custom_validates=true
+        else
+          @temp_broker.custom_validates=false
+        end
+        if @temp_broker.save
+          redirect_to @temp_broker, notice: "The request to change your profile has been sent"
+        else
+          render "edit"
+        end
+      else
+        if @broker.update(broker_params)
+          redirect_to @broker
+        else
+          render "edit"
+        end
+      end     
+
+    elsif params[:edit2]
+      @temp_broker=@broker.temp_brokers.new(broker_params_temp)
+      @temp_broker.edit_type=2
+      @temp_broker.save
+
+      dup_temp_licenses(@broker,@temp_broker)
+      swap_license(@broker,@temp_broker)
+     
+      if @broker.update(broker_params)
+        @broker.next_step_edit
+        redirect_to @temp_broker
+      #  redirect_to edit2_broker_path(@broker)
+      else
+        render "edit2"
+      end
     end
   end
+  #display individual broker
   def show
   end
-  def finish
-    @broker=Broker.find(params[:id])
-    @confirmation_number=session[:confirmation]
-  end
-  def close_finish
-    session[:confirmation]=nil
-    redirect_to home_url, notice: "Page closed."
-  end
+  #display broker search form
   def index
-    if params[:id]
-      @broker_search=BrokerSearch.find(params[:id])
-      @brokers=@broker_search.brokers
-      @brokers=@brokers.paginate(:page => params[:page])
-    else
-      @brokers=Broker.all.paginate(:page => params[:page])
-      @broker_search=BrokerSearch.new
-    end
-    
-  end
-
-  def create   
-    @broker=Broker.new(broker_params)
-
-    if @broker.save
-      cookies[:temp_broker_id]={value:@broker.id, expires:30.minutes.from_now.utc}
-      redirect_to broker_new2_url(id:@broker)
-    else
-      render "new"
-    end
-  end
-  def update
-    if params[:broker_new_next]
-      if @broker.update(broker_params)
-        redirect_to broker_new2_url(id:@broker)
+    @user=current_user
+    if @user
+      @background=@user.backgrounds.last
+      if params[:id]
+        @broker_search=BrokerSearch.find(params[:id])
+        @brokers=@broker_search.brokers
+        @brokers=@brokers.paginate(:page => params[:page])  
       else
-        render "new"
-      end    
+        state=@background.state
+        @brokers=Broker.where("state = ?",state).paginate(:page => params[:page])
+        @broker_search=BrokerSearch.new
+        @broker_search.state=state
+      end 
+    else
+      @broker_search=BrokerSearch.new
+      @brokers=Broker.all.paginate(:page => params[:page])
     end
-    if params[:prev]
-      redirect_to edit_broker_url(@broker)
-    end
-    if params[:submit]
-      
-      if @broker.update(broker_params)
-        confirmation_number=@broker.submit
-        session[:confirmation]=confirmation_number
-        forget_temp_broker # this prevents broker from getting deleted when user visit other pages
-        redirect_to broker_finish_path(id:@broker)
-      else     
-        render "new2"
-      end
-    end    
   end
-  def review_index
-  #  @broker=Broker.all.where(approved:false)
-  end
+
 
   private
-    def set_broker
-      @broker=Broker.find(params[:id])
+  def direct_to_user_edit
+    if user_logged_in?
+        # force user to enter their address, name and phone number before conducting a broker search
+      remember_desired_location
+      first_name=user.first_name
+      last_name=user.last_name
+      street=user.street
+      city=user.city
+      state=user.state
+      phone_number=user.phone_number
+      unless first_name && last_name && street && city && state && phone_number
+        redirect_to edit_user_path(user), notice: "Please fill in your name, address and phone number before broker search."
+      end
     end
-    def broker_params       
-      params.require(:broker).permit(:first_name, :last_name, :institution_name, :street, :city, :state,{:license_type => []}, :phone_work_1,:phone_work_2,:phone_work_3,:work_ext,:phone_cell_1,:phone_cell_2,:phone_cell_3, :email,:web,:username, :password, :password_confirmation,licenses_attributes:[:picture,:license_number,:license_type, :_destroy,:id])
+  end
+
+  def set_broker
+    @broker=Broker.find(params[:id])
+  end
+
+  def broker_params       
+      params.require(:broker).permit(:first_name, :last_name, :institution_name, :identification, :street, :city, :state,{:license_type_edit => []},{:license_type_remove => []}, :phone_work_1,:phone_work_2,:phone_work_3,:work_ext,:phone_cell_1,:phone_cell_2,:phone_cell_3, :email,:web,:username, :password, :password_confirmation,:firm_id,licenses_attributes:[:picture,:license_number,:license_type, {:states=>[]}, :_destroy,:id])
+
+  end
+  # all the parameters for the non-license part
+  def broker_params_temp
+    params.require(:broker).permit(:first_name, :last_name, :institution_name, :identification, :street, :city, :state,{:license_type_edit => []},{:license_type_remove => []}, :phone_work_1,:phone_work_2,:phone_work_3,:work_ext,:phone_cell_1,:phone_cell_2,:phone_cell_3, :email,:web)
+  end
+  def dup_temp_licenses(broker,temp_broker)
+    broker.licenses.each do |l|        temp=temp_broker.temp_licenses.new(license_type:l.license_type,license_number:l.license_number,approved:l.approved)
+    temp.picture=l.picture
+    temp.save
     end
+  end
+  def swap_license(broker,temp_broker)
+    (broker.licenses).zip(temp_broker.temp_licenses).each do |l,temp_l|
+      temp=TempLicense.new(temp_l.attributes)
+        
+      if (l.license_number==temp_l.license_number) &&(l.states==temp_l.states)
+        temp_broker.temp_licenses.destroy_all
+        temp_broker.destroy
+        broker.custom_validates=true
+        #check if attributes has changed
+        
+      else
+        temp_l.license_number=l.license_number
+        temp_l.picture=l.picture
+        temp_l.states=l.states
+             
+        l.picture=temp.picture    
+        l.license_number=temp.license_number
+        l.states=temp.states
+        l.save
+        temp_l.save
+      end
+
+    end
+  end
+
 end

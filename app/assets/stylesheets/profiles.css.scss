@@ -1,23 +1,50 @@
 // Place all the styles related to the profiles controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.navbar .menu{
+.menu{
     width: 100%;
     text-align:center;
-       color: red !important;
-   > li {
-    float:none;
-    display: inline-block;
-   }
-  > li a{
-   // color: black !important;
+    color: #337ab7 !important;
+    background-color: #337ab7 !important;
+    > li {
+      border:solid 1px;
+    }
+    > li a{
+      color: white !important;
+    }
+    >li a:hover{
+      background-color: darken(#428bca, 20%) !important;
+    }
+  .dropdown-menu{
+    background-color: darken(#5bc0de,10%) !important;
+    
   }
-  >li a:hover{
-  color: black !important;
-  text-decoration: underline;
+  .dropdown-submenu:hover > a:after {
+    background-color: #337ab7 !important;
+  }
+  .dropdown-submenu > a:focus,.dropdown-submenu:focus>a {
+    background-color: #337ab7 !important;
+  }
+  .dropdown-menu > a:focus,.dropdown-menu:focus>a {
+    background-color: #337ab7 !important;
+  }
+  .dropdown-submenu > li a:focus {
+    background-color: #337ab7 !important;
   }
 } 
+.dropdown-submenu {
+    position: relative;
+}
 
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px;
+    border-radius: 0 6px 6px 6px;
+}
 .box {
   width:49%;
   display:inline-block;  

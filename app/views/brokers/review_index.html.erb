@@ -1,3 +1,0 @@
-<% for broker in Broker.all.where(approved:false)%>
-<%=link_to broker.first_name, broker_url(broker)%>
-<%end%>

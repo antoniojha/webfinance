@@ -68,21 +68,4 @@ ready=function(){
   });
   }
   // initiates map jquery
- // $('#map').usmap();
-  
-
-  $( "#hello" ).dialog({ 
-    autoOpen: false,  
-    open: function() {
-        $(this).closest(".ui-dialog")
-        .find(".ui-dialog-titlebar-close")
-        .removeClass("ui-dialog-titlebar-close")
-        .html("<span class='ui-button-icon-primary ui-icon ui-icon-closethick'></span>");
-    }
-  });
-  $( "#say_it" ).click(function() {
-  $( "#hello" ).dialog( "open" );
-
-});
 }
-$(document).ready(ready);

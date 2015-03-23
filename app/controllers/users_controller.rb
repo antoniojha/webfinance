@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  skip_before_action :authorize_login, only: [:new,:create]
+  before_action :authorize_any_login
+  skip_before_action :authorize_user_login, only: [:new,:create]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   before_action :correct_user, only:[:edit,:update,:destroy]
@@ -13,6 +14,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    
     @plan=current_month_plan
   end
 
@@ -53,7 +55,7 @@ class UsersController < ApplicationController
           if @user.cropping?
             @user.reprocess_picture
           end
-          format.html { redirect_to @user, notice: 'User was successfully updated.' }
+          format.html { friendly_redirect_user(@user,'User was successfully updated.')}
           format.json { head :no_content }
         else
           format.html{render :action=>"crop"}
@@ -121,7 +123,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:first_name, :last_name,:username, :email, :password, :password_confirmation,:picture, :crop_x,:crop_y,:crop_w,:crop_h)
+      params.require(:user).permit(:first_name, :last_name,:username, :email, :password, :password_confirmation,:picture, :crop_x,:crop_y,:crop_w,:crop_h,:street,:city,:state,:phone_1,:phone_2,:phone_3)
     end
     def correct_user
       @user=User.find(params[:id])

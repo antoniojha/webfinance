@@ -1,5 +1,6 @@
 <% content_for :right do%>
-<div width="100%" style="position:fixed;top:10%;padding:10px;">
+
+<div width="100%" style="padding:10px;">
 <h3>I'm Looking for...</h3>
   <p>Enter any one of the criteria to search for brokers.</p>
   <%= form_for(@broker_search,url:{controller:"broker_search",action:"create"},method:"post") do |f| %>
@@ -24,7 +25,6 @@
     <tr class="blank_row"></tr>
   </table>
   <table width="100%">
-    <% if current_user.address%>
     <tr>
       <td colspan=2><%=f.label :distance_away, "Distance Away From Your Location:"%></td>
     </tr>
@@ -33,11 +33,7 @@
       <td width="50%"><%=select_tag "unit",  options_for_select(Order::LENGTH_UNITS),{prompt:"Select Unit",:class=>"form-control"}%></td>
     </tr>
     <tr class="blank_row"></tr>
-    <%else%>
-    <tr><p>Your address has not been entered yet.</p> 
-      <p>Click here to enter.</p>
-    </tr>
-    <%end%>
+
     <tr>
       <td colspan=2><%=f.label :license_types, "License Type:"%></td>
     </tr>

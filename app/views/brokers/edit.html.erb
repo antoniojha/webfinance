@@ -1,3 +1,15 @@
-<h1>New Account</h1>
+<%provide(:title,"|Edit Broker")%>
+<%= render 'menu_top'%>
+<div style="clear:both;border-top:2px solid;"></div>
+
 <%=render "error"%>
-<%=render "form"%>
+<% if @temp_broker%>
+<%=render "error_temp_broker"%>
+<%end%>
+<h3>Update Profile</h3>
+
+<% if @temp_broker%>
+<%=render "form1_other"%>
+<%else%>
+<%=render "form1"%>
+<%end%>

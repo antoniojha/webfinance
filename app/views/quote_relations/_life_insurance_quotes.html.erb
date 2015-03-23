@@ -1,0 +1,15 @@
+<h3>Life Insurance Quotes</h3>
+<table width="100%" class="quote_comparison_table">
+  <tr>
+    <th>Name</th>
+    <th>Phone</th>
+    <th>Quote Amount</th>
+    <th>Request Info</th>
+    <th>Additional Features</th>
+  </tr>
+  <%@quotes.each do |quote|%> 
+  <tr>
+    <td><%=full_name(quote.broker)%></td>
+  </tr>
+  <%end%>
+</table>

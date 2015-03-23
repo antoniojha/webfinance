@@ -1,0 +1,15 @@
+// Place all the styles related to the quote_relations controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.quote_comparison_table{
+  
+  tr td{
+    border: solid 1px;
+    text-align:center;
+  }
+  tr th{
+    border: solid 1px;
+    text-align:center;
+  }
+}

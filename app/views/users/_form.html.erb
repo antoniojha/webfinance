@@ -1,28 +1,5 @@
-    <% if @user.errors.any? %>
-
-    <div class="alert alert-danger error-message">
-      <h2>The form contains <%= pluralize(@user.errors.count, "error") %></h2>
-      <ul>
-      <% @user.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-
-  <% end %>
-<%= form_for @user, :html => { :multipart => true }  do |f| %>
-
   <table width="70%">
-    <tr>
-      <td><%= f.label :first_name,'First Name' %><%=asterisk_html%> </td>
-      <td><%= f.text_field :first_name,{:class=>'form-control'} %></td>
-	  </tr>
     <tr class="blank_row"></tr>
-  	<tr>
-      <td><%= f.label :last_name,'Last Name' %><%=asterisk_html%> </td>
-      <td><%= f.text_field :last_name,{:class=>'form-control'} %></td>
-	  </tr>  
-    <tr class="blank_row"></tr>  
     <tr>
   			<td width="50%"><%= f.label :username %> <span style="color:red"><i>(case insensitive)</i><%=asterisk_html%></span></td>
       <td width="50%"><%= f.text_field :username,{:class=>'form-control', :title=>"Please enter username"} %></td>
@@ -43,13 +20,5 @@
     	<td><%= f.password_field :password_confirmation,{:class=>'form-control'} %></td>
     </tr>
 		<tr class="blank_row"></tr>
-		<tr>
-			<td></td>
-      <% if @user.new_record?%>
-			<td><%= f.submit 'Create Account', :class=>"btn btn-primary" %></td>
-      <% else %>
-      <td><%= f.submit 'Update Account', :class=>"btn btn-primary" %></td>
-      <%end%>
-		</tr>
+
   </table>
-<% end %>

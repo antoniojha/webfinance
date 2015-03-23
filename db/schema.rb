@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150213045202) do
+ActiveRecord::Schema.define(version: 20150323165133) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -50,6 +50,33 @@ ActiveRecord::Schema.define(version: 20150213045202) do
     t.string   "hidden_value"
   end
 
+  create_table "application_comment_relations", force: true do |t|
+    t.integer  "broker_id"
+    t.integer  "application_comment_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "application_comment_relations", ["application_comment_id"], name: "index_application_comment_relations_on_application_comment_id"
+  add_index "application_comment_relations", ["broker_id"], name: "index_application_comment_relations_on_broker_id"
+
+  create_table "application_comments", force: true do |t|
+    t.text     "comment"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "appointments", force: true do |t|
+    t.integer  "broker_id"
+    t.integer  "product_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "appointments", ["broker_id", "product_id"], name: "index_appointments_on_broker_id_and_product_id", unique: true
+  add_index "appointments", ["broker_id"], name: "index_appointments_on_broker_id"
+  add_index "appointments", ["product_id"], name: "index_appointments_on_product_id"
+
   create_table "backgrounds", force: true do |t|
     t.string   "state"
     t.datetime "dob"
@@ -81,6 +108,7 @@ ActiveRecord::Schema.define(version: 20150213045202) do
     t.decimal  "income_need",            default: 0.0
     t.string   "protection_search"
     t.decimal  "total_property",         default: 0.0
+    t.string   "gender"
   end
 
   add_index "backgrounds", ["user_id"], name: "index_backgrounds_on_user_id"
@@ -96,6 +124,32 @@ ActiveRecord::Schema.define(version: 20150213045202) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "broker_backups", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "institution_name"
+    t.string   "phone_number_work"
+    t.string   "email"
+    t.string   "phone_number_cell"
+    t.string   "street"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.integer  "firm_id"
+    t.boolean  "change_approved?",            default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "identification_file_name"
+    t.string   "identification_content_type"
+    t.integer  "identification_file_size"
+    t.datetime "identification_updated_at"
+    t.integer  "broker_id"
+    t.string   "license_type"
+  end
+
+  add_index "broker_backups", ["broker_id"], name: "index_broker_backups_on_broker_id"
+  add_index "broker_backups", ["firm_id"], name: "index_broker_backups_on_firm_id"
 
   create_table "broker_imports", force: true do |t|
   end
@@ -130,17 +184,29 @@ ActiveRecord::Schema.define(version: 20150213045202) do
     t.string   "picture_content_type"
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
-    t.boolean  "approved",                   default: false
+    t.boolean  "approved",                    default: false
     t.string   "username"
     t.string   "license_type"
-    t.boolean  "submitted",                  default: false
-    t.string   "confirmation_number_digest"
+    t.boolean  "submitted",                   default: false
+    t.string   "confirmation_number"
     t.datetime "submitted_at"
     t.string   "web"
     t.string   "work_ext"
+    t.integer  "firm_id"
+    t.string   "register_current_step"
+    t.string   "identification_file_name"
+    t.string   "identification_content_type"
+    t.integer  "identification_file_size"
+    t.datetime "identification_updated_at"
+    t.string   "status"
+    t.string   "auth_token_digest"
+    t.string   "edit_current_step"
+    t.string   "license_type_edit"
+    t.string   "license_type_remove"
   end
 
-  add_index "brokers", ["confirmation_number_digest"], name: "index_brokers_on_confirmation_number_digest"
+  add_index "brokers", ["confirmation_number"], name: "index_brokers_on_confirmation_number"
+  add_index "brokers", ["firm_id"], name: "index_brokers_on_firm_id"
 
   create_table "debts", force: true do |t|
     t.string   "institution_name"
@@ -166,6 +232,20 @@ ActiveRecord::Schema.define(version: 20150213045202) do
   end
 
   add_index "education_expenses", ["background_id"], name: "index_education_expenses_on_background_id"
+
+  create_table "firms", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "web"
+    t.string   "business_types"
+    t.string   "product_types"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "picture_file_name"
+    t.string   "picture_content_type"
+    t.integer  "picture_file_size"
+    t.datetime "picture_updated_at"
+  end
 
   create_table "fixed_expenses", force: true do |t|
     t.string   "description"
@@ -218,6 +298,7 @@ ActiveRecord::Schema.define(version: 20150213045202) do
     t.integer  "license_type",         limit: 255
     t.string   "license_number"
     t.boolean  "approved",                         default: false
+    t.string   "states"
   end
 
   add_index "licenses", ["broker_id"], name: "index_licenses_on_broker_id"
@@ -261,6 +342,17 @@ ActiveRecord::Schema.define(version: 20150213045202) do
 
   add_index "plans", ["goal_id"], name: "index_plans_on_goal_id"
 
+  create_table "products", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "product_type"
+    t.integer  "firm_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "products", ["firm_id"], name: "index_products_on_firm_id"
+
   create_table "propertees", force: true do |t|
     t.string   "description"
     t.decimal  "amount"
@@ -285,6 +377,32 @@ ActiveRecord::Schema.define(version: 20150213045202) do
   end
 
   add_index "protection_plans", ["background_id"], name: "index_protection_plans_on_background_id"
+
+  create_table "quote_relations", force: true do |t|
+    t.integer  "broker_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "quote_file_file_name"
+    t.string   "quote_file_content_type"
+    t.integer  "quote_file_file_size"
+    t.datetime "quote_file_updated_at"
+    t.integer  "product_type"
+    t.boolean  "broker_replied?",         default: false
+  end
+
+  add_index "quote_relations", ["broker_id"], name: "index_quote_relations_on_broker_id"
+  add_index "quote_relations", ["user_id", "broker_id", "product_type"], name: "index_quote_relations", unique: true
+  add_index "quote_relations", ["user_id"], name: "index_quote_relations_on_user_id"
+
+  create_table "quote_requirements", force: true do |t|
+    t.decimal  "life_insurance_need"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "quote_relation_id"
+  end
+
+  add_index "quote_requirements", ["quote_relation_id"], name: "index_quote_requirements_on_quote_relation_id"
 
   create_table "recur_budgets", force: true do |t|
     t.string   "title"
@@ -344,6 +462,36 @@ ActiveRecord::Schema.define(version: 20150213045202) do
 
   add_index "suggested_goals", ["background_id"], name: "index_suggested_goals_on_background_id"
 
+  create_table "temp_brokers", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "institution_name"
+    t.string   "phone_number_work"
+    t.string   "email"
+    t.string   "phone_number_cell"
+    t.string   "street"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.integer  "firm_id"
+    t.integer  "broker_id"
+    t.string   "license_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "change_approved?",            default: false
+    t.string   "license_type_edit"
+    t.string   "license_type_remove"
+    t.integer  "edit_type"
+    t.string   "work_ext"
+    t.string   "web"
+    t.string   "identification_file_name"
+    t.string   "identification_content_type"
+    t.integer  "identification_file_size"
+    t.datetime "identification_updated_at"
+  end
+
+  add_index "temp_brokers", ["broker_id"], name: "index_temp_brokers_on_broker_id"
+
   create_table "temp_budget_plans", force: true do |t|
     t.decimal  "budget_amount",        precision: 8, scale: 2
     t.datetime "deadline"
@@ -360,6 +508,24 @@ ActiveRecord::Schema.define(version: 20150213045202) do
     t.integer  "alert_send_period"
     t.integer  "user_id"
   end
+
+  create_table "temp_licenses", force: true do |t|
+    t.integer  "temp_broker_id"
+    t.integer  "license_type"
+    t.string   "license_number"
+    t.boolean  "approved",             default: false
+    t.string   "states"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "picture_file_name"
+    t.string   "picture_content_type"
+    t.integer  "picture_file_size"
+    t.datetime "picture_updated_at"
+    t.integer  "broker_id"
+  end
+
+  add_index "temp_licenses", ["broker_id"], name: "index_temp_licenses_on_broker_id"
+  add_index "temp_licenses", ["temp_broker_id"], name: "index_temp_licenses_on_temp_broker_id"
 
   create_table "transaction_imports", force: true do |t|
   end
@@ -392,6 +558,10 @@ ActiveRecord::Schema.define(version: 20150213045202) do
     t.string   "address"
     t.float    "longitude"
     t.float    "latitude"
+    t.string   "street"
+    t.string   "city"
+    t.string   "state"
+    t.string   "phone_number"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

@@ -1,4 +1,4 @@
-class PlansController < ApplicationController
+class PlansController < User::AuthenticatedController
 
  
   def new

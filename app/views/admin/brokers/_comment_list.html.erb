@@ -1,0 +1,18 @@
+<table width="100%" class="comments_table">
+  <tr class="odd_line">
+    <td width="5%"></td>
+    <th width="55%">Comment</th>
+    <th width="15%">Created At</th>
+    <th width="15%">Updated At</th>
+    <td width="10%"></td>
+  </tr>
+  <% @broker.application_comments.each_with_index do |t,i|%>
+  <tr>
+    <td><%=i+1%>.</td>
+    <td><%=t.comment%></td>
+    <td><%=date(t.created_at)%></td>
+    <td><%=date(t.updated_at)%></td>
+    <td><%=link_to "Edit",edit_admin_application_comment_path(t)%></td>
+  </tr>
+  <%end%>
+</table>

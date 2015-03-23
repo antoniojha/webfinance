@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
+  scope '/broker' do
+    
+    
+  end
   resources :advance_search
   resources :broker_search
   resources :protection_plans
@@ -23,22 +27,66 @@ Rails.application.routes.draw do
     get 'remove_assoc'=> :remove_assoc
     get 'info'=> :info
     get 'direct_to'=> :direct_to
+
   end
   resources :brokers
+ # match'/register/brokers/new', to:'brokers#new', via:'get', as: 'new'
+ # get 'register/brokers/new'=> 'brokers#new'
   controller :brokers do
-    get "broker/new2"=> :new2
-    get "broker/finish"=> :finish
-    get "broker/review_index"=> :review_index
-    get "close_finish"=> :close_finish
+    get ":id/edit2"=> :edit2, as:"edit2_broker"
+    get "add_license" => :add_license
   end
-  resources :status_sessions, only: [:new,:create,:destroy,:show]
+  scope '/register' do
+      controller :brokers do
+        get "broker/new"=>:new, as:"broker_signup"
+        get "broker/edit/:id"=>:edit, as:"broker_register"
+
+
+       
+      end
+    end
   
-  resources :goals
-  controller :sessions do
+  namespace :admin do
+    resources :brokers
+    resources :application_comments
+  end
+  namespace :register do
+    resources :brokers
+    controller :brokers do
+      get 'signup'=> :new
+      get "brokers/:id/product_lookup"=> :product_lookup # this is needed for jquery ajax call
+      get "remove_appointment"=> :remove_appointment
+      #No need for add_appointment method since it's called through form's update method.
+      get "status/:id"=> :status, as:"broker_status"
+      get "finish/:id"=> :finish, as:"broker_finish"
+      get "close_finish"=> :close_finish
+    end
+  end
+  resources :temp_brokers
+  namespace :user do
+    resources :authenticated
+    controller :sessions do
     get 'login'=> :new
     post 'signin'=> :create
     delete 'logout'=> :destroy
    end
+   # resources :sessions, only:[:new,:create]
+  end
+  namespace :broker do
+    controller :sessions do
+      get 'login'=> :new
+      post "signin"=> :create
+      delete "logout"=> :destroy
+    end
+  end
+  resources :quote_relations
+  controller :quote_relations do
+    get 'quote_lists'=> :quote_lists
+  end
+  resources :status_sessions, only: [:new,:create,:destroy]
+  
+  resources :goals
+
   resources :users
   controller :users do
     get 'signup'=> :new

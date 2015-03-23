@@ -1,15 +1,17 @@
+<%provide :title, "|Broker Status Login"%>
 <h3>Status Lookup</h3>
-<p>Please enter your code to check up on your status</p>
+<p>Please enter your information to check up on your status</p>
 <%= form_for :status_session, url: status_sessions_url do |f|%>
 <table width="70%">
- <tr>
-   <td width="40%"><%= f.label :email%></td>
-   <td width="60%"><%= f.text_field :email, {:class=>'form-control'}%></td>
+  <tr>
+     <td width="30%"><%= f.label :email%></td>
+     <td width="70%"><%= f.text_field :email, {:class=>'form-control'}%>  </td>
 	</tr>
-	<tr>
-    <td width="40%"><%= f.label :confirmation_number%></td>
-    <td width="60%"><%= f.password_field :confirmation_number, {:class=>'form-control'}%></td>
-	</tr>
+  <tr class="blank_row"></tr>
+   <tr>
+     <td width="30%"><%= f.label :password%></td>
+     <td width="70%"><%= f.password_field :password, {:class=>'form-control'}%>  </td>
+	</tr>  
   <tr class="blank_row"></tr>
   <tr>
     <td></td>

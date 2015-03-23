@@ -1,0 +1,22 @@
+Admin Index Page
+<div role="tabpanel">
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#pending_brokers" aria-controls="pending_brokers" role="tab" data-toggle="tab">Pending Brokers</a></li>
+    <li role="presentation"><a href="#accepted_brokers" aria-controls="accepted_brokers" role="tab" data-toggle="tab">Accepted Brokers</a></li>
+    <li role="presentation"><a href="#rejected_brokers" aria-controls="rejected_brokers" role="tab" data-toggle="tab">Rejected Brokers</a></li>
+  </ul>
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="pending_brokers">
+      <%=render partial: "broker_list", locals:{brokers:@brokers_p}%>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="accepted_brokers">
+      <%=render partial: "broker_list", locals:{brokers:@brokers_a}%>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="rejected_brokers">
+      <%=render partial: "broker_list", locals:{brokers:@brokers_r}%>
+    </div>
+  </div>
+
+</div>
+
+

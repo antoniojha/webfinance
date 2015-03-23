@@ -5,6 +5,11 @@
       <td colspan="2"><%=f.text_field :dob_string, :class=>"form-control"%></td>
     </tr>
     <tr>
+      <td><%=f.label 'Gender'%><%=asterisk_html%></td>
+      <td>Male<%=radio_button("background", "gender", "male")%></td>
+      <td>Female<%=radio_button("background", "gender", "female")%></td>
+    </tr>
+    <tr>
       <td><%=f.label 'relationship status'%><%=asterisk_html%></td>
       <td>Single?<%=radio_button("background", "married", "false")%></td>
       <td>Married?<%=radio_button("background", "married", "true")%></td>

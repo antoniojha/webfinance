@@ -1,17 +1,26 @@
-<h3><%=@broker.first_name.capitalize%> <%=@broker.last_name.capitalize%></h3>
-<hr class="divider"> 
+<div style="float:left">
 <%=smart_image(@broker,3)%>
-<div style="clear:both;">
-<div align="left" style="float:left;">
+</div>
+<div>
+  <h3><%=@broker.first_name.capitalize%> <%=@broker.last_name.capitalize%></h3>
+</div>
+<div style="clear:both;"></div>
+<div align="left">
   <p><b>Company:</b> <%=@broker.institution_name%></p>
-  <p><b>Phone Number (Work):</b> <%=@broker.phone_number_work%></p>
-  <p><b>Phone Number (Cell):</b> <%=@broker.phone_number_cell%></p>
+  <p><b>Phone Number (Work):</b> <%=phone_num_display(@broker.phone_number_work)%> <% if @broker.work_ext%>Ext:<%=@broker.work_ext%><%end%></p>
+  <p><b>Phone Number (Cell):</b> <%=phone_num_display(@broker.phone_number_cell)%></p>
   <p><b>Email:</b> <%=@broker.email %></p>
   <p><b>Address:</b><%=@broker.address%><p>
   <p><b>License(s):</b></p>
   <ul>
     <%@broker.licenses.each do |l|%>
     <li><%=Order::LICENSE_TYPES[l.license_type.to_i-1][0]%>: License# <%=l.license_number%></li>
+    <%end%>
+  </ul>
+  <p><b>Product(s):</b></p>
+  <ul>
+    <%@broker.products.each do |l|%>
+    <li><%=Product.find(l).name%></li>
     <%end%>
   </ul>
 </div>

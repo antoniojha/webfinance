@@ -31,6 +31,18 @@ module ApplicationHelper
   def asterisk_html
     "<span class='asterisk'>*</span>".html_safe
   end
+  # applicable to broker and user object
+  def cap(name)
+    if name.nil?
+      name
+    else
+      name=name.capitalize
+    end
+  end
+  def full_name(person)
+    name=person.first_name.capitalize+ " "+person.last_name.capitalize
+    return name
+  end
   def money(amount)
     if amount.is_a? Numeric
       number_to_currency(amount)
@@ -53,6 +65,32 @@ module ApplicationHelper
       end
     end
   end
-  def smart_image_broker(broker,scenario)
+  def phone_num_display(phone_num)
+    phone_num.insert(6,"-")
+    phone_num.insert(3,"-")
+    return phone_num
+  end
+  def date(datetime)
+    if datetime
+      datetime.strftime('%m/%d/%Y at %I:%M%p')
+    end
+  end
+  def abrev_display(string,length)
+    unless string.nil?
+      if string.size >length
+        string2= string[0..length]+"..."
+        return string2
+      else
+        return string
+      end
+    end
+  end
+  def select_tag_array(big_array,select_array)
+    array=[]
+    select_array.each do |l|
+      array<< big_array[l.to_i-1]
+      
+    end
+    array
   end
 end

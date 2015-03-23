@@ -1,0 +1,16 @@
+<table width="80%">
+  <tr>
+    <th width="20%">Broker ID</th>
+    <th width="20%">Name</th>
+    <th width="50%">Firm</th>
+    <td width="10%"></td>
+  </tr>
+  <% brokers.each do |broker|%>
+  <tr>
+    <td><%=broker.id%></td>
+    <td><%=broker.name%></td>
+    <td><%=broker.institution_name%></td>
+    <td><%=link_to "View", admin_broker_url(broker)%></td>
+  </tr>
+  <%end%>
+</table>

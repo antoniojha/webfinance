@@ -1,3 +1,4 @@
+include SessionsHelper
 module ProfilesHelper
   def current_month_has_plan?
     user=current_user

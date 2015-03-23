@@ -1,0 +1,20 @@
+<%provide :title, "|Broker Application Status"%>
+<div style="float:left;">
+  <%=button_to "Save and Close",register_close_finish_url,{method: :get,:class=>"btn btn-success"}%>
+</div>
+<div style="clear:both;"></div>
+    <%if @broker.status=="pending"%>
+    <div class="alert alert-info">
+      <p> <b>Status:</b> Your Application is being reviewed...</p>
+    </div>
+    <%elsif @broker.status=="approved"%>
+    <div class="alert alert-success">
+      <p> <b>Status:</b> Your Application has been approved.</p>
+    </div>
+    <%elsif @broker.status=="denied"%>
+    <div class="alert alert-danger">
+      <p><b>Status:</b> Your Application has been denied.</p>
+    </div>
+    <%end%>
+<hr class="divider"> 
+<%=render "summary"%>

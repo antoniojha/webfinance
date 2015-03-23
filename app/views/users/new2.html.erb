@@ -1,0 +1,5 @@
+<%=render "error"%>
+<%= form_for @user do |f| %>
+<%=render partial: 'form', locals:{f:f}%>
+<%=render partial: 'form2', locals:{f:f}%>
+<%end%>

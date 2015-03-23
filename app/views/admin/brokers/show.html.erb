@@ -1,0 +1,20 @@
+<h3>Status: <%=@broker.status%></h3>
+<%content_for :left do%>
+  <%=button_to "Back",admin_brokers_url,{method: :get,:class=>"btn btn-success"}%>
+<%end%>
+<div style="width:100%;">
+  <%=render "admin/brokers/error"%>
+</div>
+<div style="clear:both"></div>
+<hr class="divider"> 
+<div style="float:left; width:50%;">
+  <%=render "register/brokers/summary"%>
+</div>
+<div style="float:right; width:50%;">
+  <%unless @broker.status=="accepted"%>
+    <h3>Comment</h3>
+    <%=render "admin/brokers/review_form"%>
+  <%end%>
+</div>
+<div style="clear:both"></div>
+<%=render "comment_list"%>

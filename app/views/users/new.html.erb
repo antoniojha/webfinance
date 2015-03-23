@@ -1,3 +1,12 @@
 
 <h1>Sign Up</h1>
-<%=render 'form'%>
+<%=render "error"%>
+<%= form_for @user do |f| %>
+<%=render partial:'form', locals:{f:f}%>
+<table width="70%">
+  <tr>
+	<td align="left"><%= f.submit 'Create Account', :class=>"btn btn-primary" %></td>  
+    
+  </tr>
+</table>
+<%end%>
