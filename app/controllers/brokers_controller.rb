@@ -96,6 +96,7 @@ class BrokersController < Broker::AuthenticatedController
   def direct_to_user_edit
     if user_logged_in?
         # force user to enter their address, name and phone number before conducting a broker search
+      user=current_user
       remember_desired_location
       first_name=user.first_name
       last_name=user.last_name
