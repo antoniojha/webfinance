@@ -14,9 +14,9 @@ class Broker < ActiveRecord::Base
   has_many :temp_brokers
   has_many :temp_licenses
   has_attached_file :identification
- # validates_attachment_presence :identification, on: [:create,:validates_new_id]
- # validates_attachment_size :identification, :less_than => 5.megabytes
- # validates_attachment :identification, content_type: {content_type: "application/pdf"}
+  validates_attachment_presence :identification, on: [:create,:validates_new_id]
+  validates_attachment_size :identification, :less_than => 5.megabytes
+  validates_attachment :identification, content_type: {content_type: "application/pdf"}
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   # the following uses Regex (lookahead assertion) to ensure there is at least a lower case and upper case letter, a digit, and a special character (non-word character)
   VALID_PASSWORD_REGEX= /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)/

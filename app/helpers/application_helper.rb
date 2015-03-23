@@ -66,8 +66,10 @@ module ApplicationHelper
     end
   end
   def phone_num_display(phone_num)
-    phone_num.insert(6,"-")
-    phone_num.insert(3,"-")
+    if phone_num.size==10
+      phone_num.insert(6,"-")
+      phone_num.insert(3,"-")
+    end
     return phone_num
   end
   def date(datetime)
