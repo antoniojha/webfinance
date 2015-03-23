@@ -1,4 +1,4 @@
-if false
+
 namespace :db do
   desc "Fill database with brokers"
     task populate: :environment do
@@ -43,5 +43,4 @@ namespace :db do
         end
       end
     end
-end
 end
