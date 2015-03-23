@@ -38,7 +38,7 @@ namespace :db do
         license_type.each do |l|
           license_type=l
           license_number=Faker::Number.number(10)
-        #  picture=(Rails.root+"spec/fixtures/pdfs/example_license.pdf").open
+          picture=(Rails.root+"spec/fixtures/pdfs/example_license.pdf").open
           License.create!(license_number:license_number,license_type:license_type, broker_id:broker.id)
         end
       end
