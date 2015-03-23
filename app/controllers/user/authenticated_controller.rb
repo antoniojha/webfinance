@@ -6,5 +6,5 @@ class User::AuthenticatedController < ApplicationController
     logger.error "Attempt to access user id#{session[:user_id]} that's not existing"
   redirect_to user_login_url, notice: "Invalid Broker"
   end
-  
+
 end

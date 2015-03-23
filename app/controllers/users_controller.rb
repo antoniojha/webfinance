@@ -55,7 +55,7 @@ class UsersController < ApplicationController
           if @user.cropping?
             @user.reprocess_picture
           end
-          format.html { friendly_redirect_user(@user,'User was successfully updated.')}
+          format.html { friendly_redirect(@user,'User was successfully updated.')}
           format.json { head :no_content }
         else
           format.html{render :action=>"crop"}

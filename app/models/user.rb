@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   before_save{self.username=username.downcase}  
   geocoded_by :address
   after_validation :geocode
-  after_validation :save_phone_number
+  before_validation :save_phone_number
   after_validation :save_address
   def address
     [street, city, state, "USA"].compact.join(', ')

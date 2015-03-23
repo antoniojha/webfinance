@@ -1,11 +1,12 @@
 class ApplicationController < ActionController::Base
+  include ApplicationHelper
+  include SessionsHelper
   helper_method :current_controller
   
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  include ApplicationHelper
-  include SessionsHelper
+
 
   def delete_temp_broker
     if cookies[:temp_broker_id]
