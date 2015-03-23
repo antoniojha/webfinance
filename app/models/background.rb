@@ -22,8 +22,8 @@ class Background < ActiveRecord::Base
   accepts_nested_attributes_for :debts, :allow_destroy => true, reject_if: :all_blank  
   accepts_nested_attributes_for :education_expenses, :allow_destroy => true, reject_if: :all_blank  
   
-  validates :married,:gender,:dob_string, :children, :state, :year,:month, presence: true
- # validates :married, :inclusion => {:in => [true, false]}
+  validates :gender,:dob_string, :children, :state, :year,:month, presence: true
+  validates :married, :inclusion => {:in => [true, false]}
 
   validate :dob_before_today
   validates :month, uniqueness: {scope:[:user_id, :year],message:"Plan for this month has been created already"}

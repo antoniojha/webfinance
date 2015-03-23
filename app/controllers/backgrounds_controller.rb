@@ -100,7 +100,9 @@ class BackgroundsController < User::AuthenticatedController
           format.html{redirect_to edit_background_url(@background)}     
         else
           @background.prev_step
-          build_before_render(assoc_field)
+          unless @background.current_field=="background_1"
+            build_before_render(assoc_field)
+          end
           format.html{render "edit"}
         end
       end
