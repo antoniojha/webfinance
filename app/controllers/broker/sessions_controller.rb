@@ -1,5 +1,6 @@
-class Broker::SessionsController < ApplicationController
+class Broker::SessionsController < Broker::AuthenticatedController
   skip_before_action :authorize_broker_login, only: [:new, :create,:destroy]
+  skip_before_action :remember_location_broker, only:[:new]
   def new
     
   end
