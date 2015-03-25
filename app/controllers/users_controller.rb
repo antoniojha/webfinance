@@ -1,5 +1,5 @@
-class UsersController < ApplicationController
-  before_action :authorize_any_login
+class UsersController < User::AuthenticatedController
+  
   skip_before_action :authorize_user_login, only: [:new,:create]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 

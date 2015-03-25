@@ -12,7 +12,8 @@ gem 'hashie'
 gem 'geocoder'
 
 gem 'facebox-rails'
-
+#calendar
+gem "watu_table_builder", :require => "table_builder"
 # This gem is used for rss feed parsing
 gem 'pauldix-feedzirra'
 # gem for manipulating different currency

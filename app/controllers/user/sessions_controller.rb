@@ -1,5 +1,5 @@
 class User::SessionsController < ApplicationController
-  skip_before_action :authorize_login, only: [:new, :create,:destroy]
+  skip_before_action :authorize_user_login, only: [:new, :create,:destroy]
   
   def new
   end

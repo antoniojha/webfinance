@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :advance_search
   resources :broker_search
   resources :protection_plans
-
+  resources :schedules
   resources :plans
   controller :plans do
 

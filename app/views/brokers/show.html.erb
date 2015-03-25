@@ -1,9 +1,15 @@
-<div style="float:left">
+<div style="float:left;">
 <%=smart_image(@broker,3)%>
+</div>
+
+<div style="float:right;">
+  <% if user_logged_in?%>
+  <%=button_to "Schedule Appointment", schedules_path%>
+  <%end%>
 </div>
 <div>
   <h3><%=@broker.first_name.capitalize%> <%=@broker.last_name.capitalize%></h3>
-</div>
+</div> 
 <div style="clear:both;"></div>
 <div align="left">
   <p><b>Company:</b> <%=@broker.institution_name%></p>
@@ -27,4 +33,4 @@
 <div style="float:right;">
 <%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@broker.latitude}%2C#{@broker.longitude}" %>
 </div>
-  <div style="clear:both;">
+<div style="clear:both;"></div>
