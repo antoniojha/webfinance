@@ -4,7 +4,7 @@ class User::AuthenticatedController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :invalid_user
   def invalid_user
     logger.error "Attempt to access user id#{session[:user_id]} that's not existing"
-  redirect_to user_login_url, notice: "Invalid Broker"
+    redirect_to user_login_url, notice: "Invalid User"
   end
 
 end

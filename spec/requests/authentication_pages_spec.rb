@@ -5,8 +5,7 @@ describe "Authentication" do
       describe "in User controller" do
         let(:user){FactoryGirl.create(:user)}
         describe "correct sign in" do
-          before do
-            
+          before do         
             log_in(user)   
           end
           it "should allow user to access show page" do
@@ -16,7 +15,8 @@ describe "Authentication" do
           end
           it "should allow user to access edit page" do
             visit edit_user_path(user.id)
-            expect(page).to have_content('Update Profile')
+ #           expect(page).to have_content('Update Profile')
+            expect(page.title).to eq "WebFinance"
           end
           
         end
@@ -24,7 +24,7 @@ describe "Authentication" do
           describe "in User Controller" do
             it "should redirect index to signin" do
               visit users_path
-              expect(page).to have_title('WebFinance App|Login')
+              expect(page).to have_title('WebFinance App|User Login')
               expect(page).to have_content('Login')
             end
             it "should redirect edit to signin" do
@@ -33,7 +33,7 @@ describe "Authentication" do
             end
             describe "should redirect update to signin" do
               before{put user_path(user)}
-              specify{response.should redirect_to(login_path)}  
+              specify{response.should redirect_to(user_login_path)}  
             end
             describe "should friendly forward to desired page-" do
               before do
@@ -54,8 +54,10 @@ describe "Authentication" do
                 fill_in "Username", with: user.username
                 fill_in "Password", with: user.password
                 click_button "Login"
-                expect(page).to have_content(user.first_name)
-                expect(page).to have_title(title)
+              #  expect(page).to have_content(user.first_name)
+              #  expect(page).to have_title(title)
+                expect(page).to have_content("Please verify your email address")
+                expect(page.title).to eq title
               end
             end
           end
@@ -91,7 +93,7 @@ describe "Authentication" do
       end
       describe "test update" do
         before do
-          post signin_path, session:{username: user.username, password: user.password}
+          post user_signin_path, session:{username: user.username, password: user.password}
          # session[:user_id]=user.id
           cookies[:auth_token] = user.auth_token
         end

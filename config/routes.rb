@@ -40,8 +40,6 @@ Rails.application.routes.draw do
       controller :brokers do
         get "broker/new"=>:new, as:"broker_signup"
         get "broker/edit/:id"=>:edit, as:"broker_register"
-
-
        
       end
     end

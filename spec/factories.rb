@@ -11,7 +11,7 @@ FactoryGirl.define do
     alarm_cat false
     social_cat false
     planning_cat false
-    email_authen false
+    email_authen true
     yodlee_username "sbMemantoniojha21"
     yodlee_password "sbMemantoniojha21#123"
     factory :admin do
