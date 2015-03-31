@@ -50,6 +50,7 @@ module SessionsHelper
     user_forget(current_user)
     session[:user_id]=nil
     session[:return_to]=nil
+    session[:broker_id_schedule]=nil
     @current_user=nil
   end
   def broker_log_out

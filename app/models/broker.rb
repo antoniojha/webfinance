@@ -10,9 +10,12 @@ class Broker < ActiveRecord::Base
   has_many :application_comments, through: :application_comment_relations
   has_many :quote_relations
   has_many :users, through: :quote_relations
+  has_many :schedules,dependent: :destroy
+  has_many :users, through: :schedules
   has_many :broker_backups
   has_many :temp_brokers
   has_many :temp_licenses
+  
   has_attached_file :identification
   validates_attachment_presence :identification, on: [:create,:validates_new_id]
   validates_attachment_size :identification, :less_than => 5.megabytes
@@ -43,7 +46,7 @@ class Broker < ActiveRecord::Base
   serialize :license_type_edit,Array
   serialize :license_type_remove, Array
   geocoded_by :address
-  after_validation :geocode
+  after_validation :geocode, :if => :address_changed?
   validate :validates_different_license
   def validates_different_license
     if @custom_validates

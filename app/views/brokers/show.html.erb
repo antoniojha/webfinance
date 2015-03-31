@@ -4,7 +4,10 @@
 
 <div style="float:right;">
   <% if user_logged_in?%>
-  <%=button_to "Schedule Appointment", schedules_path%>
+  <%=form_tag({controller:"user/authenticated",action:"create"}) do%>
+  <%=hidden_field_tag "broker_id",@broker.id%>
+    <%=submit_tag "Schedule Appointment"%>
+    <%end%>
   <%end%>
 </div>
 <div>

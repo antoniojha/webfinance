@@ -1,4 +1,4 @@
-class Admin::ApplicationCommentsController < ApplicationController
+class Admin::ApplicationCommentsController < Admin::AuthenticatedController
   skip_before_action :authorize_login
   before_action :set_broker, only:[:create,:update]
   before_action :set_comment, only:[:edit,:update]

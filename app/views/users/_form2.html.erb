@@ -37,6 +37,11 @@
     <td width="12%"><%=f.text_field :phone_3,{maxlength: 4,:class=>'form-control'}%></td>
     <td width="8%"></td>
   </tr>
+  <tr class="blank_row"></tr>
+  <tr>
+    <td><%=f.label :time_zone%></td>
+    <td colspan=6><%=f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones%></td>
+  </tr>
 </table>
 <table width="70%">
 		<tr>

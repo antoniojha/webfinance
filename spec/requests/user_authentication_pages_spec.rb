@@ -1,5 +1,5 @@
 require 'rails_helper'
-describe "Authentication" do
+describe "User Authentication" do
   describe "authorization" do
     describe "testing user login features" do
       describe "in User controller" do
@@ -11,12 +11,11 @@ describe "Authentication" do
           it "should allow user to access show page" do
             visit user_path(user.id)
             expect(page).to have_content(user.first_name)    
-            expect(page.title).to eq ('WebFinance App|first_name')
+            expect(page.title).to eq ('WebFinance App|'+user.first_name)
           end
           it "should allow user to access edit page" do
             visit edit_user_path(user.id)
- #           expect(page).to have_content('Update Profile')
-            expect(page.title).to eq "WebFinance"
+            expect(page).to have_content('Update Profile')
           end
           
         end
@@ -36,9 +35,7 @@ describe "Authentication" do
               specify{response.should redirect_to(user_login_path)}  
             end
             describe "should friendly forward to desired page-" do
-              before do
-                set_email_auth_true(user)
-              end
+
               it "edit page" do
                 visit edit_user_path(user)
                 fill_in "Username", with: user.username
@@ -49,15 +46,13 @@ describe "Authentication" do
               end
               let(:title){"WebFinance App|"+user.first_name}
               it "show page" do
-                set_email_auth_true(user)
                 visit user_path(user)
                 fill_in "Username", with: user.username
                 fill_in "Password", with: user.password
                 click_button "Login"
-              #  expect(page).to have_content(user.first_name)
-              #  expect(page).to have_title(title)
-                expect(page).to have_content("Please verify your email address")
-                expect(page.title).to eq title
+                expect(page).to have_content(user.first_name)
+                expect(page).to have_title(title)
+    
               end
             end
           end

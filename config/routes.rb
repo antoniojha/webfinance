@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     get 'direct_to'=> :direct_to
 
   end
+  resources :schedule_sessions, only:[:create,:delete]
   resources :brokers
  # match'/register/brokers/new', to:'brokers#new', via:'get', as: 'new'
  # get 'register/brokers/new'=> 'brokers#new'
@@ -47,6 +48,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :brokers
     resources :application_comments
+    resources :authenticated
   end
   namespace :register do
     resources :brokers

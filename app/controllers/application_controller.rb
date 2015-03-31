@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   include SessionsHelper
   helper_method :current_controller
+#  around_action :user_time_zone, if: :current_user
   
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -49,5 +50,8 @@ class ApplicationController < ActionController::Base
   def current_controller
     params[:controller]
   end
-
+  private
+  def user_time_zone(&block)
+    Time.use_zone(current_user.time_zone, &block)
+  end
 end

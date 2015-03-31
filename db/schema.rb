@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150324001352) do
+ActiveRecord::Schema.define(version: 20150330232355) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -438,6 +438,8 @@ ActiveRecord::Schema.define(version: 20150324001352) do
     t.decimal  "duration"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "date"
+    t.date     "schedule_date"
   end
 
   add_index "schedules", ["broker_id"], name: "index_schedules_on_broker_id"

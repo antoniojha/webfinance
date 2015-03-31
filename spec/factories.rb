@@ -14,6 +14,9 @@ FactoryGirl.define do
     email_authen true
     yodlee_username "sbMemantoniojha21"
     yodlee_password "sbMemantoniojha21#123"
+    street "80-75 208 Street"
+    city "Hollis Hills"
+    state "New York"
     factory :admin do
       admin true
     end

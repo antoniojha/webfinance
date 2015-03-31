@@ -1,0 +1,47 @@
+<% provide :right do%>
+<h4>Schedule Appointment</h4>
+
+<table width="100%">
+  <%=form_for @schedule do |f|%>
+  <tr>
+    <td width="40%"><%=f.label :date, "Select Date"%></td>
+  </tr>
+  <tr>
+    <td width="60%"><%=f.select :date, current_month_dates(@date), {:class=>'form-control'}%></td>
+  </tr>
+  <tr>
+    <td width="40%"><%=f.label :hours, "Select Time Slot"%></td>
+  </tr>
+  <tr>
+    <td width="60%"><%=f.select :hours, hours_in_day, {:class=>'form-control'}%>
+  </tr>
+  <tr>
+    <td colspan=2><%=f.submit%></td>
+    
+  </tr>
+  <%end%>
+</table>
+<%end%>
+<div id="calendar">
+  <h2><%=@broker.name%>'s Schedule</h2>
+  <%=render "error"%>
+  <h2 id="month">
+    
+    <% unless @date.beginning_of_month-1 < Date.today.beginning_of_month%>
+    <%= link_to "<", :month => (@date.beginning_of_month-1).strftime("%Y-%m-%d"),:broker_id=>@broker.id%>
+    <%end%>
+    <%=h @date.strftime("%B %Y")%>
+    <%= link_to ">", :month => (@date.end_of_month+1).strftime("%Y-%m-%d"),:broker_id=>@broker.id%>
+  </h2>
+  <%= calendar_for @schedules, :year => @date.year, :month => @date.month do |calendar| %>
+    <%= calendar.head('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat') %>
+  <%= calendar.day(:day_method => :schedule_date) do |date, schedules| %>
+  <%= date.day %>
+    <%for schedule in schedules do%>
+  <span width="100%" class="label label-primary">
+    <%=Time.parse(schedule.time_begin.to_s).strftime("%l:%M%P")%> - <%=Time.parse(schedule.time_end.to_s).strftime("%l:%M%P")%>
+  </span>
+    <%end%>
+  <% end %>
+<% end %>
+</div>

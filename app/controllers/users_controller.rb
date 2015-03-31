@@ -55,7 +55,7 @@ class UsersController < User::AuthenticatedController
           if @user.cropping?
             @user.reprocess_picture
           end
-          format.html { friendly_redirect(@user,'User was successfully updated.')}
+          format.html { redirect_to @user,notice:'User was successfully updated.'}
           format.json { head :no_content }
         else
           format.html{render :action=>"crop"}
@@ -123,7 +123,7 @@ class UsersController < User::AuthenticatedController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:first_name, :last_name,:username, :email, :password, :password_confirmation,:picture, :crop_x,:crop_y,:crop_w,:crop_h,:street,:city,:state,:phone_1,:phone_2,:phone_3)
+      params.require(:user).permit(:first_name, :last_name,:username, :email, :password, :password_confirmation,:picture, :crop_x,:crop_y,:crop_w,:crop_h,:street,:city,:state,:phone_1,:phone_2,:phone_3,:time_zone)
     end
     def correct_user
       @user=User.find(params[:id])

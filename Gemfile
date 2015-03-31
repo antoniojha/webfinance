@@ -10,6 +10,8 @@ gem 'httparty'
 gem 'hashie'
 
 gem 'geocoder'
+gem 'timezone'
+gem 'nearest_time_zone'
 
 gem 'facebox-rails'
 #calendar

@@ -1,6 +1,6 @@
-class Admin::BrokersController < ApplicationController
+class Admin::BrokersController < Admin::AuthenticatedController
  
-  skip_before_action :authorize_login
+  
   before_action :set_broker, only:[:show]
   def index
     @brokers_p=Broker.where(status:"pending")

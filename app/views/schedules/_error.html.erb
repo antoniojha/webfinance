@@ -1,0 +1,12 @@
+<% if @schedule.errors.any? %>
+
+    <div class="alert alert-danger error-message">
+      <h2>The form contains <%= pluralize(@schedule.errors.count, "error") %></h2>
+      <ul>
+        <% @schedule.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+
+  <% end %>

@@ -1,3 +1,4 @@
+
 class User < ActiveRecord::Base
   attr_accessor :auth_token
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
@@ -11,6 +12,8 @@ class User < ActiveRecord::Base
   has_many :spendings, dependent: :destroy
   has_many :quote_relations,dependent: :destroy
   has_many :brokers, through: :quote_relations
+  has_many :schedules,dependent: :destroy
+  has_many :brokers, through: :schedules
 #  has_many :temp_budget_plans, dependent: :destroy
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -30,15 +33,22 @@ class User < ActiveRecord::Base
   before_save{self.email=email.downcase}
   #ensure all username address are saved lower case
   before_save{self.username=username.downcase}  
-  geocoded_by :address
-  after_validation :geocode
+  geocoded_by :address, :if => :address_changed?
+  
   before_validation :save_phone_number
+  before_validation :geocode
   after_validation :save_address
+#  after_validation :save_time_zone
   def address
     [street, city, state, "USA"].compact.join(', ')
   end
   def save_address
     self.address=[street, city, state, "USA"].compact.join(', ')
+  end
+  def save_time_zone
+    time_zone=NearestTimeZone.to(longitude,latitude)
+    time_zone=ActiveSupport::TimeZone[time_zone]
+    update_attributes(:time_zone => time_zone)
   end
   def phone_1
     phone_number[0..2] unless phone_number.blank?
@@ -75,6 +85,17 @@ class User < ActiveRecord::Base
   end
   def associated_with?(broker,product_type)
     if quote_relations.where(broker_id:broker.id).find_by(product_type:product_type)
+      return true
+    else
+      return false
+    end
+  end
+
+  def unschedule(broker)
+    schedules.find_by(broker.id).destroy
+  end
+  def schedule_with?(broker)
+    if schedules.where(broker_id:broker.id)
       return true
     else
       return false

@@ -2,9 +2,9 @@ require 'rails_helper'
 describe User do
   describe "Creating User" do
     before do
-      @user=User.new( username:"example user", email:"example@example.com", password: "Example_password12?", password_confirmation: "Example_password12?")
-      @user2=User.new(username:"example user2", email:"example2@example.com",password:"Example_password12?",password_confirmation:"Example_password12?",first_name:"firstname",last_name:"lastname", phone_number:"1"*10)
-      @user2.save
+      @user=User.new( username:"example user", email:"example@example.com", password: "Example_password12?", password_confirmation: "Example_password12?",first_name:"firstname",last_name:"lastname", phone_number:"1"*10)
+      @user2=User.create(username:"example user2", email:"example2@example.com",password:"Example_password12?",password_confirmation:"Example_password12?")
+
     end
     subject {@user}
     it {should respond_to(:first_name)}
@@ -23,6 +23,7 @@ describe User do
       end
       it {should be_admin}
     end
+    #@user2 is used because it's testing validation when user is updated not created
     describe "when first name is not entered" do
       before {@user2.first_name=""}
       it "shouldn't save" do
@@ -190,6 +191,15 @@ describe User do
       expect(user.authenticated?('')).to eq false
       user.remember
       expect(user.authenticated?(user.auth_token)).to eq true
+    end
+    it "address, longitude, latitude should be populated" do
+      expect(user.address).to be_present
+      expect(user.longitude).to be_present
+      expect(user.latitude).to be_present
+    end
+    it "save_time_zone method should work" do
+      user.save_time_zone
+      expect(user.reload.time_zone).to be_present
     end
   end
   describe "associate and disassocite with broker through QuoteRelations" do
