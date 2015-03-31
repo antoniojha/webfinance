@@ -12,11 +12,8 @@ class SchedulesController < User::AuthenticatedController
   def create
     @schedule=current_user.schedules.new(schedule_params.merge(broker_id: @broker.id))
     if @schedule.save
-      if params[:month]
-      redirect_to new_schedule_url(month:params[:month]), notice: "Appointment Successfully Made"
-      else
         redirect_to new_schedule_url, notice: "Appointment Successfully Made"
-      end
+
     else
       @schedules=Schedule.all
       @date=params[:month] ? Date.parse(params[:month]) : Date.current
