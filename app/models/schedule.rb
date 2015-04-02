@@ -8,7 +8,7 @@ class Schedule < ActiveRecord::Base
   
   
   def create_schedule_times
-    user=User.find(user_id)
+
     hour_begin=@hours.split("-").first
     hour_end=@hours.split("-").last
     self.time_begin=DateTime.strptime(@date+hour_begin,("%Y-%m-%d%H:%M%p"))
