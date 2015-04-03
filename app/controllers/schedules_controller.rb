@@ -19,7 +19,7 @@ class SchedulesController < User::AuthenticatedController
     else
       @schedules=Schedule.all
       @date=params[:month] ? Date.parse(params[:month]) : Date.current
-      render "new"
+   #   render "new"
     end
   end
   private
