@@ -16,6 +16,7 @@
     <td width="60%"><%=f.select :hours, hours_in_day, {:class=>'form-control'}%>
   </tr>
   <tr>
+    <%=f.hidden_field :broker_id, @broker.id%>
     <td colspan=2><%=f.submit%></td>
     
   </tr>
