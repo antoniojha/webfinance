@@ -17,6 +17,7 @@ class SchedulesController < User::AuthenticatedController
         redirect_to new_schedule_url, notice: "Appointment Successfully Made"
 
     else
+      @broker=Broker.find(session[:broker_id_schedule])
       @schedules=Schedule.all
       @date=params[:month] ? Date.parse(params[:month]) : Date.current
       render "new"
