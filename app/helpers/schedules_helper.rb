@@ -5,6 +5,9 @@ module SchedulesHelper
       [date.strftime("%m-%d-%Y(%a)"), date]
       }
   end
+  def remember_broker
+    Broker.find(session[:broker_id_schedule])
+  end
   def hours_in_day
     time_start = Time.now.beginning_of_day+6.hours
     time_end = Time.now.end_of_day
