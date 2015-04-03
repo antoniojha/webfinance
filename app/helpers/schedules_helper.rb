@@ -6,7 +6,13 @@ module SchedulesHelper
       }
   end
   def remember_broker
-    Broker.find(session[:broker_id_schedule])
+    if session[:broker_id_schedule]
+      if @schedule_broker.nil?
+        @schedule_broker=Broker.find_by(id:session[:broker_id_schedule])
+      else
+        @schedule_broker
+      end
+    end
   end
   def hours_in_day
     time_start = Time.now.beginning_of_day+6.hours
