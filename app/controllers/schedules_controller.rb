@@ -3,7 +3,7 @@ class SchedulesController < User::AuthenticatedController
   before_action :set_broker, only: [:new,:create]
   
   def new
-    @broker=Broker.find(1)
+ 
     @schedule=Schedule.new
     @schedules=Schedule.all
 
