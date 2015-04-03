@@ -4,10 +4,10 @@
 <table width="100%">
   <%=form_for @schedule do |f|%>
   <tr>
-    <td width="40%"><%=f.label :date, "Select Date"%></td>
+    <td width="40%"><%=f.label :schedule_date, "Select Date"%></td>
   </tr>
   <tr>
-    <td width="60%"><%=f.select :date, current_month_dates(@date), {:class=>'form-control'}%></td>
+    <td width="60%"><%=f.select :schedule_date, current_month_dates(@date), {:class=>'form-control'}%></td>
   </tr>
   <tr>
     <td width="40%"><%=f.label :hours, "Select Time Slot"%></td>
@@ -39,7 +39,7 @@
   <%= date.day %>
     <%for schedule in schedules do%>
   <span width="100%" class="label label-primary">
-    <%=Time.parse(schedule.time_begin.to_s).strftime("%l:%M%P")%> - <%=Time.parse(schedule.time_end.to_s).strftime("%l:%M%P")%>
+    <%=schedule.time_begin%> - <%=schedule.time_end%>
   </span>
     <%end%>
   <% end %>

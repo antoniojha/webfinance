@@ -28,6 +28,6 @@ class SchedulesController < User::AuthenticatedController
     @broker=Broker.find(session[:broker_id_schedule])
   end
   def schedule_params
-    params.require(:schedule).permit(:date, :hours)
+    params.require(:schedule).permit(:schedule_date, :hours)
   end
 end

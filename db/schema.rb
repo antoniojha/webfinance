@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150330232355) do
+ActiveRecord::Schema.define(version: 20150403020936) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -433,8 +433,8 @@ ActiveRecord::Schema.define(version: 20150330232355) do
   create_table "schedules", force: true do |t|
     t.integer  "broker_id"
     t.integer  "user_id"
-    t.datetime "time_begin"
-    t.datetime "time_end"
+    t.string   "time_begin"
+    t.string   "time_end"
     t.decimal  "duration"
     t.datetime "created_at"
     t.datetime "updated_at"
