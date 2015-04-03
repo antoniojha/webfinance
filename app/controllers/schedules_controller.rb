@@ -1,5 +1,5 @@
 class SchedulesController < User::AuthenticatedController
-  
+  include SchedulesHelper
   before_action :set_broker, only: [:new,:create]
   
   def new
@@ -24,7 +24,7 @@ class SchedulesController < User::AuthenticatedController
   end
   private
   def set_broker
-    @broker=remember_broker
+    @broker=schedule_broker
   end
   def schedule_params
     params.require(:schedule).permit(:schedule_date, :hours,:broker_id)

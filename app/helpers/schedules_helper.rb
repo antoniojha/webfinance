@@ -5,7 +5,7 @@ module SchedulesHelper
       [date.strftime("%m-%d-%Y(%a)"), date]
       }
   end
-  def remember_broker
+  def schedule_broker
     if session[:broker_id_schedule]
       if @schedule_broker.nil?
         @schedule_broker=Broker.find_by(id:session[:broker_id_schedule])
