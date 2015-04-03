@@ -28,10 +28,14 @@
   <h2 id="month">
     
     <% unless @date.beginning_of_month-1 < Date.today.beginning_of_month%>
+    <% if false%>
     <%= link_to "<", :month => (@date.beginning_of_month-1).strftime("%Y-%m-%d"),:broker_id=>@broker.id%>
     <%end%>
+    <%end%>
     <%=h @date.strftime("%B %Y")%>
+    <% if false%>
     <%= link_to ">", :month => (@date.end_of_month+1).strftime("%Y-%m-%d"),:broker_id=>@broker.id%>
+    <%end%>
   </h2>
   <%= calendar_for @schedules, :year => @date.year, :month => @date.month do |calendar| %>
     <%= calendar.head('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat') %>
