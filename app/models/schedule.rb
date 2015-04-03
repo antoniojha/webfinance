@@ -2,9 +2,9 @@ class Schedule < ActiveRecord::Base
 
   belongs_to :broker
   belongs_to :user
-  before_validation :create_schedule_times
+  after_save :create_schedule_times
   validates :broker_id, :user_id, presence: true
-  validates_uniqueness_of :time_begin
+ # validates_uniqueness_of :time_begin
   
   def hours=(hour)
     @hour_begin=hour.split("-").first
