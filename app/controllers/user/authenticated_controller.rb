@@ -8,7 +8,8 @@ class User::AuthenticatedController < ApplicationController
     redirect_to user_login_url, notice: "Invalid User"
   end
   def create
-    session[:broker_id_schedule]=params[:broker_id].to_i
+    remember_broker(params[:broker_id])
+    
     redirect_to new_schedule_url
   end
 

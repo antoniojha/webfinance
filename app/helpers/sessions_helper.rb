@@ -1,4 +1,7 @@
 module SessionsHelper
+  def remember_broker(broker_id)
+    session[:broker_id_schedule]=broker_id.to_i
+  end
   def broker_log_in(broker)
     session[:broker_id]=broker.id
     
