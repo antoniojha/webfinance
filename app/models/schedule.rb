@@ -2,7 +2,7 @@ class Schedule < ActiveRecord::Base
 
   belongs_to :broker
   belongs_to :user
-  after_save :create_schedule_times
+
   validates :broker_id, :user_id, presence: true
  # validates_uniqueness_of :time_begin
   
@@ -22,7 +22,7 @@ class Schedule < ActiveRecord::Base
   def date
     @date
   end
-  def create_schedule_times
+  before_validation(:on => :create) do
     self.time_begin=DateTime.strptime(@date+@hour_begin,("%Y-%m-%d%H:%M%p"))
     self.time_end=DateTime.strptime(@date+@hour_end,("%Y-%m-%d%H:%M%p"))
   end
