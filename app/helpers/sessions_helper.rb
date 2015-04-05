@@ -17,7 +17,7 @@ module SessionsHelper
   def current_broker
     if session[:broker_id]
       if @current_broker.nil?
-        @current_broker=Broker.find_by(id:session[:broker_id])
+        @current_broker=Broker.find_by(id:session[:broker_id].to_i)
       else
         @current_broker
       end
