@@ -2,6 +2,15 @@ module SessionsHelper
   def remember_broker(broker_id)
     session[:broker_id_schedule]=broker_id.to_i
   end
+  def schedule_broker
+    if session[:broker_id_schedule]
+      if @schedule_broker.nil?
+        @schedule_broker=Broker.find_by(id:session[:broker_id_schedule])
+      else
+        @schedule_broker
+      end
+    end
+  end
   def broker_log_in(broker)
     session[:broker_id]=broker.id
     

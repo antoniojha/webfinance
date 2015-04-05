@@ -5,15 +5,7 @@ module SchedulesHelper
       [date.strftime("%m-%d-%Y(%a)"), date]
       }
   end
-  def schedule_broker
-    if session[:broker_id_schedule]
-      if @schedule_broker.nil?
-        @schedule_broker=Broker.find_by(id:session[:broker_id_schedule])
-      else
-        @schedule_broker
-      end
-    end
-  end
+
   def hours_in_day
     time_start = Time.now.beginning_of_day+6.hours
     time_end = Time.now.end_of_day

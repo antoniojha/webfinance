@@ -1,5 +1,4 @@
 class SchedulesController < User::AuthenticatedController
-  include SchedulesHelper
   before_action :set_broker, only: [:new]
   
   def new
