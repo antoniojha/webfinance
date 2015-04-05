@@ -1,5 +1,5 @@
 class SchedulesController < User::AuthenticatedController
-  before_action :set_broker, only: [:new,:create]
+  before_action :set_broker, only: [:new, :create]
   
   def new
     @schedule=Schedule.new
