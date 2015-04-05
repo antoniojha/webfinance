@@ -1,5 +1,5 @@
 class SchedulesController < User::AuthenticatedController
-  before_action :set_broker, only: [:new]
+  before_action :set_broker, only: [:new,:create]
   
   def new
     @schedule=Schedule.new
@@ -14,7 +14,6 @@ class SchedulesController < User::AuthenticatedController
     if @schedule.save
       redirect_to new_schedule_url, notice: "Appointment Successfully Made"
     else
-      @broker=schedule_broker
       @schedules=Schedule.all
       @date=params[:month] ? Date.parse(params[:month]) : Date.current
       render "new"
