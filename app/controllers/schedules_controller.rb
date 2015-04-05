@@ -2,10 +2,8 @@ class SchedulesController < User::AuthenticatedController
   before_action :set_broker, only: [:new]
   
   def new
- 
     @schedule=Schedule.new
     @schedules=Schedule.all
-
     @date=params[:month] ? Date.parse(params[:month]) : Date.current
   end
   def index
