@@ -210,6 +210,12 @@ describe User do
     end
   end
   describe "when broker is updated" do
+    before do
+      @broker=FactoryGirl.create(:broker)
+      @address=@broker.address
+      @latitude=@broker.latitude
+      @longitude=@broker.longitude
+    end
     it "should call geocode if address is updated" do
         
     end

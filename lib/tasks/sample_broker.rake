@@ -7,7 +7,7 @@ namespace :db do
         first_name=name.split[0]
         last_name=name.split[1]
         institution_name=Faker::Company.name
-        idenfication=(Rails.root+"spec/fixtures/pdfs/example_license.pdf").open
+
         street="80-75 208 Street"
         city= "Hollis Hills"
         state="NY"
@@ -35,7 +35,9 @@ namespace :db do
           license_type=["1"]
         end
         web=Faker::Internet.url('example.com')
-        broker=Broker.create!(first_name:first_name, last_name:last_name,institution_name:institution_name,street:street,city:city,state:state,username:username,email:email,password:password,password_confirmation:password,phone_work_1:phone_work_1,phone_work_2:phone_work_2,phone_work_3:phone_work_3, license_type: license_type, web:web)
+        broker=Broker.new(first_name:first_name, last_name:last_name,institution_name:institution_name,street:street,city:city,state:state,username:username,email:email,password:password,password_confirmation:password,phone_work_1:phone_work_1,phone_work_2:phone_work_2,phone_work_3:phone_work_3, license_type: license_type, web:web)
+        broker.idenfication=(Rails.root+"spec/fixtures/pdfs/example_license.pdf").open
+        broker.save!
         license_type.each do |l|
           license_type=l
           license_number=Faker::Number.number(10)
