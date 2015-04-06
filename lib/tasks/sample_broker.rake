@@ -7,6 +7,7 @@ namespace :db do
         first_name=name.split[0]
         last_name=name.split[1]
         institution_name=Faker::Company.name
+        license=(Rails.root+"spec/fixtures/pdfs/example_license.pdf").open
         street="80-75 208 Street"
         city= "Hollis Hills"
         state="NY"
@@ -38,8 +39,10 @@ namespace :db do
         license_type.each do |l|
           license_type=l
           license_number=Faker::Number.number(10)
-       #   picture=(Rails.root+"spec/fixtures/pdfs/example_license.pdf").open
-          License.create!(license_number:license_number,license_type:license_type, broker_id:broker.id)
+          picture=(Rails.root+"spec/fixtures/pdfs/example_license.pdf").open
+          license=License.new(license_number:license_number,license_type:license_type, broker_id:broker.id)
+          license.picture=picture
+          license.save!
         end
       end
     end

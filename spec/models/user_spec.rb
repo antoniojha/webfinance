@@ -164,6 +164,7 @@ describe User do
         end
       end
     end
+
   end
   
   describe "#send confirmation_password" do
@@ -206,6 +207,14 @@ describe User do
     before do
       @user=FactoryGirl.create(:user)
       @broker=FactoryGirl.create(:broker)
+    end
+  end
+  describe "when broker is updated" do
+    it "should call geocode if address is updated" do
+        
+    end
+    it "shouldn't call geocode is address is the same" do
+        
     end
   end
 end
