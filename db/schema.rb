@@ -295,7 +295,7 @@ ActiveRecord::Schema.define(version: 20150403020936) do
     t.string   "picture_content_type"
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
-    t.integer  "license_type",         limit: 255
+    t.integer  "license_type"
     t.string   "license_number"
     t.boolean  "approved",                         default: false
     t.string   "states"
