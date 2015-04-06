@@ -12,8 +12,8 @@ class SchedulesController < User::AuthenticatedController
   end
   def create
     current_user=User.find_by(id:1)
-    @schedule=current_user.schedules.new(schedule_params)
-    if @schedule.save
+  
+    if current_user.schedules.create(schedule_params)
       redirect_to new_schedule_url, notice: "Appointment Successfully Made"
     else
       @schedules=Schedule.all
