@@ -36,7 +36,7 @@ namespace :db do
         end
         web=Faker::Internet.url('example.com')
         broker=Broker.new(first_name:first_name, last_name:last_name,institution_name:institution_name,street:street,city:city,state:state,username:username,email:email,password:password,password_confirmation:password,phone_work_1:phone_work_1,phone_work_2:phone_work_2,phone_work_3:phone_work_3, license_type: license_type, web:web)
-        broker.idenfication=(Rails.root+"spec/fixtures/pdfs/example_license.pdf").open
+        broker.identification=(Rails.root+"spec/fixtures/pdfs/example_license.pdf").open
         broker.save!
         license_type.each do |l|
           license_type=l
