@@ -48,6 +48,17 @@ class Broker < ActiveRecord::Base
   geocoded_by :address
   after_validation :geocode, :if => :address_changed?
   validate :validates_different_license
+  def address_changed?
+    if self.address
+      unless self.address==address
+        return true
+      else
+        return false
+      end
+    else
+      return true
+    end
+  end
   def validates_different_license
     if @custom_validates
       errors.add(:license_number,"a new license number must be entered")

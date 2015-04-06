@@ -39,6 +39,17 @@ class User < ActiveRecord::Base
   before_validation :geocode
   after_validation :save_address
 #  after_validation :save_time_zone
+  def address_changed?
+    if self.address
+      unless self.address==address
+        return true
+      else
+        return false
+      end
+    else
+      return true
+    end
+  end
   def address
     [street, city, state, "USA"].compact.join(', ')
   end
