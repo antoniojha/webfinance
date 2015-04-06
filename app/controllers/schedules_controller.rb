@@ -22,7 +22,8 @@ class SchedulesController < User::AuthenticatedController
   end
   private
   def set_broker
-    @broker=schedule_broker
+  #  @broker=schedule_broker
+    @broker=Broker.find_by(id:session[:broker_id_schedule])
   end
   def schedule_params
     params.require(:schedule).permit(:schedule_date, :hours,:broker_id)
