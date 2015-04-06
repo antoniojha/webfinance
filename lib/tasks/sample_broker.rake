@@ -7,7 +7,7 @@ namespace :db do
         first_name=name.split[0]
         last_name=name.split[1]
         institution_name=Faker::Company.name
-        license=(Rails.root+"spec/fixtures/pdfs/example_license.pdf").open
+        idenfication=(Rails.root+"spec/fixtures/pdfs/example_license.pdf").open
         street="80-75 208 Street"
         city= "Hollis Hills"
         state="NY"
