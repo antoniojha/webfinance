@@ -28,10 +28,10 @@
   <h2 id="month">
     
     <% unless @date.beginning_of_month-1 < Date.today.beginning_of_month%>
-    <%= link_to "<", :month => (@date.beginning_of_month-1).strftime("%Y-%m-%d"),:broker_id=>@broker.id%>
+    <%= link_to "<", :month => (@date.beginning_of_month-1).strftime("%Y-%m-%d")%>
     <%end%>
     <%=h @date.strftime("%B %Y")%>
-    <%= link_to ">", :month => (@date.end_of_month+1).strftime("%Y-%m-%d"),:broker_id=>@broker.id%>
+    <%= link_to ">", :month => (@date.end_of_month+1).strftime("%Y-%m-%d")%>
 
   </h2>
   <%= calendar_for @schedules, :year => @date.year, :month => @date.month do |calendar| %>
