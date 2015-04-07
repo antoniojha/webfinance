@@ -80,7 +80,7 @@ class BrokersController < Broker::AuthenticatedController
         @brokers=@broker_search.brokers
         @brokers=@brokers.paginate(:page => params[:page])  
       else
-        state=@background.state
+        state=@user.state
         @brokers=Broker.where("state = ?",state).paginate(:page => params[:page])
         @broker_search=BrokerSearch.new
         @broker_search.state=state
