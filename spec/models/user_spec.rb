@@ -217,10 +217,14 @@ describe User do
       @longitude=@broker.longitude
     end
     it "should call geocode if address is updated" do
-        
+      @broker=@broker.update(street:"80-76 208 Street")
+      expect(@longitude).not_to eq @broker.longitude
+      expect(@latitude).not_to eq @broker.latitude
     end
     it "shouldn't call geocode is address is the same" do
-        
+      @broker=@broker.update(street:"80-75 208 Street")
+      expect(@longitude).to eq @broker.longitude
+      expect(@latitude).to eq @broker.latitude        
     end
   end
 end
