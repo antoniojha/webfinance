@@ -12,8 +12,6 @@ class SchedulesController < User::AuthenticatedController
   end
   def create
 #    current_user=User.find_by(params[:user_id])
-    params[:schedule][:user_id]=params[:schedule][:user_id].to_i
-    params[:schedule][:broker_id]=params[:schedule][:broker_id].to_i
     if Schedule.create(schedule_params)
       redirect_to new_schedule_url, notice: "Appointment Successfully Made"
     else
