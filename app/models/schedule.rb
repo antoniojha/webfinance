@@ -8,6 +8,8 @@ class Schedule < ActiveRecord::Base
     self.time_begin=hour.split("-").first
     self.time_end=hour.split("-").last      
   end
-  
+  def hours
+
+  end
   # self.time_begin=DateTime.strptime(date+@hour_begin,("%Y-%m-%d%H:%M%p"))
 end
