@@ -1,5 +1,4 @@
 class Schedule < ActiveRecord::Base
-  attr_accessor :hours
   belongs_to :broker
   belongs_to :user
 
@@ -9,5 +8,6 @@ class Schedule < ActiveRecord::Base
     self.time_begin=hour.split("-").first
     self.time_end=hour.split("-").last      
   end
+  
   # self.time_begin=DateTime.strptime(date+@hour_begin,("%Y-%m-%d%H:%M%p"))
 end
