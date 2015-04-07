@@ -14,6 +14,7 @@ class SchedulesController < User::AuthenticatedController
     if @schedule.save
       redirect_to new_schedule_url
     else
+      @schedules=Schedule.all
       @date=params[:month] ? Date.parse(params[:month]) : Date.today
       render "new"
     end
