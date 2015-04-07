@@ -13,7 +13,7 @@ class SchedulesController < User::AuthenticatedController
   def create
     current_user=User.find_by(params[:user_id])
   
-    if Schedule.create(schedule_params.merge(params[:user_id]))
+    if Schedule.create(schedule_params)
       redirect_to new_schedule_url, notice: "Appointment Successfully Made"
     else
       @schedules=Schedule.all
