@@ -3,7 +3,7 @@ class Schedule < ActiveRecord::Base
   belongs_to :user
 
 #  validates :broker_id, :user_id, presence: true
-  validates_uniqueness_of :time_begin, scope:[:schedule_date,:broker_id]
+#  validates_uniqueness_of :time_begin, scope:[:schedule_date,:broker_id]
   def hours=(hour)
     self.time_begin=hour.split("-").first
     self.time_end=hour.split("-").last      
