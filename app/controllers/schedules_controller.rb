@@ -10,7 +10,7 @@ class SchedulesController < User::AuthenticatedController
 
   end
   def create
-    @schedule=Schedule.new(schedule_params)
+    @schedule=current_user.schedules.new(schedule_params.merge(broker_id:@broker.id))
     if @schedule.save
       redirect_to new_schedule_url
     else
@@ -20,9 +20,9 @@ class SchedulesController < User::AuthenticatedController
   end
   private
   def set_broker
-    @broker=Broker.find(session[:broker_id_schedule].to_i)
+    @broker=schedule_broker
   end
   def schedule_params
-    params.require(:schedule).permit(:schedule_date, :hours,:user_id, :broker_id)
+    params.require(:schedule).permit(:schedule_date, :hours)
   end
 end
