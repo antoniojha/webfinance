@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150403020936) do
+ActiveRecord::Schema.define(version: 20150411120636) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -203,6 +203,7 @@ ActiveRecord::Schema.define(version: 20150403020936) do
     t.string   "edit_current_step"
     t.string   "license_type_edit"
     t.string   "license_type_remove"
+    t.string   "time_zone"
   end
 
   add_index "brokers", ["confirmation_number"], name: "index_brokers_on_confirmation_number"
@@ -295,7 +296,7 @@ ActiveRecord::Schema.define(version: 20150403020936) do
     t.string   "picture_content_type"
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
-    t.integer  "license_type"
+    t.integer  "license_type",         limit: 255
     t.string   "license_number"
     t.boolean  "approved",                         default: false
     t.string   "states"
@@ -433,13 +434,14 @@ ActiveRecord::Schema.define(version: 20150403020936) do
   create_table "schedules", force: true do |t|
     t.integer  "broker_id"
     t.integer  "user_id"
-    t.string   "time_begin"
-    t.string   "time_end"
+    t.datetime "time_begin",    limit: 255
+    t.datetime "time_end",      limit: 255
     t.decimal  "duration"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "date"
     t.date     "schedule_date"
+    t.string   "time_zone"
   end
 
   add_index "schedules", ["broker_id"], name: "index_schedules_on_broker_id"
@@ -455,7 +457,7 @@ ActiveRecord::Schema.define(version: 20150403020936) do
     t.string   "picture_content_type"
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
-    t.integer  "category"
+    t.integer  "category",             limit: 255
     t.integer  "account_item_id"
     t.datetime "created_at"
     t.datetime "updated_at"

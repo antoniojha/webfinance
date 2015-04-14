@@ -10,6 +10,8 @@ gem 'httparty'
 gem 'hashie'
 
 gem 'geocoder'
+gem 'google_timezone'
+
 gem 'timezone'
 gem 'nearest_time_zone'
 

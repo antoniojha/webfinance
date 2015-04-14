@@ -35,6 +35,14 @@ namespace :db do
           license_type=["1"]
         end
         web=Faker::Internet.url('example.com')
+        num5=Random.new.rand(0..2).round
+        if num5 ==0
+          time_zone= "Pacific Time (US & Canada)"
+        elsif num5==1
+          time_zone= "Central Time (US & Canada)"
+        elsif num5==2
+          time_zone= "Eastern Time (US & Canada)"
+        end
         broker=Broker.new(first_name:first_name, last_name:last_name,institution_name:institution_name,street:street,city:city,state:state,username:username,email:email,password:password,password_confirmation:password,phone_work_1:phone_work_1,phone_work_2:phone_work_2,phone_work_3:phone_work_3, license_type: license_type, web:web)
         broker.identification=(Rails.root+"spec/fixtures/pdfs/example_license.pdf").open
         broker.save!

@@ -86,6 +86,7 @@ GEM
       thor (~> 0.14)
     formatador (0.2.5)
     geocoder (1.2.7)
+    google_timezone (0.0.4)
     googlecharts (1.6.8)
     guard (2.6.1)
       formatador (>= 0.2.4)
@@ -315,6 +316,7 @@ DEPENDENCIES
   faker
   figaro
   geocoder
+  google_timezone
   googlecharts
   guard-rspec
   guard-spork

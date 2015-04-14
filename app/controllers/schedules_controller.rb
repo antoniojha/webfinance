@@ -5,6 +5,7 @@ class SchedulesController < User::AuthenticatedController
     @schedules=Schedule.all
 
     @date=params[:month] ? Date.parse(params[:month]) : Date.today
+
   end
   def index
 
@@ -24,6 +25,6 @@ class SchedulesController < User::AuthenticatedController
     @broker=schedule_broker
   end
   def schedule_params
-    params.require(:schedule).permit(:schedule_date, :hours)
+    params.require(:schedule).permit(:date, :hours)
   end
 end

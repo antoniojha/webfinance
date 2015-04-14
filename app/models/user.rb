@@ -33,21 +33,33 @@ class User < ActiveRecord::Base
   before_save{self.email=email.downcase}
   #ensure all username address are saved lower case
   before_save{self.username=username.downcase}  
-  geocoded_by :address, :if => :address_changed?
+  geocoded_by :address
+  validate :check_valid_state, on: [:update]
   
   before_validation :save_phone_number
-  before_validation :geocode
+  after_validation :geocode, :if => :address_changed?
   after_validation :save_address
-#  after_validation :save_time_zone
+
+
+  def check_valid_state
+    if Order::US_STATES.flatten.include?(state)
+      if state.size != 2
+        self.state=Order::US_STATES.to_h[state]
+      end
+    else
+    
+      errors.add(:state, "Please enter a valid state")
+    end
+  end
   def address_changed?
-    if self.address
+    if self.address =="USA"
+      return true
+    else
       unless self.address==address
         return true
       else
         return false
       end
-    else
-      return true
     end
   end
   def address
@@ -56,11 +68,7 @@ class User < ActiveRecord::Base
   def save_address
     self.address=[street, city, state, "USA"].compact.join(', ')
   end
-  def save_time_zone
-    time_zone=NearestTimeZone.to(longitude,latitude)
-    time_zone=ActiveSupport::TimeZone[time_zone]
-    update_attributes(:time_zone => time_zone)
-  end
+
   def phone_1
     phone_number[0..2] unless phone_number.blank?
   end

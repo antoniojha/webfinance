@@ -3,7 +3,7 @@ describe User do
   describe "Creating User" do
     before do
       @user=User.new( username:"example user", email:"example@example.com", password: "Example_password12?", password_confirmation: "Example_password12?",first_name:"firstname",last_name:"lastname", phone_number:"1"*10)
-      @user2=User.create(username:"example user2", email:"example2@example.com",password:"Example_password12?",password_confirmation:"Example_password12?")
+      @user2=User.create(username:"example user2", email:"example2@example.com",password:"Example_password12?",password_confirmation:"Example_password12?", street:"80-75 208 Street", city:"Hollis Hills", state:"NY")
 
     end
     subject {@user}
@@ -164,9 +164,35 @@ describe User do
         end
       end
     end
+    
+    it "address, longitude, latitude should be populated" do
+      expect(@user2.address).to be_present
+      expect(@user2.longitude).to be_present
+      expect(@user2.latitude).to be_present
+    end
 
   end
-  
+  describe "#address_changed? method" do
+    let(:user){FactoryGirl.create(:user)}
+    before do 
+      @user=User.create(username:"example user2", email:"example2@example.com",password:"Example_password12?",password_confirmation:"Example_password12?", street:"80-75 208 Street", city:"Hollis Hills", state:"NY")
+
+      @latitude=user.latitude
+      @longitude=user.longitude
+    end
+    it "should call geocode if address is updated" do
+      @user.update(street:"61-29 223 Place",city:"Oakland Gardens",state:"New York")
+      @user=@user.reload
+      expect(@longitude).not_to eq @user.longitude
+      expect(@latitude).not_to eq @user.latitude
+    end
+    it "shouldn't call geocode is address is the same" do
+      @user.update(street:"80-75 208 Street")
+      @user=@user.reload
+      expect(@longitude).to eq @user.longitude
+      expect(@latitude).to eq @user.latitude       
+    end
+  end
   describe "#send confirmation_password" do
     let(:user){FactoryGirl.create(:user)}
     #check
@@ -193,15 +219,7 @@ describe User do
       user.remember
       expect(user.authenticated?(user.auth_token)).to eq true
     end
-    it "address, longitude, latitude should be populated" do
-      expect(user.address).to be_present
-      expect(user.longitude).to be_present
-      expect(user.latitude).to be_present
-    end
-    it "save_time_zone method should work" do
-      user.save_time_zone
-      expect(user.reload.time_zone).to be_present
-    end
+
   end
   describe "associate and disassocite with broker through QuoteRelations" do
     before do
@@ -211,20 +229,27 @@ describe User do
   end
   describe "when broker is updated" do
     before do
-      @broker=FactoryGirl.create(:broker)
+      @broker=FactoryGirl.build(:broker)
+      @broker.save
       @address=@broker.address
       @latitude=@broker.latitude
       @longitude=@broker.longitude
     end
     it "should call geocode if address is updated" do
-      @broker=@broker.update(street:"80-76 208 Street")
-      expect(@longitude).not_to eq @broker.longitude
-      expect(@latitude).not_to eq @broker.latitude
+      @broker.update(street:"61-29 223 Place",city:"Oakland Gardens",state:"New York")
+      @broker=@broker.reload
+      expect(@longitude).not_to eq "@broker.longitude"
+      expect(@latitude).not_to eq "@broker.latitude"
     end
     it "shouldn't call geocode is address is the same" do
-      @broker=@broker.update(street:"80-75 208 Street")
-      expect(@longitude).to eq @broker.longitude
-      expect(@latitude).to eq @broker.latitude        
+      @broker.update(street:"80-75 208 Street")
+      @broker=@broker.reload
+      expect(@longitude).to eq "@broker.longitude"
+      expect(@latitude).to eq "@broker.latitude "       
+    end
+    it "shouldn't save state if it is invalid" do
+      @broker.state="Nwe York"
+      expect(@broker).not_to be_valid
     end
   end
 end

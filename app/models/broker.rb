@@ -46,17 +46,28 @@ class Broker < ActiveRecord::Base
   serialize :license_type_edit,Array
   serialize :license_type_remove, Array
   geocoded_by :address
+  validate :check_valid_state
   after_validation :geocode, :if => :address_changed?
+  
   validate :validates_different_license
+  def check_valid_state
+    if Order::US_STATES.flatten.include?(state)
+      if state.size != 2
+        self.state=Order::US_STATES.to_h[state]
+      end
+    else
+      errors.add(:state,"Please enter a valid state")
+    end
+  end
   def address_changed?
-    if self.address
+    if self.address =="USA"
+      return true
+    else
       unless self.address==address
         return true
       else
         return false
       end
-    else
-      return true
     end
   end
   def validates_different_license
