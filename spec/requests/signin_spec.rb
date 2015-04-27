@@ -1,13 +1,9 @@
 require 'rails_helper'
 
 describe "user sign in" do
-  before do 
-
-    visit user_login_path
-    expect(page).to have_content('Login to RichRly') 
-  end
   describe "sign in when user's has not confirmed email yet" do
     before do
+      visit user_login_path
       @user=FactoryGirl.create(:incomplete_user)
       fill_in "session_name_or_email", :with=>@user.username
       fill_in "session_password", :with=>@user.password 
@@ -19,6 +15,7 @@ describe "user sign in" do
   end
   describe "sign in after user has confirmed email" do
     before do
+      visit user_login_path
       @user_complete=FactoryGirl.create(:user)
       fill_in "session_name_or_email", :with=>@user_complete.username
       fill_in "session_password", :with=>@user_complete.password 
