@@ -5,10 +5,7 @@ describe "Users Signup" do
     let(:user){ FactoryGirl.build(:user)}
     before do
       visit signup_path
-      fill_in "user_first_name", :with=>user.first_name
-      fill_in "user_last_name", :with=>user.last_name
       fill_in "Username", :with=>user.username
-      fill_in "Email", :with=>user.email
       fill_in "Password", :with=>user.password
       fill_in "Password confirmation", :with=>user.password 
     end   
@@ -18,10 +15,11 @@ describe "Users Signup" do
     it "should create user" do
       expect { click_button "Create Account" }.to change(User, :count).by(1)  
     end
-    it "should redirect to email confirmation page after sign up" do 
+    it "should redirect to user edit page to prompt user to complete profile after sign up" do 
       click_button "Create Account"
-      expect(page).to have_content('Email Confirmation')
-      expect(last_email.to).to include(user.email)
+      expect(page).to have_content("Update Profile")
+    #  expect(page).to have_content('Email Confirmation')
+    #  expect(last_email.to).to include(user.email)
     end    
   end
   describe "invalid signup" do

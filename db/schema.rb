@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150411120636) do
+ActiveRecord::Schema.define(version: 20150425021408) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -49,6 +49,26 @@ ActiveRecord::Schema.define(version: 20150411120636) do
     t.datetime "updated_at"
     t.string   "hidden_value"
   end
+
+  create_table "advice_categories", force: true do |t|
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "advices", force: true do |t|
+    t.string   "title"
+    t.text     "content"
+    t.integer  "question_id"
+    t.integer  "broker_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "advice_category_id"
+  end
+
+  add_index "advices", ["advice_category_id"], name: "index_advices_on_advice_category_id"
+  add_index "advices", ["broker_id"], name: "index_advices_on_broker_id"
+  add_index "advices", ["question_id"], name: "index_advices_on_question_id"
 
   create_table "application_comment_relations", force: true do |t|
     t.integer  "broker_id"
@@ -276,6 +296,14 @@ ActiveRecord::Schema.define(version: 20150411120636) do
   end
 
   add_index "goals", ["background_id"], name: "index_goals_on_background_id"
+
+  create_table "identities", force: true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "password_digest"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "incomes", force: true do |t|
     t.string   "description"
@@ -579,6 +607,9 @@ ActiveRecord::Schema.define(version: 20150411120636) do
     t.string   "city"
     t.string   "state"
     t.string   "phone_number"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "salt"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

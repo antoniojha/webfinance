@@ -1,5 +1,5 @@
 class UsersController < User::AuthenticatedController
-  
+  skip_before_action :redirect_to_complete_user_profile, only:[:new,:edit,:create,:update,:destroy]
   skip_before_action :authorize_user_login, only: [:new,:create]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
@@ -35,9 +35,9 @@ class UsersController < User::AuthenticatedController
     respond_to do |format|
       if @user.save
         # method can be found in User model
-        @user.send_email_confirmation
-     #   @user.yodlee.register if Yodlee::Config.register_users
-        format.html { redirect_to confirmation_url(user_id:@user.id)}
+   #     @user.send_email_confirmation
+        user_log_in(@user)
+        format.html { redirect_to @user}
         format.json { render action: 'show', status: :created, location: @user }
       else
         format.html { render action: 'new' }
@@ -70,7 +70,6 @@ class UsersController < User::AuthenticatedController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-  #  @user.yodlee.destroy if Yodlee::Config.register_users
     user=User.find_by(username: params[:user][:username].downcase)
     if is_admin_remove?
       remove_user=User.find(params[:remove_user][:id])

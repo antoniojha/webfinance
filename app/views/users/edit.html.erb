@@ -6,6 +6,5 @@
 
 <%=render "picture_form"%>
 <%= form_for @user do |f| %>
-  <%=render partial:'form', locals:{f:f}%>
-  <%=render partial:'form2', locals:{f:f}%>
+<%=render partial:'form_edit', locals:{f:f}%>
 <%end%>

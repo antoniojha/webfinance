@@ -1,0 +1,26 @@
+<h3>Enter new advice</h3>
+<%=form_for @advice do |f|%>
+<table>
+  <tr>
+    <td><%=f.label :advice_category_id, "Category"%></td>
+  <tr>
+    <td><%=f.collection_select(:advice_category_id, AdviceCategory.all,:id,:description)%></td>
+  </tr>
+  <tr>
+    <td><%=f.label :title%></td>
+  </tr>
+  <tr>
+    <td>
+      <%=f.text_field :title,{:class=>'form-control'}%>
+    </td>
+  </tr>
+  <tr>
+    <td><%=f.label :content%></td>
+  </tr>
+  <tr>
+    <td>
+      <%=f.text_area :content, {:class=>'form-control',:cols => "60", :rows => "10"} %>
+    </td> 
+  </tr>
+</table>
+<%end%>

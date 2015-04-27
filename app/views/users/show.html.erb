@@ -1,6 +1,6 @@
 <% content_for :title do %>|<%=@user.first_name%><%end%>
 <div align="left">
-  <h3><%=@user.first_name%> <%=@user.last_name%></h3>
+  <h3><%=full_name(@user)%></h3>
 
   <hr class="divider"> 
   <%=smart_image(@user,2)%>

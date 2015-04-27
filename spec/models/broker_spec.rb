@@ -180,6 +180,37 @@ describe Broker do
         expect(@broker.submitted_at).to be_present        
       end
     end
+      describe "associate and disassocite with broker through QuoteRelations" do
+    before do
+      @user=FactoryGirl.create(:user)
+      @broker=FactoryGirl.create(:broker)
+    end
+  end
+  describe "when broker is updated" do
+    before do
+      @broker=FactoryGirl.build(:broker)
+      @broker.save
+      @address=@broker.address
+      @latitude=@broker.latitude
+      @longitude=@broker.longitude
+    end
+    it "should call geocode if address is updated" do
+      @broker.update(street:"61-29 223 Place",city:"Oakland Gardens",state:"New York")
+      @broker=@broker.reload
+      expect(@longitude).not_to eq "@broker.longitude"
+      expect(@latitude).not_to eq "@broker.latitude"
+    end
+    it "shouldn't call geocode is address is the same" do
+      @broker.update(street:"80-75 208 Street")
+      @broker=@broker.reload
+      expect(@longitude).to eq "@broker.longitude"
+      expect(@latitude).to eq "@broker.latitude "       
+    end
+    it "shouldn't save state if it is invalid" do
+      @broker.state="Nwe York"
+      expect(@broker).not_to be_valid
+    end
+  end
     describe "Appointment Association" do
       before do
         @broker.save     @product=Product.create(name:"test",description:"test",product_type:1,firm_id:1)

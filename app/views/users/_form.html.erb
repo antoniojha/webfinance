@@ -1,22 +1,17 @@
   <table width="70%">
     <tr class="blank_row"></tr>
     <tr>
-  			<td width="50%"><%= f.label :username %> <span style="color:red"><i>(case insensitive)</i><%=asterisk_html%></span></td>
+      <td width="50%"><%= f.label "Username" %> <span style="color:red"><i>(case insensitive)</i><%=asterisk_html%></span></td>
       <td width="50%"><%= f.text_field :username,{:class=>'form-control', :title=>"Please enter username"} %></td>
     </tr>
 		<tr class="blank_row"></tr>
-  	<tr>
-  		<td><%= f.label :email %> <span style="color:red"><i>(case insensitive)</i></span><%=asterisk_html%></td>
-  		<td><%= f.text_field :email,{:class=>'form-control'} %></td>
-	  </tr>
-		<tr class="blank_row"></tr>
     <tr>
-    	<td><%= f.label :password %><%=asterisk_html%></td>
+      <td><%= f.label "Password" %><%=asterisk_html%></td>
     	<td><%= f.password_field :password,{:class=>'form-control'} %></td>
     </tr>
 		<tr class="blank_row"></tr>
     <tr>
-    	<td><%= f.label :password_confirmation %><%=asterisk_html%></td>
+      <td><%= f.label "Password Confirmation" %><%=asterisk_html%></td>
     	<td><%= f.password_field :password_confirmation,{:class=>'form-control'} %></td>
     </tr>
 		<tr class="blank_row"></tr>

@@ -22,9 +22,13 @@ gem "watu_table_builder", :require => "table_builder"
 gem 'pauldix-feedzirra'
 # gem for manipulating different currency
 gem 'money'
-# THis is used for ???
+# This is used for ???
 gem 'iconv'
-
+# used for twitter authentication
+gem 'omniauth-twitter'
+gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-identity'
 # Paperclip, used to upload pictures to Amazon S3
 gem 'paperclip'
 

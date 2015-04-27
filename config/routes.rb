@@ -3,10 +3,13 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  scope '/broker' do
-    
-    
-  end
+  resources :identities
+
+  get 'auth/:provider/callback', to: 'user/sessions#create'
+  get '/auth/failure', :to => 'user/sessions#failure'
+  get '/logout', :to => 'user/sessions#destroy', :as => 'logout'
+  resources :advices
+  resources :advice_categories
   resources :advance_search
   resources :broker_search
   resources :protection_plans

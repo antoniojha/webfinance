@@ -6,20 +6,24 @@ FactoryGirl.define do
     last_name 'last_name'
     password "SecretPassword1?"
     password_confirmation "SecretPassword1?"
-    budget_cat false
-    accounts_cat false
-    alarm_cat false
-    social_cat false
-    planning_cat false
     email_authen true
-    yodlee_username "sbMemantoniojha21"
-    yodlee_password "sbMemantoniojha21#123"
     street "80-75 208 Street"
     city "Hollis Hills"
     state "New York"
     factory :admin do
       admin true
     end
+  end
+  factory :incomplete_user, class:User do
+    username "testing1234_other"
+    first_name 'first_name'
+    last_name 'last_name'
+    password "SecretPassword1?"
+    password_confirmation "SecretPassword1?"
+    email_authen false
+    street "80-75 208 Street"
+    city "Hollis Hills"
+    state "New York"
   end
   factory :broker, class: Broker do
     first_name "Broker First Name"

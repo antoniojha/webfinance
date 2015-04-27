@@ -1,4 +1,11 @@
 module SessionsHelper
+  def redirect_to_complete_user_profile
+    criteria= ["username","email","email_authen"]
+    user=current_user
+    unless user.username && user.email && (user.email_authen==true)
+      redirect_to edit_user_url(user), notice: "Please complete your profile first."
+    end
+  end
   def remember_broker(broker_id)
     session[:broker_id_schedule]=broker_id.to_i
   end
