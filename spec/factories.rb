@@ -16,8 +16,6 @@ FactoryGirl.define do
   end
   factory :incomplete_user, class:User do
     username "testing1234_other"
-    first_name 'first_name'
-    last_name 'last_name'
     password "SecretPassword1?"
     password_confirmation "SecretPassword1?"
     email_authen false

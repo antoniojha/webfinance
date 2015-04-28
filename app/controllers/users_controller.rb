@@ -50,10 +50,22 @@ class UsersController < User::AuthenticatedController
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
+      if params[:send_validation]
+        @user.validate_email_bool=true
+      end
+      if params[:validate_email]
+        user=User.find_by_email_confirmation_token(params[:user][:validation_code])
+        if user
+          @user.update_attribute(:email_authen, true)
+        end
+      end
       if @user.update(user_params)
         if params[:user][:picture].blank?
           if @user.cropping?
             @user.reprocess_picture
+          end
+          if @user.validate_email_bool
+            @user.send_email_confirmation
           end
           format.html { redirect_to @user,notice:'User was successfully updated.'}
           format.json { head :no_content }
@@ -122,7 +134,7 @@ class UsersController < User::AuthenticatedController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:first_name, :last_name,:username, :email, :password, :password_confirmation,:picture, :crop_x,:crop_y,:crop_w,:crop_h,:street,:city,:state,:phone_1,:phone_2,:phone_3,:time_zone)
+      params.require(:user).permit(:first_name, :last_name,:username, :email, :password, :password_confirmation,:validation_code,:picture, :crop_x,:crop_y,:crop_w,:crop_h,:street,:city,:state,:phone_1,:phone_2,:phone_3,:time_zone)
     end
     def correct_user
       @user=User.find(params[:id])

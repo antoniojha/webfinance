@@ -5,11 +5,27 @@
       <td width="50%"><%= f.text_field :username,{:class=>'form-control', :title=>"Please enter username"} %></td>
     </tr>
 		<tr class="blank_row"></tr>
+    <% unless f.object.email_authen%>
+    <tr>
+      <td colspan=2>Please enter email and validate.</td>
+    </tr>
+    <%end%>
   	<tr>
   		<td><%= f.label :email %> <span style="color:red"><i>(case insensitive)</i></span><%=asterisk_html%></td>
   		<td><%= f.text_field :email,{:class=>'form-control'} %></td>
+      <td><%= f.submit 'send validation code',name:"send_validation"%></td>
 	  </tr>
-    
+    <% if f.object.email && (f.object.email_authen!=true)%>
+    <tr>
+      <td><%=f.label "Validation Code"%></td>
+      <td><%=f.text_field :validation_code,{:class=>'form-control'}%></td>
+      <td><%=f.submit "validate email", name:"validate_email"%></td>
+    </tr>    
+    <%else%>
+    <tr>
+      <td colspan=3>Email address is successfully validated.</td>
+    </tr>
+    <%end%>
 		<tr class="blank_row"></tr>
     <tr>
       <td width="50%"><%= f.label :first_name,'First Name' %><%=asterisk_html%> </td>

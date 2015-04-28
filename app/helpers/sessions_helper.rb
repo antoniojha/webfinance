@@ -1,8 +1,16 @@
 module SessionsHelper
+  def user_profile_completed?
+    user=current_user
+    if user.username && user.email && (user.email_authen==true)
+      return true
+    else
+      false
+    end
+  end
   def redirect_to_complete_user_profile
     criteria= ["username","email","email_authen"]
     user=current_user
-    unless user.username && user.email && (user.email_authen==true)
+    unless user_profile_completed? 
       redirect_to edit_user_url(user), notice: "Please complete your profile first."
     end
   end

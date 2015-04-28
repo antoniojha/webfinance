@@ -1,12 +1,9 @@
 
 class User < ActiveRecord::Base
-  attr_accessor :auth_token, :password, :password_confirmation, :name_or_email
+  attr_accessor :auth_token, :password, :password_confirmation, :name_or_email,:validate_email_bool, :validation_code
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
-  
   attr_writer :phone_1, :phone_2, :phone_3
-  # used for password digest to confirm two passwords entered match
- # has_secure_password
-  #need to have customized password authentication
+
   has_attached_file :picture, :styles => { :medium => "200x200#",:large=>"500x500>"},:processors => [:cropper]
   has_many :accounts, dependent: :destroy
   has_many :backgrounds, dependent: :destroy 
@@ -24,14 +21,17 @@ class User < ActiveRecord::Base
   validates :username, presence: true, on: :create
   validates :password, :password_confirmation, presence: true, on: :create
   validate :check_passwords_match, allow_blank:true, on: :create
-  validates :first_name, :last_name,:email,presence: true, on: :update
+   validates :first_name, :last_name,presence: true, on: :update, if: :validate_email_bool?
+  validates :email, presence:true, on: :update
   validates :email, allow_blank:true, format: {with:VALID_EMAIL_REGEX}
   
   validates :password, allow_blank:true, length: { in: 7..40 },format: {with:VALID_PASSWORD_REGEX}
   validates_uniqueness_of :username, :case_sensitive => false
   validates_uniqueness_of :email, :case_sensitive => false
+  
  # validates_attachment_content_type :picture, :content_type=> ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/pjpeg"]
   #ensure all email address are saved lower case
+ 
   def check_passwords_match
     if password !=password_confirmation
       errors.add(:password,"passwords do not match")
@@ -42,6 +42,15 @@ class User < ActiveRecord::Base
     if self.email 
       self.email=email.downcase
     end 
+    nil
+  end
+  # reset email authen if a new email is set
+  before_save do
+    unless email
+      unless self.email == email
+        self.email_authen=false
+      end
+    end
   end
   #ensure all username address are saved lower case
   before_save{self.username=username.downcase}
@@ -52,7 +61,9 @@ class User < ActiveRecord::Base
   before_validation :save_phone_number
 #  after_validation :geocode, :if => :address_changed?
   after_validation :save_address
-
+  def validate_email_bool?
+    @validate_email_bool!=true
+  end
   def self.from_omniauth(auth)
     user=where(provider: auth.provider, uid: auth.uid).first_or_initialize do |user|
       user.provider = auth["provider"]
@@ -71,7 +82,7 @@ class User < ActiveRecord::Base
         user.last_name=auth["info"]["last_name"]     
       end
     end
-    user.save(:validate => false)  
+    user.save
     return user
   end
   def check_valid_state
@@ -79,8 +90,7 @@ class User < ActiveRecord::Base
       if state.size != 2
         self.state=Order::US_STATES.to_h[state]
       end
-    else
-    
+    else   
       errors.add(:state, "Please enter a valid state")
     end
   end
@@ -153,24 +163,12 @@ class User < ActiveRecord::Base
       return false
     end
   end
-  def yodlee
-    @yodlee ||= Yodlee::User.new(self)
-  end
   def send_email_confirmation
     generate_token(:email_confirmation_token)  
-    update_attribute(:email_confirmation_sent_at,Time.zone.now)
-   #calling save! will render validation error for submitting blank password. Why though? 
-   # self.email_confirmation_sent_at=Time.zone.now
-   # save!
     
+   #calling save! will render validation error for submitting blank password. Why though? 
     EmailConfirmationMailer.send_email_confirm(self).deliver
-  end
-  def set_yodlee_credentials
-    if Yodlee::Config.register_users
-      self.yodlee_username="user#{id}@your-app-name.com"
-      self.yodlee_password=Yodlee::Misc.password_generator
-      save!
-    end  
+    update_attributes(email_confirmation_sent_at:Time.zone.now)
   end
 
     # Returns the hash digest of the given string.
