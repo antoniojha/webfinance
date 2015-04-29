@@ -19,34 +19,42 @@ class User < ActiveRecord::Base
   VALID_PASSWORD_REGEX= /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)/
 
   validates :username, presence: true, on: :create
-  validates :password, :password_confirmation, presence: true, on: :create
-  validate :check_passwords_match, allow_blank:true, on: :create
-   validates :first_name, :last_name,presence: true, on: :update, if: :validate_email_bool?
-  validates :email, presence:true, on: :update
-  validates :email, allow_blank:true, format: {with:VALID_EMAIL_REGEX}
-  
-  validates :password, allow_blank:true, length: { in: 7..40 },format: {with:VALID_PASSWORD_REGEX}
-  validates_uniqueness_of :username, :case_sensitive => false
-  validates_uniqueness_of :email, :case_sensitive => false
-  
- # validates_attachment_content_type :picture, :content_type=> ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/pjpeg"]
-  #ensure all email address are saved lower case
- 
+  validates :password, :password_confirmation, presence: true, on: :create, if: :password_signup?
+  def password_signup?
+    (provider!=nil) ? false : true
+  end
+  validate :check_passwords_match, on: :create, if: :password_signup?
   def check_passwords_match
     if password !=password_confirmation
       errors.add(:password,"passwords do not match")
     end
   end
-  before_save do
-    #since in sign up does not register email
-    if self.email 
-      self.email=email.downcase
-    end 
-    nil
+  # if just update the profile with first name and last name it will not require email to be entered.
+  validates :first_name, :last_name,presence: true, on: :update, if: :validate_names_bool?
+  def validate_names_bool?
+    @validate_email_bool!=true
+    #validate email_bool is set true only when send validation button is clicked
   end
+  validates :email, presence:true, on: :update, if: :validate_email_bool?
+  def validate_email_bool?
+    @validate_email_bool==true
+    #validate email_bool is set true only when send validation button is clicked
+  end  
+  validates :email, allow_blank:true, format: {with:VALID_EMAIL_REGEX}
+  
+  validates :password, allow_blank:true, length: { in: 7..40 },format: {with:VALID_PASSWORD_REGEX}
+  validates_uniqueness_of :username, :case_sensitive => false
+  validates_uniqueness_of :email, :case_sensitive => false, if: :email?
+  # the above validation is working during the sign up even when the form does not asks email to be entered. 
+  # so s afunction is written to make sure the validation runs only when email is entered.
+  def email?
+    (email!=nil) ? true : false
+  end
+  
+ # validates_attachment_content_type :picture, :content_type=> ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/pjpeg"]
+  def evaluate_and_reset_email_authen(email)
   # reset email authen if a new email is set
-  before_save do
-    unless email
+    if email
       unless self.email == email
         self.email_authen=false
       end
@@ -61,9 +69,8 @@ class User < ActiveRecord::Base
   before_validation :save_phone_number
 #  after_validation :geocode, :if => :address_changed?
   after_validation :save_address
-  def validate_email_bool?
-    @validate_email_bool!=true
-  end
+  #
+
   def self.from_omniauth(auth)
     user=where(provider: auth.provider, uid: auth.uid).first_or_initialize do |user|
       user.provider = auth["provider"]

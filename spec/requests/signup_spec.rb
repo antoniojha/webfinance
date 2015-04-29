@@ -21,12 +21,20 @@ describe "Users Signup" do
     end    
   end
   describe "invalid signup" do
+    let(:user){ FactoryGirl.build(:user)}
     before {visit signup_path}
     it "should display validation error" do
       expect(page).to have_content('Sign Up')
       click_button "Create Account"
       expect(page).to have_content('error')
       expect(page).to have_selector(:css,'div.alert.alert-danger', :text=>'The form contains')
+    end
+    it "should display error if password don't match" do
+      fill_in "user_password", with: user.username
+      fill_in "user_password_confirmation", with: "random"
+      click_button "Create Account"
+      expect(page).to have_content('error')
+      expect(page).to have_content("passwords do not match")
     end
   end
 end

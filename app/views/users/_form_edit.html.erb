@@ -1,7 +1,7 @@
   <table width="70%">
     <tr class="blank_row"></tr>
     <tr>
-  			<td width="50%"><%= f.label :username %> <span style="color:red"><i>(case insensitive)</i><%=asterisk_html%></span></td>
+      <td width="50%"><%= f.label "Username"%> <span style="color:red"><i>(case insensitive)</i><%=asterisk_html%></span></td>
       <td width="50%"><%= f.text_field :username,{:class=>'form-control', :title=>"Please enter username"} %></td>
     </tr>
 		<tr class="blank_row"></tr>
@@ -11,7 +11,7 @@
     </tr>
     <%end%>
   	<tr>
-  		<td><%= f.label :email %> <span style="color:red"><i>(case insensitive)</i></span><%=asterisk_html%></td>
+  		<td><%= f.label "Email"%> <span style="color:red"><i>(case insensitive)</i></span><%=asterisk_html%></td>
   		<td><%= f.text_field :email,{:class=>'form-control'} %></td>
       <td><%= f.submit 'send validation code',name:"send_validation"%></td>
 	  </tr>
@@ -21,29 +21,29 @@
       <td><%=f.text_field :validation_code,{:class=>'form-control'}%></td>
       <td><%=f.submit "validate email", name:"validate_email"%></td>
     </tr>    
-    <%else%>
+    <%elsif f.object.email && (f.object.email_authen==true)%>
     <tr>
       <td colspan=3>Email address is successfully validated.</td>
     </tr>
     <%end%>
 		<tr class="blank_row"></tr>
     <tr>
-      <td width="50%"><%= f.label :first_name,'First Name' %><%=asterisk_html%> </td>
+      <td width="50%"><%= f.label "First Name" %><%=asterisk_html%> </td>
       <td width="50%"><%= f.text_field :first_name,{:class=>'form-control'} %></td>
     </tr>
     <tr class="blank_row"></tr>
     <tr>
-      <td><%= f.label :last_name,'Last Name' %><%=asterisk_html%> </td>
+      <td><%= f.label 'Last Name' %><%=asterisk_html%> </td>
       <td><%= f.text_field :last_name,{:class=>'form-control'} %></td>
     </tr>  
     <tr class="blank_row"></tr>  
     <tr>
-    	<td><%= f.label :password %></td>
+      <td><%= f.label "Password" %></td>
     	<td><%= f.password_field :password,{:class=>'form-control'} %></td>
     </tr>
 		<tr class="blank_row"></tr>
     <tr>
-    	<td><%= f.label :password_confirmation %></td>
+      <td><%= f.label "Password Confirmation" %></td>
     	<td><%= f.password_field :password_confirmation,{:class=>'form-control'} %></td>
     </tr>
 		<tr class="blank_row"></tr>

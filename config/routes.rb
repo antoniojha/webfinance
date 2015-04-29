@@ -72,6 +72,7 @@ Rails.application.routes.draw do
     get 'login'=> :new
     post 'signin'=> :create
     delete 'logout'=> :destroy
+    get 'failure'=>:failure
    end
    # resources :sessions, only:[:new,:create]
   end

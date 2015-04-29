@@ -36,5 +36,7 @@ class User::SessionsController < User::AuthenticatedController
     redirect_to user_login_url, notice: "Logged Out"
   end
 
-
+  def failure
+ 
+  end
 end

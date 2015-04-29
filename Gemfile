@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-ruby '2.1.1'
 
+ruby '2.1.5'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.5'
 
@@ -41,7 +41,6 @@ gem 'chronic'
 
 gem 'aws-sdk'
 gem 'cocaine'
-ruby '2.1.1'
 # use for pagination
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
@@ -83,7 +82,7 @@ group :development,:test do
 end
 group :test do
   gem 'capybara'
-  gem 'capybara-webkit'
+ # gem 'capybara-webkit'
   gem 'spork', "> 0.9.0.rc"
   gem 'factory_girl_rails'
   gem 'selenium-webdriver'

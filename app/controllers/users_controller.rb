@@ -52,6 +52,7 @@ class UsersController < User::AuthenticatedController
     respond_to do |format|
       if params[:send_validation]
         @user.validate_email_bool=true
+        @user.evaluate_and_reset_email_authen(params[:user][:email])
       end
       if params[:validate_email]
         user=User.find_by_email_confirmation_token(params[:user][:validation_code])
@@ -64,7 +65,7 @@ class UsersController < User::AuthenticatedController
           if @user.cropping?
             @user.reprocess_picture
           end
-          if @user.validate_email_bool
+          if @user.validate_email_bool && (@user.email_authen!=true)
             @user.send_email_confirmation
           end
           format.html { redirect_to @user,notice:'User was successfully updated.'}
