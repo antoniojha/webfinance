@@ -43,7 +43,12 @@ class User < ActiveRecord::Base
   validates :email, allow_blank:true, format: {with:VALID_EMAIL_REGEX}
   
   validates :password, allow_blank:true, length: { in: 7..40 }
-  validates_uniqueness_of :username, :case_sensitive => false
+  validates_uniqueness_of :username, :case_sensitive => false, if: :username?
+  # the above validation is working during the sign up even when the form does not asks username to be entered. 
+  # so s afunction is written to make sure the validation runs only when email is entered.
+  def username?
+    (username!=nil) ? true : false
+  end  
 
   validates_uniqueness_of :email, :case_sensitive => false, if: :email?
   # the above validation is working during the sign up even when the form does not asks email to be entered. 
