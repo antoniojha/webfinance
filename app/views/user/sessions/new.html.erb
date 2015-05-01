@@ -1,6 +1,7 @@
 
 <% content_for :title do %>|User Login<%end%>
 <h1>Login to RichRly</h1>
+<%=render "error"%>
 <%= form_for :session, url:user_signin_path do |f|%>
 	
 	<table width="100%">

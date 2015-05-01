@@ -14,6 +14,7 @@ class User::SessionsController < User::AuthenticatedController
         user_log_in(user)
         friendly_redirect user, notice: "Signed in."
       else
+        @user=user
         render "new"
       end
     else
