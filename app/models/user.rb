@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   # the following uses Regex (lookahead assertion) to ensure there is at least a lower case and upper case letter, a digit, and a special character (non-word character)
   VALID_PASSWORD_REGEX= /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)/
 
-  validates :username, presence: true, on: :create
+  validates :username, presence: true, on: :create, if: :password_signup?
   validates :password, :password_confirmation, presence: true, on: :create, if: :password_signup?
   def password_signup?
     (provider!=nil) ? false : true
@@ -42,8 +42,9 @@ class User < ActiveRecord::Base
   end  
   validates :email, allow_blank:true, format: {with:VALID_EMAIL_REGEX}
   
-  validates :password, allow_blank:true, length: { in: 7..40 },format: {with:VALID_PASSWORD_REGEX}
+  validates :password, allow_blank:true, length: { in: 7..40 }
   validates_uniqueness_of :username, :case_sensitive => false
+
   validates_uniqueness_of :email, :case_sensitive => false, if: :email?
   # the above validation is working during the sign up even when the form does not asks email to be entered. 
   # so s afunction is written to make sure the validation runs only when email is entered.
