@@ -62,7 +62,16 @@ class User < ActiveRecord::Base
     end
   end
   #ensure all username address are saved lower case
-  before_save{self.username=username.downcase}
+  before_save do
+    if username
+      self.username=username.downcase
+    end
+  end
+  before_save do
+    if email
+      self.email=email.downcase
+    end
+  end
   before_save :encrypt_password
 #  geocoded_by :address
 #  validate :check_valid_state, on: [:update]
