@@ -14,7 +14,7 @@ class User::SessionsController < User::AuthenticatedController
     user=User.from_omniauth(env['omniauth.auth'])
       if user.save
         user_log_in(user)
-        friendly_redirect user, notice: "Signed in."
+        friendly_redirect(user,"Signed in.")
       else
         @user=user
         render "new"
@@ -27,7 +27,7 @@ class User::SessionsController < User::AuthenticatedController
         if user && user.has_password?(params[:session][:password])
             user_log_in(user)
             params[:session][:remember]=='1' ? user_remember(user) : user_forget(user)
-            format.html { friendly_redirect(user,"Successfully Signed In")}
+            format.html { friendly_redirect(user)}
             #  resend email confirmation with a new token if user try to sign in without first authenticating email during sign up
        #     user.send_email_confirmation
         else
