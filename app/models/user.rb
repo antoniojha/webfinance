@@ -100,7 +100,6 @@ class User < ActiveRecord::Base
         user.last_name=auth["info"]["last_name"]     
       end
     end
-    user.save
     return user
   end
   def check_valid_state

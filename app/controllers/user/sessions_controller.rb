@@ -10,8 +10,12 @@ class User::SessionsController < User::AuthenticatedController
    
     if env['omniauth.auth']
     user=User.from_omniauth(env['omniauth.auth'])
-    user_log_in(user)
-    friendly_redirect user, notice: "Signed in."
+      if user.save
+        user_log_in(user)
+        friendly_redirect user, notice: "Signed in."
+      else
+        render "new"
+      end
     else
       name_or_email=params[:session][:name_or_email].downcase
       user=User.find_by(username: name_or_email) || User.find_by(email: name_or_email)
