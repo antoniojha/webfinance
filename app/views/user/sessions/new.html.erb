@@ -1,7 +1,7 @@
 
 <% content_for :title do %>|User Login<%end%>
 <h1>Login to RichRly</h1>
-<%=render "error"%>
+<%=render "user/sessions/error"%>
 <%= form_for :session, url:user_signin_path do |f|%>
 	
 	<table width="100%">
@@ -41,9 +41,9 @@
             <td>
               <table>
                 <tr>
-                  <td><%= link_to image_tag("twitter_icon.png"), "/auth/twitter"%></td>
-                  <td><%= link_to image_tag("googleplus_icon.png"), "/auth/google_oauth2"%></td>
-                  <td><%= link_to image_tag("fb_icon.jpg"), "/auth/facebook"%></td>
+                  <td><%= link_to image_tag("twitter_icon.png"), twitter_path(user:true)%></td>
+                  <td><%= link_to image_tag("googleplus_icon.png"), googleplus_path(user:true)%></td>
+                  <td><%= link_to image_tag("fb_icon.jpg"), facebook_path(user:true)%></td>
                 </tr>
               </table>
             </td>

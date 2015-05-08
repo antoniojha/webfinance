@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150425021408) do
+ActiveRecord::Schema.define(version: 20150507112536) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -224,6 +224,12 @@ ActiveRecord::Schema.define(version: 20150425021408) do
     t.string   "license_type_edit"
     t.string   "license_type_remove"
     t.string   "time_zone"
+    t.string   "provider"
+    t.string   "uid"
+    t.boolean  "email_authen"
+    t.string   "email_confirmation_token"
+    t.string   "email_confirmation_sent_at"
+    t.string   "salt"
   end
 
   add_index "brokers", ["confirmation_number"], name: "index_brokers_on_confirmation_number"

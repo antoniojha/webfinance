@@ -29,6 +29,7 @@ gem 'omniauth-twitter'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-identity'
+gem 'omniauth-linkedin-oauth2'
 # Paperclip, used to upload pictures to Amazon S3
 gem 'paperclip'
 

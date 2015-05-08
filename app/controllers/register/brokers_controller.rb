@@ -17,13 +17,14 @@ class Register::BrokersController < ApplicationController
   end
   def create   
       @broker=Broker.new(broker_params)
-      @broker.next_step
-      if @broker.save     
-        broker_log_in(@broker)
-        redirect_to edit_register_broker_url(@broker)
-      else
-        render "new"
-      end 
+      respond_to do |format|
+        if @broker.save     
+          broker_log_in(@broker)
+          format.html{redirect_to broker_url(@broker)}
+        else
+          format.html{render "new"}
+        end 
+      end
   end
 
   def update  

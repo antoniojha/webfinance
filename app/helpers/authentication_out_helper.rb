@@ -1,0 +1,2 @@
+module AuthenticationOutHelper
+end

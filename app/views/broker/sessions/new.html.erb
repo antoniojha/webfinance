@@ -1,25 +1,53 @@
 <% content_for :title do %>|Broker Login<%end%>
-<h3>Broker Login- Login to Bullish Planner</h3>
+<h3>Broker Login</h3>
+<%=render "broker/sessions/error"%>
 <%= form_for :session, url:broker_signin_path do |f|%>
 	
-	<table width="70%">
-		<tr>
-      <td width="20%"><%= f.label :username%></td>
-			<td width="65%"><%= f.text_field :username, {:class=>'form-control'}%></td>
-      <td width="15%"></td>
-		</tr>
-		<tr class="blank_row"></tr>
-		<tr>
-			<td><%= f.label :password, 'Password:'%></td>
-      <td><%= f.password_field :password, {:class=>'form-control'}%></td>
-      <td></td>
-		</tr>
-		<tr class="blank_row"></tr>
-		<tr>
-			<td><%= f.submit "Login", :class=>'btn btn-primary'%></td>
-      <td colspan="2"><%= f.check_box(:remember) %> &nbsp Remember login on this computer? &nbsp &nbsp &nbsp &nbsp New User? <%= link_to 'Sign Up Now!', broker_signup_path%></td>
-		</tr>
-
-	</table>
+<table width="100%">
+    <tr>
+      <td width="60%">
+        <table width="90%">
+          <tr>
+            <td width="30%"><%= f.label :name_or_email, "Username or Email"%></td>
+            <td width="70%"><%= f.text_field :name_or_email, {:class=>'form-control'}%></td>
+          </tr>
+          <tr class="blank_row"></tr>
+          <tr>
+            <td><%= f.label :password, 'Password'%></td>
+            <td><%= f.password_field :password, {:class=>'form-control'}%></td>
+          </tr>
+          <tr class="blank_row"></tr>
+        </table>
+        <table width="90%">
+          <tr>
+            <td width="30%"><%= f.submit "Login", :class=>'btn btn-primary'%></td>
+            <td width="70%"><%= f.check_box(:remember) %> &nbsp Remember login on this computer?</td>
+          </tr>
+          <tr class="blank_row"></tr>
+          <tr>
+            <td></td>
+            <td>New User? <%= link_to 'Sign Up Now!', register_signup_path%></td>
+          </tr>
+        </table>
+      </td>
+      <td style="vertical-align: text-top;" width="40%">
+        <table>
+          <tr>
+            <td><b>Or sign in through Linkedin</b></td>
+          </tr>
+          <tr class="blank_row"></tr>
+          <tr>
+            <td>
+              <table>
+                <tr>
+                  <td><%= link_to image_tag("linkedin_icon.png"), linkedin_path(broker:true)%></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
 
 <% end %>

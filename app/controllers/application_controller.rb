@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   include ApplicationHelper
   include SessionsHelper
+  
   helper_method :current_controller
 #  around_action :user_time_zone, if: :current_user
   

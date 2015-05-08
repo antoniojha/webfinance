@@ -10,19 +10,10 @@ class User::SessionsController < User::AuthenticatedController
   def create
    # raise env['omniauth.auth'].to_yaml
    
-    if env['omniauth.auth']
-    user=User.from_omniauth(env['omniauth.auth'])
-      if user.save
-        user_log_in(user)
-        friendly_redirect(user,"Signed in.")
-      else
-        @user=user
-        render "new"
-      end
-    else
+      # if user decides to sign in through username and password
       name_or_email=params[:session][:name_or_email].downcase
       user=User.find_by(username: name_or_email) || User.find_by(email: name_or_email)
-
+      
       respond_to do |format|
         if user && user.has_password?(params[:session][:password])
             user_log_in(user)
@@ -31,11 +22,11 @@ class User::SessionsController < User::AuthenticatedController
             #  resend email confirmation with a new token if user try to sign in without first authenticating email during sign up
        #     user.send_email_confirmation
         else
-          flash.now[:danger]="Invalid user/password combination"
+          @user=User.new # serves as a dummy object variable for @user.errors so it won't throw any error
+          flash.now[:danger]="Invalid username or email/password combination"
           format.html {  render 'new'}
         end
       end
-    end
   end
 
   def destroy
@@ -43,7 +34,5 @@ class User::SessionsController < User::AuthenticatedController
     redirect_to user_login_url, notice: "Logged Out"
   end
 
-  def failure
- 
-  end
+
 end

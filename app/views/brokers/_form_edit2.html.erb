@@ -1,35 +1,10 @@
-
-<%=form_for @broker do |f|%>
 <table width="70%">
-  <tr>
-    <td width="30%"><%=f.label :first_name, "First Name"%></td>
-    <td width="70%"><%=f.text_field :first_name,{:class=>'form-control', :value=>cap(@broker.first_name)}%></td>
-  </tr>
-  <tr class="blank_row"></tr>
-  <tr>
-    <td><%=f.label :last_name, "Last Name"%></td>
-    <td><%=f.text_field :last_name,{:class=>'form-control',:value=>cap(@broker.last_name)}%></td>
-  </tr>
-  <tr class="blank_row"></tr>
-  <tr>
-    <td><%=f.label :identification, "ID"%></td>
-    <td><%=f.file_field :identification,{:class=>'form-control'}%>
-      <% if @broker.identification_file_name%>
-      <b>File Uploaded:</b>
-      <%=abrev_display(@broker.identification_file_name,20)%>
-        <%= link_to "View", @broker.identification.url(:original, false), :target => "_blank" %>
-      <%end%>
-    </td>
-  </tr>  
-  <tr class="blank_row"></tr>
-
   <tr>
     <td><%=f.label :institution_name, "Company Name"%></td>
     <td><%=f.text_field :institution_name,{:class=>'form-control'}%></td>
+    <td></td>
   </tr>
   <tr class="blank_row"></tr> 
-</table>
-<table width="70%">
   <tr>
     <td width="30%"><%=f.label "Work Address"%></td>
     <td width="10%"><%=f.label :street%></td>
@@ -74,40 +49,14 @@
     <td width="30%"><%=f.label :web,"Web URL"%><b><i> (Optional)</i></b></td>
     <td width="70%"><%=f.text_field :web,{:class=>'form-control'}%></td>
   </tr> 
-  <tr class="blank_row"></tr> 
-  <tr>
-    <td width="30%"><%=f.label :username%></td>
-    <td width="70%"><%=f.text_field :username,{:class=>'form-control'}%></td>
-  </tr> 
-  <tr class="blank_row"></tr> 
-  <tr>
-    <td width="30%"><%=f.label :email%></td>
-    <td width="70%"><%=f.text_field :email,{:class=>'form-control'}%></td>
-  </tr> 
-  <tr class="blank_row"></tr> 
-  <% if Broker.exists?(:id => f.object.id) && f.object.password_digest.present?%>
-    <tr>
-    <td colspan=2>
-      <div class="alert alert-danger" role="alert">
-      Your Password has already been saved, you don't need to re-enter it unless you want to change your original password.
-      </div>
-    </td>
-  </tr>
-  <%end%>
-  <tr>
-  	<td><%= f.label :password %></td>
-  	<td><%= f.password_field :password,{:class=>'form-control'} %></td>
-  </tr>
-  <tr class="blank_row"></tr> 
-  
+  <tr class="blank_row"></tr>   
 	<tr>
     <td><%= f.label :password_confirmation, "Password Confirmation" %></td>
   	<td><%= f.password_field :password_confirmation,{:class=>'form-control'} %></td>
   </tr>
   <tr class="blank_row"></tr> 
   <tr>
-    <td colspan=2><%=f.submit "Update",name:"edit1",:class=>"btn btn-primary"%></td>
+    <td colspan=2><%=f.submit "Update Account",name:"edit1",:class=>"btn btn-primary"%></td>
     <td></td>
   </tr>
 </table>
-<%end%>

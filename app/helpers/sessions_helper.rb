@@ -8,12 +8,26 @@ module SessionsHelper
     end
   end
   def redirect_to_complete_user_profile
-    criteria= ["username","email","email_authen"]
     user=current_user
     unless user_profile_completed? 
-      redirect_to edit_user_url(user), notice: "Please complete your profile first."
+      redirect_to edit_user_url(user), notice: "Please complete your profile (username and email) first."
     end
   end
+  def broker_profile_completed?
+    broker=current_broker
+    if broker.username && broker.email && (broker.email_authen==true)
+      return true
+    else
+      false
+    end
+  end
+  def redirect_to_complete_broker_profile
+ 
+    broker=current_broker
+    unless broker_profile_completed? 
+      redirect_to edit_broker_url(broker), notice: "Please complete your profile (username and email) first."
+    end
+  end  
   def remember_broker(broker_id)
     session[:broker_id_schedule]=broker_id.to_i
   end

@@ -74,6 +74,7 @@ describe "user sign in" do
         click_button "send validation code"
         @user_complete.reload
         expect(@user_complete.email_confirmation_token).to eq nil
+        expect(@user_complete.email_authen).to eq true #test user.evaluate_and_reset_email_authen
         expect(last_email).to eq nil
       end
       it "there sould be change if user enters and update a different email" do
@@ -82,6 +83,7 @@ describe "user sign in" do
         click_button "send validation code"
         @user_complete.reload
         expect(@user_complete.email_confirmation_token).not_to eq nil  
+        expect(@user_complete.email_authen).to eq false #test user.evaluate_and_reset_email_authen
         expect(last_email.to).to include "jha@cooper.edu"
       end
     end
@@ -89,7 +91,7 @@ describe "user sign in" do
   describe "invalid sign in" do
     it "should show message for invalid login if no username or password is entered" do
       click_button "Login"
-      expect(page).to have_content('Invalid user/password combination')
+      expect(page).to have_content('Invalid username or email/password combination')
     end
   end
 end

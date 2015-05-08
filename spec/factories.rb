@@ -24,9 +24,13 @@ FactoryGirl.define do
     state "New York"
   end
   factory :broker, class: Broker do
+    username "testing"
+    email "antoniojha@gmail.com"
+    email_authen true
     first_name "Broker First Name"
     last_name "Broker Last Name"
-    email "example@example.com"
+    password "SecretPassword1?"
+    password_confirmation "SecretPassword1?"
     institution_name "World Financial Group"
     street "39-07 Prince St, Suite 6A-3"
     city "Flushing"
@@ -34,12 +38,21 @@ FactoryGirl.define do
     phone_work_1 "718"
     phone_work_2 "753"
     phone_work_3 "2309"
+  end
+  factory :incomplete_broker, class: Broker do
     username "testing"
     password "SecretPassword1?"
     password_confirmation "SecretPassword1?"
-    license_type ["1","2"]
-    identification (Rails.root+"spec/fixtures/pdfs/example_license.pdf").open
-  end
+    email_authen false
+    institution_name "World Financial Group"
+    street "39-07 Prince St, Suite 6A-3"
+    city "Flushing"
+    state "NY"
+    phone_work_1 "718"
+    phone_work_2 "753"
+    phone_work_3 "2309"
+    
+  end  
   factory :other_user, class: User do
     username "other_testing1234"
     email  "other_foo@example.com"

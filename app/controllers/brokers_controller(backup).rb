@@ -13,33 +13,56 @@ class BrokersController < Broker::AuthenticatedController
   end
 
   def update
-    if params[:send_validation]
-      @broker.validate_email_bool=true
-      @broker.evaluate_and_reset_email_authen(params[:broker][:email])
-    end
-    if params[:validate_email]
-      broker=Broker.find_by_email_confirmation_token(params[:broker][:validation_code])
-      if broker
-        @broker.update_attribute(:email_authen, true)
+ 
+    keys=%w[first_name last_name institution_name identification license_type]
+    keys2=%w[license_type license_number picture]
+    params["broker"].each do |key, value|
+      if keys.include?(key)
+        @broker.send("#{key}=", value)
       end
+
     end
-    respond_to do |format|
-      if @broker.update(broker_params)
-        if params[:broker][:picture].blank?
-         # if @broker.cropping?
-       #     @broker.reprocess_picture
-        #  end
-          if @broker.validate_email_bool && (@broker.email_authen!=true)
-            @broker.send_email_confirmation
-          end
-          format.html { redirect_to @broker,notice:'Broker was successfully updated.'}
+
+    attributes_changed=@broker.changed
+
+    if params[:edit1]
+      if attributes_changed.include?("first_name") || attributes_changed.include?("last_name")
+       @temp_broker=@broker.temp_brokers.new(broker_params_temp)
+       @temp_broker.edit_type=1
+        unless attributes_changed.include?("identification_file_name")
+          # if first name or last name is changed, force user to input a new id field
+          @temp_broker.custom_validates=true
         else
-          format.html{render :action=>"crop"}
+          @temp_broker.custom_validates=false
+        end
+        if @temp_broker.save
+          redirect_to @temp_broker, notice: "The request to change your profile has been sent"
+        else
+          render "edit"
         end
       else
-        format.html { render action: 'edit' }
-        format.json { render json: @broker.errors, status: :unprocessable_entity }
-      end  
+        if @broker.update(broker_params)
+          redirect_to @broker
+        else
+          render "edit"
+        end
+      end     
+
+    elsif params[:edit2]
+      @temp_broker=@broker.temp_brokers.new(broker_params_temp)
+      @temp_broker.edit_type=2
+      @temp_broker.save
+
+      dup_temp_licenses(@broker,@temp_broker)
+      swap_license(@broker,@temp_broker)
+     
+      if @broker.update(broker_params)
+        @broker.next_step_edit
+        redirect_to @temp_broker
+      #  redirect_to edit2_broker_path(@broker)
+      else
+        render "edit2"
+      end
     end
   end
   #display individual broker

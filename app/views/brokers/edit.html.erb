@@ -2,14 +2,8 @@
 <%= render 'menu_top'%>
 <div style="clear:both;border-top:2px solid;"></div>
 
-<%=render "error"%>
-<% if @temp_broker%>
-<%=render "error_temp_broker"%>
-<%end%>
-<h3>Update Profile</h3>
 
-<% if @temp_broker%>
-<%=render "form1_other"%>
-<%else%>
-<%=render "form1"%>
-<%end%>
+<h3>Update Profile</h3>
+<%=render "error"%>
+
+<%=render "form_edit1"%>

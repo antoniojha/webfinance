@@ -66,7 +66,7 @@ module ApplicationHelper
     end
   end
   def phone_num_display(phone_num)
-    if phone_num.size==10
+    if phone_num && phone_num.size==10
       phone_num.insert(6,"-")
       phone_num.insert(3,"-")
     end

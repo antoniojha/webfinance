@@ -4,9 +4,20 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   resources :identities
-
-  get 'auth/:provider/callback', to: 'user/sessions#create'
-  get '/auth/failure', :to => 'user/sessions#failure'
+  controller :authentication_out do
+    get 'facebook'=> :facebook
+    get 'linkedin'=> :linkedin
+    get 'googleplus'=> :googleplus
+    get 'twitter'=> :twitter
+  end
+  resources :authentication_in
+  controller :authentication_in do
+    get 'failure'=>:failure
+  end
+  get 'auth/:provider/callback', to: 'authentication_in#create'
+  get '/auth/failure', :to => 'authentication_in#failure'
+#  get 'auth/:provider/callback', to: 'broker/sessions#create'
+#  get '/auth/failure', :to => 'broker/sessions#failure'
   get '/logout', :to => 'user/sessions#destroy', :as => 'logout'
   resources :advices
   resources :advice_categories
@@ -40,13 +51,7 @@ Rails.application.routes.draw do
     get ":id/edit2"=> :edit2, as:"edit2_broker"
     get "add_license" => :add_license
   end
-  scope '/register' do
-      controller :brokers do
-        get "broker/new"=>:new, as:"broker_signup"
-        get "broker/edit/:id"=>:edit, as:"broker_register"
-       
-      end
-    end
+
   
   namespace :admin do
     resources :brokers
@@ -72,7 +77,7 @@ Rails.application.routes.draw do
     get 'login'=> :new
     post 'signin'=> :create
     delete 'logout'=> :destroy
-    get 'failure'=>:failure
+
    end
    # resources :sessions, only:[:new,:create]
   end
