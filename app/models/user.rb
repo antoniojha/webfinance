@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
     (email!=nil) ? true : false
   end
   
- # validates_attachment_content_type :picture, :content_type=> ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/pjpeg"]
+  validates_attachment_content_type :picture, :content_type=> ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/pjpeg"]
   def evaluate_and_reset_email_authen(email)
   # reset email authen if a new email is set
     if email

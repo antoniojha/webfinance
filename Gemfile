@@ -32,6 +32,7 @@ gem 'omniauth-identity'
 gem 'omniauth-linkedin-oauth2'
 # Paperclip, used to upload pictures to Amazon S3
 gem 'paperclip'
+gem 'aws-sdk'
 
 gem 'paperclip-compression'
 # This provides standardized interface to access a variety of spreadsheet format
@@ -40,7 +41,6 @@ gem 'roo'
 # this allows for flexible time entry
 gem 'chronic'
 
-gem 'aws-sdk'
 gem 'cocaine'
 # use for pagination
 gem 'will_paginate'
