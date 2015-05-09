@@ -157,7 +157,8 @@ class User < ActiveRecord::Base
   end
   def picture_geometry(style = :original)
     @geometry ||= {}
-    @geometry[style] ||= Paperclip::Geometry.from_file(picture.path(style))
+    picture_path = (picture.options[:storage] == :s3) ? picture.url(style) : picture.path(style)
+    @geometry[style] ||= Paperclip::Geometry.from_file(picture_path)
   end
   # associate user with broker for quote request
   def associate_broker(broker, product_type, life_insurance_need)
