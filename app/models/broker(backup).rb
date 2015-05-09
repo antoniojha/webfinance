@@ -1,3 +1,4 @@
+if false
 class Broker < ActiveRecord::Base
 
   attr_accessor :auth_token,:license_type_edit,:license_type_remove,:custom_validates,:custom_validates2,:name_or_email
@@ -223,4 +224,5 @@ class Broker < ActiveRecord::Base
   def steps_edit_other
     %w[form2_other form3_other form4_other]
   end
+end
 end
