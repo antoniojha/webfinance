@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   attr_writer :phone_1, :phone_2, :phone_3
 
   has_attached_file :picture, :styles => { :medium => "200x200#",:large=>"500x500>"},:processors => [:cropper]
+
   has_many :accounts, dependent: :destroy
   has_many :backgrounds, dependent: :destroy 
   has_many :spendings, dependent: :destroy
