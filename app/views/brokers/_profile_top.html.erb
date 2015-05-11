@@ -1,0 +1,9 @@
+<p><b>Company:</b> <%=@broker.institution_name%></p>
+<p><b>Title:</b> <%=@broker.title%></p>
+
+<h3>Contact Information</h3>
+
+  <p><b>Phone Number (Work):</b> <%=phone_num_display(@broker.phone_number_work)%> <% if @broker.work_ext%>Ext:<%=@broker.work_ext%><%end%></p>
+  <p><b>Phone Number (Cell):</b> <%=phone_num_display(@broker.phone_number_cell)%></p>
+  <p><b>Email:</b> <%=@broker.email %></p>
+  <p><b>Address:</b><%=@broker.address%><p>

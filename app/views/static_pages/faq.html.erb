@@ -1,23 +1,18 @@
 <% content_for :title do%>|Faq <%end%>
-<div align="left">
-<h2>FAQ page</h2>
-<h1>Importing spreadsheet</h1>
-Spreadsheet of the following format can be imported:<br>
-<ul>
-	<li>.xls file</li>
-	<li>.xlsx file</li>
-	<li>.csv file</li>
-</ul>
-For .xls and .xlsx files one can use Microsoft Excel to enter data<br>
-The first row of the Excel table has to specifiy the following header: <br>
-id, title, description, price, transaction_date(or transaction_date_d) and category<br>
-<p>Note: if you intend to have transaction date in Date Format, please put transaction_date_d as header.
-   If you intend to have it in String Format, please put transaction_date as header.</p>
+<h2>FAQ</h2>
+<div align="left" style="font-size:1.5em;">
 
-It should be noted that id is optional. If id column is not made, then new transaction will be automatically created. <br>
-Otherwise, the data correspond to the row will be updated.<br>
-Your Excel columns should look like following:<br>
-<%=image_tag "excel_example.jpg"%>
-Various banks allow you to download your bank transaction in spreadsheet format.<br>
-<%=link_to 'Chase', 'http://help.bookkeeping.godaddy.com/entries/22242916-Download-a-CSV-from-Chase-Bank'%>
+  <h4>1. Do I need to open an account with RichRly?</h4>
+  <p>A: To use RichRly’s service online, you would need to sign up, and it is  
+also connected with facebook or LinkedIn. We won’t access to any of your personal information. RichRly does not manage your money. RichRly does not provide you with bank account service. RichRly provides a platform for users to interact only.</p>
+  <h4>2. Do I need to pay commission to RichRly when we close a deal with clients?</h4>
+  <p>A: No. </p>
+  <h4>3. How can I know the advisor well?</h4>
+  <p>A: We do background check for each professional, and you could also refer to their recommendations online.</p>
+  <h4>4. I do not live in NY, can I sign up?</h4>
+  <p>A: Yes, please do. We will soon expand our service the whole states and the globe.
+  <h4>5. Can I post what I am interested in on RichRly?</h4>
+  <p>A: Yes, please do. </p>
+  <h4>6.  Can I do ranking review?</h4>
+  <p>A: No, but you can write a recommendation for your advisor.</p>
 </div>

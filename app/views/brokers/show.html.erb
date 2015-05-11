@@ -3,25 +3,13 @@
 <%=smart_image(@broker,3)%>
 </div>
 
-<div style="float:right;">
-  <% if user_logged_in?%>
-  <%=form_tag({controller:"user/authenticated",action:"create"}) do%>
-  <%=hidden_field_tag "broker_id",@broker.id%>
-    <%=submit_tag "Schedule Appointment"%>
-    <%end%>
-  <%end%>
-</div>
 <div>
-  <h3><%=@broker.first_name.capitalize%> <%=@broker.last_name.capitalize%></h3>
+  <h3><%=full_name(@broker)%></h3>
+  <%=render "profile_top"%>
 </div> 
 <div style="clear:both;"></div>
 <div align="left">
-  <p><b>Company:</b> <%=@broker.institution_name%></p>
-  <p><b>Phone Number (Work):</b> <%=phone_num_display(@broker.phone_number_work)%> <% if @broker.work_ext%>Ext:<%=@broker.work_ext%><%end%></p>
-  <p><b>Phone Number (Cell):</b> <%=phone_num_display(@broker.phone_number_cell)%></p>
-  <p><b>Email:</b> <%=@broker.email %></p>
-  <p><b>Address:</b><%=@broker.address%><p>
-  <p><b>License(s):</b></p>
+  
   <ul>
     <%@broker.licenses.each do |l|%>
     <li><%=Order::LICENSE_TYPES[l.license_type.to_i-1][0]%>: License# <%=l.license_number%></li>

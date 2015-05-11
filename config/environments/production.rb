@@ -80,15 +80,26 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
   config.action_mailer.default_url_options={:host=>"webfinance.herokuapp.com/"}
-  config.action_mailer.smtp_settings={
-    address: 'smtp.gmail.com',
-    port: 587,
-    domain: 'gmail.com',
-    enable_starttls_auto: true,
-    authentication: 'plain',
-    user_name: 'antoniojha@gmail.com',
-    password: '6004Aj??'
+  
+ # config.action_mailer.smtp_settings={
+ #   address: 'smtp.gmail.com',
+ #   port: 587,
+ #   domain: 'gmail.com',
+ #   enable_starttls_auto: true,
+ #   authentication: 'plain',
+ #   user_name: 'antoniojha@gmail.com',
+ #   password: '6004Aj??'
+ # }
+  
+  ActionMailer::Base.smtp_settings = {
+    :port =>           '587',
+    :address =>        'smtp.mandrillapp.com',
+    :user_name =>      ENV['MANDRILL_USERNAME'],
+    :password =>       ENV['MANDRILL_APIKEY'],
+    :domain =>         'heroku.com',
+    :authentication => :plain
   }
+  ActionMailer::Base.delivery_method = :smtp
   config.paperclip_defaults = {
   :storage => :s3,
   :s3_credentials => {
