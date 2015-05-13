@@ -16,6 +16,11 @@
   </tr>
   <tr class="blank_row"></tr>
   <tr>
+    <td><%=f.label "Primary Financial Category"%></td>
+    <td><%=f.select :vehicle_type, Order::FINANCIAL_CATEGORIES, {},{:class=>'form-control'}%></td>
+  </tr>  
+  <tr class="blank_row"></tr>
+  <tr>
     <td><%=f.submit%></td>
     <td></td>
   </tr>

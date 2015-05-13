@@ -14,6 +14,11 @@
     <td>Risk Level</td>
     <td><%=@product.risk_level%></td>
   </tr>
+  <tr class="blank_row"></tr>
+  <tr>
+    <td>Primary Financial Category</td>
+    <td><%=@product.vehicle_type%></td>
+  </tr>  
 </table>
 <%=link_to "Edit", edit_product_path(@product)%>
 <%= link_to 'Delete',url_for(action: :destroy,id: product.id),method: :delete, data: {confirm: "Are you sure?"} %>
