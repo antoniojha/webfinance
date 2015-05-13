@@ -1,1 +1,6 @@
 <h1>Financial Vehicle in Protection Category</h1>
+<ol>
+<%@products_cat.each do |product|%>
+  <li><%=product.name%></li>
+<%end%>
+</ol>
