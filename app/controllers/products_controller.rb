@@ -1,0 +1,48 @@
+class ProductsController < ApplicationController
+  include SessionsHelper
+  before_action :set_product, only:[:show,:update,:destroy,:edit]
+  before_action :authorize_admin
+  def new
+    @product=Product.new
+  end
+  def create
+    @product=Product.new(product_params)
+    if @product.save
+      redirect_to products_url, notice: "Vehicle successfully created"
+    else
+      render "new"
+    end
+  end
+  def show
+    
+  end
+  def update
+    if @product.update(product_params)
+      redirect_to products_url, notice:"Vehicle successfully updated"
+    else
+      render "new"
+    end
+  end
+  def destroy
+    @product.destroy
+    redirect_to products_url, notice:"Vehicle successfully deleted"
+  end
+  def edit
+  end
+  def index
+    @category=params[:vehicle_type]
+    @products=Product.all
+  end
+  private
+  def product_params
+    params.require(:product).permit(:name,:description,:product_type,:risk_level)
+  end
+  def set_product
+    @product=Product.find(params[:id])
+  end
+  def authorize_admin
+    if current_user.admin
+      
+    end
+  end
+end

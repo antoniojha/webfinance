@@ -6,7 +6,9 @@ class Order <ActiveRecord::Base
   PROPERTY_TYPES=[["Real Estate",1],["Vehicle",2],["Other Personal Property",3]]
   DEBT_TYPES=[["Student Loan",1],["Mortgage Loan",2],["Other Loan",3],["Credit Card",4]]
   PLAN_TYPES=[["Protection Plan",1],["Debt Management",2],["Emergency Fund",3],["Retirement Plan",4],["Education Fund",5],["Saving up",6]]
+  FINANCIAL_CATEGORIES=[["Protection",1],["Debt Management",2],["Retirment",3],["Investment",4],["Education Fund",5],["Budgeting",6],["Tax Saving",7]]
   PROTECTION_TYPES=[["Life Insurance",1],["Disability Insurnace",2]]
+  RISKS=[["NA"],["Low"],["Medium"],["High"],["Low to unknown"],["Medium to unknown"],["Low to medium"],["Medium to high"]]
   LICENSE_TYPES=[["Life Insurance Agent",1],["Health Insurance Agent",2],["Series 6",3],["Series 7",4]]
   LICENSE_TYPES_HASH={"1"=>"Life Insurance Agent","2"=>"Health Insurance Agent","3"=>"Series 6","4"=>"Series 7"}
   LENGTH_UNITS=[["mile",1],["kilometer",2]]

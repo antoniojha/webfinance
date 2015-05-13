@@ -14,7 +14,7 @@ class EmailConfirmationMailer < ActionMailer::Base
   def send_email_confirm(user)
     @greeting="Dear Customer,"
     @user=user
-    mail to: user.email, subject: 'Welcome to WebFinance'
+    mail to: user.email, subject: 'Welcome to Richrly'
   end
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150511103456) do
+ActiveRecord::Schema.define(version: 20150512233051) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -381,10 +381,11 @@ ActiveRecord::Schema.define(version: 20150511103456) do
   create_table "products", force: true do |t|
     t.string   "name"
     t.text     "description"
-    t.integer  "product_type"
+    t.integer  "vehicle_type"
     t.integer  "firm_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "risk_level"
   end
 
   add_index "products", ["firm_id"], name: "index_products_on_firm_id"

@@ -1,0 +1,33 @@
+  <% unless @category%>
+  
+  <div style="width:50%;float:left;">
+    <h3>Financial Vehicle Categories</h3>
+      <div align="left">
+        <ol>   
+          <li><%=link_to "Protection",{vehicle_type:"1"} %></li>
+          <li><%=link_to "Debt Management",{vehicle_type:"2"} %></li>
+          <li><%=link_to "Retirement",{vehicle_type:"3"} %></li>
+          <li><%=link_to "Investment",{vehicle_type:"4"} %></li>
+          <li><%=link_to "Education Fund",{vehicle_type:"5"} %></li>
+          <li><%=link_to "Budgeting",{vehicle_type:"6"} %></li>
+          <li><%=link_to "Tax Saving",{vehicle_type:"7"} %></li>
+        </ol>
+      </div>
+  </div>
+  <div style="width:50%;float:right;">
+    
+    <h3>Financial Vehicles</h3>
+    <div align="right"><%=button_to "Add Vehicle", new_product_url,{method:"get"}%></div>
+    <div align="left">
+      <ol>
+      <%@products.each do |product|%>
+        <li><%=link_to "#{product.name}",product%> <%= link_to 'Delete',url_for(action: :destroy,id: product.id),method: :delete, data: {confirm: "Are you sure?"} %></li>
+      <%end%>
+      </ol>
+    </div>
+  </div>
+  <%else%>
+    <% if @category=="1"%>
+      <%=render "protection"%>
+    <%end%>
+  <%end%>

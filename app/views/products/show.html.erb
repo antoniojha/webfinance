@@ -1,0 +1,18 @@
+<%=link_to "Back to index", products_path%>
+<table width="70%">
+  <tr>
+    <td width="30%">Name</td>
+    <td width="70%"><%=@product.name%></td>
+  </tr>
+  <tr class="blank_row"></tr>
+  <tr>
+    <td>Description</td>
+    <td><%=@product.description%></td>
+  </tr>
+  <tr class="blank_row"></tr>
+  <tr>
+    <td>Risk Level</td>
+    <td><%=@product.risk_level%></td>
+  </tr>
+</table>
+<%=link_to "Edit", edit_product_path(@product)%>
