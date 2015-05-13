@@ -21,4 +21,4 @@
   </tr>  
 </table>
 <%=link_to "Edit", edit_product_path(@product)%>
-<%= link_to 'Delete',url_for(action: :destroy,id: product.id),method: :delete, data: {confirm: "Are you sure?"} %>
+<%= link_to 'Delete',url_for(action: :destroy,id: @product.id),method: :delete, data: {confirm: "Are you sure?"} %>
