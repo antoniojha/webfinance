@@ -28,7 +28,7 @@
   <div align="center" class="body1">
     <div id='col_left' class=<%=column_width_left%> align="center">
       <%=yield :left%>
-      <%if user_logged_in?%>
+      <%if user_logged_in? && (params[:controller]=="users")%>
       <%=render "profiles/menu"%>
       
       <%end%>

@@ -41,8 +41,8 @@ class ProductsController < ApplicationController
     @product=Product.find(params[:id])
   end
   def authorize_admin
-    if current_user.admin
-      
+    unless current_user.admin == true
+      redirect_to user_login_url, notice: "Access Denied!"
     end
   end
 end
