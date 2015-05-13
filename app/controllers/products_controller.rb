@@ -42,7 +42,7 @@ class ProductsController < ApplicationController
   end
   def authorize_admin
     
-    unless (current_user.nil?==false) && (current_user.admin == true)
+    unless ((current_user.nil? == false) && (current_user.admin == true))
       redirect_to user_login_url, notice: "Access Denied!"
     end
   end
