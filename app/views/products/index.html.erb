@@ -21,7 +21,7 @@
     <div align="left">
       <ol>
       <%@products.each do |product|%>
-        <li><%=link_to "#{product.name}",product%> <%= link_to 'Delete',url_for(action: :destroy,id: product.id),method: :delete, data: {confirm: "Are you sure?"} %></li>
+        <li><%=link_to "#{product.name}",product%> </li>
       <%end%>
       </ol>
     </div>
