@@ -1,0 +1,5 @@
+<div align="left">
+<p>A new password will be sent to the following email address:</p>
+  <p><%=@email%></p>
+<%=button_to "Send New Password", {action: "update", id: @user.id },method: :patch  %>
+</div>

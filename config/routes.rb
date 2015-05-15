@@ -76,7 +76,10 @@ Rails.application.routes.draw do
     resources :authenticated
     controller :sessions do
     get 'login'=> :new
+    get 'password_prompt'=> :password_prompt
+    get 'password_lookup/:id'=> :edit, as:"password_lookup"
     post 'signin'=> :create
+    patch 'send_validation'=> :update
     delete 'logout'=> :destroy
 
    end

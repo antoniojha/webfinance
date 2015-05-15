@@ -94,4 +94,32 @@ describe "user sign in" do
       expect(page).to have_content('Invalid username or email/password combination')
     end
   end
+  describe "when user forgets password" do
+    before do
+      @user_complete=FactoryGirl.create(:user)
+      @prev_password=@user_complete.password_digest
+      click_link("Forgot Password?")
+    end
+    it "should go to password_prompt page" do
+      expect(page).to have_content("Enter Your Username")
+    end
+    describe "user fills in his username" do
+      before do
+        fill_in "session_username", with:@user_complete.username
+        click_button "Submit"
+      end
+      it "should display user's email" do
+        expect(page).to have_content(@user_complete.email)
+      end
+      describe "user clicks 'Send New Password' button" do
+        before do
+          click_button "Send New Password"
+          it "should generate a temporary password and send email to user" do
+            expect(last_email.to).to include @user_complete.email
+            expect(@user_complete.password_digest).not_to eq (@prev_password)
+          end
+        end
+      end
+    end
+  end
 end

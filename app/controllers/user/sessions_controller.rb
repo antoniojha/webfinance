@@ -1,15 +1,41 @@
 class User::SessionsController < User::AuthenticatedController
   skip_before_action :redirect_to_complete_user_profile
-  skip_before_action :authorize_user_login, only: [:new, :create,:destroy]
+  skip_before_action :authorize_user_login
   skip_before_action :remember_location_user, only:[:new]
   def new
     # serves as blank user object for @user.error.
     @user=User.new
   end
-
+  def password_prompt
+    
+  end
+  def edit
+    if params[:id]
+      @user=User.find_by(id: params[:id])
+      @email=@user.email
+    end  
+  end
+  def update
+    @user=User.find_by(id: params[:id])
+    @user.send_new_password
+    if @user.save
+      redirect_to user_login_url, notice: "New Password has been sent to #{@user.email}."
+    else
+      render "edit"
+    end
+  end
   def create
    # raise env['omniauth.auth'].to_yaml
-   
+    unless params[:session][:username].blank?
+      username=params[:session][:username].downcase
+      user=User.find_by(username: username)
+      if user
+        redirect_to user_password_lookup_path(user)
+      else
+        flash.now[:notice]="Username does not exists"
+        render "edit"
+      end     
+    else
       # if user decides to sign in through username and password
       name_or_email=params[:session][:name_or_email].downcase
       user=User.find_by(username: name_or_email) || User.find_by(email: name_or_email)
@@ -27,6 +53,7 @@ class User::SessionsController < User::AuthenticatedController
           format.html {  render 'new'}
         end
       end
+    end
   end
 
   def destroy

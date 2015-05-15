@@ -34,7 +34,7 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-  config.action_mailer.default_url_options={:host=>"http://pink-white-harbor-39-150689.use1.nitrousbox.com/"}
+  config.action_mailer.default_url_options={:host=>"http://ruby-on-rails-100386.nitrousapp.com:3000/"}
   #Set up for Gmail for SMTP
   config.action_mailer.smtp_settings={
     address: 'smtp.gmail.com',
@@ -45,12 +45,5 @@ Rails.application.configure do
     user_name: 'antoniojha@gmail.com',
     password: '6004Aj??'
   }
-  config.paperclip_defaults = {
-    :storage => :s3,
-    :s3_credentials => {
-      :bucket => ENV['S3_BUCKET_NAME'],
-      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
-      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
-    }
-  }
+
 end

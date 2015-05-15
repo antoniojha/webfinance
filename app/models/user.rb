@@ -194,7 +194,10 @@ class User < ActiveRecord::Base
     EmailConfirmationMailer.send_email_confirm(self).deliver
     update_attributes(email_confirmation_sent_at:Time.zone.now)
   end
-
+  def send_new_password
+    password=generate_new_password
+    EmailConfirmationMailer.send_password(self,password).deliver
+  end
     # Returns the hash digest of the given string.
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
@@ -215,7 +218,14 @@ class User < ActiveRecord::Base
   def has_password?(submitted_password)
     self.password_digest == encrypt(submitted_password)
   end
+
   private
+    def generate_new_password
+      password=SecureRandom.urlsafe_base64[0..8]
+      self.salt = make_salt
+      self.password_digest = encrypt(password) 
+      return password
+    end
     def generate_token(column)
       begin
        # update_attribute(column,SecureRandom.urlsafe_base64)

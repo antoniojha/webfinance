@@ -16,5 +16,10 @@ class EmailConfirmationMailer < ActionMailer::Base
     @user=user
     mail to: user.email, subject: 'Welcome to Richrly'
   end
-
+  def send_password(user,password)
+    @greeting="Dear Customer,"
+    @user=user
+    @password=password
+    mail to: user.email, subject: 'Your new temporary password'    
+  end
 end
