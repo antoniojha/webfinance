@@ -1,7 +1,15 @@
 <%=form_for @product_relation, url:product_relations_path do |f|%>
+
 <table width="70%">
   <tr>
-    <td><%=f.label "Why is it relations to #{@category}"%></td>
+    <td><%=f.label "Financial Category"%></td>
+  </tr>
+  <tr>
+    <td><%=f.select :category %></td>
+    
+  </tr>
+  <tr>
+    <td><%=f.label "Why is it related to the category"%></td>
   </tr>
   <tr>
     <td><%=f.text_area :description,{:class=>'form-control'}%></td>
