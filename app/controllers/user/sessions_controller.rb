@@ -6,6 +6,9 @@ class User::SessionsController < User::AuthenticatedController
     # serves as blank user object for @user.error.
     @user=User.new
   end
+  def goal
+    
+  end
   def password_prompt
     
   end

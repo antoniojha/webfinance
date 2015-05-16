@@ -77,6 +77,7 @@ Rails.application.routes.draw do
     resources :authenticated
     controller :sessions do
     get 'login'=> :new
+    get 'goal'=> :goal
     get 'password_prompt'=> :password_prompt
     get 'password_lookup/:id'=> :edit, as:"password_lookup"
     post 'signin'=> :create
