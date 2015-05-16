@@ -32,11 +32,10 @@ class ProductsController < ApplicationController
   def index
     @category=params[:vehicle_type]
     @products=Product.all
-    @products_cat=Product.where(vehicle_type:params[:vehicle].to_i)
+    @products_cat=Product.where(vehicle_type:params[:vehicle])
   end
   private
   def product_params
-    params[:product][:vehicle_type]=params[:product][:vehicle_type].to_i
     params.require(:product).permit(:name,:description,:vehicle_type,:risk_level)
   end
   def set_product
