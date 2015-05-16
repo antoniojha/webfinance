@@ -5,7 +5,7 @@
     <td><%=f.label "Financial Category"%></td>
   </tr>
   <tr>
-    <td><%=f.select :category %></td>
+    <td><%=f.select :vehicle_type, Order::FINANCIAL_CATEGORIES, {},{:class=>'form-control'} %></td>
     
   </tr>
   <tr>
