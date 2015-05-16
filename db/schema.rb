@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150512233051) do
+ActiveRecord::Schema.define(version: 20150516132956) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -377,6 +377,30 @@ ActiveRecord::Schema.define(version: 20150512233051) do
   end
 
   add_index "plans", ["goal_id"], name: "index_plans_on_goal_id"
+
+  create_table "product_fin_category_rels", force: true do |t|
+    t.integer  "vehicle_type"
+    t.integer  "product_id"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "product_fin_category_rels", ["product_id"], name: "index_product_fin_category_rels_on_product_id"
+
+  create_table "product_questions", force: true do |t|
+    t.integer  "product_fin_category_rel_id"
+    t.integer  "user_id"
+    t.integer  "broker_id"
+    t.text     "content"
+    t.integer  "vote_count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "product_questions", ["broker_id"], name: "index_product_questions_on_broker_id"
+  add_index "product_questions", ["product_fin_category_rel_id"], name: "index_product_questions_on_product_fin_category_rel_id"
+  add_index "product_questions", ["user_id"], name: "index_product_questions_on_user_id"
 
   create_table "products", force: true do |t|
     t.string   "name"

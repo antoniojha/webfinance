@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     get "saving_6"=> :saving_6
     get "start"=> :start
   end
+  resources :product_relations, controller: 'product_fin_category_rels'
   resources :backgrounds
   controller :backgrounds do
     get 'add_assoc'=> :add_assoc

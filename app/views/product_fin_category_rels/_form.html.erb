@@ -1,0 +1,14 @@
+<%=form_for @product_relation, url:product_relations_path do |f|%>
+<table width="70%">
+  <tr>
+    <td><%=f.label "Why is it relations to #{@category}"%></td>
+  </tr>
+  <tr>
+    <td><%=f.text_area :description,{:class=>'form-control'}%></td>
+  </tr>
+  <tr class="blank_row"></tr>
+  <tr>
+    <td><%=f.submit "Create Relation"%></td>
+  </tr>
+</table>
+<%end%>

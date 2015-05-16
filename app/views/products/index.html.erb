@@ -29,5 +29,17 @@
   <%else%>
     <% if @category=="1"%>
       <%=render "protection"%>
+    <% elsif @category=="2"%>
+      <%=render "debt_management"%>
+    <% elsif @category=="3"%>
+      <%=render "retirement"%>
+    <% elsif @category=="4"%>
+      <%=render "investment"%>
+    <% elsif @category=="5"%>
+      <%=render "education_fund"%>
+    <% elsif @category=="6"%>
+      <%=render "budgeting"%>
+    <% elsif @category=="7"%>
+      <%=render "tax_saving"%>
     <%end%>
   <%end%>

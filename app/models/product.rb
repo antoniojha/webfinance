@@ -1,7 +1,8 @@
 class Product < ActiveRecord::Base
   belongs_to :firm
-  has_many :appointments
-  has_many :brokers, through: :appointments
+  has_many :product_fin_category_rels
+#  has_many :appointments
+#  has_many :brokers, through: :appointments
   
   def self.return_dropdown_lists(firm_id)
     array=[]
@@ -11,5 +12,8 @@ class Product < ActiveRecord::Base
       array << temp_array
     end
     return array
+  end
+  def create_product_category_relation
+    
   end
 end
