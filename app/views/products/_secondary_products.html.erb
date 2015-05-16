@@ -1,8 +1,12 @@
 <div style="width:30%;">
-  <ol>
-  <%@sec_products_cat.each do |rel|%>
-    <%product=Product.find(rel.product_id)%>
-    <li><%=link_to "#{product.name}",product_url(product)%></li>
+  <%unless @sec_products_cat.count >0%>
+  None
+  <%else%>
+    <ol>
+    <%@sec_products_cat.each do |rel|%>
+      <%product=Product.find(rel.product_id)%>
+      <li><%=link_to "#{product.name}",product_url(product)%></li>
+    <%end%>
+    </ol>
   <%end%>
-  </ol>
 </div>
