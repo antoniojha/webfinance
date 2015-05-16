@@ -20,6 +20,6 @@
     <td><%=Order::FINANCIAL_CATEGORIES[@product.vehicle_type.to_i-1][0]%></td>
   </tr>  
 </table>
-<%=link_to "Add Category Relation", new_product_relation_url(product_id:@product.id)%>
+<%=link_to "Add Secondary Relation", new_product_relation_url(product_id:@product.id)%>
 <%=link_to "Edit", edit_product_path(@product)%>
 <%= link_to 'Delete',url_for(action: :destroy,id: @product.id),method: :delete, data: {confirm: "Are you sure?"} %>

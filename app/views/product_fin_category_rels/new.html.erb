@@ -1,9 +1,13 @@
 <h3>Create a new association between product and financial category</h3>
 Product:<%=@product.name%><br>
 Associated Category: <br>
+<% unless @categories.length >0%>
+None
+<%else%>
 <ol>
   <%@categories.each do |c|%>
   <li><%=Order::FINANCIAL_CATEGORIES[c.vehicle_type-1][0]%></li>
   <%end%>
 </ol>
+<%end%>
 <%=render "form"%>
