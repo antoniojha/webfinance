@@ -5,11 +5,11 @@ Associated Category: <br>
 <% unless @categories.length >0%>
 None
 <%else%>
-<div align="left" style="width:30%">
+<div align="left" style="width:30%;">
   <ol>
     <%@categories.each do |c|%>
     <%temp=Order::FINANCIAL_CATEGORIES[c.vehicle_type-1]%>
-    <li><%=link_to <%=temp[0],{vehicle_type:temp[1].to_s}%></li>
+    <li><%=link_to temp[0],{vehicle_type:temp[1].to_s}%></li>
     <%end%>
   </ol>
 </div>
