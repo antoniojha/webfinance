@@ -19,5 +19,5 @@
     <td><%=f.submit "Create Relation"%></td>
   </tr>
 </table>
-<%=f.hidden_field :product_id, @product.id%>
+<%=f.hidden_field :product_id, value:@product.id%>
 <%end%>
