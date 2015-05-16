@@ -33,6 +33,7 @@ class ProductsController < ApplicationController
     @category=params[:vehicle_type]
     @products=Product.all.order(name: :asc)
     @products_cat=Product.where(vehicle_type:@category)
+    @sec_products_cat=ProductFinCategoryRel.where(vehicle_type:@category)
   end
   private
   def product_params

@@ -1,6 +1,7 @@
 <div style="width:30%;">
   <ol>
-  <%@products_cat.each do |product|%>
+  <%@sec_products_cat.each do |rel|%>
+    <%product=Product.find(rel.product_id)%>
     <li><%=link_to "#{product.name}",product_url(product)%></li>
   <%end%>
   </ol>
