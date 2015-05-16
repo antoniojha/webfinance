@@ -9,6 +9,8 @@ class ProductFinCategoryRelsController < ApplicationController
     if @product_relation.save
       redirect_to products_url, notice: "New Relations has been added."
     else
+      @product=Product.find(params[:product_id])
+      @categories=@product.product_fin_category_rels
       render "new"
     end
   end
