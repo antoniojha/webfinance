@@ -10,10 +10,11 @@ Associated Category: <br>
       <ol>
         <%@categories.each do |c|%>
         <%temp=Order::FINANCIAL_CATEGORIES[c.vehicle_type-1]%>
-        <li><%=link_to temp[0],{vehicle_type:temp[1].to_s}%></li>
+        <li><%=link_to temp[0],products_url(vehicle_type:temp[1].to_s)%></li>
         <%end%>
       </ol>
     </div>
   <%end%>
 </div>
 <%=render "form"%>
+<%=link_to "Back to Vehicle", product_url(@product)%>
