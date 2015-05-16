@@ -6,7 +6,7 @@ class ProductFinCategoryRelsController < ApplicationController
   end
   def create
     @product_relation=ProductFinCategoryRel.new(product_relation_params)
-    if @product_relations.save
+    if @product_relation.save
       redirect_to products_url, notice: "New Relations has been added."
     else
       render "new"
