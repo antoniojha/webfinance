@@ -1,6 +1,6 @@
 class ProductFinCategoryRelsController < ApplicationController
   def new
-    @product=Product.find(params[:product_id])
+    @product=Product.find(params[:product_id].to_i)
     @categories=@product.product_fin_category_rels
     @product_relation=ProductFinCategoryRel.new
   end

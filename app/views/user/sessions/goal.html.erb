@@ -1,8 +1,9 @@
 <h1>Please select your goal</h1>
-<%=image_tag("protection.jpg", class:"goal_pic")%>
-<%=image_tag("debt_management-2.jpg", class:"goal_pic")%>
-<%=image_tag("retirement.jpg", class:"goal_pic")%>
-<%=image_tag("investment.jpg", class:"goal_pic")%>
-<%=image_tag("education_fund.jpg", class:"goal_pic")%>
-<%=image_tag("budgeting.jpg", class:"goal_pic")%>
-<%=image_tag("tax_saving.jpg", class:"goal_pic")%>
+
+<%=check_box("goals",nil,{:multiple=>true},"protection",nil)%><%=image_tag("protection.jpg", class:"goal_pic")%>
+<%=check_box("goals",nil,{:multiple=>true},"debt_management",nil)%><%=image_tag("debt_management-2.jpg", class:"goal_pic")%>
+<%=check_box("goals",nil,{:multiple=>true},"retirement",nil)%><%=image_tag("retirement.jpg", class:"goal_pic")%>
+<%=check_box("goals",nil,{:multiple=>true},"investment",nil)%><%=image_tag("investment.jpg", class:"goal_pic")%>
+<%=check_box("goals",nil,{:multiple=>true},"education_fund",nil)%><%=image_tag("education_fund.jpg", class:"goal_pic")%>
+<%=check_box("goals",nil,{:multiple=>true},"budgeting",nil)%><%=image_tag("budgeting.jpg", class:"goal_pic")%>
+<%=check_box("goals",nil,{:multiple=>true},"tax_saving",nil)%><%=image_tag("tax_saving.jpg", class:"goal_pic")%>
