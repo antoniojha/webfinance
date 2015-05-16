@@ -36,6 +36,7 @@ class ProductsController < ApplicationController
   end
   private
   def product_params
+    params[:product][:vehicle_type]=params[:product][:vehicle_type].to_i
     params.require(:product).permit(:name,:description,:vehicle_type,:risk_level)
   end
   def set_product
