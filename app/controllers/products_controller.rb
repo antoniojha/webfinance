@@ -32,7 +32,7 @@ class ProductsController < ApplicationController
   def index
     @category=params[:vehicle_type]
     @products=Product.all
-    @products_cat=Product.where(vehicle_type:params[:vehicle])
+    @products_cat=Product.where(vehicle_type:@category)
   end
   private
   def product_params
