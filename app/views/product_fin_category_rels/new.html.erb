@@ -4,10 +4,13 @@ Associated Category: <br>
 <% unless @categories.length >0%>
 None
 <%else%>
-<ol>
-  <%@categories.each do |c|%>
-  <li><%=Order::FINANCIAL_CATEGORIES[c.vehicle_type-1][0]%></li>
-  <%end%>
-</ol>
+<div align="left" style="width:30%">
+  <ol>
+    <%@categories.each do |c|%>
+    <%temp=Order::FINANCIAL_CATEGORIES[c.vehicle_type-1]%>
+    <li><%=link_to <%=temp[0],{vehicle_type:temp[1].to_s}%></li>
+    <%end%>
+  </ol>
+</div>
 <%end%>
 <%=render "form"%>
