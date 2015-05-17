@@ -14,7 +14,7 @@ class ProductsController < ApplicationController
     end
   end
   def show
-    
+    @categories=@product.product_fin_category_rels
   end
   def update
     if @product.update(product_params)

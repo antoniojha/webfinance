@@ -28,4 +28,22 @@
     <td><%= button_to 'Delete',{action: :destroy,id: @product.id},method: :delete, data: {confirm: "Are you sure?"} %></td>
   </tr> 
 </table>
+<table width="70%">
+  <tr>
+    <td colspan=2>Associated Category:</td>
+  </tr>
+  <% unless @categories.length >0%>
+  <tr>
+    <td colspan=2>None</td>
+  </tr>
+  <%else%>
+    <%@categories.each do |c|%>
+    <%temp=Order::FINANCIAL_CATEGORIES[c.vehicle_type-1]%>
+    <tr>
+      <td><%=link_to temp[0],products_url(vehicle_type:temp[1].to_s)%></td>
+      <td><%=c.description%></td>
+    </tr>
+    <%end%>
+  <%end%>
+</table>
 
