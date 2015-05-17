@@ -23,7 +23,7 @@
 </table>
 <table width="70%">
   <tr>
-    <td><%=button_to "Add Secondary Relation", new_product_relation_path(product_id:@product.id), :action => "new", :method => :get %></td>
+    <td><%=link_to "Add Secondary Relation",new_product_relation_path(product_id: @product.id)%></td>
     <td><%=button_to "Edit", edit_product_path(@product),{method: :get}%></td>
     <td><%= button_to 'Delete',{action: :destroy,id: @product.id},method: :delete, data: {confirm: "Are you sure?"} %></td>
   </tr> 
