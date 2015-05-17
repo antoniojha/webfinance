@@ -1,9 +1,44 @@
 <h1>Please select your goal</h1>
 
-<%=check_box("goals",nil,{:multiple=>true},"protection",nil)%><%=image_tag("protection.jpg", class:"goal_pic")%>
-<%=check_box("goals",nil,{:multiple=>true},"debt_management",nil)%><%=image_tag("debt_management-2.jpg", class:"goal_pic")%>
-<%=check_box("goals",nil,{:multiple=>true},"retirement",nil)%><%=image_tag("retirement.jpg", class:"goal_pic")%>
-<%=check_box("goals",nil,{:multiple=>true},"investment",nil)%><%=image_tag("investment.jpg", class:"goal_pic")%>
-<%=check_box("goals",nil,{:multiple=>true},"education_fund",nil)%><%=image_tag("education_fund.jpg", class:"goal_pic")%>
-<%=check_box("goals",nil,{:multiple=>true},"budgeting",nil)%><%=image_tag("budgeting.jpg", class:"goal_pic")%>
-<%=check_box("goals",nil,{:multiple=>true},"tax_saving",nil)%><%=image_tag("tax_saving.jpg", class:"goal_pic")%>
+<label>
+  <p>Protection</p>
+  <div class="goal_check_box">
+  <p><%=check_box("goals",nil,{:multiple=>true,:style => "width: 50px; height: 50px;"},"protection",nil)%></p>
+  </div>
+  <%=image_tag("protection.jpg", class:"goal_pic")%>
+</label>
+<label>
+  <p>Debt Management</p>
+  <div class="goal_check_box">
+  <p><%=check_box("goals",nil,{:multiple=>true,:style => "width: 50px; height: 50px;"},"debt_management",nil)%></p>
+  </div>
+  <%=image_tag("debt_management-2.jpg", class:"goal_pic")%>
+</label>
+<label>
+  <p>Retirement</p>
+  <div class="goal_check_box">
+  <p><%=check_box("goals",nil,{:multiple=>true,:style => "width: 50px; height: 50px;"},"retirement",nil)%></p>
+   </div>
+  <%=image_tag("retirement.jpg", class:"goal_pic")%>
+</label>
+<label>
+  <p>Investment</p>
+  <div class="goal_check_box">
+  <p><%=check_box("goals",nil,{:multiple=>true,:style => "width: 50px; height: 50px;"},"investment",nil)%></p>
+  </div>
+  <%=image_tag("investment.jpg", class:"goal_pic")%>
+</label>
+<label>
+  <p>Education Fund</p>
+  <div class="goal_check_box">
+  <p><%=check_box("goals",nil,{:multiple=>true,:style => "width: 50px; height: 50px;"},"education_fund",nil)%></p>
+  </div>
+  <%=image_tag("education_fund.jpg", class:"goal_pic")%>
+</label>
+<label>
+  <p>Tax Saving</p>
+  <div class="goal_check_box">
+  <p><%=check_box("goals",nil,{:multiple=>true,:style => "width: 50px; height: 50px;"},"tax_saving",nil)%></p>
+  </div>
+  <%=image_tag("tax_saving.jpg", class:"goal_pic")%>
+</label>
