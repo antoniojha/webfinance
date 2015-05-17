@@ -27,6 +27,8 @@
     <td><%=button_to "Edit", edit_product_path(@product),{method: :get}%></td>
     <td><%= button_to 'Delete',{action: :destroy,id: @product.id},method: :delete, data: {confirm: "Are you sure?"} %></td>
   </tr> 
+  <tr class="blank_row"></tr>
+  <tr class="blank_row"></tr>
 </table>
 <table width="70%">
   <tr>
