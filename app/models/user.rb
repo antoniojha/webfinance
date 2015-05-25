@@ -1,6 +1,6 @@
 
 class User < ActiveRecord::Base
-  attr_accessor :auth_token, :password, :password_confirmation, :name_or_email,:validate_email_bool, :validation_code
+  attr_accessor :auth_token, :password, :password_confirmation, :name_or_email,:validate_email_bool, :validation_code, :setup_bool
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   attr_writer :phone_1, :phone_2, :phone_3
 
@@ -18,8 +18,9 @@ class User < ActiveRecord::Base
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   # the following uses Regex (lookahead assertion) to ensure there is at least a lower case and upper case letter, a digit, and a special character (non-word character)
   VALID_PASSWORD_REGEX= /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)/
-
+  
   validates :username, presence: true, on: :create, if: :password_signup?
+ 
   validates :password, :password_confirmation, presence: true, on: :create, if: :password_signup?
   def password_signup?
     (provider!=nil) ? false : true
@@ -32,17 +33,39 @@ class User < ActiveRecord::Base
   end
   # if just update the profile with first name and last name it will not require email to be entered.
   validates :first_name, :last_name,presence: true, on: :update, if: :validate_names_bool?
+  
   def validate_names_bool?
-    @validate_email_bool!=true
-    #validate email_bool is set true only when send validation button is clicked
+    if @setup_bool==true
+      return false
+    else
+      @validate_email_bool!=true
+    end
+    #validate email_bool is set true only when send validation button is clicked   
   end
+  validates :first_name, :last_name,presence: true, on: :update, if: :validate_setup_bool?
+
   validates :email, presence:true, on: :update, if: :validate_email_bool?
+  validates :email, presence:true, on: :update, if: :validate_setup_bool?
   def validate_email_bool?
     @validate_email_bool==true
-    #validate email_bool is set true only when send validation button is clicked
+    #validate email_bool is set true during user edit only when send validation button is clicked 
   end  
-  validates :email, allow_blank:true, format: {with:VALID_EMAIL_REGEX}
+  def validate_setup_bool?
+    @setup_bool==true
+    #validate email_bool is set true during initial setup
+  end
+  validates :income_level, :state, :occupation, presence: true, on: :update, if: :setup_bool?
+  def setup_bool?
+    @setup_bool==true
+  end
+  validate :check_goal_not_empty, if: :setup_bool?
   
+  def check_goal_not_empty
+    if goal && goal.size==1
+      errors.add(:goals, "Need to select a financial goal")
+    end 
+  end
+  validates :email, allow_blank:true, format: {with:VALID_EMAIL_REGEX}, on: :update
   validates :password, allow_blank:true, length: { in: 7..40 }
   validates_uniqueness_of :username, :case_sensitive => false, if: :username?
   # the above validation is working during the sign up even when the form does not asks username to be entered. 
@@ -85,7 +108,7 @@ class User < ActiveRecord::Base
   before_validation :save_phone_number
 #  after_validation :geocode, :if => :address_changed?
   after_validation :save_address
-  #
+  serialize :goal
 
   def self.from_omniauth(auth)
     user=where(provider: auth.provider, uid: auth.uid).first_or_initialize do |user|
@@ -107,6 +130,33 @@ class User < ActiveRecord::Base
       end
     end
     return user
+  end
+  # this prevents the gotcha of not selecting any checkbox for the goal that would send empty value
+ # def goal=(goal)
+ #   goal.reject(&:blank?)
+ # end
+  def steps
+    %w[basic_info goal]
+  end
+  def current_field
+    unless step
+      self.step=steps.first
+    end
+    step
+  end
+  def next_step
+    unless (steps.index(step)==(steps.size-1))
+      self.step=steps[steps.index(current_field)+1]
+    else
+      self.step=steps[-1]
+    end
+  end
+  def prev_step
+    unless (steps.index(step)==0)
+      self.step=steps[steps.index(current_field)-1]
+    else
+      self.step=steps[steps.size-1]
+    end
   end
   def check_valid_state
     if Order::US_STATES.flatten.include?(state)

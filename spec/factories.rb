@@ -10,6 +10,8 @@ FactoryGirl.define do
     street "80-75 208 Street"
     city "Hollis Hills"
     state "New York"
+    setup_completed? true
+    occupation "Teacher"
     factory :admin do
       admin true
     end
@@ -19,9 +21,7 @@ FactoryGirl.define do
     password "SecretPassword1?"
     password_confirmation "SecretPassword1?"
     email_authen false
-    street "80-75 208 Street"
-    city "Hollis Hills"
-    state "New York"
+    setup_completed? false
   end
   factory :broker, class: Broker do
     username "testing"

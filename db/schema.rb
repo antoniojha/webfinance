@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150516143841) do
+ActiveRecord::Schema.define(version: 20150520223015) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -386,6 +386,7 @@ ActiveRecord::Schema.define(version: 20150516143841) do
     t.datetime "updated_at"
   end
 
+  add_index "product_fin_category_rels", ["product_id", "vehicle_type"], name: "index_product_fin_category_rels_on_product_id_and_vehicle_type", unique: true
   add_index "product_fin_category_rels", ["product_id"], name: "index_product_fin_category_rels_on_product_id"
 
   create_table "product_questions", force: true do |t|
@@ -642,6 +643,11 @@ ActiveRecord::Schema.define(version: 20150516143841) do
     t.string   "provider"
     t.string   "uid"
     t.string   "salt"
+    t.string   "step"
+    t.string   "goal"
+    t.string   "income_level"
+    t.boolean  "setup_completed?"
+    t.string   "occupation"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

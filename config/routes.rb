@@ -77,7 +77,6 @@ Rails.application.routes.draw do
     resources :authenticated
     controller :sessions do
     get 'login'=> :new
-    get 'goal'=> :goal
     get 'password_prompt'=> :password_prompt
     get 'password_lookup/:id'=> :edit, as:"password_lookup"
     post 'signin'=> :create
@@ -106,6 +105,10 @@ Rails.application.routes.draw do
   controller :users do
     get 'signup'=> :new
     get 'crop'=> :crop
+  end
+  resources :setups
+  controller :setups do
+    get 'setup/:id'=> :edit, as: 'custom_edit_setup'
   end
   match '/remove', to:'users#remove',via:'get'
   match'/admin/remove/:id', to:'users#admin_remove', via:'get', as: 'admin_remove'

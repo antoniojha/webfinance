@@ -23,7 +23,12 @@
     </tr>    
     <%elsif f.object.email && (f.object.email_authen==true)%>
     <tr>
-      <td colspan=3>Email address is successfully validated.</td>
+      <td colspan=2>
+        <div class="alert alert-success" role="alert">
+          Email address is successfully validated.
+        </div>    
+      </td>
+      <td></td>
     </tr>
     <%end%>
 		<tr class="blank_row"></tr>
@@ -37,6 +42,14 @@
       <td><%= f.text_field :last_name,{:class=>'form-control'} %></td>
     </tr>  
     <tr class="blank_row"></tr>  
+    <% if f.object.password_digest%>
+    <tr>
+      <td colspan=2>
+        <div class="alert alert-success" role="alert">Your password has been created already. You can access your account with your password now.
+        </div>
+          </td>
+    </tr>
+    <%end%>
     <tr>
       <td><%= f.label "Password" %></td>
     	<td><%= f.password_field :password,{:class=>'form-control'} %></td>
@@ -49,39 +62,6 @@
 		<tr class="blank_row"></tr>
 
   </table>
-<table width="70%">
-  <tr>
-    <td width="30%"><%=f.label "Address"%></td>
-    <td width="10%"><%=f.label :street%></td>
-    <td width="60%" colspan="3"><%=f.text_field :street,{:class=>'form-control'}%></td>
-
-  </tr>
-  <tr class="blank_row"></tr>
-  <tr>
-    <td width="30%"></td>
-    <td width="10%"><%=f.label :city%></td>
-    <td width="25%"><%=f.text_field :city,{:class=>'form-control'}%></td>
-    <td width="10%" align="center"><%=f.label :state%></td>
-    <td width="25%"><%=f.text_field :state,{:class=>'form-control'}%></td>
-  </tr>
-  <tr class="blank_row"></tr>
-</table>
-<table width="70%">
-  <tr>
-    <td width="50%"><%=f.label :phone_number, "Phone Number(Work)"%></td>
-    <td width="10%"><%=f.text_field :phone_1,{maxlength: 3,:class=>'form-control'}%></td>
-    <td width="5%" align="center">-</td>
-    <td width="10%"><%=f.text_field  :phone_2,{maxlength: 3,:class=>'form-control'}%></td>
-    <td width="5%" align="center">-</td>
-    <td width="12%"><%=f.text_field :phone_3,{maxlength: 4,:class=>'form-control'}%></td>
-    <td width="8%"></td>
-  </tr>
-  <tr class="blank_row"></tr>
-  <tr>
-    <td><%=f.label :time_zone%></td>
-    <td colspan=6><%=f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones%></td>
-  </tr>
-</table>
 <table width="70%">
 		<tr>
 			<td></td>

@@ -50,6 +50,10 @@ module ApplicationHelper
       number_to_currency(0)
     end
   end
+  def smart_label(name)
+    name.sub!('_', ' ')
+    name=name.titleize
+  end
   def smart_image(user,scenario=1)
     if user.picture_file_name
       if scenario == 1

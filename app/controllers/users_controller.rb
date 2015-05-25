@@ -1,4 +1,5 @@
 class UsersController < User::AuthenticatedController
+  skip_before_action :redirect_to_setup, only:[:new,:edit,:create,:update,:destroy]
   skip_before_action :redirect_to_complete_user_profile, only:[:new,:edit,:create,:update,:destroy]
   skip_before_action :authorize_user_login, only: [:new,:create]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
@@ -17,7 +18,7 @@ class UsersController < User::AuthenticatedController
     
     @plan=current_month_plan
   end
-
+  
   # GET /users/new
   def new
     @user = User.new
@@ -79,7 +80,7 @@ class UsersController < User::AuthenticatedController
       end
     end
   end
-
+  
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
@@ -116,7 +117,7 @@ class UsersController < User::AuthenticatedController
       end
     end
   end
-
+ 
   def email_confirmation
     @user=User.find(session[:user_id])
   end
@@ -135,7 +136,7 @@ class UsersController < User::AuthenticatedController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:first_name, :last_name,:username, :email, :password, :password_confirmation,:validation_code,:picture, :crop_x,:crop_y,:crop_w,:crop_h,:street,:city,:state,:phone_1,:phone_2,:phone_3,:time_zone)
+      params.require(:user).permit(:first_name, :last_name,:username, :email, :password, :password_confirmation,:validation_code,:picture, :crop_x,:crop_y,:crop_w,:crop_h,:income_level, :state, :occupation, {:goal => []})
     end
     def correct_user
       @user=User.find(params[:id])

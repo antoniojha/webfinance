@@ -1,0 +1,22 @@
+
+<h1>Please fill in basic info</h1>
+<%=render "error"%>
+<div style="width:30%;text-align:left;">
+  <%= form_for :user, :url => setup_path(@user), :html => { :method => :put} do|f|%>
+  <p><%=f.label "First Name"%></p>
+  <p><%=f.text_field :first_name,{:class=>'form-control'}%></p>
+  <p><%=f.label "Last Name"%></p>
+  <p><%=f.text_field :last_name,{:class=>'form-control'}%></p>
+  
+  <p><%=f.label "Email"%></p>
+  <p><%=f.text_field :email,{:class=>'form-control'}%></p>
+  <p><%=f.label "Occupation"%></p>
+  <p><%=f.text_field :occupation,{:class=>'form-control'}%></p>
+  <p><%=f.label "Income Level"%></p>
+  <p><%=f.select(:income_level, options_for_select(Order::INCOME_LEVELS),{prompt:"Select Income Level"},{:class=>'form-control'})%></p>
+  <p><%=f.label "State"%></p>
+  <p><%=f.select(:state, options_for_select(Order::US_STATES),{prompt:"Select State"}, {:class=>'form-control'})%></p>
+
+  <%=f.submit "Next",name:"next"%>
+  <%end%>
+</div>

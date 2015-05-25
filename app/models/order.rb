@@ -13,6 +13,7 @@ class Order <ActiveRecord::Base
   LICENSE_TYPES=[["Life Insurance Agent",1],["Health Insurance Agent",2],["Series 6",3],["Series 7",4]]
   LICENSE_TYPES_HASH={"1"=>"Life Insurance Agent","2"=>"Health Insurance Agent","3"=>"Series 6","4"=>"Series 7"}
   LENGTH_UNITS=[["mile",1],["kilometer",2]]
+  INCOME_LEVELS=[["0 to $30,000",1],["$30,000 to $70,000",2],["$70,000 and above",3]]
   US_STATES=
     [
       ['Alabama', 'AL'],

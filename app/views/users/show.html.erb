@@ -4,21 +4,12 @@
 
   <hr class="divider"> 
   <%=smart_image(@user,2)%>
+  <%if @user.goal%>
   <h4>Looking For:</h4>
-  <% if @plan%>
-  <ol>
-    <% unless @plan.has_protection_plan%>
-    <li>Protection Plan</li>
+  <ul>  
+    <%@user.goal.each do |g|%>
+    <li><%=smart_label(g)%></li>
     <%end%>
-    <% unless @plan.has_emergency_plan%>
-    <li>Emergency Plan</li>
-    <%end%>
-    <% unless @plan.has_education_plan%>
-    <li>Education Plan</li>
-    <%end%>
-    <% unless @plan.has_retirement_plan%>
-    <li>Saving Plan</li>
-    <%end%>
-  </ol>
+  </ul>
   <%end%>
 </div>

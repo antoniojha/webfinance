@@ -24,8 +24,12 @@ en:
     attributes:
       background:
         month: ""
+      user:
+        goals: ""
     errors:
       models:
         background:
           attributes:
             month:
+
+        

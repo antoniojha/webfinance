@@ -15,7 +15,11 @@ module AuthenticationInHelper
     user=User.from_omniauth(env['omniauth.auth'])
       if user.save
         user_log_in(user)
-        friendly_redirect(user,"Signed in.")
+        unless user.setup_completed?
+          redirect_to_setup
+        else
+          friendly_redirect(user,"Signed in.")
+        end
       else
         @user=user
         render "user/sessions/new"

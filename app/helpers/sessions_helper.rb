@@ -121,4 +121,9 @@ module SessionsHelper
   def remember_desired_location
     session[:return_to]=request.fullpath
   end
+  def redirect_to_setup
+    unless current_user.setup_completed?
+      redirect_to edit_setup_path(current_user)
+    end
+  end
 end
