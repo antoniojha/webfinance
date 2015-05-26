@@ -1,17 +1,24 @@
 <div id="upload_dialog-form" title="Upload Your Profile Picture">
-  <div style="float:left; width=50%;">
-    <% unless @user.picture_file_name%>
-      <%= form_for @user, :html => { :multipart => true } do |f| %>
-
+  
+  <% unless @user.picture_file_name%>
+    <%= form_for @user, :html => { :multipart => true } do |f| %>
+      <div style="float:left; width=50%;">
         <h4>Your Picture</h4>  
           <%=smart_image(@user,3)%>
 
-        <%=f.file_field :picture%>
-        <%=f.submit%>
-      <%end%>
-    <%else%>
-      <%=render "crop"%>
+      </div>     
+      <div style="clear:both;"></div>
+      <div style="float:left;">
+        <table width="50%">
+          <tr>
+            <td width="50%"><%=f.file_field :picture, class: "btn btn-default btn-lg"%></td>
+            <td width="50%"><%=f.submit "Post Picture", class: "btn btn-default btn-lg"%></td>
+          </tr>
+        </table>
+      </div>
     <%end%>
-  </div>
-
+  <%else%>
+    <%=render "crop"%>
+  <%end%>
+  
 </div>

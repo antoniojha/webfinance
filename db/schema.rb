@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150520223015) do
+ActiveRecord::Schema.define(version: 20150526195319) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -260,6 +260,34 @@ ActiveRecord::Schema.define(version: 20150520223015) do
   end
 
   add_index "education_expenses", ["background_id"], name: "index_education_expenses_on_background_id"
+
+  create_table "educations", force: true do |t|
+    t.string   "school"
+    t.string   "degree"
+    t.date     "begin_date"
+    t.date     "end_date"
+    t.text     "description"
+    t.string   "honors"
+    t.integer  "broker_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "educations", ["broker_id"], name: "index_educations_on_broker_id"
+
+  create_table "experiences", force: true do |t|
+    t.string   "title"
+    t.string   "company"
+    t.string   "location"
+    t.text     "description"
+    t.date     "begin_date"
+    t.date     "end_date"
+    t.integer  "broker_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "experiences", ["broker_id"], name: "index_experiences_on_broker_id"
 
   create_table "firms", force: true do |t|
     t.string   "name"
