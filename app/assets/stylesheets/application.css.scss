@@ -16,8 +16,8 @@
  *= require users
  *= require sessions
  *= require jquery.Jcrop
- *= require_self
  *= require jquery-ui
+ *= require_self
   */
 @import "bootstrap-sprockets"; // check https://github.com/twbs/bootstrap-sass#a-ruby-on-rails for more info
 @import "bootstrap";
