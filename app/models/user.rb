@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   attr_writer :phone_1, :phone_2, :phone_3
   serialize :goal
-  has_attached_file :picture, :styles => { :medium => "200x200#",:large=>"400x400>"},:processors => [:cropper]
+  has_attached_file :picture, :styles => { :medium => "200x200#", :large=>"400x400>", :original=>"600x600>"},:processors => [:cropper]
 #  after_update :reprocess_picture, :if => :cropping?
   has_many :accounts, dependent: :destroy
   has_many :backgrounds, dependent: :destroy 
