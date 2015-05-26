@@ -18,23 +18,22 @@
   </style>
 </head>
 <body data-no-turbolink="true">
-	<header height="50%" class="navbar-default navbar-inverse navbar-static-top" role="navigation">  
+	<header class="navbar-default navbar-custom navbar-static-top" role="navigation">  
 		  <%=render 'layouts/header'%>
 	</header>
-  <div class="row">
-  
-  </div>
+  <%if user_logged_in? && (params[:controller]=="users")%>
+    <div class="navbar-default navbar-custom2 navbar-static-top" role="navigation">  
+		  <%=render "profiles/top_menu"%>
+	  </div>     
+  <%end%>   
 
   <div align="center" class="body1">
     <div id='col_left' class=<%=column_width_left%> align="center">
       <%=yield :left%>
-      <%if user_logged_in? && (params[:controller]=="users")%>
-      <%=render "profiles/menu"%>
-      
-      <%end%>
+
     </div>
     <div id='col_middle' class=<%=column_width_middle%> align="center">
-      
+
       <% flash.each do|message_type, message|%>
       <div class="alert alert-<%=message_type%> <%=message_type%>"><%=message%></div>
       <%end%>

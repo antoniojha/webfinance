@@ -1,0 +1,15 @@
+<p><span style="font-size:1.3em;"><b>Occupation:</b> <%=@user.occupation%></span></p>
+<p><span style="font-size:1.3em;"><b>State of Resident:</b> <%=Order::US_STATES.to_h.key(@user.state)%></span></p>
+
+<%if @user.goal.size>0%>
+  <h3>Financial Goal(s):</h3> 
+    <%@user.goal.each do |g|%>
+      <div class="list-group">
+        <a href="#" class="list-group-item active" style="border:1px solid; color:black;">
+          <h4 class="list-group-item-heading">
+          <%=smart_label(g)%>
+          </h4>
+        </a>
+      </div>
+    <%end%>
+  <%end%> 

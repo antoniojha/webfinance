@@ -42,6 +42,7 @@ gem 'roo'
 gem 'chronic'
 
 gem 'cocaine'
+gem 'posix-spawn' #install to free up memory http://adamniedzielski.github.io/blog/2014/02/05/fighting-paperclip-errno-enomem-error/
 # use for pagination
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'

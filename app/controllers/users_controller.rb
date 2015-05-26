@@ -15,7 +15,7 @@ class UsersController < User::AuthenticatedController
   # GET /users/1
   # GET /users/1.json
   def show
-    
+    @crop=params[:crop]
     @plan=current_month_plan
   end
   
@@ -51,6 +51,9 @@ class UsersController < User::AuthenticatedController
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
+      if params[:edit_goals]
+        @user.goal_bool=true
+      end
       if params[:send_validation]
         @user.validate_email_bool=true
         @user.evaluate_and_reset_email_authen(params[:user][:email])
@@ -61,7 +64,14 @@ class UsersController < User::AuthenticatedController
           @user.update_attribute(:email_authen, true)
         end
       end
-      if @user.update(user_params)
+      if params[:delete_picture]
+        @user.picture=nil
+        if @user.save
+          format.html { redirect_to @user,notice:'User was successfully updated.'}
+        else
+          render "show"
+        end
+      elsif @user.update(user_params)
         if params[:user][:picture].blank?
           if @user.cropping?
             @user.reprocess_picture
@@ -72,11 +82,16 @@ class UsersController < User::AuthenticatedController
           format.html { redirect_to @user,notice:'User was successfully updated.'}
           format.json { head :no_content }
         else
-          format.html{render :action=>"crop"}
+          format.html{
+            redirect_to :controller => 'users', :action => 'show', :id => @user.id, :crop => true
+          }
         end
       else
-        format.html { render action: 'edit' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        if @user.goal_bool
+          format.html { render action: 'show' }
+        else
+          format.html { render action: 'edit' }
+        end
       end
     end
   end

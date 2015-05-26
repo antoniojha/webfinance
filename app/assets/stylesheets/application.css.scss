@@ -68,4 +68,16 @@ html, body {
 {
   height: 20px;
 }
+.navbar-custom
+{
+  background-color:lighten(#000, 33.5%);
+  color:white;
+}
+.navbar-custom2
+{
+  background-color:#000;
+  color:lighten(#000, 93.5%);
+  border-radius:0;  
+  
+}
 // bootstrap color taken from http://getbootstrap.com/customize/

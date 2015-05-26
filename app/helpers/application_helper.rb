@@ -59,10 +59,12 @@ module ApplicationHelper
       if scenario == 1
         image_tag user.picture.url(:medium),size:"100x100", class: "img-thumbnail"
       elsif scenario ==2
-        image_tag user.picture.url(:medium), class: "img-thumbnail"
+        image_tag user.picture.url(:medium),size:"200x200", class: "img-thumbnail"
       end
     else
       if scenario ==3
+        image_tag "place_holder.jpg",size:"300x300", class: "img-thumbnail", alt:"Please upload picture"  
+      elsif scenario ==2
         image_tag "place_holder.jpg",size:"200x200", class: "img-thumbnail", alt:"Please upload picture"
       else
         image_tag "place_holder.jpg",size:"100x100", class: "img-thumbnail", alt:"Please upload picture"

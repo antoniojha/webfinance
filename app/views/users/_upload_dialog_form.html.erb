@@ -1,0 +1,17 @@
+<div id="upload_dialog-form" title="Upload Your Profile Picture">
+  <div style="float:left; width=50%;">
+    <% unless @user.picture_file_name%>
+      <%= form_for @user, :html => { :multipart => true } do |f| %>
+
+        <h4>Your Picture</h4>  
+          <%=smart_image(@user,3)%>
+
+        <%=f.file_field :picture%>
+        <%=f.submit%>
+      <%end%>
+    <%else%>
+      <%=render "crop"%>
+    <%end%>
+  </div>
+
+</div>

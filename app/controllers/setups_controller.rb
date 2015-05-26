@@ -17,7 +17,11 @@ class SetupsController < ApplicationController
       end  
     else     
       @user.setup_bool=true
+      if (params[:submit])
+        @user.goal_bool=true
+      end
       if @user.update(user_params)
+        
         @user.next_step
         @user.save
         if params[:submit]
@@ -29,6 +33,7 @@ class SetupsController < ApplicationController
           redirect_to edit_user_path(@user)
         end
       else
+        Rails.logger.info(@user.errors.inspect) 
         render "edit"
       end
     end

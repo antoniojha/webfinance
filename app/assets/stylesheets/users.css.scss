@@ -22,3 +22,10 @@
 .index-table tr td{
   padding: 5px;
 }
+.crop_user_picture{
+  width: 100px; 
+  height: 100px; 
+  overflow: hidden; 
+  position: relative;
+  left: 10px;  
+}

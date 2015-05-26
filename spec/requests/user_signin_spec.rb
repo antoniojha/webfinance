@@ -4,6 +4,7 @@ describe "user sign in" do
   before do
     visit user_login_path
   end
+
   describe "initial sign up" do
     before do
       @user=FactoryGirl.create(:incomplete_user)
@@ -12,6 +13,7 @@ describe "user sign in" do
       fill_in "session_password", :with=>@user.password 
       click_button "Login"
     end
+  
     it "should goes to setup page- basic info" do
       expect(page).to have_content("Please fill in basic info")
     end
@@ -27,6 +29,7 @@ describe "user sign in" do
         expect(page).to have_content("State can't be blank")
       end
     end
+  
     describe "2nd page" do
       before do
         select("0 to $30,000",from:"user_income_level")
@@ -37,6 +40,7 @@ describe "user sign in" do
         fill_in "user_last_name", with: "Jha"
         click_button "Next"
       end
+
       it "should go to the 2nd page-goals" do       
         expect(page).to have_content("Please select your goal")
       end
@@ -49,6 +53,7 @@ describe "user sign in" do
           expect(page).to have_content("Update Profile") 
         end
       end
+  
       describe "click previous button" do
         before do
           click_button "Previous"
@@ -57,6 +62,7 @@ describe "user sign in" do
           expect(page).to have_content("Please fill in basic info")
         end
       end
+ 
       describe "click submit button" do
         before do
           click_button "Submit"
@@ -68,7 +74,7 @@ describe "user sign in" do
       end
     end
   end
- 
+
   describe "sign in after initial setup when user's has not confirmed email yet" do
     before do       
       @user=FactoryGirl.create(:incomplete_user)
@@ -190,4 +196,5 @@ describe "user sign in" do
       end
     end
   end
+
 end

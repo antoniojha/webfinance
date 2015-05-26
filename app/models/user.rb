@@ -1,11 +1,11 @@
 
 class User < ActiveRecord::Base
-  attr_accessor :auth_token, :password, :password_confirmation, :name_or_email,:validate_email_bool, :validation_code, :setup_bool
+  attr_accessor :auth_token, :password, :password_confirmation, :name_or_email,:validate_email_bool, :validation_code, :setup_bool, :goal_bool
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   attr_writer :phone_1, :phone_2, :phone_3
-
-  has_attached_file :picture, :styles => { :medium => "200x200#",:large=>"500x500>"},:processors => [:cropper]
-
+  serialize :goal
+  has_attached_file :picture, :styles => { :medium => "200x200#",:large=>"400x400>"},:processors => [:cropper]
+#  after_update :reprocess_picture, :if => :cropping?
   has_many :accounts, dependent: :destroy
   has_many :backgrounds, dependent: :destroy 
   has_many :spendings, dependent: :destroy
@@ -58,13 +58,20 @@ class User < ActiveRecord::Base
   def setup_bool?
     @setup_bool==true
   end
-  validate :check_goal_not_empty, if: :setup_bool?
-  
+  validate :check_goal_not_empty, on: :update, if: :goal_bool?
+  def goal_bool?
+    @goal_bool==true
+  end
+
   def check_goal_not_empty
-    if goal && goal.size==1
+    self.goal=goal.reject(&:empty?)
+    if goal.empty? 
       errors.add(:goals, "Need to select a financial goal")
     end 
   end
+
+  # this prevents the gotcha of not selecting any checkbox for the goal that would send empty value
+
   validates :email, allow_blank:true, format: {with:VALID_EMAIL_REGEX}, on: :update
   validates :password, allow_blank:true, length: { in: 7..40 }
   validates_uniqueness_of :username, :case_sensitive => false, if: :username?
@@ -108,7 +115,7 @@ class User < ActiveRecord::Base
   before_validation :save_phone_number
 #  after_validation :geocode, :if => :address_changed?
   after_validation :save_address
-  serialize :goal
+  
 
   def self.from_omniauth(auth)
     user=where(provider: auth.provider, uid: auth.uid).first_or_initialize do |user|
@@ -131,10 +138,7 @@ class User < ActiveRecord::Base
     end
     return user
   end
-  # this prevents the gotcha of not selecting any checkbox for the goal that would send empty value
- # def goal=(goal)
- #   goal.reject(&:blank?)
- # end
+
   def steps
     %w[basic_info goal]
   end
