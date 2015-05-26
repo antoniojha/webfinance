@@ -1,13 +1,13 @@
 <%=form_for @user do |f|%>
   <div style="float:left; width=50%;">
     <h4>Your Picture</h4>  
-    <%= image_tag @user.picture.url(:large), :id => "cropbox"%>
+    <%= image_tag f.object.picture.url(:large), :id => "cropbox"%>
 
   </div>
   <div style="overflow:auto;">
     <h4>Preview</h4>
     <div class="crop_user_picture">      
-      <%= image_tag @user.picture.url(:large), :id => "preview" %>
+      <%= image_tag f.object.picture.url(:large), :id => "preview" %>
     </div>    
       <% for attribute in [:crop_x, :crop_y, :crop_w, :crop_h]%>
         <%=f.hidden_field attribute, :id => attribute %>
@@ -25,6 +25,3 @@
     </table>
   </div>
 <%end%>
-  <div align="right" style="position:relative; bottom:10px;">
-      <%= button_to 'Delete Picture',{action: :update,id: @user.id, delete_picture:true}, {class:"btn btn-default btn-lg",method: :put}%>
-   </div>
