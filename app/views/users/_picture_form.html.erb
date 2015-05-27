@@ -1,12 +1,13 @@
 <% if @user.picture_file_name%>
   <% content_for (:head) do %>
     <script type="text/javascript">
-      
+      var x=<%=@user.picture_geometry(:large).width%>/2+100;
+      var y=<%=@user.picture_geometry(:large).height%>/2+100;
       $(function(){
         $('#cropbox').Jcrop({
         onChange: update_crop,
         onSelect: update_crop,
-        setSelect: [0, 0, 400,400],
+        setSelect: [x, y, 100,100],
           aspectRatio: 1
         });
       });

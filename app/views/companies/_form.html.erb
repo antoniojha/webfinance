@@ -1,0 +1,23 @@
+<%=form_for @company do |f|%>
+<table width="70%">
+  <tr>
+    <td><%=f.label "Name"%></td>
+    <td><%=f.text_field :name,{:class=>'form-control'}%></td>
+  </tr>
+  <tr class="blank_row"></tr>
+  <tr>
+    <td><%=f.label "Location"%></td>
+    <td><%=f.text_field :location, {:class=>'form-control'}%></td>
+  </tr>
+  <tr class="blank_row"></tr>
+  <tr>
+    <td><%=f.label "Description"%></td>
+  <td><%=f.text_area :description, {:class=>'form-control', size: "20x10"}%></td>
+  </tr>
+  <tr class="blank_row"></tr>
+  <tr>
+    <td><%=f.submit%></td>
+    <td></td>
+  </tr>
+</table>
+<%end%>

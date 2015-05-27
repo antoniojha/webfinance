@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150526195319) do
+ActiveRecord::Schema.define(version: 20150526235115) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -235,6 +235,14 @@ ActiveRecord::Schema.define(version: 20150526195319) do
 
   add_index "brokers", ["confirmation_number"], name: "index_brokers_on_confirmation_number"
   add_index "brokers", ["firm_id"], name: "index_brokers_on_firm_id"
+
+  create_table "companies", force: true do |t|
+    t.text     "description"
+    t.string   "location"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+  end
 
   create_table "debts", force: true do |t|
     t.string   "institution_name"

@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  # this controller creates financial vehicles but naming it as vehiclecontroller is a little bit awkward so it's named product instead.
   include SessionsHelper
   before_action :set_product, only:[:show,:update,:destroy,:edit]
   before_action :authorize_admin
