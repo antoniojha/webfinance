@@ -10,7 +10,9 @@ class Order <ActiveRecord::Base
   FINANCIAL_CATEGORIES_HASH={"1"=>"Protection","2"=>"Debt Management","3"=>"Retirment","4"=>"Investment","5"=>"Education Fund","6"=>"Budgeting","7"=>"Tax Saving"}  
   PROTECTION_TYPES=[["Life Insurance",1],["Disability Insurnace",2]]
   RISKS=[["NA"],["Low"],["Medium"],["High"],["Low to unknown"],["Medium to unknown"],["Low to medium"],["Medium to high"]]
-  LICENSE_TYPES=[["Life Insurance Agent",1],["Health Insurance Agent",2],["Series 6",3],["Series 7",4]]
+  LICENSE_TYPES=[["Life Insurance License",1],["Health Insurance License",2],["Series 33",3],["Series 6",4],["Series 7",5], ["Series 63",6], ["Series 65",7]]
+  
+  #based on http://www.investopedia.com/articles/financialcareers/07/securities_licenses.asp
   LICENSE_TYPES_HASH={"1"=>"Life Insurance Agent","2"=>"Health Insurance Agent","3"=>"Series 6","4"=>"Series 7"}
   LENGTH_UNITS=[["mile",1],["kilometer",2]]
   INCOME_LEVELS=[["0 to $30,000",1],["$30,000 to $70,000",2],["$70,000 and above",3]]

@@ -1,4 +1,12 @@
 module SessionsHelper
+  def personal_profile?(user)
+    if current_user.id==user.id
+      return true
+    else
+      return false
+    end
+    
+  end
   def user_profile_completed?
     user=current_user
     if user.username && user.email && (user.email_authen==true)

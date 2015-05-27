@@ -7,9 +7,7 @@ FactoryGirl.define do
     password "SecretPassword1?"
     password_confirmation "SecretPassword1?"
     email_authen true
-    street "80-75 208 Street"
-    city "Hollis Hills"
-    state "New York"
+    state "NY"
     setup_completed? true
     occupation "Teacher"
     factory :admin do
