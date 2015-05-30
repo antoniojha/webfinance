@@ -122,7 +122,7 @@ class SetupBrokersController < ApplicationController
     end
   end
   def broker_params
-    params.require(:broker).permit(:first_name, :last_name, :company_name,:company_location, :email, :title,{:license_type => []},{:product_names => []}, :financial_category, :product_id, :story, :check_term_of_use)
+    params.require(:broker).permit(:first_name, :last_name, :company_name,:company_location, :email, :title,{:license_type => []},{:product_names => []}, :skills, :ad_statement, :financial_category, :product_id, :story, :check_term_of_use)
   end
 
   def license_params
