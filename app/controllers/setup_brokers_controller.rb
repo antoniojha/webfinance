@@ -35,22 +35,16 @@ class SetupBrokersController < ApplicationController
 
   def update   
  #   raise "error"
-      if params[:send_validation]
-        @broker.validate_email_bool=true
-        @broker.send_email_confirmation
-        @broker.evaluate_and_reset_email_authen(params[:broker][:email])
-      end
-      if params[:validate_email]
-        broker=Broker.find_by_email_confirmation_token(params[:broker][:validation_code])
-        if broker == @broker
-          @broker.update_attribute(:email_authen, true)
-        end
-      end 
+
     if params[:back]
       @broker.prev_step
       @broker.save
       redirect_to edit_setup_broker_path(@broker)
-    else     
+    else    
+      if params[:send_validation] || params[:validate_email]
+        @broker.validate_email_bool=true
+
+      end
       if (@broker.current_field=="basic_info_1")
         
         @broker.basic_info_bool=true
@@ -78,6 +72,18 @@ class SetupBrokersController < ApplicationController
           end
       else
         if @broker.update(broker_params)
+          if params[:send_validation]
+
+            @broker.send_email_confirmation
+            @broker.evaluate_and_reset_email_authen(params[:broker][:email])
+          end
+          if params[:validate_email]
+          #  raise "#{params[:broker][:validation_code]}"
+            broker=Broker.find_by_email_confirmation_token(params[:broker][:validation_code])
+            if broker == @broker
+              @broker.update_attribute(:email_authen, true)
+            end
+          end 
           if params[:next_from_pg2]
             @broker.add_or_remove_license
           end
@@ -116,7 +122,7 @@ class SetupBrokersController < ApplicationController
     end
   end
   def broker_params
-    params.require(:broker).permit(:first_name, :last_name, :company_name,:company_location, :email, :validation_code, :title,{:license_type => []},{:product_names => []}, :financial_category, :product_id, :story, :check_term_of_use)
+    params.require(:broker).permit(:first_name, :last_name, :company_name,:company_location, :email, :title,{:license_type => []},{:product_names => []}, :financial_category, :product_id, :story, :check_term_of_use)
   end
 
   def license_params

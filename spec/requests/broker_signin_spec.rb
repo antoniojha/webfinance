@@ -39,9 +39,9 @@ describe "broker sign in" do
         end
         describe "email validation" do
           before do
-            fill_in "broker_email", with: "example@example.com"
+            fill_in "broker_email", with: "antoniojha@gmail.com"
             click_button "send validation code"
-            @broker=@broker.reload
+            @broker.reload
           end
           it "should generate validation code once validate button is clicked" do
             
@@ -52,6 +52,7 @@ describe "broker sign in" do
             before do
               fill_in "broker_validation_code", with: @broker.email_confirmation_token
               click_button "validate email"
+              @broker.reload
             end
             it "should change email authen to true" do
               expect(@broker.email_authen).to eq true
@@ -59,6 +60,7 @@ describe "broker sign in" do
           end
         end
       end
+   
       describe "at 2nd page" do
         before do
           @broker.email_authen=true

@@ -6,13 +6,16 @@
   <p><%=f.label "Last Name"%></p>
   <p><%=f.text_field :last_name,{:class=>'form-control'}%></p>
   <p><%=f.label "Email"%></p>
-  <p><%=f.text_field :email,{:class=>'form-control'}%><br>
-    <%=f.submit 'send validation code', name: "send_validation"%>
-  </p>
+  <p><%=f.text_field :email,{:class=>'form-control'}%></p>
   <% if @broker.email&& (@broker.email_authen!=true)%>
+    
+
+    <%=f.submit 'send validation code', name: "send_validation"%>
+
     <p><%=f.label "Validation Code"%></p>
-    <p><%=f.text_field :validation_code,{:class=>'form-control'}%>
-      <%=f.submit "validate email", name:"validate_email"%></p>    
+    <p><%=f.text_field :validation_code,{:class=>'form-control'}%>    
+    </p>   
+    <%=f.submit "validate email", name:"validate_email"%>
   <%elsif @broker.email && (@broker.email_authen==true)%>
     <p>
       Email address is successfully validated.
