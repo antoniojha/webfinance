@@ -1,0 +1,26 @@
+<div id="change_dialog-form" title="Crop Your Profile Picture">
+  <div style="float:left; width=50%;">
+    <h4>Your Picture</h4>  
+    <%= image_tag @broker.picture.url(:large), :id => "cropbox"%>
+   
+  </div>
+  <div style="overflow:auto;">
+    <h4>Preview</h4>
+    <div class="crop_user_picture">      
+      <%= image_tag @broker.picture.url(:large), :id => "preview" %>
+    </div>
+    
+       <%=form_for @broker do |f|%>
+        <% for attribute in [:crop_x, :crop_y, :crop_w, :crop_h]%>
+        <%=f.hidden_field attribute, :id => attribute %>
+        <%end%>
+        <%= f.submit "Crop", class: "btn btn-default btn-lg" %>
+      <%end%>
+  
+ 
+  </div>
+  <div style="clear:both;"></div>
+  <div align="right" style="position:relative; bottom:10px;">
+      <%= button_to 'Delete Picture',{action: :update,id: @broker.id, delete_picture:true}, {class:"btn btn-default btn-lg",method: :put}%>
+   </div>
+</div>

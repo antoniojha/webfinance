@@ -1,11 +1,17 @@
 module SessionsHelper
-  def personal_profile?(user)
+  def user_personal_profile?(user)
     if current_user.id==user.id
       return true
     else
       return false
-    end
-    
+    end 
+  end
+  def broker_personal_profile?(broker)
+    if current_broker.id==broker.id
+      return true
+    else
+      return false
+    end 
   end
   def user_profile_completed?
     user=current_user

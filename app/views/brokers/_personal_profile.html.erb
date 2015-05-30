@@ -1,0 +1,158 @@
+<script>
+$(function(){
+  <%if @broker.picture_file_name && (@crop!="true")%>
+  change_dialog = $( "#change_dialog-form" ).dialog({
+    autoOpen: false,
+    height: 550,
+    width: 800,
+    modal: true
+  });
+  <%elsif @broker.picture_file_name && (@crop=="true")%>
+  upload_dialog = $( "#upload_dialog-form" ).dialog({
+    autoOpen: true,
+    height: 550,
+    width: 800,
+    modal: true
+  });    
+  <%else%>
+  upload_dialog = $( "#upload_dialog-form" ).dialog({
+    autoOpen: false,
+    height: 550,
+    width: 800,
+    modal: true
+  });
+  <%end%>
+  $( ".change-btn" ).button().on( "click", function() {
+  //  alert("it's working");
+    change_dialog.dialog( "open" );
+  });
+  $( ".upload-btn" ).button().on( "click", function() {
+  //  alert("it's working");
+    upload_dialog.dialog( "open" );
+  });
+
+});
+
+
+</script>
+
+<div align="left" style="float:left; width:40%;">  
+  <table style=" text-align:left;width:100%">
+    <tr>
+      <td>
+        <%=smart_image(@broker,2)%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <% if ((@crop !="true") && @broker.picture_file_name) %>
+        <button type="button" class="btn btn-default btn-lg change-btn">
+          Change Photo
+          <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+        </button>
+        <%else%>
+        <button type="button" class="btn btn-default btn-lg upload-btn">
+          Upload Photo
+          <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+        </button>        
+        <%end%>
+      </td>
+    </tr>
+  </table>
+  <%=render "picture_form"%>
+
+</div>
+<div align="left" style="overflow: auto;">
+  <%=render "profile_info"%>
+
+</div>
+<div style="clear:both;"></div>
+<table width="100%">
+  <tr>
+    <td width="50%" class="panel panel-default">
+        <div class="panel-body" align="left">
+          <h4>About me 
+            <%=link_to broker_path(id:@broker,edit:"about") do%>
+              <span class="glyphicon glyphicon-edit"></span>
+            <%end%>
+          </h4>
+          <%if @edit=="about"%>
+            <%=form_for @broker do |f|%>
+              <%=f.text_area :ad_statement, {class:"form-control"}%>
+              <%=f.submit%>
+            <%end%>
+          <%else%>
+           <%=@broker.ad_statement%>
+          <%end%>
+          <h4>Skills & Specialties
+            <%=link_to broker_path(id:@broker, edit:"skills") do%>
+              <span class="glyphicon glyphicon-edit"></span>
+            <%end%>
+          </h4>
+          <%if @edit=="skills"%>
+            <%=form_for @broker do |f|%>
+              <%=f.text_area :ad_statement, {class:"form-control"}%>
+              <%=f.submit%>
+            <%end%>
+          <%else%>
+            <%=@broker.skills%>
+          <%end%>
+        </div>
+    </td>
+    <td width="50%" class="panel panel-default" style="vertical-align:top;">
+        <div class="panel-body" align="left">
+          <h4>Recommendations</h4>
+          <h4>Financial Stories</h4>
+        </div>
+    </td>
+  </tr>
+</table><br>
+<div align="left" style="float:left; width:50%;">
+  <div class="panel panel-default">
+    <div class="panel-body" align="left">
+      <h4>License(s)</h4>
+      <%@broker.setup_broker.licenses.each_with_index do |l,index|%>
+        <%if index==0%>
+          <%=l.license_type%>
+        <%else%>
+          ,<%=l.license_type%>
+        <%end%>
+      <%end%>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-body" align="left">
+      <h4>Financial Vehicle(s) & Product(s)</h4>
+      <%@broker.product_names.each_with_index do |p,index|%>
+        <%if index==0%>
+          <%=p%>
+        <%else%>
+          <%=", #{p}"%>
+        <%end%>
+      <%end%>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-body" align="left">
+      <h4>Education</h4>
+      <%unless @broker.educations.count >0%>
+        None.
+      <%else%>
+      
+      <%end%>
+    </div>
+  </div>  
+</div>
+<div align="left" style="overflow: auto;">
+
+  <div class="panel panel-default">
+    <div class="panel-body" align="left">
+      <h4>Experience</h4>
+      <%unless @broker.experiences.count >0%>
+        None.
+      <%else%>
+      
+      <%end%>
+    </div>
+  </div>  
+</div>

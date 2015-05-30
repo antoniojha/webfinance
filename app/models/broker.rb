@@ -1,13 +1,16 @@
 class Broker < ActiveRecord::Base
 
-  attr_accessor :name_or_email, :password, :password_confirmation,:phone_work_1,:phone_work_2,:phone_work_3, :phone_cell_1, :phone_cell_2, :phone_cell_3,:validate_email_bool, :validation_code, :licensetype_bool, :product_names_bool, :story_bool, :term_of_use_bool,:basic_info_bool
+  attr_accessor :name_or_email, :password, :password_confirmation,:validate_email_bool, :validation_code, :licensetype_bool, :product_names_bool, :story_bool, :term_of_use_bool,:basic_info_bool
   attr_accessor :financial_category,:product_id, :story
+  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   serialize :license_type
   serialize :product_names
-  belongs_to :firm
-  # broker has the following dependents: SetupBroker=>License, FinancialStory
+  has_attached_file :picture, :styles => { :medium => "200x200#", :large=>"400x400>", :original=>"600x600>"},:processors => [:cropper]
+  validates_attachment_content_type :picture, :content_type=> ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/pjpeg"]
+  # broker has the following dependents: SetupBroker=>License, FinancialStory, :Experiences, :Educations
   has_one :setup_broker, dependent: :destroy
-
+  has_many :educations, dependent: :destroy
+  has_many :experiences, dependent: :destroy
   has_many :financial_stories, dependent: :destroy
   has_many :products, through: :financial_stories
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -200,7 +203,18 @@ class Broker < ActiveRecord::Base
       end
     end
   end
-
+  #used for cropping pictures => :cropping?, :reprocess_picture, :picture_geometry
+  def cropping?
+    !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
+  end
+  def reprocess_picture
+    picture.reprocess!
+  end
+  def picture_geometry(style = :original)
+    @geometry ||= {}
+    picture_path = (picture.options[:storage] == :s3) ? picture.url(style) : picture.path(style)
+    @geometry[style] ||= Paperclip::Geometry.from_file(picture_path)
+  end
   private
 
   def generate_token(column)

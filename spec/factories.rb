@@ -30,27 +30,16 @@ FactoryGirl.define do
     last_name "Broker Last Name"
     password "SecretPassword1?"
     password_confirmation "SecretPassword1?"
-    institution_name "World Financial Group"
-    street "39-07 Prince St, Suite 6A-3"
-    city "Flushing"
-    state "NY"
-    phone_work_1 "718"
-    phone_work_2 "753"
-    phone_work_3 "2309"
+    company_name "World Financial Group"
+    company_location "39-07 Prince St, Suite 6A-3"
+
   end
   factory :incomplete_broker, class: Broker do
     username "testing"
     password "SecretPassword1?"
     password_confirmation "SecretPassword1?"
     email_authen false
-    institution_name "World Financial Group"
-    street "39-07 Prince St, Suite 6A-3"
-    city "Flushing"
-    state "NY"
-    phone_work_1 "718"
-    phone_work_2 "753"
-    phone_work_3 "2309"
-    
+   
   end  
 
   factory :other_user, class: User do

@@ -1,16 +1,16 @@
 <div id="upload_dialog-form" title="Upload Your Profile Picture">
   
-  <% unless @user.picture_file_name%>
-    <%= form_for @user, :html => { :multipart => true } do |f| %>
+  <% unless @broker.picture_file_name%>
+    <%= form_for @broker, :html => { :multipart => true } do |f| %>
       <div style="float:left; width=50%;">
         <h4>Your Picture</h4>  
-          <%=smart_image(@user,3)%>
+          <%=smart_image(@broker,3)%>
 
       </div>     
       <div style="clear:both;"></div>
       <div style="float:left; width=50%;">
         <table width="100%">
-          <tr>
+         <tr>
             <td width="100%"><%=f.file_field :picture, class: "form-control"%></td>
           </tr>
           <tr>

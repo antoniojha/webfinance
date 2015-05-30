@@ -23,10 +23,14 @@
 	</header>
   <%if user_logged_in? && (params[:controller]=="users")%>
     <div class="navbar-default navbar-custom2 navbar-static-top" role="navigation">  
-		  <%=render "profiles/top_menu"%>
+      <%=render partial:"profiles/top_menu",locals:{object:current_user,type:"users"} %>
 	  </div>     
   <%end%>   
-
+  <%if broker_logged_in? && (params[:controller]=="brokers")%>
+    <div class="navbar-default navbar-custom2 navbar-static-top" role="navigation">  
+      <%=render partial:"profiles/top_menu",locals:{object:current_broker,type:"brokers"} %>
+	  </div>     
+  <%end%>   
   <div align="center" class="body1">
     <div id='col_left' class=<%=column_width_left%> align="center">
       <%=yield :left%>

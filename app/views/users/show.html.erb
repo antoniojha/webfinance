@@ -1,5 +1,5 @@
 <% content_for :title do %>|User Profile<%end%>
-<% if personal_profile?(@user)%>
+<% if user_personal_profile?(@user)%>
 <%=render "personal_profile"%>
 <%else%>
 <%=render "public_profile"%>

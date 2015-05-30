@@ -53,8 +53,10 @@ Rails.application.routes.draw do
  # match'/register/brokers/new', to:'brokers#new', via:'get', as: 'new'
  # get 'register/brokers/new'=> 'brokers#new'
   controller :brokers do
+    get "home/:id" => :home, as: 'broker_home'
     get ":id/edit2"=> :edit2, as:"edit2_broker"
     get "add_license" => :add_license
+    get 'crop'=> :crop
   end
 
   
@@ -67,9 +69,7 @@ Rails.application.routes.draw do
     resources :brokers
     controller :brokers do
       get 'signup'=> :new
-      get "brokers/:id/product_lookup"=> :product_lookup # this is needed for jquery ajax call
-      get "remove_appointment"=> :remove_appointment
-      #No need for add_appointment method since it's called through form's update method.
+      
       get "status/:id"=> :status, as:"broker_status"
       get "finish/:id"=> :finish, as:"broker_finish"
       get "close_finish"=> :close_finish
@@ -108,6 +108,7 @@ Rails.application.routes.draw do
   controller :users do
     get 'signup'=> :new
     get 'crop'=> :crop
+    get 'home/:id'=> :home, as: 'user_home'
   end
   resources :setups
   controller :setups do

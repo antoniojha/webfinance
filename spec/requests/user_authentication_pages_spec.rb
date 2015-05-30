@@ -11,7 +11,7 @@ describe "User Authentication" do
           it "should allow user to access show page" do
             visit user_path(user.id)
             expect(page).to have_content(user.first_name)    
-            expect(page.title).to eq ('WebFinance App|'+user.first_name)
+            expect(page.title).to eq ('RichRly|'+user.first_name)
           end
           it "should allow user to access edit page" do
             visit edit_user_path(user.id)
@@ -23,7 +23,7 @@ describe "User Authentication" do
           describe "in User Controller" do
             it "should redirect index to signin" do
               visit users_path
-              expect(page).to have_title('WebFinance App|User Login')
+              expect(page).to have_title('RichRly|User Login')
               expect(page).to have_content('Login')
             end
             it "should redirect edit to signin" do
@@ -42,9 +42,9 @@ describe "User Authentication" do
                 fill_in "Password", with: user.password
                 click_button "Login"
                 expect(page).to have_content('Update Profile')
-                expect(page).to have_title('WebFinance App|Edit User')
+                expect(page).to have_title('RichRly|Edit User')
               end
-              let(:title){"WebFinance App|"+user.first_name}
+              let(:title){"RichRly|"+user.first_name}
               it "show page" do
                 visit user_path(user)
                 fill_in "Username", with: user.username

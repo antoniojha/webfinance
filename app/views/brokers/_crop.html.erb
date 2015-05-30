@@ -1,0 +1,27 @@
+<%=form_for @broker do |f|%>
+  <div style="float:left; width=50%;">
+    <h4>Your Picture</h4>  
+    <%= image_tag f.object.picture.url(:large), :id => "cropbox"%>
+
+  </div>
+  <div style="overflow:auto;">
+    <h4>Preview</h4>
+    <div class="crop_user_picture">      
+      <%= image_tag f.object.picture.url(:large), :id => "preview" %>
+    </div>    
+      <% for attribute in [:crop_x, :crop_y, :crop_w, :crop_h]%>
+        <%=f.hidden_field attribute, :id => attribute %>
+      <%end%>
+      <%= f.submit "Crop", class: "btn btn-default btn-lg" %>
+  </div>
+
+  <div style="clear:both;"></div>
+  <div style="float:left;">
+    <table width="50%">
+      <tr>
+        <td width="50%"><%=f.file_field :picture, class: "btn btn-default btn-lg"%></td>
+        <td width="50%"><%=f.submit "Post Picture", class: "btn btn-default btn-lg"%></td>
+      </tr>
+    </table>
+  </div>
+<%end%>

@@ -2,18 +2,18 @@ class UsersController < User::AuthenticatedController
   skip_before_action :redirect_to_user_setup, only:[:new,:edit,:create,:update,:destroy]
   skip_before_action :redirect_to_complete_user_profile, only:[:new,:edit,:create,:update,:destroy]
   skip_before_action :authorize_user_login, only: [:new,:create]
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update,:home, :destroy]
 
   before_action :correct_user, only:[:edit,:update,:destroy]
   include ProfilesHelper
-  # GET /users
-  # GET /users.json
+
+  def home
+    
+  end
   def index
     @users = User.order(:username).paginate(:page => params[:page])
   end
 
-  # GET /users/1
-  # GET /users/1.json
   def show
     @crop=params[:crop]
     @plan=current_month_plan
@@ -67,7 +67,7 @@ class UsersController < User::AuthenticatedController
       if params[:delete_picture]
         @user.picture=nil
         if @user.save
-          format.html { redirect_to @user,notice:'User was successfully updated.'}
+          format.html { redirect_to @user,notice:'Your profile was successfully updated.'}
         else
           render "show"
         end
