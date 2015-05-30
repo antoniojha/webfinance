@@ -37,10 +37,32 @@ describe "broker sign in" do
           expect(page).to have_content("Company name can't be blank")   
           expect(page).to have_content("Company location can't be blank") 
         end
+        describe "email validation" do
+          before do
+            fill_in "broker_email", with: "example@example.com"
+            click_button "send validation code"
+            @broker=@broker.reload
+          end
+          it "should generate validation code once validate button is clicked" do
+            
+            expect(@broker.email_confirmation_token).not_to eq nil
+            expect(page).not_to have_content("error")
+          end
+          describe "enter validation code" do
+            before do
+              fill_in "broker_validation_code", with: @broker.email_confirmation_token
+              click_button "validate email"
+            end
+            it "should change email authen to true" do
+              expect(@broker.email_authen).to eq true
+            end
+          end
+        end
       end
-      if false
       describe "at 2nd page" do
         before do
+          @broker.email_authen=true
+          @broker.save
           fill_in "broker_first_name", with: "example first name"
           fill_in "broker_last_name", with: "example last name"
           fill_in "broker_email", with: "example@example.com"
@@ -201,7 +223,6 @@ describe "broker sign in" do
           end
         end
       end
-    end
     end
   end
 end

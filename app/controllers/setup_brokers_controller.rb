@@ -35,25 +35,36 @@ class SetupBrokersController < ApplicationController
 
   def update   
  #   raise "error"
- 
+      if params[:send_validation]
+        @broker.validate_email_bool=true
+        @broker.send_email_confirmation
+        @broker.evaluate_and_reset_email_authen(params[:broker][:email])
+      end
+      if params[:validate_email]
+        broker=Broker.find_by_email_confirmation_token(params[:broker][:validation_code])
+        if broker == @broker
+          @broker.update_attribute(:email_authen, true)
+        end
+      end 
     if params[:back]
       @broker.prev_step
       @broker.save
       redirect_to edit_setup_broker_path(@broker)
     else     
-      if (@broker.step=="basic_info_1")
-        @broker.info_bool=true
+      if (@broker.current_field=="basic_info_1")
+        
+        @broker.basic_info_bool=true
       end
-      if (@broker.step=="license_2")
+      if (@broker.current_field=="license_2")
         @broker.licensetype_bool=true
       end
-      if (@broker.step=="vehicle_4")
+      if (@broker.current_field=="vehicle_4")
         @broker.product_names_bool=true
       end
-      if (@broker.step=="register_approve_info_6")
+      if (@broker.current_field=="register_approve_info_6")
         @broker.story_bool=true
       end
-      if (@broker.step=="term_of_use_7")
+      if (@broker.current_field=="term_of_use_7")
         @broker.term_of_use_bool=true
       end
       if params[:next_from_pg3]
@@ -70,8 +81,10 @@ class SetupBrokersController < ApplicationController
           if params[:next_from_pg2]
             @broker.add_or_remove_license
           end
+          unless params[:send_validation] || params[:validate_email]
             @broker.next_step
             @broker.save
+          end
           if params[:submit]
             @broker.update_attribute(:setup_completed?, true)
           end

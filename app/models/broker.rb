@@ -1,6 +1,6 @@
 class Broker < ActiveRecord::Base
 
-  attr_accessor :name_or_email, :password, :password_confirmation,:phone_work_1,:phone_work_2,:phone_work_3, :phone_cell_1, :phone_cell_2, :phone_cell_3,:validate_email_bool, :validation_code,:setup_bool, :licensetype_bool, :product_names_bool, :story_bool, :term_of_use_bool,:info_bool
+  attr_accessor :name_or_email, :password, :password_confirmation,:phone_work_1,:phone_work_2,:phone_work_3, :phone_cell_1, :phone_cell_2, :phone_cell_3,:validate_email_bool, :validation_code, :licensetype_bool, :product_names_bool, :story_bool, :term_of_use_bool,:basic_info_bool
   attr_accessor :financial_category,:product_id, :story
   serialize :license_type
   serialize :product_names
@@ -42,9 +42,13 @@ class Broker < ActiveRecord::Base
 
   validates :first_name, :last_name, :email, :company_name, :company_location, :title, presence:true, on: :update, if: :info_bool?
   def info_bool?
-    @info_bool==true
+    if @validate_email_bool
+      return false
+    else
+      @basic_info_bool==true
+    end
   end
-#  validate :ensure_email_validated, on: :update, if: :setup_bool?
+  validate :ensure_email_validated, on: :update, if: :info_bool?
   def ensure_email_validated 
     unless email_authen==true
       errors.add(:email, "Need to validate email")
@@ -73,14 +77,6 @@ class Broker < ActiveRecord::Base
     end 
   end
   before_save :encrypt_password
-  def evaluate_and_reset_email_authen(email)
-  # reset email authen if a new email is set
-    if email
-      unless self.email == email
-        self.email_authen=false
-      end
-    end
-  end
 
   validates :ad_statement, allow_blank:true, length: { maximum: 150 }  
   validates :financial_category,:product_id, :story, presence:true, on: :update, if: :story_bool?
@@ -154,6 +150,14 @@ class Broker < ActiveRecord::Base
     EmailConfirmationMailer.send_email_confirm(self).deliver
     update_attributes(email_confirmation_sent_at:Time.zone.now)
   end
+  def evaluate_and_reset_email_authen(email)
+  # reset email authen if a new email is set
+    if email
+      unless self.email == email
+        self.email_authen=false
+      end
+    end
+  end
   def steps
     %w[basic_info_1 license_2 license_info_3 vehicle_4 statement_5 register_approve_info_6 term_of_use_7]
   end
@@ -204,7 +208,7 @@ class Broker < ActiveRecord::Base
        # update_attribute(column,SecureRandom.urlsafe_base64)
         #saves the user directly instead of just assigning it
       self[column]=SecureRandom.urlsafe_base64
-    end while User.exists?(column=>self[column])
+    end while Broker.exists?(column=>self[column])
   end  
   def encrypt_password
     if password
