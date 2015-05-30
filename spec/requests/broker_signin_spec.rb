@@ -29,9 +29,9 @@ describe "broker sign in" do
           click_button "Next"
         end
         it "show error messages" do
-        #  expect(page).to have_content("error")
-        #  expect(page).to have_content("First name can't be blank")
-        #  expect(page).to have_content("Last name can't be blank")
+          expect(page).to have_content("error")
+          expect(page).to have_content("First name can't be blank")
+          expect(page).to have_content("Last name can't be blank")
           expect(page).to have_content("Email can't be blank")
           expect(page).to have_content("Title can't be blank")
           expect(page).to have_content("Company name can't be blank")   
