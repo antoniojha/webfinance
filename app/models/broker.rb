@@ -40,7 +40,8 @@ class Broker < ActiveRecord::Base
   end
 
 
-  validates :first_name, :last_name, :email, :company_name, :company_location, :title, on: :update, presence:true,if: :info_bool?
+  validates :first_name, :last_name, :email, :company_name, :company_location, :title, on: :update, presence:true
+  #,if: :info_bool?
   def info_bool?
     @info_bool==true
   end
