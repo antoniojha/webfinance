@@ -1,0 +1,13 @@
+<h1>Term of Use</h1>
+<div style="text-align:left;">
+<p>Please read and agree the term of condition</p>
+  <div style="height:250px;">
+    Text text text... will be completed in the future.
+  </div>
+<%= form_for :broker, :url => setup_broker_path(@broker), :html => { :method => :put} do|f|%>
+  <p> <%=f.check_box :check_term_of_use%> I agree with the term of use.</p>
+  
+  <%=f.submit "Previous", name:"back", :class=>"btn btn-lg btn-default"%>
+  <%=f.submit "Submit",name:"submit", :class=>"btn btn-lg btn-default"%>
+<%end%>
+</div>

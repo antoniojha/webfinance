@@ -1,8 +1,8 @@
 class Product < ActiveRecord::Base
   belongs_to :firm
   has_many :product_fin_category_rels
-#  has_many :appointments
-#  has_many :brokers, through: :appointments
+  has_many :financial_stories, dependent: :destroy
+  has_many :brokers, through: :financial_stories
   
   def self.return_dropdown_lists(firm_id)
     array=[]

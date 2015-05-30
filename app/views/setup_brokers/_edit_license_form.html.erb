@@ -1,0 +1,38 @@
+<h1>Edit Your Licenses</h1>
+<div width="60%" class="alert alert-info error-message">To remove or add licenses go to the previous page to check or uncheck license types.</div>
+<%= form_for @setup_broker do|f|%>
+  <%=f.hidden_field :broker_id, value: @broker.id%>
+  <table width="60%">
+
+    <%= f.fields_for :licenses do |builder| %>
+    <% l=@broker.license_type[builder.index]%>
+        <tr>
+          <td colspan=2>
+            <%=l%><%=builder.hidden_field :license_type, value:l%>
+          </td>
+        </tr>
+        <tr>
+          <td width="40%"><%= builder.label "License Number" %></td>
+          <td width="60%"><%= builder.text_field :license_number,{class:'form-control'} %></td>
+        </tr>
+        <tr class="blank_row"></tr>
+        <tr>
+          <td><%= builder.label "Upload License" %></td>
+          <td><%= builder.file_field :picture, {class:'form-control'} %></td>
+        </tr>
+        <% license=builder.object%>
+        <% if license.picture_file_name%>
+        <tr>
+          <td colspan=2>
+                    
+            <b>File Uploaded:</b>
+            <%= link_to "View License", download_path(license)%></td>
+        </tr>
+        <%end%>
+        <tr class="blank_row"></tr>
+    
+    <%end%>
+  </table>
+  <%=f.submit "Previous", name:"back", :class=>"btn btn-lg btn-default"%>
+  <%=f.submit "Next",name:"next_from_pg3", :class=>"btn btn-lg btn-default"%>
+<%end%>

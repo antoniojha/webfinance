@@ -4,11 +4,12 @@ describe "testing whether there is a distinction between private and public prof
   describe "Login in as user and access user 2 page" do
     before do 
       @user=FactoryGirl.create(:user)
-      @user2=@user
+      @user2=@user.dup
       @user2.first_name="other_first_name"
       @user2.last_name="other_last_name"
+      @user2.username="other_username"
+      @user2.email="otheremail@example.com"
       @user2.save
-      @user2.reload
       log_in(@user)
     end
     it "should not display upload picture button on user2's profile page" do
@@ -19,7 +20,6 @@ describe "testing whether there is a distinction between private and public prof
       visit user_path(@user)
       expect(page.title).to eq "RichRly|User Profile"
       expect(page).to have_content("Upload Photo") 
-    end
-    
+    end  
   end
 end

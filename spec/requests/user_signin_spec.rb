@@ -24,7 +24,7 @@ describe "user sign in" do
         expect(page).to have_content("First name can't be blank")
         expect(page).to have_content("Last name can't be blank")
         expect(page).to have_content("Email can't be blank")
-        expect(page).to have_content("Last name can't be blank")
+        expect(page).to have_content("Age level can't be blank")
         expect(page).to have_content("Income level can't be blank")
         expect(page).to have_content("State can't be blank")
       end
@@ -34,10 +34,12 @@ describe "user sign in" do
       before do
         select("0 to $30,000",from:"user_income_level")
         select("New York", from:"user_state")
+        select("20-39 years old",from: "user_age_level") 
         fill_in "user_email", with: "example@example.com"
         fill_in "user_occupation", with: "teacher"   
         fill_in "user_first_name", with: "Antonio"
         fill_in "user_last_name", with: "Jha"
+        
         click_button "Next"
       end
 
@@ -50,7 +52,7 @@ describe "user sign in" do
           click_button "Submit"
         end
         it "should go to the user edit page to prompt user to validate email" do
-          expect(page).to have_content("Update Profile") 
+          expect(page).to have_title("RichRly|Edit User") 
         end
       end
   
@@ -86,7 +88,7 @@ describe "user sign in" do
       click_button "Login"
     end
     it "should redirect to user edit page to prompt user to complete profile after sign in" do
-      expect(page).to have_content("Update Profile")    
+      expect(page).to have_title("RichRly|Edit User")    
     end   
     it "user can update first and last name without running into validation error to require email address be entered" do
       fill_in "user_first_name", with: "first_name"

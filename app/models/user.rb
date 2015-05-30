@@ -4,8 +4,7 @@ class User < ActiveRecord::Base
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   attr_writer :phone_1, :phone_2, :phone_3
   serialize :goal
-  has_attached_file :picture, :styles => { :medium => "200x200#", :large=>"400x400>", :original=>"600x600>"},:processors => [:cropper]
-#  after_update :reprocess_picture, :if => :cropping?
+
   has_many :accounts, dependent: :destroy
   has_many :backgrounds, dependent: :destroy 
   has_many :spendings, dependent: :destroy
@@ -14,7 +13,8 @@ class User < ActiveRecord::Base
   has_many :schedules,dependent: :destroy
   has_many :brokers, through: :schedules
 #  has_many :temp_budget_plans, dependent: :destroy
-
+  has_attached_file :picture, :styles => { :medium => "200x200#", :large=>"400x400>", :original=>"600x600>"},:processors => [:cropper]
+  validates_attachment_content_type :picture, :content_type=> ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/pjpeg"]
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   # the following uses Regex (lookahead assertion) to ensure there is at least a lower case and upper case letter, a digit, and a special character (non-word character)
   VALID_PASSWORD_REGEX= /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)/
@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
     @setup_bool==true
     #validate email_bool is set true during initial setup
   end
-  validates :income_level, :state, :occupation, presence: true, on: :update, if: :setup_bool?
+  validates :income_level, :age_level,:state, :occupation, presence: true, on: :update, if: :setup_bool?
   def setup_bool?
     @setup_bool==true
   end
@@ -88,7 +88,7 @@ class User < ActiveRecord::Base
     (email!=nil) ? true : false
   end
   
-  validates_attachment_content_type :picture, :content_type=> ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/pjpeg"]
+
   def evaluate_and_reset_email_authen(email)
   # reset email authen if a new email is set
     if email
@@ -126,7 +126,7 @@ class User < ActiveRecord::Base
         user.first_name=auth["info"]["name"].split.first
         user.last_name=auth["info"]["name"].split.last
       elsif auth["provider"]=="google_oauth2"
-        puts "is google + working?"
+    
         user.email=auth["info"]["email"]
         user.first_name=auth["info"]["first_name"]
         user.last_name=auth["info"]["last_name"]
@@ -134,6 +134,11 @@ class User < ActiveRecord::Base
         user.email=auth["info"]["email"]
         user.first_name=auth["info"]["first_name"]
         user.last_name=auth["info"]["last_name"]     
+      elsif auth["provider"]=="linkedin"
+        user.username = auth["info"]["nickname"]
+        user.first_name=auth["info"]["name"].split.first
+        user.last_name=auth["info"]["name"].split.last  
+        user.email=auth["info"]["email"]
       end
     end
     return user

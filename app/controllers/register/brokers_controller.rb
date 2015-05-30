@@ -112,4 +112,5 @@ class Register::BrokersController < ApplicationController
       params.require(:broker).permit(:first_name, :last_name, :institution_name, :identification, :street, :city, :state,{:license_type => []}, :phone_work_1,:phone_work_2,:phone_work_3,:work_ext,:phone_cell_1,:phone_cell_2,:phone_cell_3, :email,:web,:username, :password, :password_confirmation,:firm_id,licenses_attributes:[:picture,:license_number,:license_type, {:states=>[]}, :_destroy,:id])
     end
 
+
 end

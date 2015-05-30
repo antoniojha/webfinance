@@ -3,6 +3,7 @@ class Broker::AuthenticatedController < ApplicationController
   before_action :authorize_broker_login
   
   rescue_from ActiveRecord::RecordNotFound, with: :invalid_broker
+  before_action :redirect_to_broker_setup
   before_action :redirect_to_complete_broker_profile
 #  before_action :set_cache_buster
   def invalid_broker

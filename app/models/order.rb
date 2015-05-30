@@ -10,12 +10,23 @@ class Order <ActiveRecord::Base
   FINANCIAL_CATEGORIES_HASH={"1"=>"Protection","2"=>"Debt Management","3"=>"Retirment","4"=>"Investment","5"=>"Education Fund","6"=>"Budgeting","7"=>"Tax Saving"}  
   PROTECTION_TYPES=[["Life Insurance",1],["Disability Insurnace",2]]
   RISKS=[["NA"],["Low"],["Medium"],["High"],["Low to unknown"],["Medium to unknown"],["Low to medium"],["Medium to high"]]
-  LICENSE_TYPES=[["Life Insurance License",1],["Health Insurance License",2],["Series 33",3],["Series 6",4],["Series 7",5], ["Series 63",6], ["Series 65",7]]
+  LICENSE_TYPES=[["Life Insurance License",1],["Health Insurance License",2],["Series 3",3],["Series 6",4],["Series 7",5], ["Series 65",7]]
+  #license information source http://www.investopedia.com/articles/financialcareers/07/securities_licenses.asp
+  LICENSE_DESCRIPTION_HASH={
+    "Life Insurance License"=>"It's required to sell all life insurance products",
+    "Health Insurance License"=>"It's required to sell all health insurance products",
+    "Series 3"=>"It's required to sell commodity future contracts, which are considered the riskiest investment vehicle",
+    "Series 6"=>"Also known as limited-investment securities license. It allows to sell mutual funds, variable annuities and unit investment trusts (UITs)",
+    "Series 7"=>"Also known as general securities representative (GS) license. It allows to sell all kinds of investment vehicle except for packaged products that required life insurance, commodity future contracts, and real estate",
+    "Series 65"=>"It's required for anyone who provides non-commission financial advice service"
+    }
   
   #based on http://www.investopedia.com/articles/financialcareers/07/securities_licenses.asp
   LICENSE_TYPES_HASH={"1"=>"Life Insurance Agent","2"=>"Health Insurance Agent","3"=>"Series 6","4"=>"Series 7"}
   LENGTH_UNITS=[["mile",1],["kilometer",2]]
   INCOME_LEVELS=[["0 to $30,000",1],["$30,000 to $70,000",2],["$70,000 and above",3]]
+  AGE_LEVELS=[["20-39 years old", "young generation"],["40-59 years old","middle generation"],["60 years old and up","late generation"]]
+  
   US_STATES=
     [
       ['Alabama', 'AL'],

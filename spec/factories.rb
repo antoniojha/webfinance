@@ -10,6 +10,7 @@ FactoryGirl.define do
     state "NY"
     setup_completed? true
     occupation "Teacher"
+    age_level "young generation"
     factory :admin do
       admin true
     end
@@ -51,6 +52,7 @@ FactoryGirl.define do
     phone_work_3 "2309"
     
   end  
+
   factory :other_user, class: User do
     username "other_testing1234"
     email  "other_foo@example.com"

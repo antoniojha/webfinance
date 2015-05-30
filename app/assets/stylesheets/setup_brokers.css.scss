@@ -1,0 +1,14 @@
+// Place all the styles related to the setup_brokers controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+#license_table{
+  td{
+    font-size:1.2em;
+    vertical-align: top;
+    margin: 2px;
+  }
+  input[type='checkbox'] {
+   width: 20px;
+   height: 20px;
+  }
+}

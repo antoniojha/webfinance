@@ -63,7 +63,7 @@ module SessionsHelper
   def current_broker
     if session[:broker_id]
       if @current_broker.nil?
-        @current_broker=Broker.find_by(id:session[:broker_id].to_i)
+        @current_broker=Broker.find_by(id:session[:broker_id])
       else
         @current_broker
       end
@@ -129,9 +129,14 @@ module SessionsHelper
   def remember_desired_location
     session[:return_to]=request.fullpath
   end
-  def redirect_to_setup
+  def redirect_to_user_setup
     unless current_user.setup_completed?
       redirect_to edit_setup_path(current_user)
+    end
+  end
+  def redirect_to_broker_setup
+    unless current_broker.setup_completed?
+      redirect_to edit_setup_broker_path(current_broker)
     end
   end
 end

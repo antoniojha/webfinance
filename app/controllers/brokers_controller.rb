@@ -1,4 +1,5 @@
 class BrokersController < Broker::AuthenticatedController
+  skip_before_action :redirect_to_broker_setup, only:[:new,:edit,:create,:update,:destroy]
   skip_before_action :redirect_to_complete_broker_profile, only:[:new,:edit,:create,:update,:destroy]
   skip_before_action :authorize_broker_login, only:[:show,:index]
   before_action :set_broker, only:[:show,:edit,:update,:edit2]
@@ -19,7 +20,7 @@ class BrokersController < Broker::AuthenticatedController
     end
     if params[:validate_email]
       broker=Broker.find_by_email_confirmation_token(params[:broker][:validation_code])
-      if broker
+      if broker ==@broker
         @broker.update_attribute(:email_authen, true)
       end
     end

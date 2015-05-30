@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150526235115) do
+ActiveRecord::Schema.define(version: 20150529204122) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -231,6 +231,14 @@ ActiveRecord::Schema.define(version: 20150526235115) do
     t.string   "email_confirmation_sent_at"
     t.string   "salt"
     t.string   "title"
+    t.string   "step"
+    t.boolean  "setup_completed?"
+    t.string   "company_name"
+    t.string   "company_location"
+    t.text     "product_names"
+    t.text     "skills"
+    t.text     "ad_statement"
+    t.boolean  "check_term_of_use"
   end
 
   add_index "brokers", ["confirmation_number"], name: "index_brokers_on_confirmation_number"
@@ -296,6 +304,18 @@ ActiveRecord::Schema.define(version: 20150526235115) do
   end
 
   add_index "experiences", ["broker_id"], name: "index_experiences_on_broker_id"
+
+  create_table "financial_stories", force: true do |t|
+    t.integer  "product_id"
+    t.integer  "broker_id"
+    t.string   "financial_category"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "financial_stories", ["broker_id"], name: "index_financial_stories_on_broker_id"
+  add_index "financial_stories", ["product_id"], name: "index_financial_stories_on_product_id"
 
   create_table "firms", force: true do |t|
     t.string   "name"
@@ -367,13 +387,15 @@ ActiveRecord::Schema.define(version: 20150526235115) do
     t.string   "picture_content_type"
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
-    t.integer  "license_type",         limit: 255
+    t.string   "license_type"
     t.string   "license_number"
-    t.boolean  "approved",                         default: false
+    t.boolean  "approved",             default: false
     t.string   "states"
+    t.integer  "setup_broker_id"
   end
 
   add_index "licenses", ["broker_id"], name: "index_licenses_on_broker_id"
+  add_index "licenses", ["setup_broker_id"], name: "index_licenses_on_setup_broker_id"
 
   create_table "logs", force: true do |t|
     t.string   "endpoint"
@@ -544,6 +566,14 @@ ActiveRecord::Schema.define(version: 20150526235115) do
   add_index "schedules", ["broker_id"], name: "index_schedules_on_broker_id"
   add_index "schedules", ["user_id"], name: "index_schedules_on_user_id"
 
+  create_table "setup_brokers", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "broker_id"
+  end
+
+  add_index "setup_brokers", ["broker_id"], name: "index_setup_brokers_on_broker_id"
+
   create_table "spendings", force: true do |t|
     t.datetime "transaction_date"
     t.text     "description"
@@ -684,6 +714,7 @@ ActiveRecord::Schema.define(version: 20150526235115) do
     t.string   "income_level"
     t.boolean  "setup_completed?"
     t.string   "occupation"
+    t.string   "age_level"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

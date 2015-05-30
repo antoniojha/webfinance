@@ -1,0 +1,29 @@
+<h1>Enter Your Background Information</h1>
+<div style="width:30%;text-align:left;">
+  <%= form_for :broker, :url=> setup_broker_path(@broker), :html => { :method => :put} do|f|%>
+  <p><%=f.label "First Name"%></p>
+  <p><%=f.text_field :first_name,{:class=>'form-control'}%></p>
+  <p><%=f.label "Last Name"%></p>
+  <p><%=f.text_field :last_name,{:class=>'form-control'}%></p>
+  <p><%=f.label "Email"%></p>
+  <p><%=f.text_field :email,{:class=>'form-control'}%><br>
+    <%=f.submit 'send validation code', name: "send_validation"%>
+  </p>
+  <% if @broker.email&& (@broker.email_authen!=true)%>
+    <p><%=f.label "Validation Code"%></p>
+    <p><%=f.text_field :validation_code,{:class=>'form-control'}%>
+      <%=f.submit "validate email", name:"validate_email"%></p>    
+  <%elsif @broker.email && (@broker.email_authen==true)%>
+    <p>
+      Email address is successfully validated.
+  </p>
+  <%end%>
+  <p><%=f.label "Title"%></p>
+  <p><%=f.text_field :title,{:class=>'form-control'}%></p>
+  <p><%=f.label "Company Name"%></p>
+  <p><%=f.text_field :company_name,{:class=>'form-control'}%></p>
+  <p><%=f.label "Company Location"%></p>
+  <p><%=f.text_area :company_location,{:class=>'form-control'}%></p>
+  <%=f.submit "Next",name:"next"%>
+<%end%>
+</div>

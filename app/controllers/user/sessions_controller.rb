@@ -1,6 +1,6 @@
 class User::SessionsController < User::AuthenticatedController
   skip_before_action :redirect_to_complete_user_profile
-  skip_before_action :redirect_to_setup
+  skip_before_action :redirect_to_user_setup
   skip_before_action :authorize_user_login
   skip_before_action :remember_location_user, only:[:new]
   def new

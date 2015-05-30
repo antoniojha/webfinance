@@ -26,10 +26,21 @@ en:
         month: ""
       user:
         goals: ""
+      broker:
+        license_type_bool: ""
+        product_names_bool: ""
+        product_id: "Vehicle"
+        check_term_of_use: ""
+      licenses:
+    #    base: ""
+        picture: "Attachment(s)"
+        license_number: "License number(s)"
     errors:
       models:
-        background:
+   
+        broker:
           attributes:
-            month:
+            check_term_of_use:
+              blank: "You have to agree to term of use condition to be registered on Richrly"     
 
         

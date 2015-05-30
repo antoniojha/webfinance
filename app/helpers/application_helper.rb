@@ -51,8 +51,10 @@ module ApplicationHelper
     end
   end
   def smart_label(name)
-    name.sub!('_', ' ')
-    name=name.titleize
+    if name
+      name.sub!('_', ' ')
+      name=name.titleize
+    end
   end
   def smart_image(user,scenario=1)
     if user.picture_file_name

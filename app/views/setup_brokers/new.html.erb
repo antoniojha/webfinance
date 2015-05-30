@@ -1,0 +1,27 @@
+<%= form_for @broker do|f|%>
+  <table width="60%">
+
+    <%= f.fields_for :licenses do |builder| %>
+      <% #@broker.license_type.each do |l|%>
+      <% l="test"%>
+        <tr>
+          <td colspan=2>
+            <%=l%><%=f.hidden_field :license_type, value: Order::LICENSE_TYPES.to_h[l]%>
+          </td>
+        </tr>
+        <tr>
+          <td width="40%"><%= builder.label "License Number" %></td>
+          <td width="60%"><%= builder.text_field :license_number,{class:'form-control'} %></td>
+        </tr>
+        <tr class="blank_row"></tr>
+        <tr>
+          <td><%= builder.label "Upload License" %></td>
+          <td><%= builder.file_field :picture, {class:'form-control'} %></td>
+        </tr>
+        <tr class="blank_row"></tr>
+      <%#end%>
+    <%end%>
+  </table>
+  <%=f.submit "Previous", name:"back", :class=>"btn btn-lg btn-default"%>
+  <%=f.submit "Next",name:"next", :class=>"btn btn-lg btn-default"%>
+<%end%>

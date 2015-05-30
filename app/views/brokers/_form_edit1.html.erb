@@ -28,20 +28,34 @@
     </tr>
   <%end%>
   <tr class="blank_row"></tr> 
-  <% if Broker.exists?(:id => f.object.id) && f.object.password_digest.present?%>
-    <tr>
+  <% if f.object.password_digest.present?%>
+  <tr>
     <td colspan=2>
-      <div class="alert alert-danger" role="alert">
+      <div class="alert alert-info" role="alert">
       Your Password has already been saved, you don't need to re-enter it unless you want to change your original password.
       </div>
     </td>
   </tr>
+  <%else%>
+  <tr>
+    <td colspan=2>
+      <div class="alert alert-danger" role="alert">
+      You don't have a password yet. You can create a password and login to your account through username and password.
+      </div>
+    </td>
+  </tr>    
   <%end%>
   <tr>
   	<td><%= f.label :password %></td>
   	<td><%= f.password_field :password,{:class=>'form-control'} %></td>
   </tr>
   <tr class="blank_row"></tr> 
+  <tr>
+    <td><%= f.label "Password Confirmation" %></td>
+    <td><%= f.password_field :password_confirmation,{:class=>'form-control'} %></td>
+  </tr>
+	<tr class="blank_row"></tr>
+  
   <tr>
     <td width="30%"><%=f.label :first_name, "First Name"%></td>
     <td width="70%"><%=f.text_field :first_name,{:class=>'form-control', :value=>cap(@broker.first_name)}%></td>

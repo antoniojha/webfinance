@@ -1,0 +1,6 @@
+<%=render "setup_error"%>
+<% if @setup_broker.new_record?%>
+<%=render "new_license_form"%>
+<%else%>
+<%=render "edit_license_form"%>
+<%end%>

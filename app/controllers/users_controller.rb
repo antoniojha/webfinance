@@ -1,5 +1,5 @@
 class UsersController < User::AuthenticatedController
-  skip_before_action :redirect_to_setup, only:[:new,:edit,:create,:update,:destroy]
+  skip_before_action :redirect_to_user_setup, only:[:new,:edit,:create,:update,:destroy]
   skip_before_action :redirect_to_complete_user_profile, only:[:new,:edit,:create,:update,:destroy]
   skip_before_action :authorize_user_login, only: [:new,:create]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
@@ -60,7 +60,7 @@ class UsersController < User::AuthenticatedController
       end
       if params[:validate_email]
         user=User.find_by_email_confirmation_token(params[:user][:validation_code])
-        if user
+        if user == @user
           @user.update_attribute(:email_authen, true)
         end
       end

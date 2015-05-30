@@ -13,10 +13,12 @@
   <p><%=f.label "Occupation"%></p>
   <p><%=f.text_field :occupation,{:class=>'form-control'}%></p>
   <p><%=f.label "Income Level"%></p>
-  <p><%=f.select(:income_level, options_for_select(Order::INCOME_LEVELS),{prompt:"Select Income Level"},{:class=>'form-control'})%></p>
+  <p><%=f.select(:income_level, options_for_select(Order::INCOME_LEVELS),{prompt:"Select Your Income Level"},{:class=>'form-control'})%></p>
+  <p><%=f.label "Age Range"%></p>
+  <p><%=f.select(:age_level, options_for_select(Order::AGE_LEVELS),{prompt:"Select Your Age Range"},{:class=>'form-control'})%></p>
   <p><%=f.label "State"%></p>
   <p><%=f.select(:state, options_for_select(Order::US_STATES),{prompt:"Select State"}, {:class=>'form-control'})%></p>
 
-  <%=f.submit "Next",name:"next"%>
+  <%=f.submit "Next",name:"next", :class=>"btn btn-lg btn-default"%>
   <%end%>
 </div>

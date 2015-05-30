@@ -49,6 +49,14 @@
         </div>
           </td>
     </tr>
+    <%else%>
+    <tr>
+      <td colspan=2>
+        <div class="alert alert-danger" role="alert">
+        You don't have a password yet. You can create a password and login to your account through username and password.
+        </div>
+      </td>
+    </tr>    
     <%end%>
     <tr>
       <td><%= f.label "Password" %></td>

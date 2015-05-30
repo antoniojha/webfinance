@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
+  get 'licenses/:id' => 'setup_brokers#download', :as => :download
+  resources :setup_brokers
   resources :companies
   resources :products
   resources :identities

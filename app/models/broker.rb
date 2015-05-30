@@ -1,10 +1,15 @@
 class Broker < ActiveRecord::Base
 
-  attr_accessor :name_or_email, :password, :password_confirmation,:phone_work_1,:phone_work_2,:phone_work_3, :phone_cell_1, :phone_cell_2, :phone_cell_3,:validate_email_bool, :validation_code
+  attr_accessor :name_or_email, :password, :password_confirmation,:phone_work_1,:phone_work_2,:phone_work_3, :phone_cell_1, :phone_cell_2, :phone_cell_3,:validate_email_bool, :validation_code,:setup_bool, :licensetype_bool, :product_names_bool, :story_bool, :term_of_use_bool,:info_bool
+  attr_accessor :financial_category,:product_id, :story
+  serialize :license_type
+  serialize :product_names
   belongs_to :firm
-  has_many :licenses, dependent: :destroy
-  has_many :appointments,dependent: :destroy
-  has_many :products, through: :appointments
+  # broker has the following dependents: SetupBroker=>License, FinancialStory
+  has_one :setup_broker, dependent: :destroy
+
+  has_many :financial_stories, dependent: :destroy
+  has_many :products, through: :financial_stories
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   # the following uses Regex (lookahead assertion) to ensure there is at least a lower case and upper case letter, a digit, and a special character (non-word character)
   VALID_PASSWORD_REGEX= /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)/
@@ -33,16 +38,40 @@ class Broker < ActiveRecord::Base
       self.email=email.downcase
     end
   end
-  validates :first_name, :last_name,presence: true, on: :update, if: :validate_names_bool?
-  def validate_names_bool?
-    @validate_email_bool!=true
-    #validate email_bool is set true only when send validation button is clicked
+
+
+  validates :first_name, :last_name, :email, :company_name, :company_location, :title, on: :update, presence:true,if: :info_bool?
+  def info_bool?
+    @info_bool==true
   end
-  validates :email, presence:true, on: :update, if: :validate_email_bool?
-  def validate_email_bool?
-    @validate_email_bool==true
-    #validate email_bool is set true only when send validation button is clicked
-  end  
+#  validate :ensure_email_validated, on: :update, if: :setup_bool?
+  def ensure_email_validated 
+    unless email_authen==true
+      errors.add(:email, "Need to validate email")
+    end
+  end
+  validate :check_licensetype_not_empty, on: :update, if: :licensetype_bool?
+  def licensetype_bool?
+    @licensetype_bool==true
+  end
+
+  def check_licensetype_not_empty
+    self.license_type=license_type.reject(&:empty?)
+    if license_type.empty? 
+      errors.add(:licensetype_bool, "Need to select a license")
+    end 
+  end
+  validate :check_product_names_not_empty, on: :update, if: :product_names_bool?
+  def product_names_bool?
+    @product_names_bool==true
+  end
+
+  def check_product_names_not_empty
+    self.product_names=product_names.reject(&:empty?)
+    if product_names.empty? 
+      errors.add(:product_names_bool, "Need to select a Vehicle")
+    end 
+  end
   before_save :encrypt_password
   def evaluate_and_reset_email_authen(email)
   # reset email authen if a new email is set
@@ -52,12 +81,45 @@ class Broker < ActiveRecord::Base
       end
     end
   end
+
+  validates :ad_statement, allow_blank:true, length: { maximum: 150 }  
+  validates :financial_category,:product_id, :story, presence:true, on: :update, if: :story_bool?
+  def story_bool?
+    @story_bool==true
+  end
+  after_update do
+    #create Financial Story during the application
+    if story_bool?
+      self.financial_stories.create(product_id:@product_id, financial_category: @financial_category,description: @story)
+      
+      @story_bool=false # this variable prevents the story object to be saved twice since there is a @broker.next_step and @broker.save following @broker.update(params)
+    end
+  end
+  validates :check_term_of_use, presence:true, on: :update, if: :term_of_use_bool?
+  def term_of_use_bool?
+    @term_of_use_bool==true
+  end
+
+
+
   def self.from_omniauth(auth)
     
     broker=where(provider: auth.provider, uid: auth.uid).first_or_initialize do |broker|
       broker.provider = auth["provider"]
       broker.uid = auth["uid"]
-      if auth["provider"]=="linkedin"
+      if auth["provider"]=="twitter"
+        broker.username = auth["info"]["nickname"]
+        broker.first_name=auth["info"]["name"].split.first
+        broker.last_name=auth["info"]["name"].split.last
+      elsif auth["provider"]=="google_oauth2"
+        broker.email=auth["info"]["email"]
+        broker.first_name=auth["info"]["first_name"]
+        broker.last_name=auth["info"]["last_name"]
+      elsif auth["provider"]=="facebook"
+        broker.email=auth["info"]["email"]
+        broker.first_name=auth["info"]["first_name"]
+        broker.last_name=auth["info"]["last_name"]   
+      elsif auth["provider"]=="linkedin"
         broker.username = auth["info"]["nickname"]
         broker.first_name=auth["info"]["name"].split.first
         broker.last_name=auth["info"]["name"].split.last  
@@ -92,6 +154,49 @@ class Broker < ActiveRecord::Base
     EmailConfirmationMailer.send_email_confirm(self).deliver
     update_attributes(email_confirmation_sent_at:Time.zone.now)
   end
+  def steps
+    %w[basic_info_1 license_2 license_info_3 vehicle_4 statement_5 register_approve_info_6 term_of_use_7]
+  end
+  def current_field
+    unless step
+      self.step=steps.first
+    end
+    step
+  end
+  def next_step
+    unless (steps.index(step)==(steps.size-1))
+      self.step=steps[steps.index(current_field)+1]
+    else
+      self.step=steps[-1]
+    end
+  end
+  def prev_step
+    unless (steps.index(step)==0)
+      self.step=steps[steps.index(current_field)-1]
+    else
+      self.step=steps[steps.size-1]
+    end
+  end
+  def add_or_remove_license
+    
+    @setup_broker=self.setup_broker
+    if @setup_broker
+      ex_license_types=ex_license_types(@setup_broker)
+      # create new license objects to be filled out in user checks a new license type in page 2
+      self.license_type.each do |l|
+        unless ex_license_types.include?(l)
+          @setup_broker.licenses.build(license_type:l)
+        end
+      end
+      #delete existing license object if user unchecks an existing license type in page 2
+      ex_license_types.each do |l|
+        unless self.license_type.include?(l)
+         @setup_broker.licenses.find_by(license_type:l).destroy
+        end
+      end
+    end
+  end
+
   private
 
   def generate_token(column)
@@ -119,13 +224,11 @@ class Broker < ActiveRecord::Base
   def secure_hash(string)
     Digest::SHA2.hexdigest(string)
   end    
-  def steps
-    %w[form1 form2 form3 final_summary4]
-  end
-  def steps_edit
-    %w[form2 form3 form4]
-  end
-  def steps_edit_other
-    %w[form2_other form3_other form4_other]
+  def ex_license_types(setup_broker)
+    array=[]
+    setup_broker.licenses.each do |f|
+      array<< f.license_type
+    end
+    return array
   end
 end
