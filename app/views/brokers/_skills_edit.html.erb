@@ -1,0 +1,19 @@
+
+<%if @edit=="skills"%>
+  <h4>Skills & Specialties
+    <%=link_to broker_path(id:@broker), remote: true do%>
+    <span class="glyphicon glyphicon-edit"></span>
+    <%end%>
+  </h4>
+  <%=form_for @broker do |f|%>
+  <%=f.text_area :skills, {class:"form-control"}%>
+  <%=f.submit "Submit", class:"btn btn-default"%>
+  <%end%>
+<%else%>
+  <h4>Skills & Specialties
+    <%=link_to broker_path(id:@broker, edit:"skills"), remote: true do%>
+    <span class="glyphicon glyphicon-edit"></span>
+    <%end%>
+  </h4>
+  <%=@broker.skills%>
+<%end%>

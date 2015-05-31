@@ -1,6 +1,8 @@
 <% content_for :title do %>|Broker Profile<%end%>
 <% if broker_personal_profile?(@broker)%>
-<%=render "personal_profile"%>
+<div id="personal_profile">
+  <%=render "personal_profile"%>
+</div>
 <%else%>
 <%=render "public_profile"%>
 <%end%>

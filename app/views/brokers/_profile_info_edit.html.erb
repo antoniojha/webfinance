@@ -1,0 +1,69 @@
+
+  <div class="profile_info" style="height:100%;">
+
+    <%if @edit=="profile_info"%>
+    <h1><%=full_name(@broker)%>
+      <%=link_to broker_path(id:@broker), remote: true do%>
+        <span class="glyphicon glyphicon-edit"></span>
+      <%end%>
+    </h1> 
+    <h4><%=@broker.title%> at <%=@broker.company_name%></h4>
+      <%=form_for @broker do |f|%>
+        <table width="100%">
+          <tr>
+            <td width="50%">Location:</td>
+            <td width="50%"><%=@broker.company_location%></td>
+          </tr>
+          <tr>
+            <td>Email:</td>
+            <td><%=@broker.email%></td>
+          </tr>
+          <tr>
+            <td>Phone Number (Work):</td>
+            <td><%=f.text_field :phone_number_work, {class:"form-control"}%></td>
+          </tr>
+          <tr>
+            <td>Phone Number (Cell):</td>
+            <td><%=f.text_field :phone_number_cell, {class:"form-control"}%></td>
+          </tr>
+          <tr>
+            <td>URL:</td>
+            <td><%=f.text_field :web, {class:"form-control"}%></td>
+          </tr>
+          <tr>
+            <td><%=f.submit "Submit", {class: "btn btn-default"}%></td>
+            <td></td>
+          </tr>
+        </table>   
+      <%end%>
+    <%else%>
+    <h1><%=full_name(@broker)%>
+      <%=link_to broker_path(id:@broker,edit:"profile_info"), remote: true do%>
+        <span class="glyphicon glyphicon-edit"></span>
+      <%end%>
+    </h1> 
+    <h4><%=@broker.title%> at <%=@broker.company_name%></h4>
+      <table width="100%">
+        <tr>
+          <td width="50%">Location:</td>
+          <td width="50%"><%=@broker.company_location%></td>
+        </tr>
+        <tr>
+          <td>Email:</td>
+          <td><%=@broker.email%></td>
+        </tr>
+        <tr>
+          <td>Phone Number (Work):</td>
+          <td><%=@broker.phone_number_work%></td>
+        </tr>
+        <tr>
+          <td>Phone Number (Cell):</td>
+          <td><%=@broker.phone_number_cell%></td>
+        </tr>
+        <tr>
+          <td>URL:</td>
+          <td><%=@broker.web%></td>
+        </tr>
+      </table>
+    <%end%>
+  </div>

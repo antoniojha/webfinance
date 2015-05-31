@@ -62,7 +62,13 @@ class BrokersController < Broker::AuthenticatedController
       @edit="about"
     elsif params[:edit]=="skills"
       @edit="skills"
+    elsif params[:edit]=="profile_info"
+      @edit="profile_info"
     end
+    respond_to do |format|
+      format.html
+      format.js
+    end    
   end
   #display broker search form
   def index
