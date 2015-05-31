@@ -64,7 +64,11 @@ class BrokersController < Broker::AuthenticatedController
       @edit="skills"
     elsif params[:edit]=="profile_info"
       @edit="profile_info"
+    elsif params[:edit]=="education_add"     
+      @edit="education_add"
     end
+    @education=Education.new
+    @experience=Experience.new
     respond_to do |format|
       format.html
       format.js
@@ -97,7 +101,7 @@ class BrokersController < Broker::AuthenticatedController
   end
 
   def broker_params       
-    params.require(:broker).permit(:first_name, :last_name, :street, :city, :state, :email,:username, :password, :password_confirmation,:picture, :crop_x,:crop_y,:crop_w,:crop_h)
+    params.require(:broker).permit(:first_name, :last_name, :street, :city, :state, :email,:username, :password, :password_confirmation,:picture, :crop_x,:crop_y,:crop_w,:crop_h, :skills, :ad_statement, :phone_number_work, :phone_number_cell, :web)
 
   end
 end

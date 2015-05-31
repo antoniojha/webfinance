@@ -3,7 +3,6 @@ class SetupBrokersController < ApplicationController
   def create 
   #  raise "error"
     # this breaks the MVC model but is used to create licenses during broker setup. A dummy variable @setup_broker is used to generate forms that will have the accepted nested attributes. However, no SetupBroker object is created or store in database at all.
-   # raise "error"
       @broker=Broker.find(params[:setup_broker][:broker_id])
       @setup_broker=@broker.setup_broker
       unless @setup_broker
@@ -84,6 +83,12 @@ class SetupBrokersController < ApplicationController
               @broker.update_attribute(:email_authen, true)
             end
           end 
+          if params[:next_from_pg1]
+            title=params[:setup_broker][:title]
+            company_name=params[:setup_broker][:company_name]
+            company_location=params[:setup_broker][:company_location]
+            @broker.companies.create(title:title,name:company_name,location:company_location)
+          end
           if params[:next_from_pg2]
             @broker.add_or_remove_license
           end

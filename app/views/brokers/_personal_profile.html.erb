@@ -59,11 +59,11 @@ $(function(){
       </td>
     </tr>
   </table>
-  <%=render "picture_form"%>
+  <%=render "brokers/picture_form"%>
 
 </div>
 <div id ="profile_info" align="left" style="overflow: auto;padding:5px;">
-  <%=render "profile_info_edit"%>
+  <%=render "brokers/profile_info_edit"%>
 </div>
 <div style="clear:both;"></div>
 <table width="100%">
@@ -71,10 +71,10 @@ $(function(){
     <td width="50%" class="panel panel-default">
         <div class="panel-body" align="left">
           <div id="about" style="padding:5px;">
-            <%=render "about_edit"%>
+            <%=render "brokers/about_edit"%>
           </div>
           <div id="skills" style="padding:5px;">
-            <%=render "skills_edit"%>
+            <%=render "brokers/skills_edit"%>
           </div>
         </div>
     </td>
@@ -114,10 +114,43 @@ $(function(){
   <div class="panel panel-default">
     <div class="panel-body" align="left">
       <h4>Education</h4>
+      <div id="education_add" style="padding:5px;">
+        <%=render "brokers/education_add"%>   
+      </div>
       <%unless @broker.educations.count >0%>
         None.
       <%else%>
-      
+        <% @broker.educations.each do |e|%>
+            <div class="panel panel-default">
+              <div class="panel-body" align="left">
+              <table>
+                <tr>
+                  <td colspan=2><%=e.school%></td>
+                </tr>
+                <tr>
+                  <td>Attendance: <%=e.begin_date.strftime("%b,%Y")%></td>
+                  <td> &nbsp to <%=e.end_date.strftime('%b,%Y')%></td>
+                </tr>
+                <%unless e.honors.blank?%>
+                <tr>
+                  <td colspan=2>Honors</td>
+                </tr>
+                <tr>
+                  <td colspan=2><%=e.honors%></td>
+                </tr>
+                <%end%>
+                <%unless e.description.blank?%>
+                <tr>
+                  <td colspan=2>Details:</td>
+                </tr>
+                <tr>
+                  <td colspan=2><%=e.description%></td>
+                </tr>
+                <%end%>  
+              </table>
+            </div>
+          </div>
+        <%end%>
       <%end%>
     </div>
   </div>  

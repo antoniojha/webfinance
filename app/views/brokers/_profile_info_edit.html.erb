@@ -54,15 +54,15 @@
         </tr>
         <tr>
           <td>Phone Number (Work):</td>
-          <td><%=@broker.phone_number_work%></td>
+          <td><%=phone_num_display(@broker.phone_number_work)%></td>
         </tr>
         <tr>
           <td>Phone Number (Cell):</td>
-          <td><%=@broker.phone_number_cell%></td>
+          <td><%=phone_num_display(@broker.phone_number_cell)%></td>
         </tr>
         <tr>
           <td>URL:</td>
-          <td><%=@broker.web%></td>
+          <td><a href=<%="#{@broker.web}"%>><%=@broker.web%></a></td>
         </tr>
       </table>
     <%end%>
