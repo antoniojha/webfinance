@@ -71,19 +71,24 @@ describe "broker sign in" do
           fill_in "broker_title", with: "example title"
           fill_in "broker_company_name", with: "example company"   
           fill_in "broker_company_location", with: "example location"
-
-          click_button "Next"
+        end
+        it "should create current experience" do
+          expect{click_button "Next"}.to change(Experience, :count).by(1) 
         end
         it "should go to the second page license" do
+          click_button "Next"
           expect(page).to have_content("Select Your Licenses")
         end
         it "should show error messages when no license is selected" do
+          click_button "Next"
+          # now in page 2
           click_button "Next"
           expect(page).to have_content("error")
           expect(page).to have_content("Need to select a license")       
         end
         describe "at 3rd page" do
           before do
+            click_button "Next"
             check "broker_license_type_series_7"
             check "broker_license_type_series_6"
             click_button "Next"

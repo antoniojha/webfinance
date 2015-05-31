@@ -85,10 +85,10 @@ class SetupBrokersController < ApplicationController
           end 
           if params[:next_from_pg1]
             
-            title=params[:setup_broker][:title]
-            company_name=params[:setup_broker][:company_name]
-            company_location=params[:setup_broker][:company_location]
-            @broker.companies.create(title:title,name:company_name,location:company_location,current_company:true)
+            title=params[:broker][:title]
+            company=params[:broker][:company_name]
+            location=params[:broker][:company_location]
+            @broker.experiences.create(title:title,company:company,location:location,current_experience:true)
           end
           if params[:next_from_pg2]
             @broker.add_or_remove_license
