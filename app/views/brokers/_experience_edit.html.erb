@@ -1,0 +1,87 @@
+<div class="panel panel-default" id=<%="experience_edit_#{e.id}"%>>
+  <div class="panel-body" align="left">
+    <%if @edit=="experience_edit_#{e.id}"%>
+        <%=form_for e, remote: true do |f|%>
+         <table width="100%">
+          <tr>
+            <th>End Date</th>
+            <th>Start Date</th>
+           </tr>
+          <tr>
+            <td><%=f.date_select :end_date,:start_year => Date.current.year, :end_year => 1960,discard_day: true, include_blank: true%></td>    
+            <td><%=f.date_select :begin_date,{:start_year => Date.current.year, :end_year => 1960,discard_day: true}%></td>
+          </tr>
+        </table><br>
+        <table width="100%">
+          <tr>
+            <td width="40%"><%=f.label "Title"%></td>
+            <td width="60%"><%=f.text_field :title, {style:"width:100%;"}%></td>
+          </tr>
+          <tr class="blank_row_small"></tr>
+          <tr>
+            <td><%=f.label "Company"%></td>
+            <td><%=f.text_field :company, {style:"width:100%;"}%></td>
+          </tr>
+          <tr class="blank_row_small"></tr>
+          <tr>
+            <td><%=f.label "Location"%></td>
+            <td><%=f.text_area :location, {style:"width:100%;"}%></td>
+          </tr>
+          <tr class="blank_row_small"></tr>
+          <tr>
+            <td><%=f.label "Description"%></td>
+            <td><%=f.text_area :description, {style:"width:100%;"}%></td>
+          </tr>
+          <tr>
+            <td><%=f.submit "Edit", class:"btn btn-default"%></td>
+            <td align="right">
+              <%=f.hidden_field :broker_id, value: @broker.id%>              
+              <%=link_to broker_path(id:@broker), remote: true do%>
+                <span class="glyphicon glyphicon-edit"></span>
+              <%end%>
+            </td>
+          </tr>
+        </table>
+        <%end%>
+    <%else%>
+        <table width="100%">
+          <tr>
+            <td colspan=2><%=e.company%></td>
+          </tr>
+          <%unless e.title.blank?%>
+          <tr>
+            <td>Title:</td>
+            <td><%=e.title%></td>
+          </tr>
+          <%end%>
+          <% if e.begin_date && e.end_date%>
+          <tr>
+            <td>Work Time:</td>
+            <td><%=e.begin_date.strftime("%b, %Y")%>
+             to <%=e.end_date.strftime('%b, %Y')%></td>
+          </tr>
+          <%end%>
+          <%unless e.location.blank?%>
+          <tr>
+            <td>Location</td>
+            <td><%=e.location%></td>
+          </tr>
+          <%end%>
+          <%unless e.description.blank?%>
+          <tr>
+            <td>Description:</td>
+            <td><%=e.description%></td>
+          </tr>
+          <%end%>
+          <tr>
+            <td></td>
+            <td style="text-align:right;">      
+              <%=link_to broker_path(id:@broker, edit:"experience_edit_#{e.id}"), remote: true do%>
+                <span class="glyphicon glyphicon-edit"></span>
+              <%end%>
+            </td>
+          </tr>
+        </table>
+    <%end%>
+  </div>
+</div>

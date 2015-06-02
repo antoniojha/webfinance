@@ -58,17 +58,10 @@ class BrokersController < Broker::AuthenticatedController
   #display individual broker
   def show
     @crop=params[:crop]
-    if params[:edit]=="about"
-      @edit="about"
-    elsif params[:edit]=="skills"
-      @edit="skills"
-    elsif params[:edit]=="profile_info"
-      @edit="profile_info"
-    elsif params[:edit]=="education_add"     
-      @edit="education_add"
-    end
-    @education=Education.new
-    @experience=Experience.new
+
+    @edit=params[:edit]
+    @education=Education.new #needed for education_add partial template
+    @experience=Experience.new #needed for experience_add partial template
     respond_to do |format|
       format.html
       format.js

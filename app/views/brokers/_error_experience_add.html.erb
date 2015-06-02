@@ -1,7 +1,7 @@
-<% if @education && @education.errors.any? %>
+<% if @experience && @experience.errors.any? %>
   <div class="alert alert-danger error-message" style="width:100%;">
     <ul>
-      <% @education.errors.full_messages.each do |msg| %>
+      <% @experience.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>
       <% end %>
     </ul>

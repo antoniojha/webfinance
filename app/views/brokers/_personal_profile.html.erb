@@ -121,35 +121,9 @@ $(function(){
         None.
       <%else%>
         <% @broker.educations.each do |e|%>
-            <div class="panel panel-default">
-              <div class="panel-body" align="left">
-              <table>
-                <tr>
-                  <td colspan=2><%=e.school%></td>
-                </tr>
-                <tr>
-                  <td>Attendance: <%=e.begin_date.strftime("%b,%Y")%></td>
-                  <td> &nbsp to <%=e.end_date.strftime('%b,%Y')%></td>
-                </tr>
-                <%unless e.honors.blank?%>
-                <tr>
-                  <td colspan=2>Honors</td>
-                </tr>
-                <tr>
-                  <td colspan=2><%=e.honors%></td>
-                </tr>
-                <%end%>
-                <%unless e.description.blank?%>
-                <tr>
-                  <td colspan=2>Details:</td>
-                </tr>
-                <tr>
-                  <td colspan=2><%=e.description%></td>
-                </tr>
-                <%end%>  
-              </table>
-            </div>
-          </div>
+          <% unless e.new_record?%>
+            <%=render partial:"brokers/education_edit", locals:{e:e}%>
+          <%end%>
         <%end%>
       <%end%>
     </div>
@@ -160,10 +134,17 @@ $(function(){
   <div class="panel panel-default">
     <div class="panel-body" align="left">
       <h4>Experience</h4>
+      <div id="experience_add" style="padding:5px;">
+        <%=render "brokers/experience_add"%>   
+      </div>
       <%unless @broker.experiences.count >0%>
         None.
       <%else%>
-      
+        <% @broker.experiences.each do |e|%>
+          <% unless e.new_record?%>
+            <%=render partial:"brokers/experience_edit", locals:{e:e}%>
+          <%end%>
+        <%end%>      
       <%end%>
     </div>
   </div>  

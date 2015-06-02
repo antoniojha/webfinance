@@ -1,11 +1,11 @@
 
-<%=render "brokers/error_education_add"%>
-<%if @edit=="education_add"%>
+<%=render "brokers/error_experience_add"%>
+<%if @edit=="experience_add"%>
   <%=link_to broker_path(id:@broker), remote: true do%>
   <span class="glyphicon glyphicon-plus"></span> Add Education
   <%end%>
 
-  <%=form_for @education, remote: true  do |f|%>
+  <%=form_for @experience, remote: true  do |f|%>
     <table width="100%">
       <tr>
         <th>End Date</th>
@@ -17,18 +17,18 @@
     </table><br>
     <table width="100%">
       <tr>
-        <td width="40%"><%=f.label "School_Name"%></td>
-        <td width="60%"><%=f.text_field :school, {style:"width:100%;"}%></td>
+        <td width="40%"><%=f.label "Company"%></td>
+        <td width="60%"><%=f.text_field :company, {style:"width:100%;"}%></td>
       </tr>
       <tr class="blank_row_small"></tr>
       <tr>
-        <td><%=f.label "Degree_Name"%></td>
-        <td><%=f.text_field :degree, {style:"width:100%;"}%></td>
+        <td><%=f.label "Title"%></td>
+        <td><%=f.text_field :title, {style:"width:100%;"}%></td>
       </tr>
       <tr class="blank_row_small"></tr>
       <tr>
-        <td><%=f.label "Honors"%></td>
-        <td><%=f.text_field :honors, {style:"width:100%;"}%></td>
+        <td><%=f.label "Location"%></td>
+        <td><%=f.text_area :location, {style:"width:100%;"}%></td>
       </tr>
       <tr class="blank_row_small"></tr>
       <tr>
@@ -42,7 +42,7 @@
     </table>
   <%end%>
 <%else%>
-<%=link_to broker_path(id:@broker, edit:"education_add"), remote: true do%>
-  <span class="glyphicon glyphicon-plus"></span> Add Education
+<%=link_to broker_path(id:@broker, edit:"experience_add"), remote: true do%>
+  <span class="glyphicon glyphicon-plus"></span> Add Experience
   <%end%>
 <%end%>
