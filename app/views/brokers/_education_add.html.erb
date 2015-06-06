@@ -5,14 +5,15 @@
   <span class="glyphicon glyphicon-plus"></span> Add Education
   <%end%>
 
-  <%=form_for @education, remote: true  do |f|%>
+<%=form_for @education, id:"add_education"  do |f|%>
     <table width="100%">
       <tr>
-        <th>End Date</th>
         <th>Start Date</th>
+        <th>End Date</th>
       <tr>
-        <td><%=f.date_select :end_date,:start_year => Date.current.year, :end_year => 1960,discard_day: true, include_blank: true%></td>    
         <td><%=f.date_select :begin_date,{:start_year => Date.current.year, :end_year => 1960,discard_day: true}%></td>
+        <td><%=f.date_select :end_date,:start_year => Date.current.year, :end_year => 1960,discard_day: true, include_blank: true%></td>    
+
       </tr>
     </table><br>
     <table width="100%">

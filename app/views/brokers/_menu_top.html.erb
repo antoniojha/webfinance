@@ -2,7 +2,12 @@
 	<div class="container-fluid pull-left" >		
     <ul class="nav navbar-nav">
       <li><%= link_to 'Update Profile', edit_broker_path(current_broker)%></li>
-      <li><%= link_to 'Update License/Product Information',edit2_broker_path(current_broker)%>
+      <li>
+        <%= link_to 'Update License',broker_licenses_path(current_broker)%>
+      </li>
+      <li>
+        <%= link_to 'Update Product',broker_products_path(current_broker)%>
+      </li>
       <li><%= link_to 'Remove Profile', '#'%></li>
     </ul>
   </div>

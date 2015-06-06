@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150531140656) do
+ActiveRecord::Schema.define(version: 20150606165141) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -174,6 +174,19 @@ ActiveRecord::Schema.define(version: 20150531140656) do
   create_table "broker_imports", force: true do |t|
   end
 
+  create_table "broker_requests", force: true do |t|
+    t.string   "request_type"
+    t.integer  "broker_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "license_id"
+    t.boolean  "complement"
+    t.text     "comment"
+    t.string   "admin_reply"
+  end
+
+  add_index "broker_requests", ["broker_id"], name: "index_broker_requests_on_broker_id"
+
   create_table "broker_searches", force: true do |t|
     t.string   "name"
     t.string   "license_types"
@@ -250,7 +263,6 @@ ActiveRecord::Schema.define(version: 20150531140656) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
-    t.boolean  "current_company"
   end
 
   create_table "debts", force: true do |t|
@@ -302,7 +314,7 @@ ActiveRecord::Schema.define(version: 20150531140656) do
     t.integer  "broker_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "current_experience"
+    t.boolean  "current_experience", default: false
   end
 
   add_index "experiences", ["broker_id"], name: "index_experiences_on_broker_id"
@@ -439,7 +451,7 @@ ActiveRecord::Schema.define(version: 20150531140656) do
   add_index "plans", ["goal_id"], name: "index_plans_on_goal_id"
 
   create_table "product_fin_category_rels", force: true do |t|
-    t.integer  "vehicle_type"
+    t.string   "vehicle_type"
     t.integer  "product_id"
     t.text     "description"
     t.datetime "created_at"

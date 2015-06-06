@@ -32,7 +32,8 @@ FactoryGirl.define do
     password_confirmation "SecretPassword1?"
     company_name "World Financial Group"
     company_location "39-07 Prince St, Suite 6A-3"
-
+    title "Associate"
+    setup_completed? true
   end
   factory :incomplete_broker, class: Broker do
     username "testing"

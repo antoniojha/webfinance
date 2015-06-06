@@ -1,0 +1,22 @@
+<%=link_to "Back to index", admin_companies_path%>
+
+<h4>Company Information</h4>
+<table width="70%">
+  <tr>
+    <td>Company Name</td>
+    <td><%=@company.name%></td>
+  </tr>
+  <tr>
+    <td>Location</td>
+    <td><%=@company.location%></td>
+  </tr>
+  <tr>
+    <td>Description</td>
+    <td><%=@company.description%></td>
+  </tr>
+  <tr class="blank_row"></tr>
+  <tr>
+    <td><%=button_to "Edit", edit_admin_company_path(@company),{method: :get}%></td>
+    <td><%= button_to 'Delete',{action: :destroy,id: @company.id},method: :delete, data: {confirm: "Are you sure?"} %></td>
+  </tr>
+</table>

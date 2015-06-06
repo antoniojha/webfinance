@@ -1,0 +1,67 @@
+<%provide(:title,"|Edit Broker")%>
+<%= render 'brokers/menu_top'%>
+<div style="clear:both;border-top:2px solid;"></div>
+
+<h3>Update License</h3>
+
+<div class="panel panel-default">
+  <div class="panel-body" align="left">
+    <h4>Your Licenses</h4>
+    <table width="100%">
+      <tr>
+        <th width="20%">License Type</th>
+        <th width="20%">License Number</th>
+        <th width="30%">File Name</th>
+        <th width="30%">Status</th>
+      </tr>
+      <%@broker.setup_broker.licenses.each do |l|%>
+      <tr>
+        <td><%=l.license_type%></td>
+        <td><%=l.license_number%></td>
+        <td>
+          <%=l.picture_file_name%>
+          <%=link_to "View", l.picture.url(:original, false), :target => "_blank"%>
+          <%=link_to "Download", download_path(l)%>
+        </td>
+        <td>
+          <% if l.approved%>
+          Approved.
+          <%=button_to "Remove",{ controller:"broker_requests",action: "create", broker_id: @broker.id, license_id: l.id }%>  
+          <%else%>
+          Unapproved
+          <%end%>
+        </td>
+      </tr>
+      <%end%>
+    </table>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-body" align="left">
+    <%=render "licenses/error"%>
+    <h4>Add License</h4>
+    
+    <%=form_for @license, :html => { :multipart => true } do |f|%>
+    <table width="70%">
+      <tr>
+        <td><%=f.label "License Type"%></td>
+        <td>
+          <%=f.select :license_type, Order::LICENSE_TYPES.to_h.keys,{prompt:"Select License Type"}, {:class=>'form-control'}%> 
+        </td>
+      </tr>
+      <tr>
+        <td><%=f.label "License Number"%></td>
+        <td><%=f.text_field :license_number,{class:'form-control'}%></td>
+      </tr>
+      <tr>
+        <td><%=f.label "Upload Attachment"%></td>
+        <td><%=f.file_field :picture, {class:'form-control'}%></td>
+      </tr>    
+      <tr>
+        <td><%=f.submit "Upload License"%></td>
+        <td><%=hidden_field_tag :broker_id, @broker.id%></td>
+      </tr>
+    </table>
+    <%end%>
+  </div>
+</div>

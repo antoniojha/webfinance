@@ -1,0 +1,14 @@
+<div class="navbar-inner" width="100%">
+	<div class="container-fluid pull-left" >		
+    <ul class="nav navbar-nav">
+      <li><%= link_to 'Pending Application', admin_broker_requests_path(page:"pending_application")%></li>
+      <li>
+        <%= link_to 'Approved Application',admin_broker_requests_path(page:"approved_application")%>
+      </li>
+      <li>
+        <%= link_to 'Disapproved Application',admin_broker_requests_path(page:"disapproved_application")%>
+      </li>
+      <li><%= link_to 'Application Search', '#'%></li>
+    </ul>
+  </div>
+</div>

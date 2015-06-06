@@ -1,0 +1,45 @@
+
+<table width="80%">
+  <tr>
+    <th width="5%"></th>
+    <th width="25%">Name</th>
+    <th width="25%">Request</th>
+    <th width="25%">License Number</th>
+    <th colspan=2 width="20%">Status</th>
+  </tr>
+  <%@requests.each_with_index do|r,index|%>
+    <%broker=Broker.find(r.broker_id)%>
+
+  <% complement_requests=BrokerRequest.where(broker_id:broker.id,complement:true,admin_reply:nil)%>  
+ 
+    <tr class="application">
+      <td><%=index+1%>.</td>
+      <td>
+        <%=link_to "#{full_name(broker)}",broker_path(broker)%><br>
+        <%=smart_image(broker)%>
+      </td>
+      <td><%=r.request_type%></td>
+      <td></td>
+      <%if r.admin_reply=="approve"%>
+      <td colspan=2> Approved</td>
+      <%else%>
+      <td><%=button_to "Approve",{controller:"broker_requests",action: :update,id: r.id,status:"approve"},{method: :patch, class:"btn btn-default",data: {confirm: "Are you sure?"}}%></td>
+      <td><%=button_to "Disapprove",{controller:"broker_requests",action: :edit,id: r.id,status:"disapprove"},{method: :get, class:"btn btn-default"}%></td>
+      <%end%>
+    </tr>
+    <% complement_requests.each do |c|%>
+  <% l=License.find(c.license_id)%>
+    <tr class="application">
+      <td></td>
+      <td></td>
+      <td><%=c.request_type%></td>
+      <td>
+        <%=l.license_number%><br>
+        <%=link_to "View Attachment", l.picture.url(:original, false), :target => "_blank"%></td>
+     
+      <td><%=button_to "Approve",{controller:"broker_requests",action: :update,id: c.id,status:"approve"},{method: :patch, class:"btn btn-default",data: {confirm: "Are you sure?"}}%></td>
+      <td><%=button_to "Disapprove",{controller:"broker_requests",action: :edit,id: c.id,status:"disapprove"},{method: :get, class:"btn btn-default"}%></td>
+    </tr>
+    <%end%>
+  <%end%>
+</table>

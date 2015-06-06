@@ -3,12 +3,13 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
+  resources :licenses
+  
   resources :experiences
   resources :educations
   get 'licenses/:id' => 'setup_brokers#download', :as => :download
   resources :setup_brokers
-  resources :companies
-  resources :products
+
   resources :identities
   controller :authentication_out do
     get 'facebook'=> :facebook
@@ -41,7 +42,7 @@ Rails.application.routes.draw do
     get "saving_6"=> :saving_6
     get "start"=> :start
   end
-  resources :product_relations, controller: 'product_fin_category_rels'
+  
   resources :backgrounds
   controller :backgrounds do
     get 'add_assoc'=> :add_assoc
@@ -59,13 +60,22 @@ Rails.application.routes.draw do
     get ":id/edit2"=> :edit2, as:"edit2_broker"
     get "add_license" => :add_license
     get 'crop'=> :crop
+    get "brokers/licenses/:id" => :licenses, as:"broker_licenses"
+    get "brokers/products/:id" => :products, as:"broker_products"
   end
 
   
   namespace :admin do
-    resources :brokers
-    resources :application_comments
-    resources :authenticated
+    resources :product_relations, controller: 'product_fin_category_rels'
+    resources :companies
+    resources :products
+    resources :broker_requests
+    controller :admin_pages do
+      get "home" => :index
+    end
+  #  resources :brokers
+  #  resources :application_comments
+  #  resources :authenticated
   end
   namespace :register do
     resources :brokers

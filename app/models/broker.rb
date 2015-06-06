@@ -8,6 +8,7 @@ class Broker < ActiveRecord::Base
   has_attached_file :picture, :styles => { :medium => "200x200#", :large=>"400x400>", :original=>"600x600>"},:processors => [:cropper]
   validates_attachment_content_type :picture, :content_type=> ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/pjpeg"]
   # broker has the following dependents: SetupBroker=>License, FinancialStory, :Experiences, :Educations
+  has_many :broker_requests, dependent: :destroy
   has_one :setup_broker, dependent: :destroy
   has_many :educations, dependent: :destroy
   has_many :experiences, dependent: :destroy

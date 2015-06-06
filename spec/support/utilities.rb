@@ -1,11 +1,16 @@
-def log_in(user)
+def user_login(user)
   visit user_login_path
   fill_in "Username", with: user.username
   fill_in "Password", with: user.password
   click_button "Login"
-  cookies[:auth_token]=user.auth_token
+  
+#  cookies[:auth_token]=user.auth_token
 end
-
+def broker_log_in(broker)
+ # session[:broker_id]=broker.id
+  
+#  cookies[:auth_token]=user.auth_token
+end
 
 def create_spending(user)
   @spending=FactoryGirl.build(:spending)

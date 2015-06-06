@@ -86,7 +86,7 @@ $(function(){
     </td>
   </tr>
 </table><br>
-<div align="left" style="float:left; width:50%;">
+<div align="left" style="float:left; width:50%; margin:5px;">
   <div class="panel panel-default">
     <div class="panel-body" align="left">
       <h4>License(s)</h4>
@@ -120,7 +120,7 @@ $(function(){
       <%unless @broker.educations.count >0%>
         None.
       <%else%>
-        <% @broker.educations.each do |e|%>
+      <% @broker.educations.order(end_date: :desc).each do |e|%>
           <% unless e.new_record?%>
             <%=render partial:"brokers/education_edit", locals:{e:e}%>
           <%end%>
@@ -129,7 +129,7 @@ $(function(){
     </div>
   </div>  
 </div>
-<div align="left" style="overflow: auto;">
+<div align="left" style="overflow: auto; margin:5px;">
 
   <div class="panel panel-default">
     <div class="panel-body" align="left">
@@ -140,7 +140,12 @@ $(function(){
       <%unless @broker.experiences.count >0%>
         None.
       <%else%>
-        <% @broker.experiences.each do |e|%>
+      <% current_experience=@broker.experiences.find_by(current_experience:true)%>
+      <% unless current_experience.new_record?%>
+          <%=render partial:"brokers/experience_edit", locals:{e:current_experience}%>
+       <%end%>      
+      
+      <% @broker.experiences.where(current_experience:false).order(end_date: :desc).each do |e|%>
           <% unless e.new_record?%>
             <%=render partial:"brokers/experience_edit", locals:{e:e}%>
           <%end%>

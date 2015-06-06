@@ -1,4 +1,7 @@
 <% content_for :title do %>|Broker Profile<%end%>
+<% content_for :head do%>
+<%=javascript_include_tag "add_education"%>
+<%end%>
 <% if broker_personal_profile?(@broker)%>
 <div id="personal_profile">
   <%=render "brokers/personal_profile"%>

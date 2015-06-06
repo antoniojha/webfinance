@@ -1,7 +1,0 @@
-<h4>All Companies</h4>
-A total of <%=pluralize(@companies.count,"company")%>.
-<div align="left">
-  <%@companies.each do |c|%>
-    <%=link_to "#{c.name}", company_path(c.id)%>
-  <%end%>
-</div>

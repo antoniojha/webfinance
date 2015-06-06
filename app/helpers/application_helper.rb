@@ -103,4 +103,23 @@ module ApplicationHelper
     end
     array
   end
+  def display_time_difference(begin_time,end_time)
+    months=((end_time-begin_time).to_f/30).ceil
+    if months==0
+      months=1
+    end
+    year=(months.to_f/12).floor
+    month=months%12
+    
+    year_word=pluralize(year,'year')
+    month_word=pluralize(month,'month')
+    if year==0
+      return "(#{month_word})"
+    elsif month==0
+      return "(#{year_word})"
+    else
+      return "(#{year_word} #{month_word})"
+    end
+
+  end
 end

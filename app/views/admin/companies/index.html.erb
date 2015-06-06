@@ -1,0 +1,11 @@
+<h4>All Companies</h4>
+A total of <%=pluralize(@companies.count,"company")%>.
+<div align="right"><%=button_to "Add Company", new_admin_company_url,{method:"get"}%></div>
+<div align="left">
+  <ol>
+  <%@companies.each do |c|%>
+  
+    <li><%=link_to "#{c.name}", admin_company_path(c.id)%></li>
+  <%end%>
+  </ol>
+</div>

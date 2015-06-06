@@ -4,12 +4,16 @@
         <%=form_for e, remote: true do |f|%>
          <table width="100%">
           <tr>
-            <th>End Date</th>
             <th>Start Date</th>
+            <th>End Date</th>
            </tr>
           <tr>
-            <td><%=f.date_select :end_date,:start_year => Date.current.year, :end_year => 1960,discard_day: true, include_blank: true%></td>    
             <td><%=f.date_select :begin_date,{:start_year => Date.current.year, :end_year => 1960,discard_day: true}%></td>
+            <%if e.current_experience%>
+            <td>Present</td>
+            <%else%>
+            <td><%=f.date_select :end_date,:start_year => Date.current.year, :end_year => 1960,discard_day: true, include_blank: true%></td>    
+            <%end%>
           </tr>
         </table><br>
         <table width="100%">
@@ -46,7 +50,8 @@
     <%else%>
         <table width="100%">
           <tr>
-            <td colspan=2><%=e.company%></td>
+            <td>Company:</td>
+            <td><%=e.company%></td>
           </tr>
           <%unless e.title.blank?%>
           <tr>
@@ -58,7 +63,18 @@
           <tr>
             <td>Work Time:</td>
             <td><%=e.begin_date.strftime("%b, %Y")%>
-             to <%=e.end_date.strftime('%b, %Y')%></td>
+             to 
+              <%if e.current_experience%>
+                Present
+              <%else%>
+                <%=e.end_date.strftime('%b, %Y')%>
+              <%end%>
+              <% if e.current_experience%>
+                <%=display_time_difference(e.begin_date, Date.today)%>
+              <%else%>
+                <%=display_time_difference(e.begin_date, e.end_date)%>
+              <%end%>
+            </td>
           </tr>
           <%end%>
           <%unless e.location.blank?%>
@@ -74,7 +90,11 @@
           </tr>
           <%end%>
           <tr>
-            <td></td>
+            <td>
+              <%unless e.current_experience%>
+                <%=link_to '<i class="glyphicon glyphicon-remove"></i>'.html_safe, {controller:"experiences",action:"destroy",id:e.id,broker_id:@broker.id},method: :delete,data: { confirm: "Are you sure?" },:remote => true %>
+              <%end%>
+            </td>
             <td style="text-align:right;">      
               <%=link_to broker_path(id:@broker, edit:"experience_edit_#{e.id}"), remote: true do%>
                 <span class="glyphicon glyphicon-edit"></span>

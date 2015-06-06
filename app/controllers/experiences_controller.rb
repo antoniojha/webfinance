@@ -1,5 +1,5 @@
 class ExperiencesController < ApplicationController
-  before_action :set_experience, only:[:update]
+  before_action :set_experience, only:[:update, :destroy]
   def new
   end
   def create
@@ -21,7 +21,7 @@ class ExperiencesController < ApplicationController
     @broker=Broker.find(params[:experience][:broker_id])
     respond_to do |format|
       if @experience.update(experience_params)
-
+        @broker.reload #this is to pick up change of any update action that happens to broker in Experience model
         format.js
         format.html{redirect_to @broker}
       else
@@ -34,6 +34,12 @@ class ExperiencesController < ApplicationController
   def index
   end
   def destroy
+    @experience.destroy
+    @broker=Broker.find(params[:broker_id])
+    respond_to do |format|
+      format.js
+      format.html{render "brokers/show"}    
+    end
   end
   def show
   end

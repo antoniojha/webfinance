@@ -1,0 +1,73 @@
+<%=link_to "Back to index", admin_products_path%>
+<div class="panel panel-default" style="width:70%;">
+  <div class="panel-body" align="left">
+    <h3>Vehicle Information</h3>
+    <table width="100%">
+      <tr>
+        <td width="30%">Name</td>
+        <td width="70%"><%=@product.name%></td>
+      </tr>
+      <tr class="blank_row"></tr>
+      <tr>
+        <td>Description</td>
+        <td><%=@product.description%></td>
+      </tr>
+      <tr class="blank_row"></tr>
+      <tr>
+        <td>Risk Level</td>
+        <td><%=@product.risk_level%></td>
+      </tr>
+      <tr class="blank_row"></tr>
+      <tr>
+        <td>Primary Financial Category</td>
+        <td><%=Order::FINANCIAL_CATEGORIES[@product.vehicle_type.to_i-1][0]%></td>
+      </tr>  
+      <tr class="blank_row"></tr>
+      <tr>
+        <td>
+          <div class="vehicle">
+          <%=button_to "Edit", edit_admin_product_path(@product),{method: :get, class: "btn btn-default"}%>
+          </div>
+        </td>
+        <td style="text-align:right;">
+        <%= button_to 'Delete',{action: :destroy,id: @product.id},{method: :delete, class: "btn btn-default",data: {confirm: "Are you sure?"}} %>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="panel panel-default" style="width:70%;">
+  <div class="panel-body" align="left">
+<%=link_to "Add Secondary Relation",new_admin_product_relation_path(product_id: @product.id)%>
+    <h3>Associated Category</h3>
+
+    <table width="100%">
+      <% unless @categories.length >0%>
+      <tr>
+        <td colspan=2>None</td>
+      </tr>
+      <%else%>
+        <tr>
+          <th width="20%">Category</th>
+          <th width="60%">Explanation</th>
+          <th colspan=2 width="20%"></th>
+        </tr>
+        <%@categories.each do |c|%>
+        <%temp=Order::FINANCIAL_CATEGORIES_HASH[c.vehicle_type]%>
+        <tr>
+          <td><%=link_to temp,admin_products_url(vehicle_type:c.vehicle_type)%></td>
+          <td><%=c.description%></td>
+          <td>
+            <div class="product_relation">
+            <%=button_to "Edit", edit_admin_product_relation_path(c),{method: :get, class: "btn btn-default"}%>
+            </div>
+          </td>
+          <td><%= button_to 'Delete Relation',{controller:"product_fin_category_rels",action: :destroy,id: c.id, product_id: @product.id},{method: :delete, class:"btn btn-default",data: {confirm: "Are you sure?"}} %></td>
+        </tr>
+        <%end%>
+      <%end%>
+    </table>
+  </div>
+</div>
+

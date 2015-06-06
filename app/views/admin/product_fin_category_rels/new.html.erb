@@ -1,0 +1,21 @@
+<h3>Create a new association between product and financial category</h3>
+<%=render "error"%>
+<div align="left" style="width:70%;">
+  <b>Product:</b><br>
+  <%=link_to "#{@product.name}", admin_product_path(@product)%><br>
+  <b>Existing Associated Category:</b><br>
+  <% unless @categories.length >0%>
+  None
+  <%else%>
+    <div style="width:40%;">
+      <ol>
+        <%@categories.each do |c|%>
+        <%temp=Order::FINANCIAL_CATEGORIES_HASH[c.vehicle_type]%>
+        <li><%=link_to temp,admin_products_url(vehicle_type:c.vehicle_type)%></li>
+        <%end%>
+      </ol>
+    </div>
+  <%end%>
+</div>
+<%=render "form"%>
+<%=link_to "Back to Vehicle", admin_product_url(@product)%>

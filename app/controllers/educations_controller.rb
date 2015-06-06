@@ -1,5 +1,5 @@
 class EducationsController < ApplicationController
-  before_action :set_education, only:[:update]
+  before_action :set_education, only:[:update,:destroy]
   def new
   end
   def create
@@ -10,7 +10,7 @@ class EducationsController < ApplicationController
         format.js
         format.html{redirect_to @broker}
       else
-        format.js
+        format.json { render json: @education.errors, status: :unprocessable_entity }
         format.html{render "brokers/show"}
       end
     end
@@ -33,6 +33,12 @@ class EducationsController < ApplicationController
   def index
   end
   def destroy
+    @education.destroy
+    @broker=Broker.find(params[:broker_id])
+    respond_to do |format|
+      format.js
+      format.html{render "brokers/show"}    
+    end
   end
   def show
   end

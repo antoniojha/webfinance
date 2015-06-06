@@ -1,0 +1,22 @@
+<h1>Application Dispproval</h1>
+<% if @request.license_id%>
+<%license=License.find(@request.license_id)%>
+<%end%>
+<%broker=Broker.find(@request.broker_id)%>
+<div style="width:70%;text-align:left;">
+  <%if @request.request_type=="create license"%>
+  <p>Reject <%=full_name(broker)%> license application for <%=Order::FINANCIAL_CATEGORIES_HASH[license.license_type]%>, license number <%=license.license_number%>.</p> 
+  <%elsif @request.request_type=="create account"%>
+  <p>Reject <%=full_name(broker)%> account application.</p>   
+  <%end%>
+  <%=form_for @request, url:admin_broker_request_path(@request), method: :patch do |f|%>
+    <%=f.label "Reason for Rejection"%>
+    <%=f.text_area :comment, {rows:"5", class:"form-control"}%>
+    <%=hidden_field_tag :status,"disapprove"%>
+  <%=f.submit "Reject", class:"btn btn-default"%>
+  <%end%>
+</div>
+<br>
+<p>
+<%=link_to "Back to Broker Request", admin_broker_requests_path%>
+</p>

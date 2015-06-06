@@ -1,0 +1,27 @@
+
+<table width="80%">
+  <tr>
+    <th width="5%"></th>
+    <th width="15%">Name</th>
+    <th width="20%">Request</th>
+    <th width="20%">License Number</th>
+    <th width="20%">Date Requested</th>
+    <th width="20%">Date Approved</th>
+  </tr>
+  <%@requests.each_with_index do |r,index|%>
+  <%broker=Broker.find(r.broker_id)%>
+  <%license=License.find_by_id(r.license_id)%>
+    <tr class="application">
+      <td><%=index+1%>.</td>
+      <td><%=full_name(broker)%></td>
+      <td><%=r.request_type%></td>
+      <td>
+        <%if license%>
+        <%=license.license_number%>
+        <%end%>
+      </td>
+      <td><%=r.created_at.strftime("%m/%d/%Y")%></td>
+      <td><%=r.updated_at.strftime("%m/%d/%Y")%></td>
+    </tr>
+  <%end%>
+</table>

@@ -4,11 +4,12 @@
         <%=form_for e, remote: true do |f|%>
          <table width="100%">
           <tr>
-            <th>End Date</th>
             <th>Start Date</th>
+            <th>End Date</th>
           <tr>
-            <td><%=f.date_select :end_date,:start_year => Date.current.year, :end_year => 1960,discard_day: true, include_blank: true%></td>    
             <td><%=f.date_select :begin_date,{:start_year => Date.current.year, :end_year => 1960,discard_day: true}%></td>
+            <td><%=f.date_select :end_date,:start_year => Date.current.year, :end_year => 1960,discard_day: true, include_blank: true%></td>    
+            
           </tr>
         </table><br>
         <table width="100%">
@@ -45,7 +46,8 @@
     <%else%>
         <table width="100%">
           <tr>
-            <td colspan=2><%=e.school%></td>
+            <td>School:</td>
+            <td><%=e.school%></td>
           </tr>
           <%unless e.degree.blank?%>
           <tr>
@@ -57,7 +59,9 @@
           <tr>
             <td>Attendance:</td>
             <td><%=e.begin_date.strftime("%b, %Y")%>
-             to <%=e.end_date.strftime('%b, %Y')%></td>
+             to <%=e.end_date.strftime('%b, %Y')%>
+            <%=display_time_difference(e.begin_date,e.end_date)%>
+            </td>
           </tr>
           <%end%>
           <%unless e.honors.blank?%>
@@ -75,7 +79,10 @@
           </tr>
           <%end%>
           <tr>
-            <td></td>
+            <td>
+              <%=link_to '<i class="glyphicon glyphicon-remove"></i>'.html_safe, {controller:"educations",action:"destroy",id:e.id,broker_id:@broker.id},method: :delete,data: { confirm: "Are you sure?" },:remote => true %>
+            
+            </td>
             <td style="text-align:right;">      
               <%=link_to broker_path(id:@broker, edit:"education_edit_#{e.id}"), remote: true do%>
                 <span class="glyphicon glyphicon-edit"></span>

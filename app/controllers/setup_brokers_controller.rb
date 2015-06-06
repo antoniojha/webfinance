@@ -88,7 +88,7 @@ class SetupBrokersController < ApplicationController
             title=params[:broker][:title]
             company=params[:broker][:company_name]
             location=params[:broker][:company_location]
-            @broker.experiences.create(title:title,company:company,location:location,current_experience:true)
+            @broker.experiences.create(title:title,company:company,location:location,current_experience:true, begin_date: Date.today)
           end
           if params[:next_from_pg2]
             @broker.add_or_remove_license
@@ -99,6 +99,10 @@ class SetupBrokersController < ApplicationController
           end
           if params[:submit]
             @broker.update_attribute(:setup_completed?, true)
+            @broker.broker_requests.create(request_type:"create account",complement:false)
+            @broker.licenses.each do |l|
+              @broker.broker_requests.create(request_type:"create license", license_id:l.id,complement:true)
+            end
           end
           unless @broker.setup_completed?
             redirect_to edit_setup_broker_path(@broker)

@@ -1,0 +1,11 @@
+<div style="width:30%;">
+  <%unless @products_cat.count >0%>
+  None
+  <%else%>
+    <ol>
+    <%@products_cat.each do |product|%>
+      <li><%=link_to "#{product.name}",admin_product_url(product)%></li>
+    <%end%>
+    </ol>
+  <%end%>
+</div>

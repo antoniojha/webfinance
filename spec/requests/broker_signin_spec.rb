@@ -74,6 +74,8 @@ describe "broker sign in" do
         end
         it "should create current experience" do
           expect{click_button "Next"}.to change(Experience, :count).by(1) 
+          expect(Experience.first.current_experience).to eq true
+          expect(Experience.first.begin_date).to eq Date.today
         end
         it "should go to the second page license" do
           click_button "Next"

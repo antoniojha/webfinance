@@ -9,7 +9,12 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-
+  def authorize_admin
+    
+    unless ((current_user.nil? == false) && (current_user.admin == true))
+      redirect_to user_login_url, notice: "Access Denied!"
+    end
+  end
   def delete_temp_broker
     if cookies[:temp_broker_id]
       broker=Broker.find(cookies[:temp_broker_id])  

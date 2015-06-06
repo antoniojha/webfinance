@@ -1,6 +1,6 @@
-<h1>Upload Your Licenses</h1>
-<div width="60%" class="alert alert-info error-message">To remove or add licenses go to the previous page to check or uncheck license types.</div>
-<%= form_for @setup_broker, url:setup_brokers_path, :html => { :method => :post} do|f|%>
+ils<h1>Upload Your Licenses</h1>
+<div width="60%" class="alert alert-info error-message">To remove or add licenses go to the previous page to check or uncheck license types.</div>, 
+<%= form_for @setup_broker, url:setup_brokers_path, :html => { :method => :post,:multipart => true} do|f|%>
   <%=f.hidden_field :broker_id, value: @broker.id%>
   <table width="60%">
 

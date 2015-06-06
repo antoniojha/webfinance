@@ -6,11 +6,11 @@ class Order <ActiveRecord::Base
   PROPERTY_TYPES=[["Real Estate",1],["Vehicle",2],["Other Personal Property",3]]
   DEBT_TYPES=[["Student Loan",1],["Mortgage Loan",2],["Other Loan",3],["Credit Card",4]]
   PLAN_TYPES=[["Protection Plan",1],["Debt Management",2],["Emergency Fund",3],["Retirement Plan",4],["Education Fund",5],["Saving up",6]]
-  FINANCIAL_CATEGORIES=[["Protection",1],["Debt Management",2],["Retirment",3],["Investment",4],["Education Fund",5],["Budgeting",6],["Tax Saving",7]]
-  FINANCIAL_CATEGORIES_HASH={"1"=>"Protection","2"=>"Debt Management","3"=>"Retirment","4"=>"Investment","5"=>"Education Fund","6"=>"Budgeting","7"=>"Tax Saving"}  
+  FINANCIAL_CATEGORIES=[["Protection",1],["Debt Management",2],["Retirement",3],["Investment",4],["Education Fund",5],["Budgeting",6],["Tax Saving",7]]
+  FINANCIAL_CATEGORIES_HASH={"1"=>"Protection","2"=>"Debt Management","3"=>"Retirement","4"=>"Investment","5"=>"Education Fund","6"=>"Budgeting","7"=>"Tax Saving"}  
   PROTECTION_TYPES=[["Life Insurance",1],["Disability Insurnace",2]]
   RISKS=[["NA"],["Low"],["Medium"],["High"],["Low to unknown"],["Medium to unknown"],["Low to medium"],["Medium to high"]]
-  LICENSE_TYPES=[["Life Insurance License",1],["Health Insurance License",2],["Series 3",3],["Series 6",4],["Series 7",5], ["Series 65",7]]
+  LICENSE_TYPES=[["Life Insurance License",1],["Health Insurance License",2],["Series 3",3],["Series 6",4],["Series 7",5], ["Series 65",6]]
   #license information source http://www.investopedia.com/articles/financialcareers/07/securities_licenses.asp
   LICENSE_DESCRIPTION_HASH={
     "Life Insurance License"=>"It's required to sell all life insurance products",
