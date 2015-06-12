@@ -100,14 +100,14 @@ class SetupBrokersController < ApplicationController
           if params[:submit]
             @broker.update_attribute(:setup_completed?, true)
             @broker.broker_requests.create(request_type:"create account",complement:false)
-            @broker.licenses.each do |l|
+            @broker.setup_broker.licenses.each do |l|
               @broker.broker_requests.create(request_type:"create license", license_id:l.id,complement:true)
             end
           end
           unless @broker.setup_completed?
             redirect_to edit_setup_broker_path(@broker)
           else
-            redirect_to edit_broker_path(@broker)
+            redirect_to broker_path(@broker)
           end
         else
          #   Rails.logger.info(@user.errors.inspect) 

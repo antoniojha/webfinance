@@ -1,0 +1,90 @@
+<% complement_requests=BrokerRequest.where(broker_id:broker.id,complement:true)%>  
+<div class="panel panel-default">
+  <div class="panel-body" align="left">
+    <table width="100%">
+      <tr>
+        <th width="5%"><%=index+1%>.</th>
+        <th width="25%">Name</th>
+        <th colspan=2 width="45%">Financial Rep Info</th>
+        <th colspan=2 width="25%">Account Application Approval?</th>
+      </tr>
+      <tr>
+        <td></td>
+        <td>    
+          <%=link_to "#{full_name(broker)}",broker_path(broker)%><br>
+          <%=smart_image(broker)%>
+        </td>
+        <td colspan=2>
+          <p>Company:<%=broker.company_name%></p>
+          <p>Title:<%=broker.title%></p>
+          <p>Licenses:
+            <% broker.license_type.each_with_index do |l,index|%>
+            <%if index ==0%>
+              <%=l%>
+            <%else%>
+              ,<%=l%>
+            <%end%>         
+          <%end%>
+           </p>
+        </td>
+        <td>
+          <div class="approve_account"> 
+            <%=button_to "Approve",admin_broker_request_path(r.id, broker_request:{admin_reply:"approve"},page:"pending_application"),{method: :patch, class:"btn btn-default",data: {confirm: "Are you sure?"}}%>
+          </div>
+        </td>
+        <td>
+          <div class="disapprove_account">
+            <%=button_to "Disapprove",{controller:"broker_requests",action: :edit,id: r.id},{method: :get, class:"btn btn-default"}%>
+          </div>
+        </td>
+
+      </tr>
+      <% if complement_requests.count>0%>
+      <tr>
+        
+        <th></th>
+        <th>License Type</th>
+        <th>License Number</th>
+        <th>Attachment</th>
+        <th colspan=2>License Application Approval?</th>
+      </tr>
+
+      <%end%>
+      <% complement_requests.each do |c|%>
+      <% l=License.find(c.license_id)%>
+      <tr>
+        <td></td>
+        <td><%=l.license_type%></td>
+        <td><%=l.license_number%></td>
+        <td>
+          <%=link_to "View Attachment", l.picture.url(:original, false), :target => "_blank"%>
+        </td>     
+        <%if c.admin_reply=="approve"%>
+        <td> Approved</td>
+        <td>
+          <div class="disapprove_license_<%=l.license_number%>">
+            <%=button_to "Disapprove",{controller:"broker_requests",action: :edit,id: c.id,status:"disapprove"},{method: :get, class:"btn btn-default"}%>
+          </div>
+        </td>
+        <%elsif c.admin_reply=="disapprove"%>
+        <td>Disapproved</td>
+        <td>
+          <div class="approve_license_<%=l.license_number%>"><%=button_to "Approve",admin_broker_request_path(c.id, broker_request:{admin_reply:"approve"},page:"pending_application"),{method: :patch, class:"btn btn-default",data: {confirm: "Are you sure?"}}%>
+          </div>
+        </td>
+        <%else%>
+        <td>
+          <div class="approve_license_<%=l.license_number%>"><%=button_to "Approve",admin_broker_request_path(c.id, broker_request:{admin_reply:"approve"},page:"pending_application"),{method: :patch, class:"btn btn-default",data: {confirm: "Are you sure?"}}%>
+          </div>
+        </td>
+        <td>
+          <div class="disapprove_license_<%=l.license_number%>">
+          <%=button_to "Disapprove",{controller:"broker_requests",action: :edit,id: c.id,status:"disapprove"},{method: :get, class:"btn btn-default"}%>
+          </div>
+         </td>
+        <%end%>
+      </tr>
+      <%end%>
+    </table>
+  </div>
+</div>

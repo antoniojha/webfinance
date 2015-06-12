@@ -23,6 +23,7 @@ describe "broker sign in" do
     it "should redirect to broker edit page to prompt broker to setup" do
       expect(page).to have_content("Enter Your Background Information")    
     end   
+
     describe "at 1st page" do
       describe "when no fields information are entered" do
         before do
@@ -220,8 +221,8 @@ describe "broker sign in" do
                           check "broker_check_term_of_use"
                           click_button "Submit"
                         end
-                        it "should directs to user edit page" do
-                          expect(page).to have_title("RichRly|Edit Broker")
+                        it "should directs to broker show page" do
+                          expect(page.title).to eq("RichRly|Broker Profile")
                         end
                       end
                     end

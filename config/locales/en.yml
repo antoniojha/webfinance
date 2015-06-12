@@ -35,6 +35,8 @@ en:
     #    base: ""
         picture: "Attachment(s)"
         license_number: "License number(s)"
+      broker_request:
+        complement_requests: ""
     errors:
       models:
    

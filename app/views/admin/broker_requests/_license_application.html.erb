@@ -1,0 +1,24 @@
+<%l=License.find(r.license_id)%>
+<div class="panel panel-default">
+  <div class="panel-body" align="left">
+    <table width="100%">
+      <tr>
+        <th width="5%"><%=index+1%>.</th>
+        <th width="25%">Name</th>
+        <th width="25%">License Number</th>
+        <th width="20%"></th>
+        <th colspan=2 width="25%">License Application Approval?</th>
+      </tr>
+       <tr>
+        <td></td>
+        <td><%=link_to "#{full_name(broker)}",broker_path(broker)%></td>
+        <td><%=l.license_number%></td>
+        <td>
+         <%=link_to "View Attachment", l.picture.url(:original, false), :target => "_blank"%>
+         </td>
+        <td><%=button_to "Approve",{controller:"broker_requests",action: :update,id: r.id,status:"approve"},{method: :patch, class:"btn btn-default",data: {confirm: "Are you sure?"}}%></td>
+        <td><%=button_to "Disapprove",{controller:"broker_requests",action: :edit,id: r.id,status:"disapprove"},{method: :get, class:"btn btn-default"}%></td>
+      </tr>
+    </table>
+  </div>
+</div>

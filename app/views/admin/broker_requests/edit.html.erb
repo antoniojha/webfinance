@@ -9,11 +9,11 @@
   <%elsif @request.request_type=="create account"%>
   <p>Reject <%=full_name(broker)%> account application.</p>   
   <%end%>
-  <%=form_for @request, url:admin_broker_request_path(@request), method: :patch do |f|%>
+  <%=form_for :broker_request, url:admin_broker_request_path(@request), method: :patch do |f|%>
     <%=f.label "Reason for Rejection"%>
     <%=f.text_area :comment, {rows:"5", class:"form-control"}%>
-    <%=hidden_field_tag :status,"disapprove"%>
-  <%=f.submit "Reject", class:"btn btn-default"%>
+    <%=f.hidden_field :admin_reply, value:"disapprove"%>
+    <%=f.submit "Reject", class:"btn btn-default"%>
   <%end%>
 </div>
 <br>

@@ -22,25 +22,30 @@ FactoryGirl.define do
     email_authen false
     setup_completed? false
   end
-  factory :broker, class: Broker do
+  factory :broker do
     username "testing"
+    password "SecretPassword1?"
+    password_confirmation "SecretPassword1?"
     email "antoniojha@gmail.com"
     email_authen true
     first_name "Broker First Name"
     last_name "Broker Last Name"
-    password "SecretPassword1?"
-    password_confirmation "SecretPassword1?"
     company_name "World Financial Group"
     company_location "39-07 Prince St, Suite 6A-3"
     title "Associate"
     setup_completed? true
+    license_type ["Life Insurance","Series 3"]
   end
-  factory :incomplete_broker, class: Broker do
+  factory :incomplete_broker, class:Broker do
+
     username "testing"
+    email "antoniojha@gmail.com"
     password "SecretPassword1?"
     password_confirmation "SecretPassword1?"
-    email_authen false
-   
+    first_name "Broker First Name"
+    last_name "Broker Last Name"
+    email_authen false 
+    setup_completed? false
   end  
 
   factory :other_user, class: User do

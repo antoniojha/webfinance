@@ -1,28 +1,22 @@
-require 'rails_helper'
-
-describe "Admin Pages" do
-  describe "sign up as user-admin" do
-    let(:user){FactoryGirl.create(:user)}
+  if false
     before do
-      user.admin=true
-      user.save
-      user.reload
-      user_login(user)
-      visit user_path(user)
+      @user=FactoryGirl.create(:user)
+      @user.admin=true
+      @user.save
+      @user.reload
+      user_login(@user)
+      visit user_path(@user)
     end
-    if false
     it "should be user profile page" do
       expect(page.title).to eq "RichRly|User Profile"
     end
     it "should show admin home link from drop down" do
       expect(page).to have_content("Admin Home")
     end
-    end
     describe "access admin page" do
       before do
         click_link("Admin Home")
       end
-      if false
       it "should show links to index to products" do
         expect(page).to have_link("Vehicles")
       end
@@ -199,123 +193,7 @@ describe "Admin Pages" do
           end
         end
       end
-      end
-      describe "Broker Request pages" do
-        before do
-          @broker=FactoryGirl.create(:broker)
-          setup_broker_requests(@broker)
-          visit admin_broker_requests_path
-        end
-        it "should display right title" do
-          expect(page.title).to eq ("RichRly|Broker Request")
-        end
-        it "should be on the broker request page" do
-          expect(page).to have_content("Broker Request Page")
-        end
-
-        it "all license and broker application should not be approved" do
-          expect(@broker.approved).to eq false
-          expect(@license1.approved).to eq false
-          expect(@license2.approved).to eq false
-        end
-        it "should show user application and two license application" do
-          expect(page).to have_link("#{full_name(@broker)}")
-          expect(page).to have_content(@license1.license_number)
-          expect(page).to have_content(@license2.license_number)
-  
-        end
-        describe "testing approval and disapproval and its validation" do
-
-          describe "test disapprove license" do
-            before do
-              @request1=BrokerRequest.find_by(license_id:@license1.id)
-              within (".disapprove_license_#{@license1.license_number}") do
-                click_button "Disapprove"
-              end
-            end
-            it "should first go to edit page to fill out comment" do
-              expect(page).to have_content("Application Dispproval")
-            end
-            describe "fill out comment then disapprove license" do
-              
-              before do
-                fill_in "broker_request_comment", with: "test"
-                click_button "Reject"
-              end
-              it "should disapprove the license application request" do
-                @request1.reload
-                expect(@request1.admin_reply).to eq "disapprove"
-                expect(page).to have_content("Disapproved")
-              end
-            end
-          end
-          describe "test approve license" do
-            it "should approve license" do
-              @request1=BrokerRequest.find_by(license_id:@license1.id)
-              expect(@request1.admin_reply).to eq nil
-              within (".approve_license_#{@license1.license_number}") do
-                click_button "Approve"
-              end
-              @license1.reload
-              @request1.reload
-              expect(@request1.admin_reply).to eq "approve"
-              expect(@license1.approved).to eq true
-            end
-            it "should not allow user account to be accepted without first approving licenses" do
-              within ".approve_account" do
-                click_button "Approve"
-              end
-              expect(page).to have_content("Account for #{full_name(@broker)} can't be approved since license(s) number #{@license1.license_number} has not been approved.")
-              expect(page).to have_content("Account for #{full_name(@broker)} can't be approved since license(s) number #{@license2.license_number} has not been approved.")
-            end
-            describe "when one license is rejected, the broker application will be rejected" do
-              before do
-                @request1=BrokerRequest.find_by(license_id:@license1.id)
-                @request1.admin_reply="disapprove"
-                @request1.save
-              end
-              it "should not allow user account to be approved" do
-                  within ".approve_account" do
-                    click_button "Approve"
-                  end
-                  expect(page).to have_content("Account for #{full_name(@broker)} can't be approved since license(s) number #{@license1.license_number} was disapproved.")
-                  expect(page).to have_content("Account for #{full_name(@broker)} can't be approved since license(s) number #{@license2.license_number} has not been approved.")
-            end
-            end
-            describe "even when one license is accepted, the broker application is still rejected if not all licenses are approved" do
-              before do
-                within (".approve_license_#{@license1.license_number}") do
-                  click_button "Approve"
-                end  
-                within ".approve_account" do
-                  click_button "Approve"
-                end
-              end
-              it "should reject broker application" do
-                expect(page).to have_content("Account for #{full_name(@broker)} can't be approved since license(s) number #{@license2.license_number} has not been approved.")
-              end
-            end
-            describe "admin approve all licenses then approves the application" do
-              before do
-                within (".approve_license_#{@license1.license_number}") do
-                  click_button "Approve"
-                end
-                within (".approve_license_#{@license2.license_number}") do
-                  click_button "Approve"
-                end
-                within ".approve_account" do
-                  click_button "Approve"
-                end
-             #   expect(page).not_to have_content("error")
-                @broker.reload
-              end
-              it "should approve broker" do
-                expect(@broker.approved).to eq true
-              end
-            end
-          end
-        end
-      end
+ 
+ 
     end
-  end
-end
+    end
