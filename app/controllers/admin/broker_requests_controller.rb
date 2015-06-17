@@ -22,25 +22,34 @@ class Admin::BrokerRequestsController < Admin::AuthenticatedController
   def edit
   end
   def update
+    # @page and @requests variable are created just in case update fails and render back to index page
     @page=params[:page]
     @requests=BrokerRequest.where(complement:false).where('admin_reply IS ?', nil).order(created_at: :desc)
     if @request.request_type =="create license"
       
       if @request.update(request_param)
         @license=License.find(@request.license_id)
-        if params[:broker_request][:admin_reply]=="approve" 
+        if @request.admin_reply=="approve" 
           @license.update_attributes(approved:true)
         end
+
         redirect_to admin_broker_requests_path, notice:"#{@request.request_type} is #{@request.admin_reply}d"
       else
         render "index"
       end
     elsif @request.request_type=="create account"
-      @request.create_application_bool=true
+      if params[:broker_request][:admin_reply] =="approve"
+        @request.create_application_bool=true
+      end
       if @request.update(request_param)
         @broker=Broker.find(@request.broker_id)
-        if params[:broker_request][:admin_reply]=="approve"
+        if @request.admin_reply=="approve"
           @broker.update_attributes(approved:true)   
+        end
+        if @request.admin_reply=="approve"
+          @broker.send_approval_email
+        elsif @request.admin_reply=="disapprove"
+          @broker.send_rejection_email
         end
         redirect_to admin_broker_requests_path, notice:"#{@request.request_type} is #{@request.admin_reply}d"
       else

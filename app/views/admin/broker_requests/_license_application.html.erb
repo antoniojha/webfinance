@@ -4,20 +4,29 @@
     <table width="100%">
       <tr>
         <th width="5%"><%=index+1%>.</th>
-        <th width="25%">Name</th>
-        <th width="25%">License Number</th>
-        <th width="20%"></th>
+        <th width="15%">Name</th>
+        <th width="20%">License Type</th>
+        <th width="20%">License Number</th>
+        <th width="15%">Attachment</th>
         <th colspan=2 width="25%">License Application Approval?</th>
       </tr>
        <tr>
         <td></td>
         <td><%=link_to "#{full_name(broker)}",broker_path(broker)%></td>
+        <td><%=l.license_type%></td>
         <td><%=l.license_number%></td>
         <td>
          <%=link_to "View Attachment", l.picture.url(:original, false), :target => "_blank"%>
          </td>
-        <td><%=button_to "Approve",{controller:"broker_requests",action: :update,id: r.id,status:"approve"},{method: :patch, class:"btn btn-default",data: {confirm: "Are you sure?"}}%></td>
-        <td><%=button_to "Disapprove",{controller:"broker_requests",action: :edit,id: r.id,status:"disapprove"},{method: :get, class:"btn btn-default"}%></td>
+        <td>
+          <div class="approve_license_<%=l.license_number%>"><%=button_to "Approve",admin_broker_request_path(r.id, broker_request:{admin_reply:"approve"},page:"pending_application"),{method: :patch, class:"btn btn-default",data: {confirm: "Are you sure?"}}%>
+          </div>
+        </td>
+        <td>
+          <div class="disapprove_license_<%=l.license_number%>">
+          <%=button_to "Disapprove",{controller:"broker_requests",action: :edit,id: r.id,status:"disapprove"},{method: :get, class:"btn btn-default"}%>
+          </div>
+         </td>
       </tr>
     </table>
   </div>

@@ -1,0 +1,9 @@
+<% if @financial_product && @financial_product.errors.any? %>
+  <div class="alert alert-danger error-message" style="width:100%;">
+    <ul>
+      <% @financial_product.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

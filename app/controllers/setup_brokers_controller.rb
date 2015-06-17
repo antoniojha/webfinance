@@ -52,7 +52,7 @@ class SetupBrokersController < ApplicationController
         @broker.licensetype_bool=true
       end
       if (@broker.current_field=="vehicle_4")
-        @broker.product_names_bool=true
+        @broker.products_bool=true
       end
       if (@broker.current_field=="register_approve_info_6")
         @broker.story_bool=true
@@ -132,7 +132,7 @@ class SetupBrokersController < ApplicationController
     end
   end
   def broker_params
-    params.require(:broker).permit(:first_name, :last_name, :company_name,:company_location, :email, :title,{:license_type => []},{:product_names => []}, :skills, :ad_statement, :financial_category, :product_id, :story, :check_term_of_use)
+    params.require(:broker).permit(:first_name, :last_name, :company_name,:company_location, :email, :title,{:license_type => []},{:products => []}, :skills, :ad_statement, :financial_category, :product_id, :story, :check_term_of_use)
   end
 
   def license_params

@@ -165,7 +165,7 @@ describe "broker sign in" do
               end
               describe "at product_info_5 page" do
                 before do
-                  check "broker_product_names_name1"
+                  check "broker_product_ids_name1"
                   click_button "Next"
                 end
                 it "should go to product_info_5 page" do

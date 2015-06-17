@@ -1,0 +1,41 @@
+
+<%if @edit=="financial_product_add_#{index}"%>
+<%=render "brokers/error_financial_product_add"%>
+
+
+  <%=product.name%>
+
+
+  <%=link_to broker_path(id:@broker), remote: true do%>
+  <span class="glyphicon glyphicon-plus"></span> Add Product
+  <%end%><br>
+
+<br>
+<%=form_for @financial_product, remote:true do |f|%>  
+  <table width="100%">
+    <tr>
+      <td>Company:</td>
+      <td><%=f.select :company_id,Company.all.collect {|c| [ c.name, c.id ] },{},{style:"width:100%;"}%></td>
+    </tr>
+    <tr>
+      <td>Name:</td>
+      <td><%=f.text_field :name, {style:"width:100%;"}%></td>
+    </tr>
+
+    <tr>
+      <td><%=f.submit "Add", class:"btn btn-default"%></td>
+      <td><%=f.hidden_field :broker_id, value: @broker.id%>
+        <%=f.hidden_field :product_id, value: product.id%>
+        <%=f.hidden_field :edit, value: "financial_product_add_#{index}"%>
+      </td>
+    </tr>
+  </table>
+  <%end%>
+<%else%>
+
+<%=product.name%> 
+
+<%=link_to broker_path(id:@broker, edit:"financial_product_add_#{index}"), remote: true do%>
+   <span class="glyphicon glyphicon-plus"></span> Add Product
+  <%end%>
+<%end%>

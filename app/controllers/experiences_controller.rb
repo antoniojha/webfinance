@@ -1,5 +1,6 @@
 class ExperiencesController < ApplicationController
   before_action :set_experience, only:[:update, :destroy]
+
   def new
   end
   def create
@@ -10,6 +11,7 @@ class ExperiencesController < ApplicationController
         format.js
         format.html{redirect_to @broker}
       else
+        @edit=params[:experience][:edit]
         format.js
         format.html{render "brokers/show"}
       end
@@ -25,7 +27,7 @@ class ExperiencesController < ApplicationController
         format.js
         format.html{redirect_to @broker}
       else
-
+        @edit=params[:experience][:edit]
         format.js
         format.html{render "brokers/show"}
       end
@@ -44,6 +46,7 @@ class ExperiencesController < ApplicationController
   def show
   end
   private
+
   def set_experience
     @experience=Experience.find(params[:id])
   end

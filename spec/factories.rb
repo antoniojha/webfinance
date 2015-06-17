@@ -35,6 +35,7 @@ FactoryGirl.define do
     title "Associate"
     setup_completed? true
     license_type ["Life Insurance","Series 3"]
+    product_ids ["name1", "Test", "Incredible Plastic Shoes"]
   end
   factory :incomplete_broker, class:Broker do
 

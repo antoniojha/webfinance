@@ -2,6 +2,7 @@ class BrokerRequest < ActiveRecord::Base
   include ApplicationHelper
   attr_accessor :create_application_bool, :complement_requests
   belongs_to :broker
+  belongs_to :license
   validate :check_all_complement_approved, if: :create_application?
   def check_all_complement_approved
     complement_requests=BrokerRequest.where(broker_id:broker_id,complement:true)

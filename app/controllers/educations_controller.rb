@@ -1,15 +1,20 @@
 class EducationsController < ApplicationController
   before_action :set_education, only:[:update,:destroy]
+
   def new
   end
   def create
     @broker=Broker.find(params[:education][:broker_id])
     @education=@broker.educations.build(education_params)
+    
     respond_to do |format|
       if @education.save
+
         format.js
         format.html{redirect_to @broker}
       else
+        @edit=params[:education][:edit]
+        format.js
         format.json { render json: @education.errors, status: :unprocessable_entity }
         format.html{render "brokers/show"}
       end
@@ -24,7 +29,7 @@ class EducationsController < ApplicationController
         format.js
         format.html{redirect_to @broker}
       else
-     
+        @edit=params[:education][:edit] 
         format.js
         format.html{render "brokers/show"}
       end
@@ -43,6 +48,7 @@ class EducationsController < ApplicationController
   def show
   end
   private
+
   def set_education
     @education=Education.find(params[:id])
   end

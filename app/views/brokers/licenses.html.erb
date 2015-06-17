@@ -10,25 +10,35 @@
     <table width="100%">
       <tr>
         <th width="20%">License Type</th>
-        <th width="20%">License Number</th>
-        <th width="30%">File Name</th>
-        <th width="30%">Status</th>
+        <th width="25%">License Number</th>
+        <th width="25%">File Name</th>
+        <th width="20%">Status</th>
+        <th width="10%"></th>
       </tr>
+      <%@broker.reload%>
       <%@broker.setup_broker.licenses.each do |l|%>
+      <%request=BrokerRequest.find_by(license_id:l.id)%>
       <tr>
         <td><%=l.license_type%></td>
         <td><%=l.license_number%></td>
         <td>
           <%=l.picture_file_name%>
           <%=link_to "View", l.picture.url(:original, false), :target => "_blank"%>
-          <%=link_to "Download", download_path(l)%>
         </td>
         <td>
-          <% if l.approved%>
+        <%if request%>
+          <% if request.admin_reply=="approve"%>
           Approved.
-          <%=button_to "Remove",{ controller:"broker_requests",action: "create", broker_id: @broker.id, license_id: l.id }%>  
-          <%else%>
-          Unapproved
+          <%elsif request.admin_reply=="dispprove"%>
+          Denied.
+          <%elsif request.admin_reply==nil%>
+          Pending Approval.
+          <%end%>
+        <%end%>
+        </td>
+        <td>
+          <%if request.admin_reply==nil%>
+          <%= button_to 'Remove',{controller:"licenses",action: :destroy,id: l.id, broker_id:@broker.id},{method: :delete, class:"btn btn-default",data: {confirm: "Are you sure?"}} %>
           <%end%>
         </td>
       </tr>
@@ -36,29 +46,32 @@
     </table>
   </div>
 </div>
-<div class="panel panel-default">
+<div class="panel panel-default" style="width:50%;float:left;">
   <div class="panel-body" align="left">
     <%=render "licenses/error"%>
     <h4>Add License</h4>
     
     <%=form_for @license, :html => { :multipart => true } do |f|%>
-    <table width="70%">
+    <table width="100%">
       <tr>
         <td><%=f.label "License Type"%></td>
         <td>
           <%=f.select :license_type, Order::LICENSE_TYPES.to_h.keys,{prompt:"Select License Type"}, {:class=>'form-control'}%> 
         </td>
       </tr>
+      <tr class="blank_row"></tr>
       <tr>
         <td><%=f.label "License Number"%></td>
         <td><%=f.text_field :license_number,{class:'form-control'}%></td>
       </tr>
+      <tr class="blank_row"></tr>
       <tr>
         <td><%=f.label "Upload Attachment"%></td>
         <td><%=f.file_field :picture, {class:'form-control'}%></td>
       </tr>    
+      <tr class="blank_row"></tr>
       <tr>
-        <td><%=f.submit "Upload License"%></td>
+        <td><%=f.submit "Upload License", class:"btn btn-default"%></td>
         <td><%=hidden_field_tag :broker_id, @broker.id%></td>
       </tr>
     </table>

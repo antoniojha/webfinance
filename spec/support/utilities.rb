@@ -16,6 +16,7 @@ def setup_broker_requests(broker)
       license.picture=(Rails.root+"spec/fixtures/pdfs/example_license.pdf").open
       license.save
     end
+    
     @license1=License.all.first
     @license2=License.all.second
     broker.broker_requests.create(request_type:"create account",complement:false)  
@@ -23,11 +24,13 @@ def setup_broker_requests(broker)
     broker.setup_broker.licenses.each do |l|
       broker.broker_requests.create(request_type:"create license", license_id:l.id,complement:true,admin_reply:nil)
     end
+  
 end
 def broker_login(broker)
- # session[:broker_id]=broker.id
-  
-#  cookies[:auth_token]=user.auth_token
+  visit broker_login_path
+  fill_in "Username", with: broker.username
+  fill_in "Password", with: broker.password
+  click_button "Login"
 end
 
 def create_spending(user)

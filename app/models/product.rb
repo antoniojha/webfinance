@@ -1,5 +1,7 @@
 class Product < ActiveRecord::Base
   belongs_to :firm
+  has_many :financial_products, dependent: :destroy
+  has_many :companies, through: :financial_products
   has_many :product_fin_category_rels, dependent: :destroy
   has_many :financial_stories, dependent: :destroy
   has_many :brokers, through: :financial_stories

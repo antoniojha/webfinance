@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150606165141) do
+ActiveRecord::Schema.define(version: 20150617000453) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -179,10 +179,10 @@ ActiveRecord::Schema.define(version: 20150606165141) do
     t.integer  "broker_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "license_id"
     t.boolean  "complement"
     t.text     "comment"
     t.string   "admin_reply"
+    t.integer  "license_id"
   end
 
   add_index "broker_requests", ["broker_id"], name: "index_broker_requests_on_broker_id"
@@ -248,7 +248,7 @@ ActiveRecord::Schema.define(version: 20150606165141) do
     t.boolean  "setup_completed?"
     t.string   "company_name"
     t.string   "company_location"
-    t.text     "product_names"
+    t.text     "product_ids"
     t.text     "skills"
     t.text     "ad_statement"
     t.boolean  "check_term_of_use"
@@ -318,6 +318,27 @@ ActiveRecord::Schema.define(version: 20150606165141) do
   end
 
   add_index "experiences", ["broker_id"], name: "index_experiences_on_broker_id"
+
+  create_table "financial_product_rels", force: true do |t|
+    t.integer  "financial_product_id"
+    t.integer  "broker_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "financial_product_rels", ["broker_id"], name: "index_financial_product_rels_on_broker_id"
+  add_index "financial_product_rels", ["financial_product_id"], name: "index_financial_product_rels_on_financial_product_id"
+
+  create_table "financial_products", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "company_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "product_id"
+  end
+
+  add_index "financial_products", ["company_id"], name: "index_financial_products_on_company_id"
 
   create_table "financial_stories", force: true do |t|
     t.integer  "product_id"

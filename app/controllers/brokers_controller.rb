@@ -25,6 +25,9 @@ class BrokersController < Broker::AuthenticatedController
       end
     end
     respond_to do |format|
+      if params[:edit_products]
+        @broker.products_bool=true
+      end
       if params[:delete_picture]
         @broker.picture=nil
         if @broker.save
@@ -59,12 +62,14 @@ class BrokersController < Broker::AuthenticatedController
     @edit=params[:edit]
     @education=Education.new #needed for education_add partial template
     @experience=Experience.new #needed for experience_add partial template
+    @financial_product =FinancialProduct.new
     respond_to do |format|
       format.html
       format.js
     end    
   end
   def licenses
+    @licenses=@broker.setup_broker.licenses
     @license=License.new
   end
   def products
@@ -97,7 +102,7 @@ class BrokersController < Broker::AuthenticatedController
   end
 
   def broker_params       
-    params.require(:broker).permit(:first_name, :last_name, :street, :city, :state, :email,:username, :password, :password_confirmation,:picture, :crop_x,:crop_y,:crop_w,:crop_h, :skills, :ad_statement, :phone_number_work, :phone_number_cell, :web)
+    params.require(:broker).permit(:first_name, :last_name, :street, :city, :state, :email,:username, :password, :password_confirmation,:picture, :crop_x,:crop_y,:crop_w,:crop_h, :skills, :ad_statement, :phone_number_work, :phone_number_cell, :web,{:product_ids => []})
 
   end
 end

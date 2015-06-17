@@ -1,0 +1,22 @@
+<p>
+  <%= @greeting %>,
+</p>
+<p>
+  Your application has been denied. One of your licenses has been denied.
+</p>
+<p>
+  <table>
+    <tr>
+      <th>License Number</th>
+      <th>Status</th>
+    </tr>
+  <% @complement_requests.each do |c|%>
+    <%license=License.find(c.license_id)%>
+    <tr>
+      <td><%=license.license_number%></td>
+      <td><%=c.admin_reply%></td>
+    </tr>
+  <%end%>
+  </table>
+</p>
+

@@ -1,6 +1,7 @@
 <div class="panel panel-default" id=<%="education_edit_#{e.id}"%>>
   <div class="panel-body" align="left">
     <%if @edit=="education_edit_#{e.id}"%>
+    <%=render "brokers/error_education"%>
         <%=form_for e, remote: true do |f|%>
          <table width="100%">
           <tr>
@@ -35,7 +36,8 @@
           <tr>
             <td><%=f.submit "Edit", class:"btn btn-default"%></td>
             <td align="right">
-              <%=f.hidden_field :broker_id, value: @broker.id%>              
+              <%=f.hidden_field :broker_id, value: @broker.id%>   
+              <%=f.hidden_field :edit, value:"education_edit_#{e.id}"%>
               <%=link_to broker_path(id:@broker), remote: true do%>
                 <span class="glyphicon glyphicon-edit"></span>
               <%end%>

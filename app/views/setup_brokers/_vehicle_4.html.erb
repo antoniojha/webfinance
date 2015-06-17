@@ -1,6 +1,6 @@
 <h1>Select Your Financial Vehicle</h1>
 <%= form_for :broker, :url => setup_broker_path(@broker), :html => { :method => :put} do|f|%>
-  <%= hidden_field_tag "broker[product_names][]", nil %>
+<%= hidden_field_tag "broker[product_ids][]", nil %>
   <%Order::FINANCIAL_CATEGORIES_HASH.each do |category|%>
 
     <table width="70%">
@@ -10,10 +10,10 @@
       <% Product.where(vehicle_type:category[0]).each_with_index do |p,index|%>
         <% if index%2 ==0%>
           <tr>
-            <td width="10%"><%=f.check_box("product_names", {:multiple => true, size:"25x25"}, p.name, nil)%></td>
+            <td width="10%"><%=f.check_box("product_ids", {:multiple => true, size:"25x25"}, p.id.to_s, nil)%></td>
             <td width="40%"><%=p.name%></td>
         <%else%>
-            <td width="10%"><%=f.check_box("product_names", {:multiple => true, size:"25x25"}, p.name, nil)%></td>
+            <td width="10%"><%=f.check_box("product_ids", {:multiple => true, size:"25x25"}, p.id.to_s, nil)%></td>
             <td width="40%"><%=p.name%></td>
           </tr>
         <%end%>

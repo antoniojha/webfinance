@@ -1,13 +1,15 @@
 class Broker < ActiveRecord::Base
 
-  attr_accessor :name_or_email, :password, :password_confirmation,:validate_email_bool, :validation_code, :licensetype_bool, :product_names_bool, :story_bool, :term_of_use_bool,:basic_info_bool
+  attr_accessor :name_or_email, :password, :password_confirmation,:validate_email_bool, :validation_code, :licensetype_bool, :products_bool, :story_bool, :term_of_use_bool,:basic_info_bool
   attr_accessor :financial_category,:product_id, :story
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
-  serialize :license_type
-  serialize :product_names
+  serialize :license_type #used during setup, this will not be updated after setup all licenses will be accessed via @broker.setup_broker.licenses
+  serialize :product_ids
   has_attached_file :picture, :styles => { :medium => "200x200#", :large=>"400x400>", :original=>"600x600>"},:processors => [:cropper]
   validates_attachment_content_type :picture, :content_type=> ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/pjpeg"]
   # broker has the following dependents: SetupBroker=>License, FinancialStory, :Experiences, :Educations
+  has_many :financial_product_rels, dependent: :destroy
+  has_many :financial_products, through: :financial_product_rels
   has_many :broker_requests, dependent: :destroy
   has_one :setup_broker, dependent: :destroy
   has_many :educations, dependent: :destroy
@@ -69,15 +71,17 @@ class Broker < ActiveRecord::Base
       errors.add(:licensetype_bool, "Need to select a license")
     end 
   end
-  validate :check_product_names_not_empty, on: :update, if: :product_names_bool?
-  def product_names_bool?
-    @product_names_bool==true
+  validate :check_products_not_empty, on: :update, if: :products_bool?
+  def products_bool?
+    @products_bool==true
   end
 
-  def check_product_names_not_empty
-    self.product_names=product_names.reject(&:empty?)
-    if product_names.empty? 
-      errors.add(:product_names_bool, "Need to select a Vehicle")
+  def check_products_not_empty
+    self.product_ids=product_ids-[""]
+    puts "here"
+    if product_ids.empty? 
+      
+      errors.add(:products_bool, "Need to select a Vehicle")
     end 
   end
   before_save :encrypt_password
@@ -99,8 +103,6 @@ class Broker < ActiveRecord::Base
   def term_of_use_bool?
     @term_of_use_bool==true
   end
-
-
 
   def self.from_omniauth(auth)
     
@@ -153,6 +155,12 @@ class Broker < ActiveRecord::Base
    #calling save! will render validation error for submitting blank password. Why though? 
     EmailConfirmationMailer.send_email_confirm(self).deliver
     update_attributes(email_confirmation_sent_at:Time.zone.now)
+  end
+  def send_approval_email #for both approval and disapproval
+    EmailNotice.application_approval(self).deliver 
+  end
+  def send_rejection_email
+    EmailNotice.application_rejection(self).deliver 
   end
   def evaluate_and_reset_email_authen(email)
   # reset email authen if a new email is set

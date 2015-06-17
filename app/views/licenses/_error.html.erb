@@ -1,12 +1,9 @@
 <% if @license.errors.any? %>
-
-    <div class="alert alert-danger error-message">
-      <h2>The form contains <%= pluralize(@license.errors.count, "error") %></h2>
-      <ul>
-        <% @license.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+  <div class="alert alert-danger error-message">
+    <ul>
+      <% @license.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
       <% end %>
-      </ul>
-    </div>
-
-  <% end %>
+    </ul>
+  </div>
+<% end %>

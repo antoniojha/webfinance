@@ -224,8 +224,49 @@ describe "Admin Pages" do
           expect(page).to have_content(@license2.license_number)
   
         end
-        describe "testing approval and disapproval and its validation" do
-
+  describe "test non-complementary license appliction approval, disapproval and validation" do
+          before do
+            @license3=License.create(license_type:"Health Insurance License", license_number: "test3")
+            @license3.picture=(Rails.root+"spec/fixtures/pdfs/example_license.pdf").open
+            @license3.save
+            @broker.broker_requests.create(request_type:"create license", license_id:@license3.id,complement:false,admin_reply:nil)
+            visit admin_broker_requests_path
+          end
+          describe "test disapprove license application" do
+            before do
+              @request3=BrokerRequest.find_by(license_id:@license3.id)
+              within (".disapprove_license_#{@license3.license_number}") do
+                click_button "Disapprove"
+              end
+            end
+            describe "fill out comment then disapprove license" do
+              
+              before do
+                fill_in "broker_request_comment", with: "test"
+                click_button "Reject"
+              end
+              it "should disapprove the license application request" do
+                @request3.reload
+                expect(@request3.admin_reply).to eq "disapprove"
+                expect(page).to have_content("Disapproved")
+              end
+            end                    
+          end
+          describe "test approve license application" do
+            it "should approve license" do
+              @request3=BrokerRequest.find_by(license_id:@license3.id)
+              expect(@request3.admin_reply).to eq nil
+              within (".approve_license_#{@license3.license_number}") do
+                click_button "Approve"
+              end
+              @license3.reload
+              @request3.reload
+              expect(@request3.admin_reply).to eq "approve"
+              expect(@license3.approved).to eq true
+            end         
+          end
+        end
+        describe "testing account appliction approval, disapproval and validation" do
           describe "test disapprove license" do
             before do
               @request1=BrokerRequest.find_by(license_id:@license1.id)
@@ -247,6 +288,7 @@ describe "Admin Pages" do
                 expect(@request1.admin_reply).to eq "disapprove"
                 expect(page).to have_content("Disapproved")
               end
+
             end
           end
           describe "test approve license" do
@@ -268,7 +310,7 @@ describe "Admin Pages" do
               expect(page).to have_content("Account for #{full_name(@broker)} can't be approved since license(s) number #{@license1.license_number} has not been approved.")
               expect(page).to have_content("Account for #{full_name(@broker)} can't be approved since license(s) number #{@license2.license_number} has not been approved.")
             end
-            describe "when one license is rejected, the broker application will be rejected" do
+            describe "when one license is rejected, the broker application can't be approved" do
               before do
                 @request1=BrokerRequest.find_by(license_id:@license1.id)
                 @request1.admin_reply="disapprove"
@@ -280,7 +322,7 @@ describe "Admin Pages" do
                   end
                   expect(page).to have_content("Account for #{full_name(@broker)} can't be approved since license(s) number #{@license1.license_number} was disapproved.")
                   expect(page).to have_content("Account for #{full_name(@broker)} can't be approved since license(s) number #{@license2.license_number} has not been approved.")
-            end
+              end
             end
             describe "even when one license is accepted, the broker application is still rejected if not all licenses are approved" do
               before do
@@ -311,6 +353,36 @@ describe "Admin Pages" do
               end
               it "should approve broker" do
                 expect(@broker.approved).to eq true
+              end
+              it "should send out approval email" do
+                expect(last_email.to).to include (@broker.email)
+              end
+            end
+            describe "test disapprove broker account application" do
+              before do
+                within (".disapprove_account") do
+                  click_button "Disapprove"
+                end
+              end
+              it "should first go to edit page to fill out comment" do
+                expect(page).to have_content("Application Dispproval")
+              end
+              describe "fill out comment then disapprove license" do
+
+                before do
+                  @request=BrokerRequest.find_by(request_type:"create account")
+                  fill_in "broker_request_comment", with: "test"
+                  click_button "Reject"
+                end
+                it "should disapprove the license application request" do
+                  @request.reload
+                  expect(@request.admin_reply).to eq "disapprove"
+                  expect(page).to have_content("Disapproved")
+                end
+                it "should send out disapproval email" do
+                  @broker=Broker.find(@request.broker_id)
+                  expect(last_email.to).to include (@broker.email)
+                end
               end
             end
           end

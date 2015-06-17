@@ -89,7 +89,12 @@ $(function(){
 <div align="left" style="float:left; width:50%; margin:5px;">
   <div class="panel panel-default">
     <div class="panel-body" align="left">
-      <h4>License(s)</h4>
+      <h4>License(s)
+        <%=link_to broker_licenses_path(@broker) do%>
+        <span class="glyphicon glyphicon-edit"></span>
+        <%end%>
+
+      </h4>
       <%@broker.setup_broker.licenses.each_with_index do |l,index|%>
         <%if index==0%>
           <%=l.license_type%>
@@ -101,12 +106,45 @@ $(function(){
   </div>
   <div class="panel panel-default">
     <div class="panel-body" align="left">
-      <h4>Financial Vehicle(s) & Product(s)</h4>
-      <%@broker.product_names.each_with_index do |p,index|%>
+      <h4>Financial Vehicle(s)
+        <%=link_to broker_products_path(@broker) do%>
+          <span class="glyphicon glyphicon-edit"></span>
+        <%end%>
+      </h4>
+      <%@broker.product_ids.each_with_index do |p,index|%>
+        <%product=Product.find(p)%>
         <%if index==0%>
-          <%=p%>
+          <%=product.name%>
         <%else%>
-          <%=", #{p}"%>
+          <%=", #{product.name}"%>
+        <%end%>
+      <%end%>
+      <h4>Financial Product(s)
+
+      </h4>
+ 
+      <%@broker.product_ids.each_with_index do |product_id,index|%>
+      <%product=Product.find(product_id)%>
+        <%if product%>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <%=render partial:"brokers/financial_product_add", locals:{product:product,index:index}%>   
+              </h3>
+            </div>
+            <div class="panel-body">
+              <%@broker.financial_products.where(product_id:product.id).includes(:company).order("companies.name DESC").each do |financial_product|%> 
+
+                <span class="label label-primary">
+                  <%="#{financial_product.company.name} #{financial_product.name}"%>
+                </span>
+                  <%=link_to '<i class="glyphicon glyphicon-remove"></i>'.html_safe, {controller:"financial_products",action:"destroy",id:financial_product.id,broker_id:@broker.id},method: :delete,data: { confirm: "Are you sure?" },:remote => true %>
+                
+              <%end%>
+            </div>
+          </div>
+   
+          
         <%end%>
       <%end%>
     </div>
