@@ -1,12 +1,12 @@
 class BrokersController < Broker::AuthenticatedController
-  skip_before_action :redirect_to_broker_setup, only:[:new,:edit,:create,:update,:destroy]
-  skip_before_action :redirect_to_complete_broker_profile, only:[:new,:edit,:create,:update,:destroy]
+  skip_before_action :redirect_to_broker_setup, only:[:index]
+  skip_before_action :redirect_to_complete_broker_profile, only:[:new,:edit,:create,:update,:destroy,:index]
   skip_before_action :authorize_broker_login, only:[:show,:index]
   before_action :set_broker, only:[:show,:edit,:home,:update,:destroy,:products,:licenses]
 
   #edit form for individual registered broker  
   def home
-    
+
   end
   def edit
     #
@@ -84,11 +84,9 @@ class BrokersController < Broker::AuthenticatedController
         @broker_search=BrokerSearch.find(params[:id])
         @brokers=@broker_search.brokers
         @brokers=@brokers.paginate(:page => params[:page])  
-      else
-        state=@user.state
-        @brokers=Broker.where("state = ?",state).paginate(:page => params[:page])
+      else     
+        @brokers=Broker.all.paginate(:page => params[:page])
         @broker_search=BrokerSearch.new
-        @broker_search.state=state
       end 
     else
       @broker_search=BrokerSearch.new

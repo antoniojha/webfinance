@@ -8,7 +8,11 @@ class UsersController < User::AuthenticatedController
   include ProfilesHelper
 
   def home
-    
+    unless params[:goal]
+      @goal="protection"
+    else
+      @goal=params[:goal]
+    end    
   end
   def index
     @users = User.order(:username).paginate(:page => params[:page])

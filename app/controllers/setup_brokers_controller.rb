@@ -36,6 +36,7 @@ class SetupBrokersController < ApplicationController
  #   raise "error"
 
     if params[:back]
+
       @broker.prev_step
       @broker.save
       redirect_to edit_setup_broker_path(@broker)
@@ -71,6 +72,7 @@ class SetupBrokersController < ApplicationController
           end
       else
         if @broker.update(broker_params)
+          
           if params[:send_validation]
 
             @broker.send_email_confirmation
@@ -110,7 +112,8 @@ class SetupBrokersController < ApplicationController
             redirect_to broker_path(@broker)
           end
         else
-         #   Rails.logger.info(@user.errors.inspect) 
+        #  raise "error2"
+        #  Rails.logger.info(@broker.errors.inspect) 
           render "edit"
         end
       end
@@ -132,7 +135,7 @@ class SetupBrokersController < ApplicationController
     end
   end
   def broker_params
-    params.require(:broker).permit(:first_name, :last_name, :company_name,:company_location, :email, :title,{:license_type => []},{:products => []}, :skills, :ad_statement, :financial_category, :product_id, :story, :check_term_of_use)
+    params.require(:broker).permit(:first_name, :last_name, :company_name,:company_location, :email, :title,{:license_type => []},{:product_ids => []}, :skills, :ad_statement, :financial_category, :product_id, :story, :check_term_of_use)
   end
 
   def license_params

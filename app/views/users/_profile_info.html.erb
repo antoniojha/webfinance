@@ -3,13 +3,18 @@
 <p><span style="font-size:1.3em;"><b>Age Range:</b> <%=smart_label(@user.age_level)%></span></p>
 <%unless @user.goal.nil?%>
   <h3>Financial Goal(s):</h3> 
-    <%@user.goal.each do |g|%>
-      <div class="list-group">
-        <a href="#" class="list-group-item active" style="border:1px solid; color:black;">
-          <h4 class="list-group-item-heading">
-          <%=smart_label(g)%>
-          </h4>
-        </a>
-      </div>
-    <%end%>
-  <%end%> 
+  <%@user.goal.each do |g|%>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <%=smart_label(g)%>
+      </h4>
+    </div>
+    <div class="panel-body">
+      Saved Brokers:
+      Saved Stories:
+      Saved Articles:
+    </div>
+  </div>
+  <%end%>
+<%end%> 

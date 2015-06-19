@@ -35,16 +35,16 @@ FactoryGirl.define do
     title "Associate"
     setup_completed? true
     license_type ["Life Insurance","Series 3"]
-    product_ids ["name1", "Test", "Incredible Plastic Shoes"]
+    
   end
   factory :incomplete_broker, class:Broker do
 
     username "testing"
-    email "antoniojha@gmail.com"
+  #  email "antoniojha@gmail.com"
     password "SecretPassword1?"
     password_confirmation "SecretPassword1?"
-    first_name "Broker First Name"
-    last_name "Broker Last Name"
+  #  first_name "Broker First Name"
+  #  last_name "Broker Last Name"
     email_authen false 
     setup_completed? false
   end  

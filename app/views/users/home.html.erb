@@ -1,0 +1,17 @@
+<div with=50%>
+  <div style="float:left;width:110px;"><%=smart_image(@user,1)%></div>
+  <div style="overflow:auto;" align="left"><h3><%=full_name(@user)%></h3></div>
+</div>
+<div style="clear:both;"></div>
+<div align="left">
+  <ul class="nav nav-pills">
+    <%@user.goal.each do |goal|%>
+      <%if goal==@goal%>
+      <li role="presentation" class="active"><%=link_to "#{goal.titleize}",user_home_url(goal:goal) %></li>
+      <%else%>
+      <li role="presentation"><%=link_to "#{goal.titleize}",user_home_url(goal:goal) %></li>
+      <%end%>
+    <%end%>
+  </ul>
+  <%=render partial:"home_goal", locals:{g:@goal}%>
+</div>

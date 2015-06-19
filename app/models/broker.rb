@@ -8,6 +8,7 @@ class Broker < ActiveRecord::Base
   has_attached_file :picture, :styles => { :medium => "200x200#", :large=>"400x400>", :original=>"600x600>"},:processors => [:cropper]
   validates_attachment_content_type :picture, :content_type=> ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/pjpeg"]
   # broker has the following dependents: SetupBroker=>License, FinancialStory, :Experiences, :Educations
+  has_many :votes, dependent: :destroy
   has_many :financial_product_rels, dependent: :destroy
   has_many :financial_products, through: :financial_product_rels
   has_many :broker_requests, dependent: :destroy
@@ -15,7 +16,8 @@ class Broker < ActiveRecord::Base
   has_many :educations, dependent: :destroy
   has_many :experiences, dependent: :destroy
   has_many :financial_stories, dependent: :destroy
-  has_many :products, through: :financial_stories
+  has_many :broker_product_rels, dependent: :destroy
+  has_many :products, through: :broker_product_rels
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   # the following uses Regex (lookahead assertion) to ensure there is at least a lower case and upper case letter, a digit, and a special character (non-word character)
   VALID_PASSWORD_REGEX= /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)/
@@ -49,6 +51,7 @@ class Broker < ActiveRecord::Base
   validates :first_name, :last_name, :email, :company_name, :company_location, :title, presence:true, on: :update, if: :info_bool?
   def info_bool?
     if @validate_email_bool
+
       return false
     else
       @basic_info_bool==true
@@ -78,7 +81,7 @@ class Broker < ActiveRecord::Base
 
   def check_products_not_empty
     self.product_ids=product_ids-[""]
-    puts "here"
+  #  puts "here"
     if product_ids.empty? 
       
       errors.add(:products_bool, "Need to select a Vehicle")
@@ -99,6 +102,7 @@ class Broker < ActiveRecord::Base
       @story_bool=false # this variable prevents the story object to be saved twice since there is a @broker.next_step and @broker.save following @broker.update(params)
     end
   end
+
   validates :check_term_of_use, presence:true, on: :update, if: :term_of_use_bool?
   def term_of_use_bool?
     @term_of_use_bool==true

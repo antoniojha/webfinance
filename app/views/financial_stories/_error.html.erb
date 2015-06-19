@@ -1,0 +1,10 @@
+<% if @vote.errors.any? %>
+  <div class="alert alert-success error-message" style="float:left;">
+    <ul>
+      <% @vote.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<div style="clear:both;"></div>
+<% end %>

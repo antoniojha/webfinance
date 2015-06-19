@@ -133,14 +133,7 @@ $(function(){
               </h3>
             </div>
             <div class="panel-body">
-              <%@broker.financial_products.where(product_id:product.id).includes(:company).order("companies.name DESC").each do |financial_product|%> 
-
-                <span class="label label-primary">
-                  <%="#{financial_product.company.name} #{financial_product.name}"%>
-                </span>
-                  <%=link_to '<i class="glyphicon glyphicon-remove"></i>'.html_safe, {controller:"financial_products",action:"destroy",id:financial_product.id,broker_id:@broker.id},method: :delete,data: { confirm: "Are you sure?" },:remote => true %>
-                
-              <%end%>
+              <%=render partial:"brokers/financial_products", locals:{product:product}%>
             </div>
           </div>
    

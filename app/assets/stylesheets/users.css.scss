@@ -23,3 +23,30 @@
   position: relative;
   left: 10px;  
 }
+.story_display{
+
+  background-color:lighten(#000,82%);
+  border-radius: 10px;
+  vertical-align: text-top;
+  padding:5px;
+
+}
+.home_display{
+  a:hover{
+      text-decoration: none;
+  }
+}
+.financial_story_show{
+  background-color:lighten(#000,82%);
+  padding:5px;
+  width:100%;
+}
+
+.financial_story, .financial_story_comment{
+
+  background-color:lighten(#000,93%);
+  vertical-align:text-top;
+  padding: 5px;
+  magin: 3px;
+}
+  

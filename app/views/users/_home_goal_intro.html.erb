@@ -1,0 +1,60 @@
+ <h3><%=g.titleize%></h3>
+  <%if g=="protection"%>
+    <div style="float:left;">
+      <%=image_tag("protection.jpg", class:"goal_pic")%>
+    </div>
+  <%elsif g=="debt management"%>
+    <div style="float:left;">
+      <%=image_tag("debt_management-2.jpg", class:"goal_pic")%>
+    </div>
+  <%elsif g=="retirement"%>
+    <div style="float:left;">
+      <%=image_tag("retirement.jpg", class:"goal_pic")%>
+    </div>
+  <%elsif g=="investment"%>
+    <div style="float:left;">
+      <%=image_tag("investment.jpg", class:"goal_pic")%>
+    </div>
+  <%elsif g=="education fund"%>
+    <div style="float:left;">
+      <%=image_tag("education_fund.jpg", class:"goal_pic")%>
+    </div>
+  <%elsif g=="tax saving"%>
+    <div style="float:left;">
+      <%=image_tag("tax_saving.jpg", class:"goal_pic")%>
+    </div>
+  <%end%>
+  <div style="overflow:auto;">
+    <%if g=="protection"%>
+      <div style="float:left;">
+        Protection is important if you have family members who depends on your income.
+      </div>
+    <%elsif g=="debt management"%>
+      <div style="float:left;">
+        Debt Management is important if you have family members who depends on your income.
+      </div>
+    <%elsif g=="retirement"%>
+      <div style="float:left;">
+        Retirement is important if you have family members who depends on your income.
+      </div>
+    <%elsif g=="investment"%>
+      <div style="float:left;">
+        Investment is important if you have family members who depends on your income.
+      </div>
+    <%elsif g=="education fund"%>
+      <div style="float:left;">
+        Education Fund is important if you have family members who depends on your income.
+      </div>
+    <%elsif g=="tax saving"%>
+      <div style="float:left;">
+        Tax Saving is important if you have family members who depends on your income.
+      </div>
+    <%end%>
+    
+    <p>Below are the various types of vehicle in this category:</p>
+    <ol>
+      <%products.each do |product|%>
+      <li><%=product.name%></li>
+      <%end%>
+    </ol>
+  </div>

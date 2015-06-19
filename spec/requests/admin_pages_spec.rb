@@ -10,19 +10,19 @@ describe "Admin Pages" do
       user_login(user)
       visit user_path(user)
     end
-    if false
+
     it "should be user profile page" do
       expect(page.title).to eq "RichRly|User Profile"
     end
     it "should show admin home link from drop down" do
       expect(page).to have_content("Admin Home")
     end
-    end
+
     describe "access admin page" do
       before do
         click_link("Admin Home")
       end
-      if false
+ 
       it "should show links to index to products" do
         expect(page).to have_link("Vehicles")
       end
@@ -198,7 +198,6 @@ describe "Admin Pages" do
             end
           end
         end
-      end
       end
       describe "Broker Request pages" do
         before do

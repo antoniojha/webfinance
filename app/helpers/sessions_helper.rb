@@ -7,11 +7,13 @@ module SessionsHelper
     end 
   end
   def broker_personal_profile?(broker)
-    if current_broker.id==broker.id
-      return true
-    else
-      return false
-    end 
+    if current_broker
+      if current_broker.id==broker.id
+        return true
+      else
+        return false
+      end 
+    end
   end
   def user_profile_completed?
     user=current_user
@@ -29,7 +31,7 @@ module SessionsHelper
   end
   def broker_profile_completed?
     broker=current_broker
-    if broker.username && broker.email && (broker.email_authen==true)
+    if broker&&broker.username && broker.email && (broker.email_authen==true)
       return true
     else
       false
@@ -38,8 +40,10 @@ module SessionsHelper
   def redirect_to_complete_broker_profile
  
     broker=current_broker
-    unless broker_profile_completed? 
-      redirect_to edit_broker_url(broker), notice: "Please complete your profile (username and email) first."
+    if broker
+      unless broker_profile_completed? 
+        redirect_to edit_broker_url(broker), notice: "Please complete your profile (username and email) first."
+      end
     end
   end  
   def remember_broker(broker_id)
@@ -141,8 +145,10 @@ module SessionsHelper
     end
   end
   def redirect_to_broker_setup
-    unless current_broker.setup_completed?
-      redirect_to edit_setup_broker_path(current_broker)
+    if current_broker
+      unless current_broker.setup_completed?
+        redirect_to edit_setup_broker_path(current_broker)
+      end
     end
   end
 end

@@ -24,7 +24,7 @@ def setup_broker_requests(broker)
     broker.setup_broker.licenses.each do |l|
       broker.broker_requests.create(request_type:"create license", license_id:l.id,complement:true,admin_reply:nil)
     end
-  
+
 end
 def broker_login(broker)
   visit broker_login_path

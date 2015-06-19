@@ -1,0 +1,18 @@
+<%brokers=product.brokers.first(8)%>
+<h4>Top Financial Representatives</h4>
+
+<%if brokers.count >0%>
+  <%brokers.each do |broker|%>
+    <div style="display:inline-block;text-align:center;">
+      <%=link_to broker do %>
+      <%=smart_image(broker,4)%><br>
+      <span style="font-size:0.8em;" class="label label-primary"><%=full_name(broker)%></span>
+      <%end%>
+    </div>
+  <%end%>
+<%else%>
+None.<br>
+<div style="display:inline-block;text-align:center;height:75px;">
+  
+</div>
+<%end%>

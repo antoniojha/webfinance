@@ -38,6 +38,7 @@ describe "broker sign in" do
           expect(page).to have_content("Company name can't be blank")   
           expect(page).to have_content("Company location can't be blank") 
         end
+    
         describe "email validation" do
           before do
             fill_in "broker_email", with: "antoniojha@gmail.com"
@@ -61,7 +62,7 @@ describe "broker sign in" do
           end
         end
       end
-   
+
       describe "at 2nd page" do
         before do
           @broker.email_authen=true
@@ -165,7 +166,7 @@ describe "broker sign in" do
               end
               describe "at product_info_5 page" do
                 before do
-                  check "broker_product_ids_name1"
+                  check "broker_product_ids_1"
                   click_button "Next"
                 end
                 it "should go to product_info_5 page" do

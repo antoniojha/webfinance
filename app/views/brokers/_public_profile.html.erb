@@ -1,28 +1,108 @@
-<% content_for :title do %>|Broker Profile<%end%>
-<div style="float:left;">
-<%=smart_image(@broker,3)%>
-</div>
+<div align="left" style="float:left; width:40%;">  
+  <table style=" text-align:left;width:100%">
+    <tr>
+      <td>
+        <%=smart_image(@broker,2)%>
+      </td>
+    </tr>
+  </table>
 
-<div>
-  <h3><%=full_name(@broker)%></h3>
-  <%=render "profile_top"%>
-</div> 
-<div style="clear:both;"></div>
-<div align="left">
-  
-  <ul>
-    <%@broker.setup_broker.licenses.each do |l|%>
-    <li><%=Order::LICENSE_TYPES[l.license_type.to_i-1][0]%>: License# <%=l.license_number%></li>
-    <%end%>
-  </ul>
-  <p><b>Product(s):</b></p>
-  <ul>
-    <%@broker.products.each do |l|%>
-    <li><%=Product.find(l).name%></li>
-    <%end%>
-  </ul>
 </div>
-<div style="float:right;">
-<%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@broker.latitude}%2C#{@broker.longitude}" %>
+<div id ="profile_info" align="left" style="overflow: auto;padding:5px;">
+  <%=render "brokers/profile_info_show"%>
 </div>
 <div style="clear:both;"></div>
+<table width="100%">
+  <tr>
+    <td width="50%" class="panel panel-default">
+        <div class="panel-body" align="left">
+          <div id="about" style="padding:5px;">
+            <h4>About me</h4>
+            <%if @broker.ad_statement%>
+            <%=@broker.ad_statement%>
+            <%else%>
+            None.
+            <%end%>
+          </div>
+          <div id="skills" style="padding:5px;">
+            <h4>Skills & Specialties</h4>
+            <%if @broker.skills%>
+            <%=@broker.skills%>
+            <%else%>
+            None.
+            <%end%>
+          </div>
+        </div>
+    </td>
+    <td width="50%" class="panel panel-default" style="vertical-align:top;">
+        <div class="panel-body" align="left">
+          <h4>Recommendations</h4>
+          <h4>Financial Stories</h4>
+        </div>
+    </td>
+  </tr>
+</table><br>
+<div align="left" style="float:left; width:50%; margin:5px;">
+  <div class="panel panel-default">
+    <div class="panel-body" align="left">
+      <h4>License(s)</h4>
+      <%@broker.setup_broker && @broker.setup_broker.licenses.each_with_index do |l,index|%>
+        <%if index==0%>
+          <%=l.license_type%>
+        <%else%>
+          ,<%=l.license_type%>
+        <%end%>
+      <%end%>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-body" align="left">
+      <h4>Financial Vehicle(s)</h4>
+      <%@broker.product_ids.each_with_index do |p,index|%>
+        <%product=Product.find(p)%>
+        <%if index==0%>
+          <%=product.name%>
+        <%else%>
+          <%=", #{product.name}"%>
+        <%end%>
+      <%end%>
+      <h4>Financial Product(s)</h4>
+ 
+      <%@broker.product_ids.each_with_index do |product_id,index|%>
+      <%product=Product.find(product_id)%>
+        <%if product%>
+          <%=render partial:"brokers/financial_product_show", locals:{product:product}%>
+        <%end%>
+      <%end%>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-body" align="left">
+      <h4>Education</h4>
+      <%unless @broker.educations.count >0%>
+        None.
+      <%else%>
+      <% @broker.educations.order(end_date: :desc).each do |e|%>
+          <% unless e.new_record?%>
+            <%=render partial:"brokers/education_show", locals:{e:e}%>
+          <%end%>
+        <%end%>
+      <%end%>
+    </div>
+  </div>  
+</div>
+<div align="left" style="overflow: auto; margin:5px;">
+
+  <div class="panel panel-default">
+    <div class="panel-body" align="left">
+      <h4>Experience</h4>
+      <%unless @broker.experiences.count >0%>
+        None.
+      <%else%>      
+        <% @broker.experiences.where(current_experience:false).order(end_date: :desc).each do |e|%>
+          <%=render partial:"brokers/experience_show", locals:{e:e}%>
+        <%end%>      
+      <%end%>
+    </div>
+  </div>  
+</div>

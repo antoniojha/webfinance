@@ -16,5 +16,9 @@
   <span class="glyphicon glyphicon-edit"></span>
   <%end%>
 </h4>
-<%=@broker.ad_statement%>
+  <%if @broker.ad_statement%>
+  <%=@broker.ad_statement%>
+  <%else%>
+  None.
+  <%end%>
 <%end%>

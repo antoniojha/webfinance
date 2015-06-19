@@ -15,5 +15,9 @@
     <span class="glyphicon glyphicon-edit"></span>
     <%end%>
   </h4>
-  <%=@broker.skills%>
+  <%if @broker.skills%>
+    <%=@broker.skills%>
+  <%else%>
+    None.
+  <%end%>
 <%end%>

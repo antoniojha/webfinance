@@ -1,15 +1,13 @@
 
 <%if @edit=="financial_product_add_#{index}"%>
 <%=render "brokers/error_financial_product_add"%>
-
-
   <%=product.name%>
 
-
-  <%=link_to broker_path(id:@broker), remote: true do%>
-  <span class="glyphicon glyphicon-plus"></span> Add Product
-  <%end%><br>
-
+  <div style="float:right;">
+    <%=link_to broker_path(id:@broker), remote: true do%>
+    <span class="glyphicon glyphicon-plus"></span> Add Product
+    <%end%>
+  </div>
 <br>
 <%=form_for @financial_product, remote:true do |f|%>  
   <table width="100%">
@@ -33,9 +31,11 @@
   <%end%>
 <%else%>
 
-<%=product.name%> 
+  <%=product.name%> 
 
-<%=link_to broker_path(id:@broker, edit:"financial_product_add_#{index}"), remote: true do%>
-   <span class="glyphicon glyphicon-plus"></span> Add Product
-  <%end%>
+  <div style="float:right;">
+  <%=link_to broker_path(id:@broker, edit:"financial_product_add_#{index}"), remote: true do%>
+     <span class="glyphicon glyphicon-plus"></span> Add Product
+    <%end%>
+  </div>
 <%end%>

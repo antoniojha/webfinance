@@ -1,22 +1,56 @@
 
 <%content_for :title do%>|Home<%end%>
+<div width="100%">
+  <div style="float:left;">
+    <%=image_tag "company_logo.png", size: "150x128"%>
+  </div>
+  <div style="overflow:auto;" align="center">
+    <div style="padding-top:10px;">
+      <h1>Get Financial Planning Ideas, Get Connected</h1>
+    </div>
+  </div>
+</div>
+<div style="clear:both;"></div>
+<div class="home_background" style="overflow:auto;">
+</div>
+ 
 
-<h1>WebFinance</h1> 
-<h4>The Future of Financial Planning begins with a few clicks of a button.</h4>
-<div class="jumbotron">
-  <p>Welcome to WebFinance, the website designed to help you succeed in your financial planning!</p>
-  <p>We will guide you in your financial planning based on the information you provided.</p>
-  <p>Sign up and you can also connect to others who share your financial goals and also financial advisors.</p>
-  <p>We will match you with the right financial broker for you based on your financial status.</p>
+<div style="float:left; width:35%;">
+    <%@user=User.new%>
+    <%=render 'form'%>
+</div>
+<div style="overflow:auto; width:65%; text-align:left; padding:10px;">
+  <h2>Get Ideas</h2>
+  <div style="float:right;">
+    <%=image_tag "home_picture3.jpg", size: "200x200"%>
+  </div>
+  
+  <div style="font-size:1.2em;padding:10px;">   
+    There is a need for professionals who do not know how to start with their first financial plan. They don't know what they need and they don’t know they don’t know. RichRly gives users ideas of possible financial strategy based on their current situation.
+    
+  </div>
+  <div style="clear:both;"></div>
+  <h2>Get Connected</h2>
+  <div style="float:right;">
+    <%=image_tag "home_picture9.jpg", size: "200x133"%>
+  </div>
+  
+  <div style="font-size:1.2em;padding:10px;">
+  RichRly connects users with financial representatives without having them to meet up. Depends on users’ preference, they can contact the advisor they like based on the profile and background information they post on the website.
+  </div>
+  <div style="clear:both;"></div>
+  <h2>Financial Education</h2>
+  <div style="float:right; width:200px;text-align:center;">
+    <%=image_tag "home_picture1.jpg", size: "150x150"%>
+  </div>
+  <div style="font-size:1.2em;padding:10px;">
+    Users can learn basic financial terms from RichRly’s financial vehicle dictionary and related articles online. RichRly provides a new combination of existing ideas, so users will feel comfortable surfing and exploring the financial world.
+  </div>
+  <div style="clear:both;"></div>
+</div>
+
+
+<div style="font-size:1.2em;">
 
 </div>
-<h4>Look up users and brokers in your state.</h4>
-<div id="map" style="width: 350px; height: 250px;"></div>
-<div id="clicked-state"></div>
 
-<div class="jumbotron">
-
-  <p><%= button_to 'Learn more',about_path, {:class=>"btn btn-primary btn-lg", :method=>'get'}%></p>
-  <p>What are you waiting for? Signup to try it for yourself!</p>
-  <p><%= button_to 'Sign Up', new_user_path, {:class=>"btn btn-primary btn-lg", :method=>'get'}%></p>
-</div>

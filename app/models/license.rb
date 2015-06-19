@@ -12,6 +12,6 @@ class License < ActiveRecord::Base
     
     return "You have upload this type of license already"
   end
-  validates_uniqueness_of :license_type, scope: :broker_id, message: custom_message
+  validates_uniqueness_of :license_type, scope: :setup_broker_id, message: custom_message
 
 end

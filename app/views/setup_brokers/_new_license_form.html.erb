@@ -1,4 +1,4 @@
-ils<h1>Upload Your Licenses</h1>
+<h1>Upload Your Licenses</h1>
 <div width="60%" class="alert alert-info error-message">To remove or add licenses go to the previous page to check or uncheck license types.</div>, 
 <%= form_for @setup_broker, url:setup_brokers_path, :html => { :method => :post,:multipart => true} do|f|%>
   <%=f.hidden_field :broker_id, value: @broker.id%>
@@ -24,6 +24,6 @@ ils<h1>Upload Your Licenses</h1>
       <%#end%>
     <%end%>
   </table>
-  <%=f.submit "Previous", name:"back_from_pg3", :class=>"btn btn-lg btn-default"%>
+  <%=f.submit "Previous", name:"back", :class=>"btn btn-lg btn-default"%>
   <%=f.submit "Next",name:"next", :class=>"btn btn-lg btn-default"%>
 <%end%>

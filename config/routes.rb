@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
+  resources :micro_comments
+  resources :financial_stories
   resources :financial_products
   resources :licenses
   
@@ -57,7 +59,7 @@ Rails.application.routes.draw do
  # match'/register/brokers/new', to:'brokers#new', via:'get', as: 'new'
  # get 'register/brokers/new'=> 'brokers#new'
   controller :brokers do
-    get "home/:id" => :home, as: 'broker_home'
+    get "broker/home/:id" => :home, as: 'broker_home'
     get ":id/edit2"=> :edit2, as:"edit2_broker"
     get "add_license" => :add_license
     get 'crop'=> :crop
@@ -121,7 +123,7 @@ Rails.application.routes.draw do
   controller :users do
     get 'signup'=> :new
     get 'crop'=> :crop
-    get 'home/:id'=> :home, as: 'user_home'
+    get 'user/home/:id'=> :home, as: 'user_home'
   end
   resources :setups
   controller :setups do

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150617000453) do
+ActiveRecord::Schema.define(version: 20150618173745) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -173,6 +173,16 @@ ActiveRecord::Schema.define(version: 20150617000453) do
 
   create_table "broker_imports", force: true do |t|
   end
+
+  create_table "broker_product_rels", force: true do |t|
+    t.integer  "broker_id"
+    t.integer  "product_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "broker_product_rels", ["broker_id"], name: "index_broker_product_rels_on_broker_id"
+  add_index "broker_product_rels", ["product_id"], name: "index_broker_product_rels_on_product_id"
 
   create_table "broker_requests", force: true do |t|
     t.string   "request_type"
@@ -347,6 +357,7 @@ ActiveRecord::Schema.define(version: 20150617000453) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "votes",              default: 0
   end
 
   add_index "financial_stories", ["broker_id"], name: "index_financial_stories_on_broker_id"
@@ -441,6 +452,19 @@ ActiveRecord::Schema.define(version: 20150617000453) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "micro_comments", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "broker_id"
+    t.integer  "financial_story_id"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "micro_comments", ["broker_id"], name: "index_micro_comments_on_broker_id"
+  add_index "micro_comments", ["financial_story_id"], name: "index_micro_comments_on_financial_story_id"
+  add_index "micro_comments", ["user_id"], name: "index_micro_comments_on_user_id"
 
   create_table "optional_expenses", force: true do |t|
     t.string   "description"
@@ -754,5 +778,18 @@ ActiveRecord::Schema.define(version: 20150617000453) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["username"], name: "index_users_on_username", unique: true
+
+  create_table "votes", force: true do |t|
+    t.integer  "financial_story_id"
+    t.integer  "user_id"
+    t.integer  "broker_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "description"
+  end
+
+  add_index "votes", ["broker_id"], name: "index_votes_on_broker_id"
+  add_index "votes", ["financial_story_id"], name: "index_votes_on_financial_story_id"
+  add_index "votes", ["user_id"], name: "index_votes_on_user_id"
 
 end

@@ -6,7 +6,7 @@ describe "User Authentication" do
         let(:user){FactoryGirl.create(:user)}
         describe "correct sign in" do
           before do         
-            log_in(user)   
+            user_login(user)   
           end
           it "should allow user to access show page" do
             visit user_path(user.id)
@@ -65,7 +65,7 @@ describe "User Authentication" do
       let(:user){FactoryGirl.create(:user)}
       let(:wrong_user){FactoryGirl.create(:other_user)}
       before do
-        log_in user
+        user_login user
       end
       describe "as wrong user" do
         describe "should access edit if correct user" do

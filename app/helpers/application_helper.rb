@@ -2,28 +2,29 @@ include ActionView::Helpers::NumberHelper
 
 module ApplicationHelper
   def column_width_right
-    if current_controller=='spendings'
+    if current_controller=='brokers' && controller.action_name=="index"
       return "col-md-3"
-    elsif current_controller=='brokers' && controller.action_name=="index"
-      return "col-md-3"
+    elsif current_controller=="static_pages"
+      return "col-md-1"
     else
       return "col-md-2"
     end
   end
   def column_width_middle
-    if current_controller=='spendings'
-      return "col-md-6"
-    elsif current_controller=='brokers' && controller.action_name=="index"
+    if current_controller=='brokers' && controller.action_name=="index"
       return "col-md-7"
+    elsif current_controller=="static_pages"
+      return "col-md-10"
     else
       return "col-md-8"
     end
   end
   def column_width_left
-    if current_controller=='spendings'
-      return "col-md-3"
-    elsif current_controller=='brokers' && controller.action_name=="index"
+
+    if current_controller=='brokers' && controller.action_name=="index"
       return "col-md-2"  
+    elsif current_controller=="static_pages"
+      return "col-md-1"
     else
       return "col-md-2"
     end
@@ -62,9 +63,13 @@ module ApplicationHelper
         image_tag user.picture.url(:medium),size:"100x100", class: "img-thumbnail"
       elsif scenario ==2
         image_tag user.picture.url(:medium),size:"200x200", class: "img-thumbnail"
+      elsif scenario ==4
+        image_tag user.picture.url(:medium),size:"75x75", class: "img-thumbnail"
       end
     else
-      if scenario ==3
+      if scenario ==4
+        image_tag "place_holder.jpg",size:"75x75", class: "img-thumbnail", alt:"Please upload picture"        
+      elsif scenario ==3
         image_tag "place_holder.jpg",size:"300x300", class: "img-thumbnail", alt:"Please upload picture"  
       elsif scenario ==2
         image_tag "place_holder.jpg",size:"200x200", class: "img-thumbnail", alt:"Please upload picture"

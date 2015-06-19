@@ -1,0 +1,48 @@
+          
+          <h4><%=product.name%></h4>
+          <div class="panel panel-default">
+            <div class="panel-body" align="center">
+              
+              <%brokers=product.brokers%>
+              <h4>Top Financial Representatives Licensed to sell <%=product.name%></h4>
+              <div class="panel panel-default">
+                <div class="panel-body" align="left">
+                  
+                <%brokers.each do |broker|%>
+                  <div style="display:inline-block;text-align:center;">
+
+                    <%=smart_image(broker,4)%><br>
+                    <span style="font-size:0.8em;"><%=full_name(broker)%></span>
+                  </div>
+                <%end%>
+                </div>
+              </div>
+              <div class="panel panel-default" style="width:50%; float:left; text-align:center;">
+                <div class="panel-body">
+                  <h4>Top Financial Stories</h4>
+                  <div width="100%" align="left">
+                    <%financial_stories=product.financial_stories%>
+                    <table>
+                    <%financial_stories.each do |story|%>
+                      <tr>
+                        <td width="30%"><span style="font-size:0.8em;">
+                          By: <%=full_name(story.broker)%>
+                          </span>
+                        </td>
+                        <td width="5%"></td>
+                        <td width="65%"><%=abrev_display(story.description,100)%></td>
+                      </tr>
+                    <%end%>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-default" style="width:50%; overflow:auto; text-align:center;">
+                <div class="panel-body">
+                  <h4>Top Financial Advises</h4>
+                  <div width="100%">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>

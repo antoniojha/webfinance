@@ -1,0 +1,43 @@
+ <%vehicle_type=Order::FINANCIAL_CATEGORIES_HASH.key(g.titleize)%>
+  <%products=Product.where(vehicle_type:vehicle_type)%>
+  <%=render partial:"home_goal_intro", locals:{g:g, products:products}%>
+    <div class="panel panel-default">
+      <div class="panel-body" align="left">
+        <table width="100%" style="text-align:center;">
+          <%size=products.size%>
+          <%products.each_with_index do |product,index|%>
+            <%if index%2==0 && (index+1<size)%>
+            <tr>
+              <td width="50%" class="panel panel-primary" style="margin:5px;">
+                <h3><span class="label label-success"><%=product.name%></span></h3>
+                <div class="panel-body home_display" align="left">
+
+                  <%=render partial:"brokers_home", locals:{product:product}%>
+                  <%=render partial:"stories_home", locals:{product:product}%>
+                </div>
+              </td>
+            <%elsif index%2==1%>
+              <td width="50%" class="panel panel-primary" style="margin:5px; vertical-align:text-top;">
+                <h3><span class="label label-success"><%=product.name%></span></h3>
+                <div class="panel-body" align="left">
+                  <%=render partial:"brokers_home", locals:{product:product}%>
+                  <%=render partial:"stories_home", locals:{product:product}%>
+                </div>
+              </td>
+            </tr>
+            <%elsif index%2==0 && (index+1==size)%>
+            <tr>
+              <td width="50%" class="panel panel-primary" style="margin:5px;">
+                <h3><span class="label label-success"><%=product.name%></span></h3>
+                <div class="panel-body" align="left">
+                  <%=render partial:"brokers_home", locals:{product:product}%>
+                  <%=render partial:"stories_home", locals:{product:product}%>
+                </div>
+              </td>
+              <td width="50%"></td>
+            </tr>
+            <%end%>
+          <%end%>
+        </table>
+      </div>
+    </div>

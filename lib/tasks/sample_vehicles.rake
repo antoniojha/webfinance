@@ -1,7 +1,8 @@
+if false
 namespace :db do
-  desc "Fill database with vehichles" 
+  desc "Fill database with vehichles"
     task populate: :environment do  
-      
+
       (1..7).each do |v|
         10.times do
           vehicle_type=v.to_s
@@ -11,4 +12,5 @@ namespace :db do
         end
       end
     end
+end
 end

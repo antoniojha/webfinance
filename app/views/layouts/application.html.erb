@@ -18,16 +18,22 @@
   </style>
 </head>
 <body data-no-turbolink="true">
-	<header class="navbar-default navbar-static-top" role="navigation">  
+  <%if params[:controller]=="static_pages"%>
+  	<header class="navbar-default navbar-static-top navbar-inverse" role="navigation">  
 		  <%=render 'layouts/header'%>
-	</header>
-  <%if user_logged_in? && (params[:controller]=="users")%>
+	  </header>
+  <%else%>
+	  <header class="navbar-default navbar-static-top" role="navigation">  
+		  <%=render 'layouts/header'%>
+	  </header>
+  <%end%>
+  <%if user_logged_in?%>
     <div class="navbar-default navbar-custom2 navbar-static-top" role="navigation">  
       <%=render partial:"profiles/top_menu",locals:{object:current_user,type:"users"} %>
 	  </div>     
   <%end%>   
-  <%if broker_logged_in? && (params[:controller]=="brokers")%>
-    <div class="navbar-default navbar-custom2 navbar-static-top" role="navigation">  
+  <%if broker_logged_in?%>
+    <div class="navbar-default navbar-custom2 navbar-static-top" role="navigation">
       <%=render partial:"profiles/top_menu",locals:{object:current_broker,type:"brokers"} %>
 	  </div>     
   <%end%>   

@@ -22,6 +22,8 @@
 en:
   activerecord:
     attributes:
+      vote:
+        user_id: ""
       background:
         month: ""
       user:
