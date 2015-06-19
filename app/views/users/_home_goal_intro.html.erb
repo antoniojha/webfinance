@@ -53,8 +53,8 @@
     
     <p>Below are the various types of vehicle in this category:</p>
     <ol>
-      <%products.each do |product|%>
-      <li><%=product.name%></li>
+      <%products.each do |product|%>     
+      <li><%=content_tag(:a,product.name,href:"##{product.name}")%></li>
       <%end%>
     </ol>
   </div>
