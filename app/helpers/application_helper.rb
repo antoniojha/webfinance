@@ -41,8 +41,10 @@ module ApplicationHelper
     end
   end
   def full_name(person)
+    if person.first_name && person.last_name
     name=person.first_name.capitalize+ " "+person.last_name.capitalize
     return name
+    end
   end
   def money(amount)
     if amount.is_a? Numeric
