@@ -3,6 +3,7 @@ class MicroCommentsController < ApplicationController
   def create
     @comment=MicroComment.new(financial_story_params)
     @story=FinancialStory.find(params[:micro_comment][:financial_story_id])
+    @vote=Vote.new
     respond_to do |format|
       if @comment.save
         format.html{redirect_to @story}
