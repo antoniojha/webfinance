@@ -2,8 +2,8 @@
 <div class="navbar-inner" style="margin-left:25%;">
 	<div class="container">	
     <ul class="nav nav-pills">
-      <li role="presentation"><%=link_to "Home", controller: type, action: "home", id: object%></li>
-      <li role="presentation"><%=link_to "Profile", controller: type, action: "show", id: object%></li>
+      <li role="presentation"><%=link_to "Home", controller: "/#{type}", action: "home", id: object.id%></li>
+      <li role="presentation"><%=link_to "Profile", controller: "/#{type}", action: "show", id: object.id%></li>
       <li role="presentation"><%=link_to "Financial Reps", brokers_path%></li>
       <li role="presentation"><%=link_to "Users", users_path%></li>
       <li role="presentation"><a href="#">News</a></li>

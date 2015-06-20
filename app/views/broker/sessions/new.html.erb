@@ -1,5 +1,6 @@
 <% content_for :title do %>|Broker Login<%end%>
 <h3>Broker Login</h3>
+
 <%=render "broker/sessions/error"%>
 <%= form_for :session, url:broker_signin_path do |f|%>
 	

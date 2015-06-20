@@ -110,7 +110,11 @@ Rails.application.routes.draw do
       post "signin"=> :create
       delete "logout"=> :destroy
     end
+    controller :brokers do
+      get 'signup'=> :new
+    end
   end
+
   resources :quote_relations
   controller :quote_relations do
     get 'quote_lists'=> :quote_lists
