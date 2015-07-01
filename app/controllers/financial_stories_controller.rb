@@ -1,7 +1,21 @@
 class FinancialStoriesController < ApplicationController
   before_action :set_story, only:[:show, :edit,:update]
   def create
-
+    @broker=Broker.find(params[:broker_id])
+    @story=FinancialStory.new(financial_story_params)
+    @story.broker_id=@broker.id
+    
+    respond_to do |format|
+      if @story.save
+        format.js{}
+        format.html{redirect_to @broker}
+      else
+        @story_error=true
+        @story
+        format.js{}
+        format.html{render "brokers/show"}
+      end
+    end
   end
   def update
     if params[:user_id]
@@ -39,6 +53,9 @@ class FinancialStoriesController < ApplicationController
   def index
   end
   private
+  def financial_story_params
+    params.require(:financial_story).permit(:title,:financial_category,:product_id,:description)
+  end
   def set_story
     @story=FinancialStory.find(params[:id])
   end

@@ -11,8 +11,8 @@
         <th>Start Date</th>
         <th>End Date</th>
       <tr>
-        <td><%=f.date_select :begin_date,{:start_year => Date.current.year, :end_year => 1960,discard_day: true}%></td>
-        <td><%=f.date_select :end_date,:start_year => Date.current.year, :end_year => 1960,discard_day: true, include_blank: true%></td>    
+        <td><%=f.date_select :begin_date,{:start_year => Date.current.year, :end_year => 1960,discard_day: true, include_blank: true}%></td>
+        <td><%=f.date_select :end_date,:start_year => Date.current.year, :end_year => 1960,discard_day: true%></td>    
       </tr>
     </table><br>
     <table width="100%">

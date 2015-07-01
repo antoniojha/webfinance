@@ -1,6 +1,4 @@
 <%@comment=MicroComment.new%>
-
-
 <div class="panel panel-default">
   <div class="panel-body">
     
@@ -97,8 +95,12 @@
     <h3>Your comment</h3>
     <table width="100%">
       <tr>
-        <td width="15%" style="vertical-align:text-top;">        
-          <%=smart_image(current_user,4)%>
+        <td width="15%" style="vertical-align:text-top;">      
+          <%if current_user%>
+            <%=smart_image(current_user,4)%>
+          <%elsif current_broker%>
+            <%=smart_image(current_broker,4)%>
+          <%end%>
         </td>
         <td width="85%">
           <%=form_for @comment, remote:true do |f|%>

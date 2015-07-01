@@ -5,6 +5,10 @@ ruby '2.1.5'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.5'
 
+gem "auto_complete"
+
+gem 'remotipart', '~> 1.2'
+
 # yodlee gems
 gem 'httparty'
 gem 'hashie'
@@ -35,6 +39,9 @@ gem 'paperclip'
 gem 'aws-sdk'
 gem 'rmagick'
 gem 'paperclip-compression'
+#Carrierwave, used to upload pictures to Amazon S3
+gem 'carrierwave'
+gem 'fog'
 # This provides standardized interface to access a variety of spreadsheet format
 gem 'roo'
 
@@ -55,6 +62,9 @@ gem 'rufus-scheduler'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+
+# Gon allow javascript to access variable created in controller
+gem 'gon'
 
 # Install library to use Yellow Fade Technique to highlight ajax change
 gem 'jquery-ui-rails'
@@ -84,7 +94,7 @@ group :development,:test do
 end
 group :test do
   gem 'capybara'
- # gem 'capybara-webkit'
+#  gem 'capybara-webkit'
   gem 'spork', "> 0.9.0.rc"
   gem 'factory_girl_rails'
   gem 'selenium-webdriver'

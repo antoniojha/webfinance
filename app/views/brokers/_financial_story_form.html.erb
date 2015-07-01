@@ -1,0 +1,39 @@
+
+  <%=render "financial_stories/error"%>
+  
+  <%=form_for @story, remote:true do |f|%>
+  <table width="80%">
+    <tr>
+      <td width="20%"><%=f.label "Title"%></td>
+      <td width="80%">
+        <%=f.text_field :title,{:style=>"width:100%;"}%>
+      </td>
+    </tr>
+    <tr>
+      <td><%=f.label "Category"%></td>
+      <td>
+        <%=f.select :financial_category, Order::FINANCIAL_CATEGORIES, {prompt:"Please Select Category"},{:style=>"width:100%;"}%>
+      </td>
+    </tr>
+    <tr>
+      <td><%=f.label "Vehicle"%></td>
+      <td>
+        <%=f.select :product_id, Product.all.collect {|p| [ p.name, p.id ] }, {prompt:"Please Select Vehicle"},{:style=>"width:100%;"}%>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top;"><%=f.label "Story"%></td>
+      <td>
+        <%=f.text_area :description, {rows:"12", :style=>"width:100%;"}%>
+      </td>
+    </tr>
+    <tr>
+      <%if @story.new_record?%>
+      <td><%=f.submit "Create Story"%></td>
+      <%else%>
+      <td><%=f.submit "Update Story"%></td>
+      <%end%>
+      <td><%=hidden_field_tag :broker_id, @broker.id%></td>
+    </tr>
+  </table>
+  <%end%>

@@ -94,11 +94,11 @@
           <tr>
             <td>
               <%unless e.current_experience%>
-                <%=link_to '<i class="glyphicon glyphicon-remove"></i>'.html_safe, {controller:"experiences",action:"destroy",id:e.id,broker_id:@broker.id},method: :delete,data: { confirm: "Are you sure?" },:remote => true %>
+                <%=link_to '<i class="glyphicon glyphicon-remove"></i>'.html_safe, {controller:"experiences",action:"destroy",id:e.id,broker_id:@broker.id},method: :delete,data: { confirm: "Are you sure?" },:remote => true, id:"experience_remove_#{e.id}" %>
               <%end%>
             </td>
             <td style="text-align:right;">      
-              <%=link_to broker_path(id:@broker, edit:"experience_edit_#{e.id}"), remote: true do%>
+              <%=link_to broker_path(id:@broker, edit:"experience_edit_#{e.id}"), remote: true, id: "experience_edit_#{e.id}" do%>
                 <span class="glyphicon glyphicon-edit"></span>
               <%end%>
             </td>

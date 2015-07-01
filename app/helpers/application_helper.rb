@@ -60,23 +60,28 @@ module ApplicationHelper
     end
   end
   def smart_image(user,scenario=1)
-    if user.picture_file_name
+    
+    place_holder_url='http://www.clker.com/cliparts/C/N/O/F/T/X/blank-profile-th.png'
+    if !user.image_url.to_s.empty?
       if scenario == 1
-        image_tag user.picture.url(:medium),size:"100x100", class: "img-thumbnail"
+       # image_tag user.image_url(:thumb_100).to_s
+        image_tag user.image_url(:thumb_200).to_s,size:"100x100", class: "img-thumbnail"
       elsif scenario ==2
-        image_tag user.picture.url(:medium),size:"200x200", class: "img-thumbnail"
+      #  image_tag user.image_url(:thumb_200).to_s
+        image_tag user.image_url(:thumb_200).to_s,size:"200x200", class: "img-thumbnail"
       elsif scenario ==4
-        image_tag user.picture.url(:medium),size:"75x75", class: "img-thumbnail"
+     #   image_tag user.image_url(:thumb_75).to_s
+        image_tag user.image_url(:thumb_200).to_s,size:"75x75", class: "img-thumbnail"
       end
     else
       if scenario ==4
-        image_tag "place_holder.jpg",size:"75x75", class: "img-thumbnail", alt:"Please upload picture"        
+        image_tag place_holder_url,size:"75x75", class: "img-thumbnail", alt:"Please upload picture"        
       elsif scenario ==3
-        image_tag "place_holder.jpg",size:"300x300", class: "img-thumbnail", alt:"Please upload picture"  
+        image_tag place_holder_url,size:"300x300", class: "img-thumbnail", alt:"Please upload picture"  
       elsif scenario ==2
-        image_tag "place_holder.jpg",size:"200x200", class: "img-thumbnail", alt:"Please upload picture"
+        image_tag place_holder_url,size:"200x200", class: "img-thumbnail", alt:"Please upload picture"
       else
-        image_tag "place_holder.jpg",size:"100x100", class: "img-thumbnail", alt:"Please upload picture"
+        image_tag place_holder_url,size:"100x100", class: "img-thumbnail", alt:"Please upload picture"
       end
     end
   end

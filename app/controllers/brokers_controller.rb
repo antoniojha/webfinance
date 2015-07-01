@@ -27,24 +27,31 @@ class BrokersController < Broker::AuthenticatedController
       end
     end
     respond_to do |format|
+  
       if params[:edit_products]
         @broker.products_bool=true
       end
       if params[:delete_picture]
-        @broker.picture=nil
+        @broker.image=nil
+        @broker.remove_image!
         if @broker.save
           format.html { redirect_to @broker,notice:'Your profile was successfully updated.'}
         else
-          render "show"
+          format.html{render "show"}
         end
+        
       elsif @broker.update(broker_params)
-        if params[:broker][:picture].blank?
+   
+        if params[:broker][:image].blank?
           if @broker.cropping?
-            @broker.reprocess_picture
+            @broker.image.recreate_versions!
+        
+          #  @broker.reprocess_picture
           end
           if @broker.validate_email_bool && (@broker.email_authen!=true)
             @broker.send_email_confirmation
           end
+       
           format.html { redirect_to @broker,notice:'Broker was successfully updated.'}
         else
           format.html{
@@ -53,6 +60,7 @@ class BrokersController < Broker::AuthenticatedController
         end
       else
         format.html { render action: 'edit' }
+        format.js{}
         format.json { render json: @broker.errors, status: :unprocessable_entity }
       end  
     end
@@ -60,11 +68,12 @@ class BrokersController < Broker::AuthenticatedController
   #display individual broker
   def show
     @crop=params[:crop]
-
     @edit=params[:edit]
     @education=Education.new #needed for education_add partial template
     @experience=Experience.new #needed for experience_add partial template
     @financial_product =FinancialProduct.new
+    @story=FinancialStory.new
+
     respond_to do |format|
       format.html
       format.js
@@ -102,7 +111,7 @@ class BrokersController < Broker::AuthenticatedController
   end
 
   def broker_params       
-    params.require(:broker).permit(:first_name, :last_name, :street, :city, :state, :email,:username, :password, :password_confirmation,:picture, :crop_x,:crop_y,:crop_w,:crop_h, :skills, :ad_statement, :phone_number_work, :phone_number_cell, :web,{:product_ids => []})
+    params.require(:broker).permit(:first_name, :last_name, :street, :city, :state, :email,:username, :password, :password_confirmation,:picture, :crop_x,:crop_y,:crop_w,:crop_h, :skills, :ad_statement, :phone_number_work, :phone_number_cell, :web,{:product_ids => []},:image)
 
   end
 end

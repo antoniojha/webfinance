@@ -4,11 +4,12 @@
   <%=product.name%>
 
   <div style="float:right;">
-    <%=link_to broker_path(id:@broker), remote: true do%>
+    <%=link_to broker_path(id:@broker), remote:true do%>
     <span class="glyphicon glyphicon-plus"></span> Add Product
     <%end%>
   </div>
 <br>
+<div class="financial_product_add">
 <%=form_for @financial_product, remote:true do |f|%>  
   <table width="100%">
     <tr>
@@ -17,7 +18,7 @@
     </tr>
     <tr>
       <td>Name:</td>
-      <td><%=f.text_field :name, {style:"width:100%;"}%></td>
+      <td><%=f.text_field :name, {style:"width:100%;", class:"financial_product_name", data:{autocomplete_source:financial_products_url}}%></td>
     </tr>
 
     <tr>
@@ -29,12 +30,13 @@
     </tr>
   </table>
   <%end%>
+</div>
 <%else%>
 
   <%=product.name%> 
 
   <div style="float:right;">
-  <%=link_to broker_path(id:@broker, edit:"financial_product_add_#{index}"), remote: true do%>
+    <%=link_to broker_path(id:@broker, edit:"financial_product_add_#{index}"),id:"financial_product_add_#{index}", remote:true do%>
      <span class="glyphicon glyphicon-plus"></span> Add Product
     <%end%>
   </div>

@@ -20,10 +20,7 @@
           marginLeft: '-' + Math.round(rx * coords.x) + 'px',
           marginTop: '-' + Math.round(ry * coords.y) + 'px'
         });
-
-
-        var ratio = <%=@user.picture_geometry(:original).width %> / <%= @user.picture_geometry(:large).width %>; 
-      
+        var ratio = <%=@user.picture_geometry(:original).width %> / <%= @user.picture_geometry(:large).width %>;      
         $('#crop_x').val(Math.floor(coords.x * ratio));
         $('#crop_y').val(Math.floor(coords.y * ratio));
         $('#crop_w').val(Math.floor(coords.w * ratio));

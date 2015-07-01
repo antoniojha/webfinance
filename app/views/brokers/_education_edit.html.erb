@@ -82,11 +82,11 @@
           <%end%>
           <tr>
             <td>
-              <%=link_to '<i class="glyphicon glyphicon-remove"></i>'.html_safe, {controller:"educations",action:"destroy",id:e.id,broker_id:@broker.id},method: :delete,data: { confirm: "Are you sure?" },:remote => true %>
+              <%=link_to '<i class="glyphicon glyphicon-remove"></i>'.html_safe, {controller:"educations",action:"destroy",id:e.id,broker_id:@broker.id},method: :delete,data: { confirm: "Are you sure?" },:remote => true,id:"education_remove_#{e.id}" %>
             
             </td>
             <td style="text-align:right;">      
-              <%=link_to broker_path(id:@broker, edit:"education_edit_#{e.id}"), remote: true do%>
+              <%=link_to broker_path(id:@broker, edit:"education_edit_#{e.id}"), remote: true,id:"education_edit_#{e.id}" do%>
                 <span class="glyphicon glyphicon-edit"></span>
               <%end%>
             </td>

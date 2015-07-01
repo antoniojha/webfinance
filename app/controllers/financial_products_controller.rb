@@ -21,6 +21,14 @@ class FinancialProductsController < ApplicationController
       end
     end
   end
+  def index
+    respond_to do |format|
+      @financial_products = FinancialProduct.order(:name).where("name like ?", "%#{params[:term]}%")
+      format.json do
+        render json: @financial_products.map(&:name).uniq!
+      end
+    end
+  end
   def destroy
     @broker=Broker.find(params[:broker_id])
     @financial_product_rel=FinancialProductRel.where(broker_id:@broker.id,financial_product_id:params[:id])

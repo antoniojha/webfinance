@@ -1,0 +1,8 @@
+$( "#financial_story_form" ).dialog('destroy'); 
+$("#financial_story_form").html("<%=escape_javascript render('brokers/financial_story_form')%>");
+  create_financial_dialog = $( "#financial_story_form" ).dialog({
+    autoOpen: true,
+    height: 550,
+    width: 800,
+    modal: true
+  });

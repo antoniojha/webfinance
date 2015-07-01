@@ -1,16 +1,16 @@
-<%=form_for @broker do |f|%>
+<%=form_for @broker, html:{:multipart => true} do |f|%>
   <div style="float:left; width=50%;">
-    <h4>Your Picture</h4>  
-    <%= image_tag f.object.picture.url(:large), :id => "cropbox"%>
+    <h4>Your Picture_Crop</h4>  
+    <%= image_tag f.object.image_url(:thumb_400).to_s, :id => "cropbox"%>
 
   </div>
   <div style="overflow:auto;">
     <h4>Preview</h4>
     <div class="crop_user_picture">      
-      <%= image_tag f.object.picture.url(:large), :id => "preview" %>
+      <%= image_tag f.object.image_url(:thumb_400).to_s, :id => "preview" %>
     </div>    
       <% for attribute in [:crop_x, :crop_y, :crop_w, :crop_h]%>
-        <%=f.hidden_field attribute, :id => attribute %>
+        <%=f.hidden_field attribute%>
       <%end%>
       <%= f.submit "Crop", class: "btn btn-default btn-lg" %>
   </div>
@@ -19,7 +19,7 @@
   <div style="float:left;">
     <table width="50%">
       <tr>
-        <td width="50%"><%=f.file_field :picture, class: "btn btn-default btn-lg"%></td>
+        <td width="50%"><%=f.file_field :image, class: "btn btn-default btn-lg"%></td>
         <td width="50%"><%=f.submit "Post Picture", class: "btn btn-default btn-lg"%></td>
       </tr>
     </table>

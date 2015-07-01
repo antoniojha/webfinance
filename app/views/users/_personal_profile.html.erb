@@ -1,5 +1,6 @@
 <script>
 $(function(){
+  
   <%if @user.picture_file_name && (@crop!="true")%>
   change_dialog = $( "#change_dialog-form" ).dialog({
     autoOpen: false,
@@ -30,7 +31,6 @@ $(function(){
   //  alert("it's working");
     upload_dialog.dialog( "open" );
   });
-
 });
 
 

@@ -13,13 +13,13 @@
   	<tr>
   		<td><%= f.label "Email"%> <span style="color:red"><i>(case insensitive)</i></span><%=asterisk_html%></td>
   		<td><%= f.text_field :email,{:class=>'form-control'} %></td>
-      <td><%= f.submit 'send validation code',name:"send_validation"%></td>
+      <td><%= f.submit 'send validation code',name:"send_validation", class:"btn btn-default"%></td>
 	  </tr>
     <% if f.object.email && (f.object.email_authen!=true)%>
     <tr>
       <td><%=f.label "Validation Code"%></td>
       <td><%=f.text_field :validation_code,{:class=>'form-control'}%></td>
-      <td><%=f.submit "validate email", name:"validate_email"%></td>
+      <td><%=f.submit "validate email", name:"validate_email", class:"btn btn-default"%></td>
     </tr>    
     <%elsif f.object.email && (f.object.email_authen==true)%>
     <tr>
@@ -73,6 +73,6 @@
 <table width="70%">
 		<tr>
 			<td></td>
-      <td><%= f.submit 'Update Account', :class=>"btn btn-primary" %></td>
+      <td><%= f.submit 'Update Account', :class=>"btn btn-default" %></td>
 		</tr>
 </table>

@@ -1,40 +1,31 @@
-<% if @broker.picture_file_name%>
-  <% content_for (:head) do %>
-    <script type="text/javascript">
-      var x=<%=@broker.picture_geometry(:large).width%>/2+100;
-      var y=<%=@broker.picture_geometry(:large).height%>/2+100;
-      $(function(){
-        $('#cropbox').Jcrop({
-        onChange: update_crop,
-        onSelect: update_crop,
-        setSelect: [x, y, 100,100],
-          aspectRatio: 1
-        });
-      });
-      function update_crop(coords) {
-        var rx = 100/coords.w;
-        var ry = 100/coords.h;
-        $('#preview').css({
-          width: Math.round(rx * <%= @broker.picture_geometry(:large).width %>) + 'px',
-          height: Math.round(ry * <%= @broker.picture_geometry(:large).height %>) + 'px',
-          marginLeft: '-' + Math.round(rx * coords.x) + 'px',
-          marginTop: '-' + Math.round(ry * coords.y) + 'px'
-        });
-
-
-        var ratio = <%=@broker.picture_geometry(:original).width %> / <%= @broker.picture_geometry(:large).width %>; 
-      
-        $('#crop_x').val(Math.floor(coords.x * ratio));
-        $('#crop_y').val(Math.floor(coords.y * ratio));
-        $('#crop_w').val(Math.floor(coords.w * ratio));
-        $('#crop_h').val(Math.floor(coords.h * ratio));   
-      }
-</script>
-  <%end%>
-<%end%>
-<%if @broker.picture_file_name && @crop!="true"%>
+  <table style=" text-align:left;width:100%;">
+    <tr>
+      <td>
+        <%=smart_image(@broker,2)%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <% if ((@crop !="true") && !@broker.image_url.to_s.empty?) %>
+        <button type="button" class="btn btn-default btn-lg change-btn">
+          Change Photo
+          <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+        </button>
+        <%else%>
+        <button type="button" class="btn btn-default btn-lg upload-btn">
+          Upload Photo
+          <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+        </button>        
+        <%end%>
+      </td>
+    </tr>
+  </table>
+here <%=@broker.image_url.to_s.empty?%>; crop:<%=@crop%>;
+<%if !@broker.image_url.to_s.empty? && @crop!="true"%>
 <%=render "brokers/change_dialog_form"%>
 <%else%>
-<%=render "brokers/upload_dialog_form"%>
+
+ <%=render "brokers/upload_dialog_form"%>
+
 <%end%>
 

@@ -1,7 +1,7 @@
 class Broker < ActiveRecord::Base
 
   attr_accessor :name_or_email, :password, :password_confirmation,:validate_email_bool, :validation_code, :licensetype_bool, :products_bool, :story_bool, :term_of_use_bool,:basic_info_bool
-  attr_accessor :financial_category,:product_id, :story
+  attr_accessor :financial_category,:product_id, :story, :image
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   serialize :license_type #used during setup, this will not be updated after setup all licenses will be accessed via @broker.setup_broker.licenses
   serialize :product_ids
@@ -21,6 +21,8 @@ class Broker < ActiveRecord::Base
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   # the following uses Regex (lookahead assertion) to ensure there is at least a lower case and upper case letter, a digit, and a special character (non-word character)
   VALID_PASSWORD_REGEX= /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)/
+  
+  mount_uploader :image, ImageUploader
   validates :username, presence: true, on: :create, if: :password_signup?
   validates :password, :password_confirmation, presence: true, on: :create, if: :password_signup?
   def password_signup?

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150618173745) do
+ActiveRecord::Schema.define(version: 20150630233444) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -262,6 +262,7 @@ ActiveRecord::Schema.define(version: 20150618173745) do
     t.text     "skills"
     t.text     "ad_statement"
     t.boolean  "check_term_of_use"
+    t.string   "image"
   end
 
   add_index "brokers", ["confirmation_number"], name: "index_brokers_on_confirmation_number"
@@ -358,6 +359,7 @@ ActiveRecord::Schema.define(version: 20150618173745) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "votes",              default: 0
+    t.string   "title"
   end
 
   add_index "financial_stories", ["broker_id"], name: "index_financial_stories_on_broker_id"

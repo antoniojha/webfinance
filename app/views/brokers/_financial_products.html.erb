@@ -4,7 +4,7 @@
     <span class="label label-primary">
       <%="#{financial_product.company.name} #{financial_product.name}"%>
     </span>
-    <%=link_to '<i class="glyphicon glyphicon-remove"></i>'.html_safe, {controller:"financial_products",action:"destroy",id:financial_product.id,broker_id:@broker.id},method: :delete,data: { confirm: "Are you sure?" },:remote => true %>
+    <%=link_to '<i class="glyphicon glyphicon-remove"></i>'.html_safe, {controller:"financial_products",action:"destroy",id:financial_product.id,broker_id:@broker.id},method: :delete,:remote => true, id:"remove_product_#{financial_product.id}" %>
 
   <%end%>
 <%else%>

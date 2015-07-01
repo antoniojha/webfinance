@@ -1,7 +1,18 @@
-<% if @vote.errors.any? %>
+<% if @vote && @vote.errors.any? %>
   <div class="alert alert-success error-message" style="float:left;">
     <ul>
       <% @vote.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<div style="clear:both;"></div>
+<% end %>
+here
+<% if @story && @story.errors.any? %>
+  <div class="alert alert-success error-message" style="float:left;">
+    <ul>
+      <% @story.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>
       <% end %>
     </ul>

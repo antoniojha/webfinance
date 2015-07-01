@@ -3,12 +3,12 @@
 
     <%if @edit=="profile_info"%>
     <h1><%=full_name(@broker)%>
-      <%=link_to broker_path(id:@broker), remote: true do%>
+      <%=link_to broker_path(id:@broker),id: "profile_info_edit", remote:true do%>
         <span class="glyphicon glyphicon-edit"></span>
       <%end%>
     </h1> 
     <h4><%=@broker.title%> at <%=@broker.company_name%></h4>
-      <%=form_for @broker do |f|%>
+    <%=form_for @broker, remote:true do |f|%>
         <table width="100%">
           <tr>
             <td width="50%">Location:</td>
@@ -20,25 +20,25 @@
           </tr>
           <tr>
             <td>Phone Number (Work):</td>
-            <td><%=f.text_field :phone_number_work, {class:"form-control"}%></td>
+            <td><%=f.text_field :phone_number_work, {style:"width:100%;"}%></td>
           </tr>
           <tr>
             <td>Phone Number (Cell):</td>
-            <td><%=f.text_field :phone_number_cell, {class:"form-control"}%></td>
+            <td><%=f.text_field :phone_number_cell, {style:"width:100%;"}%></td>
           </tr>
           <tr>
             <td>URL:</td>
-            <td><%=f.text_field :web, {class:"form-control"}%></td>
+            <td><%=f.text_field :web, {style:"width:100%;"}%></td>
           </tr>
           <tr>
-            <td><%=f.submit "Submit", {class: "btn btn-default"}%></td>
+            <td><%=f.submit "Edit", {class: "btn btn-default"}%></td>
             <td></td>
           </tr>
         </table>   
       <%end%>
     <%else%>
     <h1><%=full_name(@broker)%>
-      <%=link_to broker_path(id:@broker,edit:"profile_info"), remote: true do%>
+      <%=link_to broker_path(id:@broker,edit:"profile_info"), id: "profile_info_edit", remote:true do%>
         <span class="glyphicon glyphicon-edit"></span>
       <%end%>
     </h1> 
