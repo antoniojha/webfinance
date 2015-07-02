@@ -1,7 +1,7 @@
 
-  <%=render "financial_stories/error"%>
+  <%=render partial: "financial_stories/error", locals:{story:story}%>
   
-  <%=form_for @story, remote:true do |f|%>
+  <%=form_for story, remote:true do |f|%>
   <table width="80%">
     <tr>
       <td width="20%"><%=f.label "Title"%></td>
@@ -28,7 +28,7 @@
       </td>
     </tr>
     <tr>
-      <%if @story.new_record?%>
+      <%if story.new_record?%>
       <td><%=f.submit "Create Story"%></td>
       <%else%>
       <td><%=f.submit "Update Story"%></td>

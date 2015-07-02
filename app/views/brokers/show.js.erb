@@ -1,3 +1,9 @@
-$("#personal_profile").html("<%=escape_javascript render('personal_profile')%>");
-
+$("#profile_infos").html("<%=escape_javascript render('brokers/profile_infos')%>");
+$("#abouts").html("<%=escape_javascript render('brokers/abouts')%>");
+$("#skills").html("<%=escape_javascript render('brokers/skills')%>");
+$("#licenses").html("<%=escape_javascript render('brokers/licenses')%>");
+$("#finance_vehicles_products").html("<%=escape_javascript render('brokers/finance_vehicles_products')%>");
+$("#educations").html("<%=escape_javascript render('brokers/educations')%>");
+$("#experiences").html("<%=escape_javascript render('brokers/experiences')%>");
+$("#financial_stories").html("<%=escape_javascript render('brokers/financial_stories')%>");
 $("#<%=@edit%>").css({'background-color':'#D0D0D0'}).animate({'background-color':'white'},1500);

@@ -1,5 +1,5 @@
 class FinancialStoriesController < ApplicationController
-  before_action :set_story, only:[:show, :edit,:update]
+  before_action :set_story, only:[:show, :edit,:update,:destroy]
   def create
     @broker=Broker.find(params[:broker_id])
     @story=FinancialStory.new(financial_story_params)
@@ -11,7 +11,6 @@ class FinancialStoriesController < ApplicationController
         format.html{redirect_to @broker}
       else
         @story_error=true
-        @story
         format.js{}
         format.html{render "brokers/show"}
       end
@@ -25,21 +24,34 @@ class FinancialStoriesController < ApplicationController
     end
     if params[:direction]=="up"
       @vote=@author.votes.new(financial_story_id:@story.id,description:"up")
-    else
+    elsif params[:direction]=="down"
       @vote=@author.votes.new(financial_story_id:@story.id,description:"down")
     end 
     respond_to do |format|
-      if @vote.save
-        if params[:direction]=="up"
-          @story.votes=@story.votes+1
+      if params[:direction]
+        if @vote.save
+          if params[:direction]=="up"
+            @story.votes=@story.votes+1
+          else
+            @story.votes=@story.votes-1
+          end
+          @story.save
+          format.html{redirect_to @story}
+          format.js{}
         else
-          @story.votes=@story.votes-1
+          format.js{}
         end
-        @story.save
-        format.html{redirect_to @story}
-        format.js{}
       else
-        format.js{}
+        @broker=@story.broker
+        @story_id=@story.id
+        if @story.update(financial_story_params)
+          format.html{redirect_to @story.broker}
+          format.js{}
+        else
+          @story_error=true
+          format.html{render "brokers/show"}
+          format.js{}
+        end
       end
     end
   end
@@ -49,6 +61,14 @@ class FinancialStoriesController < ApplicationController
     @vote=Vote.new
   end
   def destroy
+    @broker=@story.broker
+    @story_id=@story.id
+    @story.destroy
+    
+    respond_to do |format|
+      format.js{}
+      format.html{redirect_to @broker}
+    end
   end
   def index
   end

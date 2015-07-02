@@ -1,6 +1,6 @@
 
 <% if !@broker.image_url.to_s.empty?%> 
-  <%= content_tag "div", id: "picture_form", data: {picture_file_name: @broker.image_url.to_s,broker_pic_large_width:@broker.image.thumb_400.get_geometry[0],broker_pic_large_height:@broker.image.thumb_400.get_geometry[1],crop:@crop}, style:"float:left; width:40%;",align:"left" do %>
+  <%= content_tag "div", id: "picture_form", data: {picture_file_name: @broker.image_url.to_s,broker_pic_large_width:@broker.image.get_geometry[0],broker_pic_large_height:@broker.image.get_geometry[1],crop:@crop}, style:"float:left; width:40%;",align:"left" do %>
   <%=render "brokers/picture_form"%>
 
   <% end %>
@@ -9,152 +9,67 @@
     <%=render "brokers/picture_form"%>  
   </div>
 <%end%>
-
-<div id ="profile_info" align="left" style="overflow: auto;padding:5px;">
-  <%=render "brokers/profile_info_edit"%>
-</div>
-<div style="clear:both;"></div>
-<table width="100%">
-  <tr>
-    <td width="65%" class="panel panel-default">
-      <div class="panel-body" align="left">
-        <div id="about" style="padding:5px;">
-          <%=render "brokers/about_edit"%>
-        </div>
-        <div id="skills" style="padding:5px;">
-          <%=render "brokers/skills_edit"%>
-        </div>
-      </div>
-    </td>
-    <td width="35%" class="panel panel-default" style="vertical-align:top;">
-      <div class="panel-body" align="left">
-        <h4>Recommendations</h4>
-        <h4>Financial Stories</h4>
-      </div>
-    </td>
-  </tr>
-</table><br>
-<table width="100%" style="border-spacing: 5px;">
-  <tr>
-    <td width="65%" align="left" style="padding:5px;border: 1px ridge;vertical-align:top;">
-      <div class="panel panel-default">
+<div id="personal_info">
+  <div id ="profile_infos" align="left" style="overflow: auto;padding:5px;">
+    <%=render "brokers/profile_infos"%>
+  </div>
+  <div style="clear:both;"></div>
+  <table width="100%">
+    <tr>
+      <td width="65%" class="panel panel-default">
         <div class="panel-body" align="left">
-          <h4>License(s)
-            <%=link_to broker_licenses_path(@broker), id:"licenses_edit" do%>
-            <span class="glyphicon glyphicon-edit"></span>
-            <%end%>
-
-          </h4>
-          <%@broker.setup_broker.licenses.each_with_index do |l,index|%>
-            <%if index==0%>
-              <%=l.license_type%>
-            <%else%>
-              ,<%=l.license_type%>
-            <%end%>
-          <%end%>
-        </div>
-      </div>
-      <div class="panel panel-default">
-        <div class="panel-body" align="left">
-          <h4>Financial Vehicle(s)
-            <%=link_to broker_products_path(@broker), id:"vehicles_edit" do%>
-              <span class="glyphicon glyphicon-edit"></span>
-            <%end%>
-          </h4>
-          <%@broker.product_ids.each_with_index do |p,index|%>
-            <%product=Product.find(p)%>
-            <%if index==0%>
-              <%=product.name%>
-            <%else%>
-              <%=", #{product.name}"%>
-            <%end%>
-          <%end%>
-          <h4>Financial Product(s)</h4>
-
-          <%@broker.product_ids.each_with_index do |product_id,index|%>
-          <%product=Product.find(product_id)%>
-            <%if product%>
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h3 class="panel-title">
-                    <%=render partial:"brokers/financial_product_add", locals:{product:product,index:index}%>   
-                  </h3>
-                </div>
-                <div class="panel-body">
-                  <%=render partial:"brokers/financial_products", locals:{product:product}%>
-                </div>
-              </div>
-
-
-            <%end%>
-          <%end%>
-        </div>
-      </div>
-      <div class="panel panel-default">
-        <div class="panel-body" align="left">
-          <h4>Education</h4>
-          <div id="education_add" style="padding:5px;">
-            <%=render "brokers/education_add"%>   
+          <div id="abouts" style="padding:5px;">
+            <%=render "brokers/abouts"%>
           </div>
-          <%unless @broker.educations.count >0%>
-            None.
-          <%else%>
-          <% @broker.educations.order(end_date: :desc).each do |e|%>
-              <% unless e.new_record?%>
-                <%=render partial:"brokers/education_edit", locals:{e:e}%>
-              <%end%>
-            <%end%>
-          <%end%>
-        </div>
-      </div>  
-      <div class="panel panel-default">
-        <div class="panel-body" align="left">
-          <h4>Experience</h4>
-          <div id="experience_add" style="padding:5px;">
-            <%=render "brokers/experience_add"%>   
+          <div id="skills" style="padding:5px;">
+            <%=render "brokers/skills"%>
           </div>
-          <%unless @broker.experiences.count >0%>
-            None.
-          <%else%>
-          <% current_experience=@broker.experiences.find_by(current_experience:true)%>
-          <% if current_experience%>
-            <% unless current_experience.new_record?%>
-              <%=render partial:"brokers/experience_edit", locals:{e:current_experience}%>
-            <%end%>      
-          <%end%>
+        </div>
+      </td>
+      <td width="35%" class="panel panel-default" style="vertical-align:top;">
+        <div class="panel-body" align="left">
+          <h4>Recommendations</h4>
+          <h4>Financial Stories</h4>
+        </div>
+      </td>
+    </tr>
+  </table><br>
+  <table width="100%" style="border-spacing: 5px;">
+    <tr>
+      <td width="65%" align="left" style="padding:5px;border: 1px ridge;vertical-align:top;">
+        <div id="licenses">
+          <%=render "brokers/licenses"%>
+        </div>
+        <div id="finance_vehicles_products">
+          <%=render "brokers/finance_vehicles_products"%>
+        </div>       
+        <div id="educations">
+          <%=render "brokers/educations"%>
+        </div>           
+        <div id="experiences">
+          <%=render "brokers/experiences"%>
+        </div>           
+      </td>
+      <td width="35%" align="left" style="padding:5px;vertical-align:top;border: 1px ridge;">
+        <div style="float:left;font-size:1.1em;"><b>Financial Stories</b></div>    
 
-          <% @broker.experiences.where(current_experience:false).order(end_date: :desc).each do |e|%>
-              <% unless e.new_record?%>
-                <%=render partial:"brokers/experience_edit", locals:{e:e}%>
-              <%end%>
-            <%end%>      
+        <div style="float:right;font-size:1.1em;">
+          <%=link_to "#", class:"create_finance_story" do%>
+          <span class="glyphicon glyphicon-plus"></span> Create Story
           <%end%>
         </div>
-      </div>     
-    </td>
-    <td width="35%" align="left" style="padding:5px;vertical-align:top;border: 1px ridge;">
-      <div style="float:left;font-size:1.1em;"><b>Financial Stories</b></div>    
-      
-      <div style="float:right;font-size:1.1em;">
-        <%=link_to "#", class:"create_finance_story" do%>
-        <span class="glyphicon glyphicon-plus"></span> Create Story
+        <div style="clear:both;"></div>
+        <div id="financial_stories">
+          <%=render "brokers/financial_stories"%>
+        </div>
+        <% if @story.nil?%>
+          <%@story=FinancialStory.new%>
         <%end%>
-      </div>
-      <div style="clear:both;"></div>
-      <p><%=@broker.first_name%> has posted <%=pluralize(@broker.financial_stories.count, "financial story")%></p>
-      <%@broker.financial_stories.each do |story|%>
-        <div class="panel panel-default">
-          <div class="panel-body" align="left">
-            <h4>Title:<%=story.title%></h4>
-            <p>Financial Vehicle:<span class="label label-success"><%=story.product.name%></span></p>
-            <p>Category: <span class="label label-success"><%=Order::FINANCIAL_CATEGORIES_HASH[story.financial_category]%></span></p>
-            <%=link_to "Read More", story%>
-          </div>
-        </div>
-      <%end%>
-      <div id="financial_story_form" align="center" title="Create Financial Story">
-        <%=render "brokers/financial_story_form"%>
-      </div>  
-    </td>
-  </tr>
-</table>
+        <div id="create_story_form" align="center" title="Create Financial Story">
+          <%=render partial:"financial_stories/story_form", locals:{story:@story}%>
+        </div>  
+
+      </td>
+    </tr>
+  </table>
+</div>

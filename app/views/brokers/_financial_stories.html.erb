@@ -1,0 +1,50 @@
+<p><%=@broker.first_name%> has posted <%=pluralize(@broker.financial_stories.count, "financial story")%></p>
+<%@broker.financial_stories.order(created_at: :desc).each do |story|%>
+<div class="panel panel-default">
+  <div class="panel-body" align="left">
+    <h4><%=link_to "Title:#{story.title}", story%></h4>
+    <p>
+      Posted at <%=story.created_at.strftime("%b,%y at %l:%M %P")%>
+    </p>
+    <p>Financial Vehicle:<span class="label label-success"><%=story.product.name%></span></p>
+    <p>Category: <span class="label label-success"><%=Order::FINANCIAL_CATEGORIES_HASH[story.financial_category]%></span></p>
+ 
+    <div style="float:right;">
+      <%=link_to "Edit",broker_path(id:@broker,financial_story_id:story.id,method:"edit"), remote:true%>
+      <%=link_to "Delete",broker_path(id:@broker,financial_story_id:story.id,method:"delete"), remote:true%>
+
+    </div>
+  </div>
+</div>
+<%end%>
+
+
+<% if @edit_story%>
+<script>
+  edit_story_dialog = $( "#edit_story_<%=@edit_story.id%>" ).dialog({
+                        autoOpen: true,
+                        height: 550,
+                        width: 800,
+                        modal: true
+                        });   
+</script>
+<div id= "edit_story_<%=@edit_story.id%>" class="edit_story_form" align="center" title="Edit Financial Story">
+
+  <%=render partial:"financial_stories/story_form", locals:{story:@edit_story}%>
+</div>  
+<%end%>
+<% if @delete_story%>
+<script>
+  delete_story_dialog = $( "#delete_story_<%=@delete_story.id%>" ).dialog({
+                        autoOpen: true,
+                        height: 200,
+                        width: 400,
+                        modal: true
+                        });   
+</script>
+<div id= "delete_story_<%=@delete_story.id%>" class="delete_story_form" align="center" title="Remove Financial Story">
+  <p>Story Title: <%=@delete_story.title%></p>
+  <p>Are you sure you want to delete this story?</p>
+  <%=link_to "OK", {controller:"financial_stories",action:"destroy", id:@delete_story.id},{method: :delete, remote:true, class:"btn btn-default"}%>
+</div>  
+<%end%>

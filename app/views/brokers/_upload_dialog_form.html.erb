@@ -1,26 +1,20 @@
 <div id="upload_dialog-form" title="Upload Your Profile Picture">
-  
-  <% if @broker.image_url.to_s.empty?%>
-  <%= form_for @broker,:html => {class:"broker_picture_form",:multipart => true} do |f| %>
-      <div style="float:left; width=50%;">
-        <h4>Your Picture</h4>  
-          <%=smart_image(@broker,3)%>
+  <%= direct_upload_form_for @uploader,:html => {class:"broker_picture_form"} do |f| %>
+  <div style="float:left; width=50%;">
+    <h4>Your Picture</h4>  
+    <%=smart_image(@broker,3)%>
 
-      </div>     
-      <div style="clear:both;"></div>
-      <div style="float:left; width=50%;">
-        <table width="100%">
-         <tr>
-           <td width="100%"><%=f.file_field :image, class: "form-control", style:"width:300px;"%></td>
-          </tr>
-          <tr>
-            <td style="text-align:left;"><%=f.submit "Post Picture", class: "btn btn-default btn-lg"%></td>
-          </tr>
-        </table>
-      </div>
-    <%end%>
-  <%else%>
-    <%=render "crop"%>
-  <%end%>
-  
+  </div>     
+  <div style="clear:both;"></div>
+  <div style="float:left; width=50%;">
+    <table width="100%">
+      <tr>
+        <td width="100%"><%=f.file_field :image, class: "form-control", style:"width:300px;"%></td>
+      </tr>
+      <tr>
+        <td style="text-align:left;"><%=f.submit "Post Picture", class: "btn btn-default btn-lg"%></td>
+      </tr>
+    </table>
+  </div>
+  <%end%> 
 </div>

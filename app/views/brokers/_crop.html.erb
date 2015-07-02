@@ -1,13 +1,13 @@
 <%=form_for @broker, html:{:multipart => true} do |f|%>
   <div style="float:left; width=50%;">
-    <h4>Your Picture_Crop</h4>  
-    <%= image_tag f.object.image_url(:thumb_400).to_s, :id => "cropbox"%>
+    <h4>Your Picture</h4>  
+    <%= image_tag f.object.image_url, :id => "cropbox"%>
 
   </div>
   <div style="overflow:auto;">
     <h4>Preview</h4>
     <div class="crop_user_picture">      
-      <%= image_tag f.object.image_url(:thumb_400).to_s, :id => "preview" %>
+      <%= image_tag f.object.image_url, :id => "preview" %>
     </div>    
       <% for attribute in [:crop_x, :crop_y, :crop_w, :crop_h]%>
         <%=f.hidden_field attribute%>
@@ -16,6 +16,8 @@
   </div>
 
   <div style="clear:both;"></div>
+<%end%>
+<%= direct_upload_form_for @uploader,:html => {class:"broker_picture_form"} do |f| %>
   <div style="float:left;">
     <table width="50%">
       <tr>

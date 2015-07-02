@@ -9,6 +9,7 @@ class FinancialProductsController < ApplicationController
     end
     
     respond_to do |format|
+      
       if @financial_product.save
         @broker.financial_product_rels.create(financial_product_id:@financial_product.id)
         format.js

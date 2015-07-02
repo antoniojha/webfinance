@@ -1,1 +1,13 @@
-$('#financial_story').html("<%=escape_javascript(render('financial_stories/financial_story'))%>");
+<% if @story_error%>
+$( "#edit_story_<%=@story_id%>" ).dialog('destroy'); 
+$("#financial_stories").html("<%=escape_javascript render('brokers/financial_stories')%>");
+edit_story_dialog = $( "#edit_story_<%=@story_id%>" ).dialog({
+  autoOpen: true,
+  height: 550,
+  width: 800,
+  modal: true
+});  
+<%else%>
+$( "#edit_story_<%=@story_id%>" ).dialog('destroy'); 
+$("#financial_stories").html("<%=escape_javascript render('brokers/financial_stories')%>");
+<%end%>

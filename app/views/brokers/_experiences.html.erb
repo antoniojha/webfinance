@@ -1,0 +1,24 @@
+<div class="panel panel-default">
+  <div class="panel-body" align="left">
+    <h4>Experience</h4>
+    <div id="experience_add" style="padding:5px;">
+      <%=render "brokers/experience_add"%>   
+    </div>
+    <%unless @broker.experiences.count >0%>
+    None.
+    <%else%>
+    <% current_experience=@broker.experiences.find_by(current_experience:true)%>
+    <% if current_experience%>
+    <% unless current_experience.new_record?%>
+    <%=render partial:"brokers/experience_edit", locals:{e:current_experience}%>
+    <%end%>      
+    <%end%>
+
+    <% @broker.experiences.where(current_experience:false).order(end_date: :desc).each do |e|%>
+    <% unless e.new_record?%>
+    <%=render partial:"brokers/experience_edit", locals:{e:e}%>
+    <%end%>
+    <%end%>      
+    <%end%>
+  </div>
+</div>     

@@ -1,0 +1,34 @@
+<div class="panel panel-default">
+  <div class="panel-body" align="left">
+    <h4>Financial Vehicle(s)
+      <%=link_to broker_products_path(@broker), id:"vehicles_edit" do%>
+      <span class="glyphicon glyphicon-edit"></span>
+      <%end%>
+    </h4>
+    <%@broker.product_ids.each_with_index do |p,index|%>
+      <%product=Product.find(p)%>
+      <%if index==0%>
+      <%=product.name%>
+      <%else%>
+      <%=", #{product.name}"%>
+      <%end%>
+    <%end%>
+    <h4>Financial Product(s)</h4>
+
+    <%@broker.product_ids.each_with_index do |product_id,index|%>
+      <%product=Product.find(product_id)%>
+      <%if product%>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%=render partial:"brokers/financial_product_add", locals:{product:product,index:index}%>   
+          </h3>
+        </div>
+        <div class="panel-body">
+          <%=render partial:"brokers/financial_products", locals:{product:product}%>
+        </div>
+      </div>
+      <%end%>
+    <%end%>
+  </div>
+</div>

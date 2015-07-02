@@ -1,19 +1,22 @@
   <table style=" text-align:left;width:100%;">
     <tr>
       <td>
-     
-        <%=smart_image(@broker,2)%>
+        <%if @crop==true%>
+          <%= image_tag @broker.image_url.to_s,size:"150x150", class: "img-thumbnail"%>
+        <%else%>
+          <%=smart_image(@broker,2)%>
+        <%end%>
       </td>
     </tr>
     <tr>
       <td>
         <% if ((@crop !="true") && !@broker.image_url.to_s.empty?) %>
-        <button type="button" class="btn btn-default btn-lg change-btn">
+        <button type="button" class="btn btn-default btn-change" style="width:150px;">
           Change Photo
           <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
         </button>
         <%else%>
-        <button type="button" class="btn btn-default btn-lg upload-btn">
+        <button type="button" class="btn btn-default btn-upload" style="width:150px;">
           Upload Photo
           <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
         </button>        
@@ -21,12 +24,10 @@
       </td>
     </tr>
   </table>
-here <%=@broker.image_url.to_s.empty?%>; crop:<%=@crop%>;
-<%if !@broker.image_url.to_s.empty? && @crop!="true"%>
-<%=render "brokers/change_dialog_form"%>
+
+<%if !@broker.image_url.to_s.empty?%>
+  <%=render "brokers/change_dialog_form"%>
 <%else%>
-
- <%=render "brokers/upload_dialog_form"%>
-
+  <%=render "brokers/upload_dialog_form"%>
 <%end%>
 

@@ -43,9 +43,12 @@ class BrokersController < Broker::AuthenticatedController
       elsif @broker.update(broker_params)
    
         if params[:broker][:image].blank?
+          
           if @broker.cropping?
-            @broker.image.recreate_versions!
-        
+            @broker.remote_image_url = @broker.image.direct_fog_url(with_path: true)
+            @broker.save
+        #    @broker.image.recreate_versions!
+           
           #  @broker.reprocess_picture
           end
           if @broker.validate_email_bool && (@broker.email_authen!=true)
@@ -67,13 +70,29 @@ class BrokersController < Broker::AuthenticatedController
   end
   #display individual broker
   def show
-    @crop=params[:crop]
+    unless params[:key]
+      @uploader = Broker.new.image
+      @uploader.success_action_redirect = broker_url(@broker)
+    else
+      @uploader = Broker.new.image
+      @broker.key=params[:key]
+      # the below line update the @broker image and crop it and upload to Amazon S3
+      @broker.remote_image_url = @broker.image.direct_fog_url(with_path: true)
+      @broker.save!
+      @uploader=@broker
+      @crop=true
+    end
+#    @crop=params[:crop]
     @edit=params[:edit]
     @education=Education.new #needed for education_add partial template
     @experience=Experience.new #needed for experience_add partial template
     @financial_product =FinancialProduct.new
     @story=FinancialStory.new
-
+    if params[:method]=="edit"
+      @edit_story=FinancialStory.find(params[:financial_story_id])
+    elsif params[:method]=="delete"
+      @delete_story=FinancialStory.find(params[:financial_story_id])
+    end
     respond_to do |format|
       format.html
       format.js

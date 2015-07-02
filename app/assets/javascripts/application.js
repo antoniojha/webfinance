@@ -12,7 +12,7 @@
 //
 
 //= require jquery
-
+//= require jquery.turbolinks
 //= require jquery-ui/tooltip
 //= require jquery_ujs
 //= require jquery.remotipart

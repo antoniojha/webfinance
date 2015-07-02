@@ -1,13 +1,13 @@
 <div id="change_dialog-form" title="Crop Your Profile Picture">
   <div style="float:left; width=50%;">
     <h4>Your Picture</h4>  
-    <%= image_tag @broker.image_url(:thumb_400).to_s, :id => "cropbox"%>
+    <%= image_tag @broker.image_url.to_s, :id => "cropbox"%>
    
   </div>
   <div style="overflow:auto;">
     <h4>Preview</h4>
-    <div class="crop_user_picture">      
-      <%= image_tag @broker.image_url(:thumb_400).to_s, :id => "preview" %>
+    <div class="crop_user_picture" >   
+      <%= image_tag @broker.image_url.to_s, :id => "preview" %>
     </div>
     
     <%=form_for @broker, :html => { class:"broker_picture_form"} do |f|%>

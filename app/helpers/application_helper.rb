@@ -68,7 +68,8 @@ module ApplicationHelper
         image_tag user.image_url(:thumb_200).to_s,size:"100x100", class: "img-thumbnail"
       elsif scenario ==2
       #  image_tag user.image_url(:thumb_200).to_s
-        image_tag user.image_url(:thumb_200).to_s,size:"200x200", class: "img-thumbnail"
+       
+        image_tag user.image_url(:thumb_200).to_s,size:"150x150", class: "img-thumbnail"
       elsif scenario ==4
      #   image_tag user.image_url(:thumb_75).to_s
         image_tag user.image_url(:thumb_200).to_s,size:"75x75", class: "img-thumbnail"
