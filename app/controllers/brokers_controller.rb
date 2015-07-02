@@ -39,32 +39,33 @@ class BrokersController < Broker::AuthenticatedController
         else
           format.html{render "show"}
         end
-      end  
-      if @broker.update(broker_params)
-   
-        if params[:broker][:image].blank?     
-          if @broker.cropping?
-            @broker.remote_image_url = @broker.image.direct_fog_url(with_path: true)
-            @broker.save!
-        #    @broker.image.recreate_versions!
-           
-          #  @broker.reprocess_picture
+      else  
+        if @broker.update(broker_params)
+
+          if params[:broker][:image].blank?     
+            if @broker.cropping?
+              @broker.remote_image_url = @broker.image.direct_fog_url(with_path: true)
+              @broker.save!
+          #    @broker.image.recreate_versions!
+
+            #  @broker.reprocess_picture
+            end
+            if @broker.validate_email_bool && (@broker.email_authen!=true)
+              @broker.send_email_confirmation
+            end
+
+            format.html { redirect_to @broker,notice:'Broker was successfully updated.'}
+          else
+            format.html{
+              redirect_to :controller => 'brokers', :action => 'show', :id => @broker.id, :crop => true
+            }
           end
-          if @broker.validate_email_bool && (@broker.email_authen!=true)
-            @broker.send_email_confirmation
-          end
-       
-          format.html { redirect_to @broker,notice:'Broker was successfully updated.'}
         else
-          format.html{
-            redirect_to :controller => 'brokers', :action => 'show', :id => @broker.id, :crop => true
-          }
-        end
-      else
-        format.html { render action: 'edit' }
-        format.js{}
-        format.json { render json: @broker.errors, status: :unprocessable_entity }
-      end  
+          format.html { render action: 'edit' }
+          format.js{}
+          format.json { render json: @broker.errors, status: :unprocessable_entity }
+        end  
+      end
     end
   end
   #display individual broker
