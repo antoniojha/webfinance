@@ -17,8 +17,17 @@
 //= require jquery_ujs
 //= require jquery.remotipart
 //= require turbolinks
-//= require jquery.Jcrop.min
 //= require personal_profile
+//= require add_association
+//= require remove_association
+//= require pagination
+//= require edit_broker
+//= require protection_plans
+//= require raphael
+//= require jquery.usmap
+
+//= require jquery.Jcrop.min
+
 //= require_tree .
 //= require bootstrap
 //= require jquery-ui
