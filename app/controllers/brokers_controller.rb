@@ -39,14 +39,13 @@ class BrokersController < Broker::AuthenticatedController
         else
           format.html{render "show"}
         end
-        
-      elsif @broker.update(broker_params)
+      end  
+      if @broker.update(broker_params)
    
-        if params[:broker][:image].blank?
-          
+        if params[:broker][:image].blank?     
           if @broker.cropping?
             @broker.remote_image_url = @broker.image.direct_fog_url(with_path: true)
-            @broker.save
+            @broker.save!
         #    @broker.image.recreate_versions!
            
           #  @broker.reprocess_picture
@@ -94,7 +93,6 @@ class BrokersController < Broker::AuthenticatedController
       @delete_story=FinancialStory.find(params[:financial_story_id])
     end
     respond_to do |format|
-      format.html
       format.js
     end    
   end
