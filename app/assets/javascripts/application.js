@@ -17,7 +17,7 @@
 //= require jquery_ujs
 //= require jquery.remotipart
 //= require turbolinks
-//= require personal_profile
+
 //= require remove_association
 //= require pagination
 //= require jquery.Jcrop.min
