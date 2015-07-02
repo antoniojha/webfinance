@@ -37,9 +37,11 @@
         <%end%>
         </td>
         <td>
+        <%if request%>
           <%if request.admin_reply==nil%>
           <%= button_to 'Remove',{controller:"licenses",action: :destroy,id: l.id, broker_id:@broker.id},{method: :delete, class:"btn btn-default",data: {confirm: "Are you sure?"}} %>
           <%end%>
+        <%end%>
         </td>
       </tr>
       <%end%>

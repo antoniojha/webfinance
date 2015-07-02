@@ -1,8 +1,7 @@
-
-<% if story && story.errors.any? %>
+<% if @vote && @vote.errors.any? %>
   <div class="alert alert-success error-message" style="float:left;">
     <ul>
-      <% story.errors.full_messages.each do |msg| %>
+      <% @vote.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>
       <% end %>
     </ul>
