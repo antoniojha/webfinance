@@ -93,6 +93,7 @@ class BrokersController < Broker::AuthenticatedController
       @delete_story=FinancialStory.find(params[:financial_story_id])
     end
     respond_to do |format|
+      format.html{}
       format.js
     end    
   end
