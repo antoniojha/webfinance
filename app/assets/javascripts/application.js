@@ -17,11 +17,8 @@
 //= require jquery_ujs
 //= require jquery.remotipart
 //= require turbolinks
-
-//= require remove_association
-//= require pagination
 //= require jquery.Jcrop.min
-
+//= require personal_profile
 //= require_tree .
 //= require bootstrap
 //= require jquery-ui
