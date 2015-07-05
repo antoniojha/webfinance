@@ -27,7 +27,6 @@
 //= require jquery.usmap
 
 //= require jquery.Jcrop.min
-
 //= require_tree .
 //= require bootstrap
 //= require jquery-ui

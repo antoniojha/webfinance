@@ -4,7 +4,7 @@
 <%end%>
 <% if broker_personal_profile?(@broker)%>
 <div id="personal_profile_js">
-  
+  <%=javascript_include_tag "personal_profile"%>
 </div>
 <div id="personal_profile">
   <%=render "brokers/personal_profile"%>

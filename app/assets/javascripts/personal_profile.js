@@ -45,14 +45,17 @@ $(function(){
   
 
   if((typeof picture_file_name!="undefined") && (crop!=true)){
+    console.log("test1");
     change_dialog = $( "#change_dialog-form" ).dialog({
       autoOpen: false,
       height: 550,
       width: 800,
       modal: true
+      
     });
   }
   else if((typeof picture_file_name!="undefined") && (crop==true)){
+    console.log("test2");
     change_dialog = $( "#change_dialog-form" ).dialog({
       autoOpen: true,
       height: 550,
