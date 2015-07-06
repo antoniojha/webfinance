@@ -43,7 +43,8 @@ $(function(){
       };
    }
   
-  console.log("crop"+crop);
+  console.log("crop:"+crop);
+  console.log("picture file name:"+picture_file_name);
   if((typeof picture_file_name!="undefined") && (crop!=true)){
     console.log("test1");
     change_dialog = $( "#change_dialog-form" ).dialog({
