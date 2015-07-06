@@ -8,10 +8,10 @@ $(function(){
   
    if (picture_file_name!="null"){ 
 
-  //    var pic_large_width=parseInt($('#picture_form').data('broker-pic-large-width'));
-  //    var pic_large_height=parseInt($('#picture_form').data('broker-pic-large-height'));
-      var pic_large_width=$('#cropbox').width();
-      var pic_large_height=$('#cropbox').height();
+      var pic_large_width=parseInt($('#picture_form').data('broker-pic-large-width'));
+      var pic_large_height=parseInt($('#picture_form').data('broker-pic-large-height'));
+   //   var pic_large_width=$('#cropbox').width();
+   //   var pic_large_height=$('#cropbox').height();
      console.log("width:"+pic_large_width);
      console.log("height:"+pic_large_height);
       var x=pic_large_width/2+100;
