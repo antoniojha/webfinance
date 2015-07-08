@@ -34,6 +34,7 @@ class BrokersController < Broker::AuthenticatedController
       if params[:delete_picture]
         @broker.image=nil
         @broker.remove_image!
+        @broker.image_status=nil
         if @broker.save
           format.html { redirect_to @broker,notice:'Your profile was successfully updated.'}
         else
@@ -44,11 +45,14 @@ class BrokersController < Broker::AuthenticatedController
 
           if params[:broker][:image].blank?     
             if @broker.cropping?
-              @broker.remote_image_url = @broker.image.direct_fog_url(with_path: true)
-              @broker.save!
+          #    @broker.image.recreate_versions!
+              @broker.crop_image
+          #    @broker.reload
+              
+          #    @broker.remote_image_url = @broker.image.direct_fog_url(with_path: true)
+          #    @broker.save!
           #    @broker.image.recreate_versions!
 
-            #  @broker.reprocess_picture
             end
             if @broker.validate_email_bool && (@broker.email_authen!=true)
               @broker.send_email_confirmation
@@ -74,12 +78,11 @@ class BrokersController < Broker::AuthenticatedController
       @uploader = Broker.new.image
       @uploader.success_action_redirect = broker_url(@broker)
     else
-      @uploader = Broker.new.image
+
       @broker.key=params[:key]
-      # the below line update the @broker image and crop it and upload to Amazon S3
-      @broker.remote_image_url = @broker.image.direct_fog_url(with_path: true)
-      @broker.save!
-      @uploader=@broker
+      @broker.save
+  #    @broker.upload_image    
+      
       @crop=true
     end
 #    @crop=params[:crop]

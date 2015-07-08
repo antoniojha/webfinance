@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150701185613) do
+ActiveRecord::Schema.define(version: 20150707235748) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -264,6 +264,7 @@ ActiveRecord::Schema.define(version: 20150701185613) do
     t.boolean  "check_term_of_use"
     t.string   "image"
     t.string   "aws_image_path"
+    t.string   "image_status"
   end
 
   add_index "brokers", ["confirmation_number"], name: "index_brokers_on_confirmation_number"

@@ -5,6 +5,10 @@ ruby '2.1.5'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.5'
 
+
+gem 'redis'
+gem 'sidekiq'
+
 gem "auto_complete"
 
 gem 'remotipart', '~> 1.2'
@@ -43,7 +47,7 @@ gem 'paperclip-compression'
 gem 'carrierwave'
 gem 'fog'
 gem 'carrierwave_direct'
-gem 'sidekiq'
+
 
 # This provides standardized interface to access a variety of spreadsheet format
 gem 'roo'

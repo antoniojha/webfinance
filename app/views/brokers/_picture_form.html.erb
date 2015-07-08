@@ -16,10 +16,14 @@
           <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
         </button>
         <%else%>
-        <button type="button" class="btn btn-default btn-upload" style="width:150px;">
-          Upload Photo
-          <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
-        </button>        
+          <%if @broker.image_status=="processing"%>
+            Processing...
+          <%else%>
+            <button type="button" class="btn btn-default btn-upload" style="width:150px;">
+              Upload Photo
+              <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+            </button>     
+          <%end%>
         <%end%>
       </td>
     </tr>
@@ -28,6 +32,8 @@
 <%if !@broker.image_url.to_s.empty?%>
   <%=render "brokers/change_dialog_form"%>
 <%else%>
-  <%=render "brokers/upload_dialog_form"%>
+  <%unless @broker.image_status=="processing"%>
+    <%=render "brokers/upload_dialog_form"%>
+  <%end%>
 <%end%>
 

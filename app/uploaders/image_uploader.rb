@@ -45,8 +45,9 @@ class ImageUploader < CarrierWave::Uploader::Base
      process :resize_to_limit => [400, 400]
    end
   def crop
+  #  raise "error"
     if model.crop_x.present?
-
+      puts "model crop_x #{model.crop_x}"
       manipulate! do |img|
         x = model.crop_x.to_i
         y = model.crop_y.to_i

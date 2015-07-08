@@ -222,13 +222,37 @@ class Broker < ActiveRecord::Base
   def cropping?
     !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
   end
-  def reprocess_picture
-    picture.reprocess!
-  end
+
   def picture_geometry(style = :original)
     @geometry ||= {}
     picture_path = (picture.options[:storage] == :s3) ? picture.url(style) : picture.path(style)
     @geometry[style] ||= Paperclip::Geometry.from_file(picture_path)
+  end
+ # after_save :enqueue_image
+
+  def crop_image
+    puts "crop image"
+    ImageWorker.perform_async(id,key,"crop",crop_x,crop_y,crop_w,crop_h)
+    
+  end
+  class ImageWorker
+    include Sidekiq::Worker
+    
+    def perform(id, key,status,crop_x,crop_y,crop_w,crop_h)
+      puts "status: #{status}"   
+      puts "crop_x: #{crop_x}"
+      broker = Broker.find(id)
+      broker.crop_x=crop_x
+      broker.crop_y=crop_y
+      broker.crop_w=crop_w
+      broker.crop_h=crop_h
+
+      broker.key=key 
+      broker.image.recreate_versions!
+      broker.remote_image_url = broker.image.direct_fog_url(with_path: true)
+      broker.image_status="uploaded"
+      broker.save!
+    end
   end
   private
 
@@ -264,4 +288,5 @@ class Broker < ActiveRecord::Base
     end
     return array
   end
+
 end
