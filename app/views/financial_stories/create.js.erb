@@ -11,6 +11,8 @@ $("#create_story_form").html("<%=escape_javascript render partial:"financial_sto
   });
 <%else%>
 $( "#create_story_form" ).dialog('destroy'); 
+<%@story=FinancialStory.new%>
+$( "#create_story_form" ).html("<%=escape_javascript render partial:"financial_stories/story_form", locals:{story:@story}%>")
 $("#financial_stories").html("<%=escape_javascript render('brokers/financial_stories')%>");
   create_financial_dialog = $( "#create_story_form" ).dialog({
     autoOpen: false,

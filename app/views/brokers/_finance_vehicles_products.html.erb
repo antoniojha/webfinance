@@ -23,10 +23,18 @@
           <h3 class="panel-title">
             <%=render partial:"brokers/financial_product_add", locals:{product:product,index:index}%>   
           </h3>
-        </div>
+        </div>        
+        <%if @broker.financial_products.where(product_id:product.id).count>0%>  
         <div class="panel-body">
-          <%=render partial:"brokers/financial_products", locals:{product:product}%>
+          <%@broker.financial_products.where(product_id:product.id).includes(:company).order("companies.name DESC").each do |financial_product|%> 
+
+          <span class="label label-primary">
+            <%="#{financial_product.company.name} #{financial_product.name}"%>
+          </span>
+          <%=link_to '<i class="glyphicon glyphicon-remove"></i>'.html_safe, {controller:"financial_products",action:"destroy",id:financial_product.id,broker_id:@broker.id},method: :delete,:remote => true, id:"remove_product_#{financial_product.id}" %>
+          <%end%>
         </div>
+        <%end%>      
       </div>
       <%end%>
     <%end%>
