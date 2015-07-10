@@ -235,22 +235,25 @@ class Broker < ActiveRecord::Base
     ImageWorker.perform_async(id,key,"crop",crop_x,crop_y,crop_w,crop_h)
     
   end
+  def create_image_thumb
+    puts "create thumb"
+    ImageWorker.perform_async(id,key,"null","null","null","null","null")
+  end
   class ImageWorker
     include Sidekiq::Worker
     
     def perform(id, key,status,crop_x,crop_y,crop_w,crop_h)
       puts "status: #{status}"   
-      puts "crop_x: #{crop_x}"
       broker = Broker.find(id)
-      broker.crop_x=crop_x
-      broker.crop_y=crop_y
-      broker.crop_w=crop_w
-      broker.crop_h=crop_h
-
+      if status=="crop"
+        broker.crop_x=crop_x
+        broker.crop_y=crop_y
+        broker.crop_w=crop_w
+        broker.crop_h=crop_h
+      #  broker.image.recreate_versions!
+      end
       broker.key=key 
-      broker.image.recreate_versions!
       broker.remote_image_url = broker.image.direct_fog_url(with_path: true)
-      broker.image_status="uploaded"
       broker.save!
     end
   end

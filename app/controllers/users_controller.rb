@@ -19,7 +19,15 @@ class UsersController < User::AuthenticatedController
   end
 
   def show
-    @crop=params[:crop]
+    unless params[:key]
+      @uploader = User.new.image
+      @uploader.success_action_redirect = user_url(@user)
+    else
+
+      @user.key=params[:key]
+      @user.save
+      @crop=true
+    end
     @plan=current_month_plan
   end
   
@@ -78,7 +86,8 @@ class UsersController < User::AuthenticatedController
       elsif @user.update(user_params)
         if params[:user][:picture].blank?
           if @user.cropping?
-            @user.reprocess_picture
+            @user.crop_image
+          #  @user.reprocess_picture
           end
           if @user.validate_email_bool && (@user.email_authen!=true)
             @user.send_email_confirmation
