@@ -46,6 +46,7 @@ class BrokersController < Broker::AuthenticatedController
           if params[:broker][:image].blank?     
             if @broker.cropping?
           #    @broker.image.recreate_versions!
+              @broker.update_attributes(image_cropped:false)
               @broker.crop_image
           #    @broker.reload
               

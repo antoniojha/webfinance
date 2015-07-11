@@ -254,6 +254,7 @@ class Broker < ActiveRecord::Base
       end
       broker.key=key 
       broker.remote_image_url = broker.image.direct_fog_url(with_path: true)
+      broker.image_cropped=true
       broker.save!
     end
   end

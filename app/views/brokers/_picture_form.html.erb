@@ -6,6 +6,9 @@
         <%else%>
           <%=smart_image(@broker,2)%>
         <%end%>
+        <%if @broker.image_cropped==false%>
+        <p><i>Processing Image...</i></p>
+        <%end%>
       </td>
     </tr>
     <tr>
@@ -16,14 +19,11 @@
           <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
         </button>
         <%else%>
-          <%if @broker.image_status=="processing"%>
-            Processing...
-          <%else%>
-            <button type="button" class="btn btn-default btn-upload" style="width:150px;">
-              Upload Photo
-              <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
-            </button>     
-          <%end%>
+        <button type="button" class="btn btn-default btn-upload" style="width:150px;">
+          Upload Photo
+          <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+        </button>     
+
         <%end%>
       </td>
     </tr>
