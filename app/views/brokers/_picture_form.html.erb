@@ -32,8 +32,6 @@
 <%if !@broker.image_url.to_s.empty?%>
   <%=render "brokers/change_dialog_form"%>
 <%else%>
-  <%unless @broker.image_status=="processing"%>
-    <%=render "brokers/upload_dialog_form"%>
-  <%end%>
+  <%=render "brokers/upload_dialog_form"%>
 <%end%>
 

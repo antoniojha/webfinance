@@ -1,5 +1,8 @@
 <% content_for :title do %>|User Profile<%end%>
 <% if user_personal_profile?(@user)%>
+<div id="personal_profile_js">
+  <%=javascript_include_tag "personal_profile"%>
+</div>
 <%=render "personal_profile"%>
 <%else%>
 <%=render "public_profile"%>

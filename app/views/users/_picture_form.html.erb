@@ -1,37 +1,37 @@
-<% if @user.picture_file_name%>
-  <% content_for (:head) do %>
-    <script type="text/javascript">
-      var x=<%=@user.picture_geometry(:large).width%>/2+100;
-      var y=<%=@user.picture_geometry(:large).height%>/2+100;
-      $(function(){
-        $('#cropbox').Jcrop({
-        onChange: update_crop,
-        onSelect: update_crop,
-        setSelect: [x, y, 100,100],
-          aspectRatio: 1
-        });
-      });
-      function update_crop(coords) {
-        var rx = 100/coords.w;
-        var ry = 100/coords.h;
-        $('#preview').css({
-          width: Math.round(rx * <%= @user.picture_geometry(:large).width %>) + 'px',
-          height: Math.round(ry * <%= @user.picture_geometry(:large).height %>) + 'px',
-          marginLeft: '-' + Math.round(rx * coords.x) + 'px',
-          marginTop: '-' + Math.round(ry * coords.y) + 'px'
-        });
-        var ratio = <%=@user.picture_geometry(:original).width %> / <%= @user.picture_geometry(:large).width %>;      
-        $('#crop_x').val(Math.floor(coords.x * ratio));
-        $('#crop_y').val(Math.floor(coords.y * ratio));
-        $('#crop_w').val(Math.floor(coords.w * ratio));
-        $('#crop_h').val(Math.floor(coords.h * ratio));   
-      }
-</script>
-  <%end%>
-<%end%>
-<%if @user.picture_file_name && @crop!="true"%>
-<%=render "change_dialog_form"%>
-<%else%>
-<%=render "upload_dialog_form"%>
+  <table style=" text-align:left;width:100%;">
+    <tr>
+      <td>
+        <%if @crop==true%>
+          <%= image_tag @user.image_url.to_s,size:"150x150", class: "img-thumbnail"%>
+        <%else%>
+          <%=smart_image(@user,2)%>
+        <%end%>
+        <%if @user.image_cropped==false%>
+        <p><i>Processing Image...</i></p>
+        <%end%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <% if ((@crop !="true") && !@user.image_url.to_s.empty?) %>
+        <button type="button" class="btn btn-default btn-change" style="width:150px;">
+          Change Photo
+          <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+        </button>
+        <%else%>
+        <button type="button" class="btn btn-default btn-upload" style="width:150px;">
+          Upload Photo
+          <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+        </button>     
+
+        <%end%>
+      </td>
+    </tr>
+  </table>
+
+<%if !@user.image_url.to_s.empty?%>
+  <%=render "users/change_dialog_form"%>
+<%else%> 
+  <%=render "users/upload_dialog_form"%>
 <%end%>
 
