@@ -64,15 +64,48 @@ module ApplicationHelper
     place_holder_url='http://www.clker.com/cliparts/C/N/O/F/T/X/blank-profile-th.png'
     if !user.image_url.to_s.empty?
       if scenario == 1
-       # image_tag user.image_url(:thumb_100).to_s
-        image_tag user.image_url(:thumb_200).to_s,size:"100x100", class: "img-thumbnail"
+        if user.image.thumb_200.file.exists?
+          if user.image.get_geometry[1] > 100
+            image_tag user.image_url(:thumb_200).to_s,style: 'width:auto;height:100px;', class: "img-thumbnail"
+          else
+            image_tag user.image_url.to_s, class:"img-thumbnail"
+          end
+        else
+          if user.image.get_geometry[1] > 100
+            image_tag user.image_url.to_s,style: 'width:auto;height:100px;', class: "img-thumbnail"
+          else
+            image_tag user.image_url.to_s, class:"img-thumbnail"
+          end
+        end
       elsif scenario ==2
-      #  image_tag user.image_url(:thumb_200).to_s
-       
-        image_tag user.image_url(:thumb_200).to_s,size:"150x150", class: "img-thumbnail"
+        if user.image.thumb_200.file.exists?
+        
+          if user.image.get_geometry[1] > 150
+            image_tag user.image_url(:thumb_200).to_s,size:"150x150", class: "img-thumbnail"
+          else
+            image_tag user.image_url.to_s, class:"img-thumbnail"
+          end
+        else        
+          if user.image.get_geometry[1] > 150
+            image_tag user.image_url.to_s,style: 'width:auto;height:150px;', class: "img-thumbnail"
+          else
+            image_tag user.image_url.to_s, class:"img-thumbnail"
+          end
+        end
       elsif scenario ==4
-     #   image_tag user.image_url(:thumb_75).to_s
-        image_tag user.image_url(:thumb_200).to_s,size:"75x75", class: "img-thumbnail"
+        if user.image.thumb_200.file.exists?
+          if user.image.get_geometry[1] > 75
+            image_tag user.image_url(:thumb_200).to_s,size:"75x75", class: "img-thumbnail"
+          else
+            image_tag user.image_url.to_s, class:"img-thumbnail"
+          end
+        else
+          if user.image.get_geometry[1] > 75
+            image_tag user.image_url.to_s,style: 'width:auto;height:75px;', class: "img-thumbnail"
+          else
+            image_tag user.image_url.to_s, class:"img-thumbnail"
+          end
+        end
       end
     else
       if scenario ==4

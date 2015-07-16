@@ -1,0 +1,34 @@
+<h4>Financial Goal</h4>
+<%=render "users/financial_goal_add"%> 
+<%array=[["", "Unspecified"]]%>
+<%@user.interests.each do |interest|%>
+<%array<< [interest, interest]%>
+<%end%>
+<% @user.goals.each_with_index do |goal, index|%>
+<div class="panel panel-default">
+  <div class="panel-body" align="left">
+    <div style="float:left;">
+      <h4><%=index+1%>. <%= best_in_place goal, :description %></h4>
+    </div>
+    <div style="overflow:auto" align="right">
+      <%=link_to "Delete",user_path(id:@user,goal_id:goal.id), remote:true%>
+    </div>
+    <div style="clear:both;"></div>
+   </div>
+</div>
+<%end%>
+<% if @delete_goal%>
+<script>
+  delete_story_dialog = $( "#delete_goal_<%=@delete_goal.id%>" ).dialog({
+                        autoOpen: true,
+                        height: 200,
+                        width: 400,
+                        modal: true
+                        });   
+</script>
+<div id= "delete_goal_<%=@delete_goal.id%>" class="delete_goal_form" align="center" title="Remove Financial Goal">
+  <p>Financial Goal: <%=@delete_goal.description%></p>
+  <p>Are you sure you want to delete this financial goal? All your saved associated articles will be deleted as well!</p>
+  <%=link_to "OK", {controller:"goals",action:"destroy", id:@delete_goal.id},{method: :delete, remote:true, class:"btn btn-default"}%>
+</div>  
+<%end%>

@@ -24,8 +24,7 @@
   left: 10px;  
 }
 .story_display{
-
-  background-color:lighten(#000,82%);
+  border: 1px ridge;
   border-radius: 10px;
   vertical-align: text-top;
   padding:5px;
@@ -42,7 +41,7 @@
   width:100%;
 }
 
-.financial_story, .financial_story_comment{
+.financial_story_comment{
 
   background-color:lighten(#000,93%);
   vertical-align:text-top;

@@ -1,0 +1,8 @@
+<div id="save_story_dialog-form" title="Crop Your Profile Picture">
+  <p>Save Financial Story: <%=@story.title%></p>
+  <%@financial_goal_story_rel=FinancialGoalStoryRel.new%>
+  <%=form_for @financial_goal_story_rel do |f|%>
+  <%=f.hidden_field :story_id, value:@story.id%>
+  <%=f.select :goal_id, %>
+  <%end%>
+</div>

@@ -1,11 +1,7 @@
   <table style=" text-align:left;width:100%;">
     <tr>
       <td>
-        <%if @crop==true%>
-          <%= image_tag @broker.image_url.to_s,size:"150x150", class: "img-thumbnail"%>
-        <%else%>
-          <%=smart_image(@broker,2)%>
-        <%end%>
+        <%=smart_image(@broker,2)%>
         <%if @broker.image_cropped==false%>
         <p><i>Processing Image...</i></p>
         <%end%>

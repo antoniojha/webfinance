@@ -1,7 +1,8 @@
 <%@comment=MicroComment.new%>
 <div class="panel panel-default">
-  <div class="panel-body">
-    
+  <div class="panel-body" align="left">
+    <h4>Title:<%=@story.title%></h4>
+    <p><b>Financial Vehicle:</b><span class="label label-primary"><%=@story.product.name%></span><b><span style="font-size:1.5em;"> / </span></b><b>Category:</b><span class="label label-success"><%=Order::FINANCIAL_CATEGORIES_HASH[@story.financial_category]%></span></p>
     <table width="100%">
       <tr>
         <td width="15%">        
@@ -37,12 +38,18 @@
             </tr>
           </table>
         </td>
-        <td width="80%" class="financial_story"><%=@story.description%></td>
+        <td width="80%" style="border:1px ridge;"><%=@story.description%></td>
       </tr>
       <tr>
         <td></td>
         <td></td>
-        <td>Posted at <%=@story.created_at.strftime("%b,%y at %l:%M %P")%></td>
+        <td>Posted at <%=@story.created_at.strftime("%b,%y at %l:%M %P")%>
+          <div style="float:right">
+            <button type="button" class="btn btn-default" id="save_story">
+            Save Story
+            </button>
+          </div>
+        </td>
       </tr>
     </table>
   </div>
@@ -119,4 +126,7 @@
       </tr>
     </table>
   </div>
+</div>
+<div>
+  <%=render "financial_stories/save_story_form"%>
 </div>

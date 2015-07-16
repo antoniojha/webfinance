@@ -1,9 +1,9 @@
 
 class User < ActiveRecord::Base
-  attr_accessor :auth_token, :password, :password_confirmation, :name_or_email,:validate_email_bool, :validation_code, :setup_bool, :goal_bool
+  attr_accessor :auth_token, :password, :password_confirmation, :name_or_email,:validate_email_bool, :validation_code, :setup_bool, :interest_bool
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   attr_writer :phone_1, :phone_2, :phone_3
-  serialize :goal
+  serialize :interests
   has_many :votes, dependent: :destroy
   has_many :accounts, dependent: :destroy
   has_many :backgrounds, dependent: :destroy 
@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_many :brokers, through: :quote_relations
   has_many :schedules,dependent: :destroy
   has_many :brokers, through: :schedules
+  has_many :goals
 #  has_many :temp_budget_plans, dependent: :destroy
   has_attached_file :picture, :styles => { :medium => "200x200#", :large=>"400x400>", :original=>"600x600>"},:processors => [:cropper]
   validates_attachment_content_type :picture, :content_type=> ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/pjpeg"]
@@ -59,19 +60,19 @@ class User < ActiveRecord::Base
   def setup_bool?
     @setup_bool==true
   end
-  validate :check_goal_not_empty, on: :update, if: :goal_bool?
-  def goal_bool?
-    @goal_bool==true
+  validate :check_interest_not_empty, on: :update, if: :interest_bool?
+  def interest_bool?
+    @interest_bool==true
   end
 
-  def check_goal_not_empty
-    self.goal=goal.reject(&:empty?)
-    if goal.empty? 
-      errors.add(:goals, "Need to select a financial goal")
+  def check_interest_not_empty
+    self.interests=interests.reject(&:empty?)
+    if interests.empty? 
+      errors.add(:interests, "Need to select a financial interest")
     end 
   end
 
-  # this prevents the gotcha of not selecting any checkbox for the goal that would send empty value
+  # this prevents the gotcha of not selecting any checkbox for the interest that would send empty value
 
   validates :email, allow_blank:true, format: {with:VALID_EMAIL_REGEX}, on: :update
   validates :password, allow_blank:true, length: { in: 7..40 }
@@ -278,7 +279,30 @@ class User < ActiveRecord::Base
   def has_password?(submitted_password)
     self.password_digest == encrypt(submitted_password)
   end
+  def crop_image
+    puts "crop image"
+    ImageWorker.perform_async(id,key,"crop",crop_x,crop_y,crop_w,crop_h)    
+  end
 
+  class ImageWorker
+    include Sidekiq::Worker
+    
+    def perform(id, key,status,crop_x,crop_y,crop_w,crop_h)
+      puts "status: #{status}"   
+      user = User.find(id)
+      if status=="crop"
+        user.crop_x=crop_x
+        user.crop_y=crop_y
+        user.crop_w=crop_w
+        user.crop_h=crop_h
+      #  broker.image.recreate_versions!
+      end
+      user.key=key 
+      user.remote_image_url = user.image.direct_fog_url(with_path: true)
+      user.image_cropped=true
+      user.save!
+    end
+  end
   private
     def generate_new_password
       password=SecureRandom.urlsafe_base64[0..8]

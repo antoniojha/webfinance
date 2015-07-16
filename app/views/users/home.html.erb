@@ -5,13 +5,13 @@
 <div style="clear:both;"></div>
 <div align="left">
   <ul class="nav nav-pills">
-    <%@user.goal.each do |goal|%>
-      <%if goal==@goal%>
-      <li role="presentation" class="active"><%=link_to "#{goal.titleize}",user_home_url(goal:goal) %></li>
+    <%Order::FINANCIAL_CATEGORIES_HASH.values.each do |interest|%>
+    <%if interest==@interest%>
+    <li role="presentation" class="active"><%=link_to "#{interest.titleize}",user_home_url(interest:interest) %></li>
       <%else%>
-      <li role="presentation"><%=link_to "#{goal.titleize}",user_home_url(goal:goal) %></li>
+    <li role="presentation"><%=link_to "#{interest.titleize}",user_home_url(interest:interest) %></li>
       <%end%>
     <%end%>
   </ul>
-  <%=render partial:"home_goal", locals:{g:@goal}%>
+  <%=render partial:"home_goal", locals:{g:@interest}%>
 </div>

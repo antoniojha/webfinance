@@ -1,0 +1,25 @@
+<div id="financial_goal_add" width="50%">
+<%if @edit=="financial_goal_add"%>
+
+  <%=link_to user_path(id:@user), remote: true do%>
+  <span class="glyphicon glyphicon-plus"></span> Add Financial Goal
+  <%end%>
+  <h4>Enter your new goal:</h4>
+  <%=form_for @goal, remote:true do |f|%>
+    <table width="100%">
+      <tr>
+        <td align="left" width="15%">Description</td>
+        <td align="left" width="60%"><%=f.text_field :description, style:"width:100%;"%>
+          <%=f.hidden_field :user_id, value:@user.id%>
+        </td>
+        <td align="left"><%=f.submit "Add"%></td>
+      </tr>
+    </table>
+  <%end%>
+  <br>
+<%else%>
+  <%=link_to user_path(id:@user, edit:"financial_goal_add"), remote: true do%>
+  <span class="glyphicon glyphicon-plus"></span> Add Financial Goal
+  <%end%>
+<%end%>
+</div>

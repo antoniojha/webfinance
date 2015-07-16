@@ -18,7 +18,7 @@ class SetupsController < ApplicationController
     else     
       @user.setup_bool=true
       if (@user.step=="goal")
-        @user.goal_bool=true
+        @user.interest_bool=true
       end
       if @user.update(user_params)
         

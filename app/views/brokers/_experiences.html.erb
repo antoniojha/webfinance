@@ -7,18 +7,18 @@
     <%unless @broker.experiences.count >0%>
     None.
     <%else%>
-    <% current_experience=@broker.experiences.find_by(current_experience:true)%>
-    <% if current_experience%>
-    <% unless current_experience.new_record?%>
-    <%=render partial:"brokers/experience_edit", locals:{e:current_experience}%>
-    <%end%>      
-    <%end%>
+      <% current_experience=@broker.experiences.find_by(current_experience:true)%>
+      <% if current_experience%>
+        <% unless current_experience.new_record?%>
+        <%=render partial:"brokers/experience_edit", locals:{e:current_experience}%>
+        <%end%>      
+      <%end%>
 
-    <% @broker.experiences.where(current_experience:false).order(end_date: :desc).each do |e|%>
-    <% unless e.new_record?%>
-    <%=render partial:"brokers/experience_edit", locals:{e:e}%>
-    <%end%>
-    <%end%>      
+      <% @broker.experiences.where(current_experience:false).order(end_date: :desc).each do |e|%>
+        <% unless e.new_record?%>
+        <%=render partial:"brokers/experience_edit", locals:{e:e}%>
+        <%end%>
+      <%end%>      
     <%end%>
   </div>
 </div>     

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150711135208) do
+ActiveRecord::Schema.define(version: 20150716020202) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -332,6 +332,16 @@ ActiveRecord::Schema.define(version: 20150711135208) do
 
   add_index "experiences", ["broker_id"], name: "index_experiences_on_broker_id"
 
+  create_table "financial_goal_story_rels", force: true do |t|
+    t.integer  "goal_id"
+    t.integer  "financial_story_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "financial_goal_story_rels", ["financial_story_id"], name: "index_financial_goal_story_rels_on_financial_story_id"
+  add_index "financial_goal_story_rels", ["goal_id"], name: "index_financial_goal_story_rels_on_goal_id"
+
   create_table "financial_product_rels", force: true do |t|
     t.integer  "financial_product_id"
     t.integer  "broker_id"
@@ -398,17 +408,12 @@ ActiveRecord::Schema.define(version: 20150711135208) do
 
   create_table "goals", force: true do |t|
     t.string   "description"
-    t.decimal  "amount"
-    t.datetime "start_date"
-    t.datetime "maturity_date"
-    t.boolean  "completed"
     t.integer  "priority"
-    t.integer  "background_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
+    t.string   "financial_interests"
   end
-
-  add_index "goals", ["background_id"], name: "index_goals_on_background_id"
 
   create_table "identities", force: true do |t|
     t.string   "name"
@@ -773,7 +778,7 @@ ActiveRecord::Schema.define(version: 20150711135208) do
     t.string   "uid"
     t.string   "salt"
     t.string   "step"
-    t.string   "goal"
+    t.string   "interests"
     t.string   "income_level"
     t.boolean  "setup_completed?"
     t.string   "occupation"
@@ -781,6 +786,8 @@ ActiveRecord::Schema.define(version: 20150711135208) do
     t.string   "image"
     t.string   "key"
     t.boolean  "image_cropped"
+    t.text     "about_statement"
+    t.string   "satisfaction"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

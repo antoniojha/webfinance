@@ -33,8 +33,8 @@ class BrokersController < Broker::AuthenticatedController
       end
       if params[:delete_picture]
         @broker.image=nil
+        @broker.image_cropped=nil
         @broker.remove_image!
-        @broker.image_status=nil
         if @broker.save
           format.html { redirect_to @broker,notice:'Your profile was successfully updated.'}
         else
@@ -62,8 +62,7 @@ class BrokersController < Broker::AuthenticatedController
             format.html { redirect_to @broker,notice:'Broker was successfully updated.'}
           else
             format.html{
-              redirect_to :controller => 'brokers', :action => 'show', :id => @broker.id, :crop => true
-            }
+              redirect_to :controller => 'brokers', :action => 'show', :id => @broker.id}
           end
         else
           format.html { render action: 'edit' }
@@ -78,13 +77,10 @@ class BrokersController < Broker::AuthenticatedController
     unless params[:key]
       @uploader = Broker.new.image
       @uploader.success_action_redirect = broker_url(@broker)
-    else
-      
+    else      
       @broker.key=params[:key]
       @broker.save
-      @crop=true
     end
-#    @crop=params[:crop]
     @edit=params[:edit]
     @education=Education.new #needed for education_add partial template
     @experience=Experience.new #needed for experience_add partial template

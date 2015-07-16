@@ -26,7 +26,7 @@ class Order <ActiveRecord::Base
   LENGTH_UNITS=[["mile",1],["kilometer",2]]
   INCOME_LEVELS=[["0 to $30,000",1],["$30,000 to $70,000",2],["$70,000 and above",3]]
   AGE_LEVELS=[["20-39 years old", "young generation"],["40-59 years old","middle generation"],["60 years old and up","late generation"]]
-  
+  SATISFACTION_LEVELS=[["Very Satisfied"],["Satisfied"],["Not Satisfied"]]
   US_STATES=
     [
       ['Alabama', 'AL'],

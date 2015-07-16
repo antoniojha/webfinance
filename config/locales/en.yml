@@ -27,7 +27,7 @@ en:
       background:
         month: ""
       user:
-        goals: ""
+        interests: ""
       broker:
         license_type_bool: ""
         product_names_bool: ""

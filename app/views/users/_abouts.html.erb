@@ -1,0 +1,24 @@
+
+<%if @edit=="about"%>
+  <h4>About me 
+    <%=link_to user_path(id:@user),id:"about_edit", remote:true do%>
+    <span class="glyphicon glyphicon-edit"></span>
+    <%end%>
+  </h4>
+  <%=form_for @user, remote:true do |f|%>
+    <%=f.text_area :about_statement, {class:"form-control"}%>
+    <%=f.submit "Edit", class:"btn btn-default"%>
+  <%end%>
+
+<%else%>
+<h4>About me 
+  <%=link_to user_path(id:@user,edit:"about"),id:"about_edit", remote:true do%>
+  <span class="glyphicon glyphicon-edit"></span>
+  <%end%>
+</h4>
+  <%if @user.about_statement%>
+  <%=@user.about_statement%>
+  <%else%>
+  None.
+  <%end%>
+<%end%>

@@ -36,10 +36,18 @@ $(function(){
           marginLeft: '-' + Math.round(rx * coords.x) + 'px',
           marginTop: '-' + Math.round(ry * coords.y) + 'px'
         }); 
+        if ($('#broker_crop_x').length){
         $('#broker_crop_x').val(Math.floor(coords.x));
         $('#broker_crop_y').val(Math.floor(coords.y));
         $('#broker_crop_w').val(Math.floor(coords.w));
-        $('#broker_crop_h').val(Math.floor(coords.h));   
+        $('#broker_crop_h').val(Math.floor(coords.h));
+        }
+        else if($('#user_crop_x').length){
+        $('#user_crop_x').val(Math.floor(coords.x));
+        $('#user_crop_y').val(Math.floor(coords.y));
+        $('#user_crop_w').val(Math.floor(coords.w));
+        $('#user_crop_h').val(Math.floor(coords.h));          
+        }
       };
    }
   

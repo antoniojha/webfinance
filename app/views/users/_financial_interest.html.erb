@@ -1,0 +1,37 @@
+<%if @edit=="financial_interest"%>
+  <h4>Financial Interest(s):
+    <%=link_to user_path(id:@user),id:"financial_interest_edit", remote:true do%>
+    <span class="glyphicon glyphicon-edit"></span>
+    <%end%>
+  </h4> 
+  
+  <% interests=["protection", "debt management", "retirement", "investment", "education fund", "tax saving"]%>
+  <%= form_for :user, :url => user_path(@user), :html => { :method => :put}, remote:true do|f|%>
+    <%= hidden_field_tag "user[interests][]", nil %>
+    <ul>
+    <%for interest in interests%>
+      <li>
+        <%=smart_label(interest)%>
+        <%result=@user.interests.include?(interest)%>
+        <%=f.check_box("interests", {:multiple => true,checked:result}, interest, nil)%>
+      </li>
+    <%end%>
+    </ul>
+    <table width="70%">
+      <tr>
+        <td><%=f.submit "Edit", name:"edit_goals", :class=>"btn btn-default"%></td>
+      </tr>
+    </table>
+  <%end%>
+<%else%>
+  <h4>Financial Interest(s):
+    <%=link_to user_path(id:@user,edit:"financial_interest"),id:"financial_interest_edit", remote:true do%>
+    <span class="glyphicon glyphicon-edit"></span>
+    <%end%>
+  </h4> 
+  <ul>
+    <%@user.interests.each do |interest|%>
+    <li><%=smart_label(interest)%></li>
+    <%end%>
+  </ul>
+<%end%> 

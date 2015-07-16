@@ -1,20 +1,53 @@
+<div style="float:left; width:40%;" align="left">
 <% if !@user.image_url.to_s.empty?%> 
-  <%= content_tag "div", id: "picture_form", data: {picture_file_name: @user.image_url.to_s,user_pic_large_width:@user.image.get_geometry[0],user_pic_large_height:@user.image.get_geometry[1],crop:@crop}, style:"float:left; width:40%;",align:"left" do %>
+  <%= content_tag "div", id: "picture_form", data: {picture_file_name: @user.image_url.to_s,user_pic_large_width:@user.image.get_geometry[0],user_pic_large_height:@user.image.get_geometry[1],crop:@crop}, align:"left" do %>
   <%=render "users/picture_form"%>
 
   <% end %>
 <%else%>
-  <div id="picture_form" style="float:left; width:40%;" align="left">
+  <div id="picture_form" align="left">
     <%=render "users/picture_form"%>  
   </div>
 <%end%>
-
-
-  <%=render "error_small"%>
-  <%=render "collapse_link1"%>  
 </div>
 <div align="left" style="overflow: auto;">
-
-  <%=render "profile_info"%>
-
+  <div id="profile_infos">
+    <%=render "users/profile_infos"%>
+  </div>
 </div>
+<div style="clear:both;"></div>
+<table width="100%">
+  <tr>
+    <td width="65%" class="panel panel-default">
+      <div class="panel-body" align="left">
+        <div id="abouts" style="padding:5px;">
+          <%=render "users/abouts"%>
+        </div>
+      </div>
+    </td>
+    <td width="35%" class="panel panel-default" style="vertical-align:top;">
+      <div class="panel-body" align="left">
+        <h4>Financial Testimonies</h4>
+      </div>
+    </td>
+  </tr>
+</table><br>
+<table width="100%" style="border-spacing: 5px;">
+  <tr>
+    <td width="65%" align="left" style="padding:5px;border: 1px ridge;vertical-align:top;">
+      <div id="financial_goal">
+        <%=render "financial_goal"%>
+      </div>
+    </td>
+    <td width="35%" align="left" style="padding:5px;vertical-align:top;border: 1px ridge;">
+      <%=render "error_small"%>
+      <div id="financial_interest">
+        <%=render "financial_interest"%>
+      </div>
+    </td>
+  </tr>
+</table>
+
+  
+
+

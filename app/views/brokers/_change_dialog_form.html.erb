@@ -1,8 +1,11 @@
 <div id="change_dialog-form" title="Crop Your Profile Picture">
   <div style="float:left; width=50%;">
     <h4>Your Picture</h4>  
-    <%= image_tag @broker.image_url,style: 'width:400px;height:auto;', :id => "cropbox"%>
-
+    <%if @broker.image.get_geometry[0] > 400%>
+      <%= image_tag @broker.image_url,style: 'width:400px;height:auto;', :id => "cropbox"%>
+    <%else%>
+      <%= image_tag @broker.image_url, :id => "cropbox"%>
+    <%end%>
   </div>
   <div style="overflow:auto;">
     <h4>Preview</h4>

@@ -42,67 +42,87 @@
     </td>
   </tr>
 </table><br>
-<div align="left" style="float:left; width:50%; margin:5px;">
-  <div class="panel panel-default">
-    <div class="panel-body" align="left">
-      <h4>License(s)</h4>
-      <%@broker.setup_broker && @broker.setup_broker.licenses.each_with_index do |l,index|%>
-        <%if index==0%>
-          <%=l.license_type%>
-        <%else%>
-          ,<%=l.license_type%>
-        <%end%>
-      <%end%>
-    </div>
-  </div>
-  <div class="panel panel-default">
-    <div class="panel-body" align="left">
-      <h4>Financial Vehicle(s)</h4>
-      <%@broker.product_ids.each_with_index do |p,index|%>
-        <%product=Product.find(p)%>
-        <%if index==0%>
-          <%=product.name%>
-        <%else%>
-          <%=", #{product.name}"%>
-        <%end%>
-      <%end%>
-      <h4>Financial Product(s)</h4>
- 
-      <%@broker.product_ids.each_with_index do |product_id,index|%>
-      <%product=Product.find(product_id)%>
-        <%if product%>
-          <%=render partial:"brokers/financial_product_show", locals:{product:product}%>
-        <%end%>
-      <%end%>
-    </div>
-  </div>
-  <div class="panel panel-default">
-    <div class="panel-body" align="left">
-      <h4>Education</h4>
-      <%unless @broker.educations.count >0%>
-        None.
-      <%else%>
-      <% @broker.educations.order(end_date: :desc).each do |e|%>
-          <% unless e.new_record?%>
-            <%=render partial:"brokers/education_show", locals:{e:e}%>
-          <%end%>
-        <%end%>
-      <%end%>
-    </div>
-  </div>  
-</div>
-<div align="left" style="overflow: auto; margin:5px;">
 
-  <div class="panel panel-default">
-    <div class="panel-body" align="left">
-      <h4>Experience</h4>
-      <%unless @broker.experiences.count >0%>
-        None.
-      <%else%>      
-        <% @broker.experiences.where(current_experience:false).order(end_date: :desc).each do |e|%>
-          <%=render partial:"brokers/experience_show", locals:{e:e}%>
-        <%end%>      
+<table width="100%" style="border-spacing: 5px;">
+  <tr>
+    <td width="65%" align="left" style="padding:5px;border: 1px ridge;vertical-align:top;">
+      <div class="panel panel-default">
+        <div class="panel-body" align="left">
+          <h4>License(s)</h4>
+          <%@broker.setup_broker && @broker.setup_broker.licenses.each_with_index do |l,index|%>
+            <%if index==0%>
+              <%=l.license_type%>
+            <%else%>
+              ,<%=l.license_type%>
+            <%end%>
+          <%end%>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-body" align="left">
+          <h4>Financial Vehicle(s)</h4>
+          <%@broker.product_ids.each_with_index do |p,index|%>
+            <%product=Product.find(p)%>
+            <%if index==0%>
+              <%=product.name%>
+            <%else%>
+              <%=", #{product.name}"%>
+            <%end%>
+          <%end%>
+          <h4>Financial Product(s)</h4>
+
+          <%@broker.product_ids.each_with_index do |product_id,index|%>
+          <%product=Product.find(product_id)%>
+            <%if product%>
+              <%=render partial:"brokers/financial_product_show", locals:{product:product}%>
+            <%end%>
+          <%end%>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-body" align="left">
+          <h4>Education</h4>
+          <%unless @broker.educations.count >0%>
+            None.
+          <%else%>
+          <% @broker.educations.order(end_date: :desc).each do |e|%>
+              <% unless e.new_record?%>
+                <%=render partial:"brokers/education_show", locals:{e:e}%>
+              <%end%>
+            <%end%>
+          <%end%>
+        </div>
+      </div>   
+      <div class="panel panel-default">
+        <div class="panel-body" align="left">
+          <h4>Experience</h4>
+          <%unless @broker.experiences.count >0%>
+            None.
+          <%else%>      
+            <% @broker.experiences.where(current_experience:false).order(end_date: :desc).each do |e|%>
+              <%=render partial:"brokers/experience_show", locals:{e:e}%>
+            <%end%>      
+          <%end%>
+        </div>
+      </div>
+    </td>
+    <td width="35%" align="left" style="padding:5px;vertical-align:top;border: 1px ridge;">
+      <div style="font-size:1.1em;"><p><b>Financial Stories</b></p></div>   
+     
+      <p><%=@broker.first_name%> has posted <%=pluralize(@broker.financial_stories.count, "financial story")%></p>
+      <%@broker.financial_stories.order(created_at: :desc).each do |story|%>
+      <div class="panel panel-default">
+        <div class="panel-body" align="left">
+          <h4><%=link_to "Title:#{story.title}", story%></h4>
+          <p>
+            Posted at <%=story.created_at.strftime("%b,%y at %l:%M %P")%>
+          </p>
+          <p>Financial Vehicle:<span class="label label-success"><%=story.product.name%></span></p>
+          <p>Category: <span class="label label-success"><%=Order::FINANCIAL_CATEGORIES_HASH[story.financial_category]%></span></p>
+
+        </div>
+      </div>
       <%end%>
-    </div>
-  </div>  
-</div>
+    </td>
+  </tr>
+</table>

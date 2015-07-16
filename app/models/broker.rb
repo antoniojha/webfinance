@@ -235,10 +235,7 @@ class Broker < ActiveRecord::Base
     ImageWorker.perform_async(id,key,"crop",crop_x,crop_y,crop_w,crop_h)
     
   end
-  def create_image_thumb
-    puts "create thumb"
-    ImageWorker.perform_async(id,key,"null","null","null","null","null")
-  end
+
   class ImageWorker
     include Sidekiq::Worker
     

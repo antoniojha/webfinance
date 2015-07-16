@@ -8,10 +8,10 @@ class UsersController < User::AuthenticatedController
   include ProfilesHelper
 
   def home
-    unless params[:goal]
-      @goal="protection"
+    unless params[:interest]
+      @interest="protection"
     else
-      @goal=params[:goal]
+      @interest=params[:interest]
     end    
   end
   def index
@@ -23,12 +23,21 @@ class UsersController < User::AuthenticatedController
       @uploader = User.new.image
       @uploader.success_action_redirect = user_url(@user)
     else
-
       @user.key=params[:key]
       @user.save
-      @crop=true
+      
     end
+    if params[:goal_id]
+      @delete_goal=Goal.find(params[:goal_id])
+    end
+    @edit=params[:edit]
+    @goal=Goal.new #needed for financial_goal_add partial template
     @plan=current_month_plan
+    respond_to do |format|
+      format.html
+      format.js
+    end
+      
   end
   
   # GET /users/new
@@ -64,7 +73,7 @@ class UsersController < User::AuthenticatedController
   def update
     respond_to do |format|
       if params[:edit_goals]
-        @user.goal_bool=true
+        @user.interest_bool=true
       end
       if params[:send_validation]
         @user.validate_email_bool=true
@@ -77,7 +86,9 @@ class UsersController < User::AuthenticatedController
         end
       end
       if params[:delete_picture]
-        @user.picture=nil
+        @user.image=nil
+        @user.image_cropped=nil
+        @user.remove_image!
         if @user.save
           format.html { redirect_to @user,notice:'Your profile was successfully updated.'}
         else
@@ -85,24 +96,29 @@ class UsersController < User::AuthenticatedController
         end
       elsif @user.update(user_params)
         if params[:user][:picture].blank?
+    
           if @user.cropping?
+            
+            @user.update_attributes(image_cropped:false)
             @user.crop_image
-          #  @user.reprocess_picture
           end
           if @user.validate_email_bool && (@user.email_authen!=true)
             @user.send_email_confirmation
           end
+          format.js
           format.html { redirect_to @user,notice:'User was successfully updated.'}
           format.json { head :no_content }
         else
+          format.js
           format.html{
-            redirect_to :controller => 'users', :action => 'show', :id => @user.id, :crop => true
-          }
+            redirect_to :controller => 'users', :action => 'show', :id => @user.id}
         end
       else
-        if @user.goal_bool
+        if @user.interest_bool
+          format.js
           format.html { render action: 'show' }
         else
+          format.js
           format.html { render action: 'edit' }
         end
       end
@@ -164,7 +180,7 @@ class UsersController < User::AuthenticatedController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:first_name, :last_name,:username, :email, :password, :password_confirmation,:validation_code,:picture, :crop_x,:crop_y,:crop_w,:crop_h,:income_level, :state, :occupation, {:goal => []})
+      params.require(:user).permit(:first_name, :last_name,:username, :email, :password, :password_confirmation,:validation_code,:picture, :crop_x,:crop_y,:crop_w,:crop_h,:income_level, :state, :occupation, {:interests => []},:satisfaction, :about_statement)
     end
     def correct_user
       @user=User.find(params[:id])
