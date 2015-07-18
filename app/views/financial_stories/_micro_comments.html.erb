@@ -17,7 +17,7 @@
                       <div style="font-size:0.5em;">
                       <%=link_to full_name(author), author%> &nbsp&nbsp
                         Posted at <%=comment.created_at.strftime("%b,%y at %l:%M %P")%>
-                        <%if ((comment.user==current_user)&&current_user.nil?) || ((comment.broker==current_broker)&&(!current_broker.nil?))%>
+                        <%if ((comment.user==current_user)&&(!current_user.nil?)) || ((comment.broker==current_broker)&&(!current_broker.nil?))%>
                         <div style="float:right">
                         <table>
                           <tr>
