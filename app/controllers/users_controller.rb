@@ -180,7 +180,7 @@ class UsersController < User::AuthenticatedController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:first_name, :last_name,:username, :email, :password, :password_confirmation,:validation_code,:picture, :crop_x,:crop_y,:crop_w,:crop_h,:income_level, :state, :occupation, {:interests => []},:satisfaction, :about_statement)
+      params.require(:user).permit(:first_name, :last_name,:username, :email, :password, :password_confirmation,:validation_code,:picture, :crop_x,:crop_y,:crop_w,:crop_h,:age_level, :state, :occupation, {:interests => []},:satisfaction, :about_statement)
     end
     def correct_user
       @user=User.find(params[:id])

@@ -8,19 +8,19 @@
   <%=form_for @user, remote:true do |f|%>
   <table width="100%">
     <tr>
-      <td width="30%"><span style="font-size:1.1em;"><b>Occupation:</b></span></td>
+      <td width="40%"><span style="font-size:1.1em;"><b>Occupation:</b></span></td>
       <td width="50%"><%=f.text_field :occupation, {style:"width:100%;"}%></td>
     </tr>
     <tr>
-      <td width="30%"><span style="font-size:1.1em;"><b>State of Resident:</b></span></td>
+      <td width="40%"><span style="font-size:1.1em;"><b>State of Resident:</b></span></td>
       <td width="50%"><%=f.select(:state, options_for_select(Order::US_STATES),{prompt:"Select Your Age Range"}, {style:"width:100%;"})%></td>
     </tr>
     <tr>
-      <td width="30%"><span style="font-size:1.1em;"><b>Age Range:</b></span></td>
+      <td width="40%"><span style="font-size:1.1em;"><b>Age Range:</b></span></td>
       <td width="50%"><%=f.select(:age_level, options_for_select(Order::AGE_LEVELS),{prompt:"Select Your Age Range"},{style:"width:100%;"})%></td>
     </tr>
     <tr>
-      <td width="30%"><span style="font-size:1.1em;"><b>How satisfied am I with my finance?:</b></span></td>
+      <td width="40%"><span style="font-size:1.1em;"><b>How satisfied am I with my finance?:</b></span></td>
       <td width="50%" style="vertical-align:top;"><%=f.select(:satisfaction, options_for_select(Order::SATISFACTION_LEVELS),{prompt:"Select Your Satisfaction Level"},{style:"width:100%;"})%></td>
     </tr>
 
@@ -39,15 +39,15 @@
   </h1> 
   <table width="100%">
     <tr>
-      <td width="30%"><span style="font-size:1.1em;"><b>Occupation:</b></span></td>
+      <td width="40%"><span style="font-size:1.1em;"><b>Occupation:</b></span></td>
       <td width="50%"><%=@user.occupation%></td>
     </tr>
     <tr>
-      <td width="30%"><span style="font-size:1.1em;"><b>State of Resident:</b></span></td>
+      <td width="40%"><span style="font-size:1.1em;"><b>State of Resident:</b></span></td>
       <td width="50%"><%=Order::US_STATES.to_h.key(@user.state)%></td>
     </tr>
     <tr>
-      <td width="30%"><span style="font-size:1.1em;"><b>Age Range:</b></span></td>
+      <td width="40%"><span style="font-size:1.1em;"><b>Age Range:</b></span></td>
       <td width="50%"><%=smart_label(@user.age_level)%></td>
     </tr>
     <tr>
