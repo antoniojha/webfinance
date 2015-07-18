@@ -135,7 +135,7 @@ class UsersController < User::AuthenticatedController
     end
     
     respond_to do |format|
-      if user && user.authenticated?(params[:user][:password])
+      if user && user.has_password?(params[:user][:password])
         if is_admin_remove?
           name=remove_user.username 
           remove_user.destroy unless remove_user.admin?

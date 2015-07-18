@@ -265,6 +265,7 @@ class User < ActiveRecord::Base
                                                   BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
   end
+  #used to authenticate cookie session
   def authenticated?(auth_token)
     return false if auth_token_digest.nil?
     BCrypt::Password.new(auth_token_digest).is_password? (auth_token)
