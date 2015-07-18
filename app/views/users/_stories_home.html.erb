@@ -1,27 +1,29 @@
-<h4>Top Financial Stories</h4>
+<%story_count=product.financial_stories.count%>
+<h4><%=pluralize(story_count,"Top Financial Story")%></h4>
 <div width="100%" align="left">
-  <%financial_stories=product.financial_stories.first(5)%>
-  <table>
+  <%financial_stories=product.financial_stories.order(votes: :desc).first(5)%>  
+  <table width="100%">
     <%financial_stories.each do |story|%>
     <tr>
-      <td width="30%">
-        <span class="label label-primary" style="font-size:0.8em;">
-          By:<%=full_name(story.broker)%>
-        </span>
-      </td>
-      <td width="70%" align="right">
-        
-      </td>
-    </tr>
-    <tr>
-      <td>
+      <td width="20%" style="vertical-align:top;">
         <%=link_to story.broker do %>
         <%=smart_image(story.broker,4)%>
         <%end%>
       </td>
-      <td class="story_display">       
-        <%=link_to story.title, story%><br>
-        Votes:<%=story.votes%>
+      <td width="80%">    
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div style="font-size:0.7em;">
+              <h4><%=link_to story.title, story%></h4>
+
+              <span class="label label-success">Upvotes:<%=story.votes%></span>
+            </div>
+          </div>
+          <div class="panel-body" style="vertical-align:top;">
+            Posted by <%=link_to full_name(story.broker), story.broker%><br>
+            Posted on <%=story.created_at.strftime("%b,%y at %l:%M %P")%><br> 
+          </div>
+        </div>
       </td>
     </tr>
 

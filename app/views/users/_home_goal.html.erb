@@ -10,8 +10,8 @@
             <tr>
               <td width="50%" class="panel panel-primary" style="margin:5px;">
                 <h3>
-                  <span class="label label-success vehicle-heading">
-                    <a name="<%=product.name%>"><%=product.name%></a>
+                  <span class="label label-info vehicle-heading">
+                    <%=content_tag(:a,product.name.titleize,name:"#{product.name}", title:product.description)%>
                   </span>
                 </h3>
                 <div class="panel-body home_display" align="left">
@@ -22,11 +22,11 @@
             <%elsif index%2==1%>
               <td width="50%" class="panel panel-primary" style="margin:5px; vertical-align:text-top;">
                 <h3>
-                  <span class="label label-success vehicle-heading">
-                    <a name="<%=product.name%>"><%=product.name%></a>
+                  <span class="label label-primary vehicle-heading">
+                    <%=content_tag(:a,product.name.titleize,name:"#{product.name}", title:product.description)%>
                   </span>
                 </h3>
-                <div class="panel-body" align="left">
+                <div class="panel-body" align="left" width="100%">
                
                   <%=render partial:"stories_home", locals:{product:product}%>
                 </div>
@@ -36,8 +36,8 @@
             <tr>
               <td width="50%" class="panel panel-primary" style="margin:5px;">
                 <h3>
-                  <span class="label label-success vehicle-heading">
-                    <%=content_tag(:a,product.name,name:"#{product.name}")%>
+                  <span class="label label-primary vehicle-heading">
+                    <%=content_tag(:a,product.name.titleize,name:"#{product.name}", title:product.description)%>
                   </span>
                 </h3>
                 <div class="panel-body" align="left">

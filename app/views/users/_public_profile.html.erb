@@ -1,8 +1,5 @@
 <% content_for :title do %>|User Profile<%end%>
-<div align="left" style="width:100%; display:block">  
-  
-  <h1><%=full_name(@user)%></h1> 
-</div>
+
 <div align="left" style="float:left; width:40%;">  
   <table style=" text-align:left;width:100%">
     <tr>
@@ -105,8 +102,10 @@
       <div id="financial_interest">
         <h4>Financial Interest(s):</h4> 
         <ul>
-          <%@user.interests.each do |interest|%>
-          <li><%=smart_label(interest)%></li>
+          <% if @user.interests%>
+            <%@user.interests.each do |interest|%>
+            <li><%=smart_label(interest)%></li>
+            <%end%>
           <%end%>
         </ul>
       </div>

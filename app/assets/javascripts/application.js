@@ -13,7 +13,7 @@
 
 //= require jquery
 //= require jquery.turbolinks
-//= require jquery-ui/tooltip
+
 //= require jquery_ujs
 //= require jquery.purr
 //= require best_in_place
@@ -28,11 +28,11 @@
 //= require protection_plans
 //= require raphael
 //= require jquery.usmap
-
 //= require jquery.Jcrop.min
-//= require_tree .
 //= require bootstrap
 //= require jquery-ui
+//= require jquery-ui/tooltip
+//= require_tree .
 ready=function(){
 //   $('#bank_login').validate();
   //**important- $field will be used in controller/backgrounds/add_assoc.js.erb
