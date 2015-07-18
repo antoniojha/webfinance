@@ -1,46 +1,46 @@
-<h1>Please select your goal</h1>
+<h1>Please select your financial interest</h1>
 <%=render "error"%>
 <%= form_for :user, :url => setup_path(@user), :html => { :method => :put} do|f|%>
-<%= hidden_field_tag "user[goal][]", nil %>
+<%= hidden_field_tag "user[interests][]", nil %>
 <label>
   <p>Protection</p>
-  <div class="goal_check_box">
-    <p><%=f.check_box("goal", {:multiple => true}, "protection", nil)%></p>
+  <div class="interest_check_box">
+    <p><%=f.check_box("interests", {:multiple => true}, "protection", nil)%></p>
   </div>
   <%=image_tag("protection.jpg", class:"goal_pic")%>
 </label>
 <label>
   <p>Debt Management</p>
-  <div class="goal_check_box">
-    <p><%=f.check_box("goal", {:multiple => true}, "debt management", nil)%></p>
+  <div class="interest_check_box">
+    <p><%=f.check_box("interests", {:multiple => true}, "debt management", nil)%></p>
   </div>
   <%=image_tag("debt_management-2.jpg", class:"goal_pic")%>
 </label>
 <label>
   <p>Retirement</p>
-  <div class="goal_check_box">
-    <p><%=f.check_box("goal", {:multiple => true}, "retirement", nil)%></p>
+  <div class="interest_check_box">
+    <p><%=f.check_box("interests", {:multiple => true}, "retirement", nil)%></p>
    </div>
   <%=image_tag("retirement.jpg", class:"goal_pic")%>
 </label>
 <label>
   <p>Investment</p>
-  <div class="goal_check_box">
-    <p><%=f.check_box("goal", {:multiple => true}, "investment", nil)%></p>
+  <div class="interest_check_box">
+    <p><%=f.check_box("interests", {:multiple => true}, "investment", nil)%></p>
   </div>
   <%=image_tag("investment.jpg", class:"goal_pic")%>
 </label>
 <label>
   <p>Education Fund</p>
-  <div class="goal_check_box">
-    <p><%=f.check_box("goal", {:multiple => true}, "education fund", nil)%></p>
+  <div class="interest_check_box">
+    <p><%=f.check_box("interests", {:multiple => true}, "education fund", nil)%></p>
   </div>
   <%=image_tag("education_fund.jpg", class:"goal_pic")%>
 </label>
 <label>
   <p>Tax Saving</p>
-  <div class="goal_check_box">
-    <p><%=f.check_box("goal", {:multiple => true}, "tax saving", nil)%></p>
+  <div class="interest_check_box">
+    <p><%=f.check_box("interests", {:multiple => true}, "tax saving", nil)%></p>
   </div>
   <%=image_tag("tax_saving.jpg", class:"goal_pic")%>
 </label>

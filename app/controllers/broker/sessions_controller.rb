@@ -8,7 +8,7 @@ class Broker::SessionsController < Broker::AuthenticatedController
     @broker=Broker.new
   end
   def create
-
+      
       name_or_email=params[:session][:name_or_email].downcase
       broker=Broker.find_by(username: name_or_email) || Broker.find_by(email: name_or_email)
       respond_to do |format|

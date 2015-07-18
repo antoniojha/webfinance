@@ -147,7 +147,7 @@ class User < ActiveRecord::Base
   end
 
   def steps
-    %w[basic_info goal]
+    %w[basic_info interests]
   end
   def current_field
     unless step

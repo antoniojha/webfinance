@@ -1,0 +1,2 @@
+module FinancialGoalStoryRelsHelper
+end

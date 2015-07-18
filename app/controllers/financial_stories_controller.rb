@@ -22,26 +22,35 @@ class FinancialStoriesController < ApplicationController
     elsif params[:broker_id]
       @author=Broker.find(params[:broker_id])
     end
-    if params[:direction]=="up"
+    if params[:upvote]
       @vote=@author.votes.new(financial_story_id:@story.id,description:"up")
-    elsif params[:direction]=="down"
-      @vote=@author.votes.new(financial_story_id:@story.id,description:"down")
     end 
+    if params[:cancel_upvote]
+      @vote=@author.votes.where(financial_story_id:@story.id).first
+      @vote.destroy
+      @story.votes=@story.votes-1
+      @story.save
+    end
     respond_to do |format|
-      if params[:direction]
-        if @vote.save
-          if params[:direction]=="up"
+      #this is to vote up or cancel vote by both user and broker
+      if params[:upvote] || params[:cancel_upvote]
+        @change_vote=true
+        if params[:upvote]
+          if @vote.save
             @story.votes=@story.votes+1
+            @story.save
+            format.html{redirect_to @story}
+            format.js{}
           else
-            @story.votes=@story.votes-1
+            format.html{render "financial_stories/show"}
+            format.js{}
           end
-          @story.save
-          format.html{redirect_to @story}
-          format.js{}
         else
+          format.html{redirect_to @story}
           format.js{}
         end
       else
+        # this is to update financial story by broker
         @broker=@story.broker
         @story_id=@story.id
         if @story.update(financial_story_params)
@@ -59,6 +68,10 @@ class FinancialStoriesController < ApplicationController
   end
   def show
     @vote=Vote.new
+    @financial_goal_story_rel=FinancialGoalStoryRel.new
+    @edit=params[:edit]
+    @author= current_user || current_broker
+
   end
   def destroy
     @broker=@story.broker

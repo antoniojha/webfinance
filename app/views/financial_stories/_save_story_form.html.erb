@@ -1,8 +1,22 @@
 <div id="save_story_dialog-form" title="Crop Your Profile Picture">
+  <div width="80%;">
+    
   <p>Save Financial Story: <%=@story.title%></p>
-  <%@financial_goal_story_rel=FinancialGoalStoryRel.new%>
-  <%=form_for @financial_goal_story_rel do |f|%>
-  <%=f.hidden_field :story_id, value:@story.id%>
-  <%=f.select :goal_id, %>
+    <% if @financial_goal_story_rel && @financial_goal_story_rel.errors.any? %>
+      <div class="alert alert-success error-message" style="float:left;">
+        <ul>
+          <% @financial_goal_story_rel.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <div style="clear:both;"></div>
+    <% end %>
+    <%=form_for @financial_goal_story_rel do |f|%>
+    <%=f.hidden_field :financial_story_id, value:@story.id%>
+    <p><%=f.select :goal_id,current_user.goals.all.collect {|g| [ g.description, g.id ] }, {},{style:"width:100%;"} %></p>
+    <p><%=f.text_area :summary, rows:"6",style:"width:100%;"%></p>
+    <p><%=f.submit "Save"%></p>
+  </div>
   <%end%>
 </div>

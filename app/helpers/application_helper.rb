@@ -94,14 +94,14 @@ module ApplicationHelper
         end
       elsif scenario ==4
         if user.image.thumb_200.file.exists?
-          if user.image.get_geometry[1] > 75
-            image_tag user.image_url(:thumb_200).to_s,size:"75x75", class: "img-thumbnail"
+          if user.image.get_geometry[1] > 65
+            image_tag user.image_url(:thumb_200).to_s,size:"65x65", class: "img-thumbnail"
           else
             image_tag user.image_url.to_s, class:"img-thumbnail"
           end
         else
-          if user.image.get_geometry[1] > 75
-            image_tag user.image_url.to_s,style: 'width:auto;height:75px;', class: "img-thumbnail"
+          if user.image.get_geometry[1] > 65
+            image_tag user.image_url.to_s,style: 'width:auto;height:65px;', class: "img-thumbnail"
           else
             image_tag user.image_url.to_s, class:"img-thumbnail"
           end
@@ -109,13 +109,13 @@ module ApplicationHelper
       end
     else
       if scenario ==4
-        image_tag place_holder_url,size:"75x75", class: "img-thumbnail", alt:"Please upload picture"        
+        image_tag place_holder_url,style: 'width:65px;height:65px;', class: "img-thumbnail", alt:"Please upload picture"        
       elsif scenario ==3
-        image_tag place_holder_url,size:"300x300", class: "img-thumbnail", alt:"Please upload picture"  
+        image_tag place_holder_url,style: 'width:300px;height:300px;', class: "img-thumbnail", alt:"Please upload picture"  
       elsif scenario ==2
-        image_tag place_holder_url,size:"200x200", class: "img-thumbnail", alt:"Please upload picture"
+        image_tag place_holder_url,style: 'width:200px;height:200px;', class: "img-thumbnail", alt:"Please upload picture"
       else
-        image_tag place_holder_url,size:"100x100", class: "img-thumbnail", alt:"Please upload picture"
+        image_tag place_holder_url,style: 'width:100px;height:100px;', class: "img-thumbnail", alt:"Please upload picture"
       end
     end
   end

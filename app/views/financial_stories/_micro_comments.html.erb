@@ -1,0 +1,87 @@
+  <div class="panel panel-default">
+    <div class="panel-body" align="left">
+      <%@comments=@story.micro_comments%>
+      <h3><%=pluralize( @comments.size, 'comment' )%></h3>
+      <%@comments.each do |comment|%>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <table width="100%">
+              <tr>
+                <%author=comment.user || comment.broker%>
+                <td width="15%">           
+                  <%=smart_image(author,4)%><br>          
+                </td>
+                <td width="85%" style="vertical-align:top;">
+                  <div class="panel panel-default">
+                    <div class="panel-heading" align="left">
+                      <div style="font-size:0.5em;">
+                      <%=link_to full_name(author), author%> &nbsp&nbsp
+                        Posted at <%=comment.created_at.strftime("%b,%y at %l:%M %P")%>
+                        <%if (comment.user==current_user) || (comment.broker==current_broker)%>
+                        <div style="float:right">
+                        <table>
+                          <tr>
+                            <td style="padding:5px;">
+                              <%if @edit=="micro_comment_edit_#{comment.id}"%>
+                              <%=link_to "Edit", financial_story_path(id:@story), remote: true, id: "micro_comment_edit_#{comment.id}"%>
+                              <%else%>
+                              <%=link_to "Edit", financial_story_path(id:@story, edit:"micro_comment_edit_#{comment.id}"), remote: true, id: "micro_comment_edit_#{comment.id}"%>
+                              <%end%>
+                            </td>
+                            <td style="padding:5px;"><%=link_to "Delete", {controller:"micro_comments",action:"destroy", id:comment.id},method: :delete, remote:true%></td>
+                          </tr>
+                        </table>
+                        </div>
+                        <%end%>
+                      </div>
+                    </div>
+                    <div class="panel-body" align="left" style="vertical-align:top;">
+                      <%if @edit=="micro_comment_edit_#{comment.id}"%>
+                      <%=form_for comment, remote:true do |f|%>
+                        <%=f.text_area :description, {rows:"3",class:"form-control"}%><br>
+                        <%=f.submit "Edit", class:"btn btn-default"%>
+                      <%end%>
+                      <%else%>
+                        <%=comment.description%>
+                      <%end%>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      <%end%>      
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-body" align="left">
+    <h3>Your comment</h3>
+    <table width="100%">
+      <tr>
+        <td width="15%" style="vertical-align:text-top;">      
+          <%if current_user%>
+            <%=smart_image(current_user,4)%>
+          <%elsif current_broker%>
+            <%=smart_image(current_broker,4)%>
+          <%end%>
+        </td>
+        <td width="85%">
+          <%@comment=MicroComment.new%>
+          <%=form_for @comment, remote:true do |f|%>
+            <%=f.text_area :description, {rows:"3",class:"form-control"}%><br>
+            <%=f.submit "Leave Comment", class:"btn btn-default"%>
+            <%=f.hidden_field :financial_story_id, value:@story.id%>
+            <%if user_logged_in?%>
+            <%=f.hidden_field :user_id, value:current_user.id%>
+            <%elsif broker_logged_in?%>
+            <%=f.hidden_field :broker_id, value:current_broker.id%>
+            <%end%>
+
+          <%end%>
+        </td>
+
+      </tr>
+    </table>
+  </div>
+</div>

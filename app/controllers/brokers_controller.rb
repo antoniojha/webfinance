@@ -78,6 +78,7 @@ class BrokersController < Broker::AuthenticatedController
       @uploader = Broker.new.image
       @uploader.success_action_redirect = broker_url(@broker)
     else      
+      @crop=true
       @broker.key=params[:key]
       @broker.save
     end

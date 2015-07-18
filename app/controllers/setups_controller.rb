@@ -17,7 +17,7 @@ class SetupsController < ApplicationController
       end  
     else     
       @user.setup_bool=true
-      if (@user.step=="goal")
+      if (@user.step=="interests")
         @user.interest_bool=true
       end
       if @user.update(user_params)
@@ -43,7 +43,7 @@ class SetupsController < ApplicationController
     @user=User.find(params[:id])
   end
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :income_level, :age_level,:state, :occupation, {:goal => []})
+    params.require(:user).permit(:first_name, :last_name, :email, :income_level, :age_level,:state, :occupation, {:interests => []})
 
   end
 end

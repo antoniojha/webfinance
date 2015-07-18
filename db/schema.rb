@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150716020202) do
+ActiveRecord::Schema.define(version: 20150716224941) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -337,6 +337,7 @@ ActiveRecord::Schema.define(version: 20150716020202) do
     t.integer  "financial_story_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "summary"
   end
 
   add_index "financial_goal_story_rels", ["financial_story_id"], name: "index_financial_goal_story_rels_on_financial_story_id"

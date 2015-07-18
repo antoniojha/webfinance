@@ -14,6 +14,26 @@
       <%=link_to "Delete",user_path(id:@user,goal_id:goal.id), remote:true%>
     </div>
     <div style="clear:both;"></div>
+    <p>You have saved <%=pluralize(goal.financial_stories.count, "story")%>.</p>
+    <%goal.financial_stories.order(title: :desc).each do |story|%>
+      <table width="100%;">
+        <tr>
+          <td style="width:55%;">
+            <%=link_to story.title, story%>
+          </td>
+          <td style="width:40%;vertical-align:top;padding:5px;">
+            <div class="financial_story_summary">
+              <%rels=FinancialGoalStoryRel.where(goal_id:goal.id, financial_story:story.id)%>
+              <%rel=rels.first%>
+              <%=best_in_place rel, :summary, type: :textarea%>
+            </div>
+          </td>
+          <td style="width:5%;vertical-align:bottom;">
+          <%=link_to '<i class="glyphicon glyphicon-remove"></i>'.html_safe, {controller:"financial_goal_story_rels",action:"destroy",id:rel.id},method: :delete,:remote => true, id:"financial_goal_story_remove_#{rel.id}" %>
+          </td>
+        </tr>
+    </table>
+    <%end%>
    </div>
 </div>
 <%end%>
@@ -28,7 +48,7 @@
 </script>
 <div id= "delete_goal_<%=@delete_goal.id%>" class="delete_goal_form" align="center" title="Remove Financial Goal">
   <p>Financial Goal: <%=@delete_goal.description%></p>
-  <p>Are you sure you want to delete this financial goal? All your saved associated articles will be deleted as well!</p>
+  <p>Are you sure you want to delete this financial goal? All your saved associated article referneces will be deleted as well!</p>
   <%=link_to "OK", {controller:"goals",action:"destroy", id:@delete_goal.id},{method: :delete, remote:true, class:"btn btn-default"}%>
 </div>  
 <%end%>

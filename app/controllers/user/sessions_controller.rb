@@ -27,33 +27,21 @@ class User::SessionsController < User::AuthenticatedController
     end
   end
   def create
-   # raise env['omniauth.auth'].to_yaml
-    unless params[:session][:username].blank?
-      username=params[:session][:username].downcase
-      user=User.find_by(username: username)
-      if user
-        redirect_to user_password_lookup_path(user)
+
+    name_or_email=params[:session][:name_or_email].downcase
+    user=User.find_by(username: name_or_email) || User.find_by(email: name_or_email)
+
+    respond_to do |format|
+      if user && user.has_password?(params[:session][:password])
+        user_log_in(user)
+        params[:session][:remember]=='1' ? user_remember(user) : user_forget(user)
+        format.html { friendly_redirect(user)}
+        #  resend email confirmation with a new token if user try to sign in without first authenticating email during sign up
+        #     user.send_email_confirmation
       else
-        flash.now[:notice]="Username does not exists"
-        render "edit"
-      end     
-    else
-      # if user decides to sign in through username and password
-      name_or_email=params[:session][:name_or_email].downcase
-      user=User.find_by(username: name_or_email) || User.find_by(email: name_or_email)
-      
-      respond_to do |format|
-        if user && user.has_password?(params[:session][:password])
-            user_log_in(user)
-            params[:session][:remember]=='1' ? user_remember(user) : user_forget(user)
-            format.html { friendly_redirect(user)}
-            #  resend email confirmation with a new token if user try to sign in without first authenticating email during sign up
-       #     user.send_email_confirmation
-        else
-          @user=User.new # serves as a dummy object variable for @user.errors so it won't throw any error
-          flash.now[:danger]="Invalid username or email/password combination"
-          format.html {  render 'new'}
-        end
+        @user=User.new # serves as a dummy object variable for @user.errors so it won't throw any error
+        flash.now[:danger]="Invalid username or email/password combination"
+        format.html {  render 'new'}
       end
     end
   end

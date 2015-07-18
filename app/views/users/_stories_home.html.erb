@@ -9,26 +9,22 @@
           By:<%=full_name(story.broker)%>
         </span>
       </td>
-      <td width="5%"></td>
-      <td width="65%" align="right">
+      <td width="70%" align="right">
         
       </td>
     </tr>
     <tr>
-      <td rowspan="2">
+      <td>
         <%=link_to story.broker do %>
         <%=smart_image(story.broker,4)%>
         <%end%>
       </td>
-      <td></td>
       <td class="story_display">       
-        <%=abrev_display(story.description,65)%>
+        <%=link_to story.title, story%><br>
+        Votes:<%=story.votes%>
       </td>
     </tr>
-    <tr>
-      <td></td>
-      <td align="right"> <%=link_to "Read", story%></td>
-    </tr>
+
     <%end%>
   </table>
 </div>

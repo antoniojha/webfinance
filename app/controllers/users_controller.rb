@@ -25,7 +25,7 @@ class UsersController < User::AuthenticatedController
     else
       @user.key=params[:key]
       @user.save
-      
+      @crop=true
     end
     if params[:goal_id]
       @delete_goal=Goal.find(params[:goal_id])

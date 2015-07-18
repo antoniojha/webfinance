@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
+  resources :financial_goal_story_rels
   resources :micro_comments
   resources :financial_stories
   resources :financial_products

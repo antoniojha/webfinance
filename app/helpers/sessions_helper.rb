@@ -59,10 +59,15 @@ module SessionsHelper
     end
   end
   def broker_log_in(broker)
+    if user_logged_in?
+      user_log_out
+    end
     session[:broker_id]=broker.id
-    
   end
   def user_log_in(user)
+    if broker_logged_in?
+      broker_log_out
+    end
     session[:user_id]=user.id
   end
   def user_remember(user) # generate and saves auth_token_digest in user
