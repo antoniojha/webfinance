@@ -1,9 +1,6 @@
 <h4>Financial Goal</h4>
 <%=render "users/financial_goal_add"%> 
-<%array=[["", "Unspecified"]]%>
-<%@user.interests.each do |interest|%>
-<%array<< [interest, interest]%>
-<%end%>
+
 <% @user.goals.each_with_index do |goal, index|%>
 <div class="panel panel-default">
   <div class="panel-body" align="left">

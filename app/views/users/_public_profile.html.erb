@@ -13,7 +13,103 @@
   </table>
 </div>
 <div align="left" style="overflow: auto;">
+  <div id="profile_infos">
+    <h1><%=full_name(@user)%></h1> 
+    <table width="100%">
+      <tr>
+        <td width="40%"><span style="font-size:1.1em;"><b>Occupation:</b></span></td>
+        <td width="50%"><%=@user.occupation%></td>
+      </tr>
+      <tr>
+        <td width="40%"><span style="font-size:1.1em;"><b>State of Resident:</b></span></td>
+        <td width="50%"><%=Order::US_STATES.to_h.key(@user.state)%></td>
+      </tr>
+      <tr>
+        <td width="40%"><span style="font-size:1.1em;"><b>Age Range:</b></span></td>
+        <td width="50%"><%=smart_label(@user.age_level)%></td>
+      </tr>
+      <tr>
+        <td><span style="font-size:1.1em;"><b>How satisfied am I with my finance?:</b></span></td>
+        <td style="vertical-align:top;"><%=@user.satisfaction%></td>
 
-  <%=render "profile_info"%>
-
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+  </div>
 </div>
+<div style="clear:both;"></div>
+<table width="100%">
+  <tr>
+    <td width="65%" class="panel panel-default">
+      <div class="panel-body" align="left">
+        <div id="abouts" style="padding:5px;">
+          <h4>About me </h4>
+          <%if @user.about_statement%>
+            <%=@user.about_statement%>
+          <%else%>
+            None.
+          <%end%>
+        </div>
+      </div>
+    </td>
+    <td width="35%" class="panel panel-default" style="vertical-align:top;">
+      <div class="panel-body" align="left">
+        <h4>Financial Testimonies</h4>
+      </div>
+    </td>
+  </tr>
+</table><br>
+<table width="100%" style="border-spacing: 5px;">
+  <tr>
+    <td width="65%" align="left" style="padding:5px;border: 1px ridge;vertical-align:top;">
+      <div id="financial_goal">
+        <h4>Financial Goal</h4>
+        <% @user.goals.each_with_index do |goal, index|%>
+          <div class="panel panel-default">
+            <div class="panel-body" align="left">
+              <div style="float:left;">
+                <h4><%=index+1%>. <%= goal.description %></h4>
+              </div>
+
+              <div style="clear:both;"></div>
+              <p>You have saved <%=pluralize(goal.financial_stories.count, "story")%>.</p>
+              <%goal.financial_stories.order(title: :desc).each do |story|%>
+                <table width="100%;">
+                  <tr>
+                    <td style="width:55%;">
+                      <%=link_to story.title, story%>
+                    </td>
+                    <td style="width:40%;vertical-align:top;padding:5px;">
+                      <div class="financial_story_summary">
+                        <%rels=FinancialGoalStoryRel.where(goal_id:goal.id, financial_story:story.id)%>
+                        <%rel=rels.first%>
+                        <%=rel.summary%>
+                      </div>
+                    </td>
+                    <td style="width:5%;vertical-align:bottom;">
+
+                    </td>
+                  </tr>
+              </table>
+              <%end%>
+             </div>
+          </div>
+        <%end%>
+      </div>
+    </td>
+    <td width="35%" align="left" style="padding:5px;vertical-align:top;border: 1px ridge;">
+      <%=render "error_small"%>
+      <div id="financial_interest">
+        <h4>Financial Interest(s):</h4> 
+        <ul>
+          <%@user.interests.each do |interest|%>
+          <li><%=smart_label(interest)%></li>
+          <%end%>
+        </ul>
+      </div>
+    </td>
+  </tr>
+</table>
