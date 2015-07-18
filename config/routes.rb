@@ -134,8 +134,8 @@ Rails.application.routes.draw do
   controller :setups do
     get 'setup/:id'=> :edit, as: 'custom_edit_setup'
   end
-  match '/users/remove/:id', to:'users#remove',via:'get'
-  match '/brokers/remove/:id', to:'brokers#remove',via:'get'
+  match '/users/remove/:id', to:'users#remove',via:'get', as: 'user_remove'
+  match '/brokers/remove/:id', to:'brokers#remove',via:'get', as: 'broker_remove'
   match'/admin/remove/:id', to:'users#admin_remove', via:'get', as: 'admin_remove'
   
   controller :static_pages do
