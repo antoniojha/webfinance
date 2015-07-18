@@ -135,7 +135,7 @@ class UsersController < User::AuthenticatedController
     end
     
     respond_to do |format|
-      if user && user.authenticate(params[:user][:password])
+      if user && user.authenticated?(params[:user][:password])
         if is_admin_remove?
           name=remove_user.username 
           remove_user.destroy unless remove_user.admin?
@@ -153,12 +153,12 @@ class UsersController < User::AuthenticatedController
           format.html{redirect_to users_url}
         else
           flash[:notice]="Your profile is successfully removed!"
-          format.html { redirect_to login_url}
+          format.html { redirect_to user_login_url}
         end
         format.json { head :no_content }
       else
-        flash[:danger]="Invalid user/password combinations"
-        format.html {  redirect_to remove_url}
+        flash.now[:danger]="Invalid user/password combinations"
+        format.html {  render "users/remove"}
       end
     end
   end
