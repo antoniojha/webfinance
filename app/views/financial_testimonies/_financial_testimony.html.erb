@@ -1,0 +1,39 @@
+
+<div class="panel panel-default">
+  <div class="panel-body" align="left">
+    
+    <table width="100%">
+      <tr>
+        <td width="20%">
+          <%=link_to @testimony.user do %>
+            <%=full_name(@testimony.user)%>
+          <%end%><br>
+          <%=smart_image(@testimony.user,4)%>
+        </td>
+        <td width="50%">
+
+          <h3><%=@testimony.title%></h3>
+          <p><b>Financial Vehicle:</b><%=@testimony.product.name%></p>
+          <p><b>Category:</b><%=Order::FINANCIAL_CATEGORIES_HASH[@testimony.financial_category]%></p>
+          
+        </td>
+        <td width="30%">
+
+        </td>
+      </tr>
+    </table>
+    <div class="panel panel-default">
+      <div class="panel-heading" id="testimony_heading">
+        <%=render "financial_testimonies/testimony_heading"%>
+      </div>
+      <div class="panel-body" style="vertical-align:top;">
+        <%=@testimony.description%>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%=render "financial_stories/vote_error"%>
+<div id="micro_comments">
+  <%=render "micro_comments"%>
+</div>

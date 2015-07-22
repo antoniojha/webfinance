@@ -1,0 +1,33 @@
+<%= will_paginate @stories %>
+<table width="100%">
+  <%@stories.each do |story|%>
+  <tr>
+    <td width="40%" style="vertical-align:top;">
+      Posted by <%=link_to full_name(story.broker), story.broker%><br>
+      <% if story.broker.title%>
+      <%=story.broker.title%> 
+      <%else%>
+      Unknown Title 
+      <%end%>
+      at <%=story.broker.company_name%><br>
+      <%=link_to story.broker do %>
+      <%=smart_image(story.broker,4)%>
+      <%end%>
+    </td>
+    <td width="60%">    
+      <div class="panel panel-default">
+        <div class="panel-heading">           
+          <h4><%=link_to story.title, story%></h4>
+        </div>
+        <div class="panel-body" style="vertical-align:top;">        
+          Posted on <%=story.created_at.strftime("%b,%y at %l:%M %P")%>
+          <div style="font-size:1.2em;float:right;">
+            <span class="label label-success">Upvotes:<%=story.votes%></span>
+          </div>
+        </div>
+
+      </div>
+    </td>
+  </tr>
+  <%end%>
+</table>

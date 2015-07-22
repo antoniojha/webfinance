@@ -1,6 +1,6 @@
   <div class="panel panel-default">
     <div class="panel-body" align="left">
-      <%@comments=@story.micro_comments%>
+      <%@comments=@testimony.micro_comments%>
       <h3><%=pluralize( @comments.size, 'comment' )%></h3>
       <%@comments.each do |comment|%>
       <table width="100%">
@@ -21,9 +21,9 @@
                       <tr>
                         <td style="padding:5px;">
                           <%if @edit=="micro_comment_edit_#{comment.id}"%>
-                          <%=link_to "Edit", financial_story_path(id:@story), remote: true, id: "micro_comment_edit_#{comment.id}"%>
+                          <%=link_to "Edit", financial_testimony_path(id:@testimony), remote: true, id: "micro_comment_edit_#{comment.id}"%>
                           <%else%>
-                          <%=link_to "Edit", financial_story_path(id:@story, edit:"micro_comment_edit_#{comment.id}"), remote: true, id: "micro_comment_edit_#{comment.id}"%>
+                          <%=link_to "Edit", financial_testimony_path(id:@testimony, edit:"micro_comment_edit_#{comment.id}"), remote: true, id: "micro_comment_edit_#{comment.id}"%>
                           <%end%>
                         </td>
                         <td style="padding:5px;"><%=link_to "Delete", {controller:"micro_comments",action:"destroy", id:comment.id},method: :delete, remote:true%></td>
@@ -67,13 +67,12 @@
           <%=form_for @comment, remote:true do |f|%>
             <%=f.text_area :description, {rows:"3",class:"form-control"}%><br>
             <%=f.submit "Leave Comment", class:"btn btn-default"%>
-            <%=f.hidden_field :financial_story_id, value:@story.id%>
+            <%=f.hidden_field :financial_testimony_id, value:@testimony.id%>
             <%if user_logged_in?%>
             <%=f.hidden_field :user_id, value:current_user.id%>
             <%elsif broker_logged_in?%>
             <%=f.hidden_field :broker_id, value:current_broker.id%>
             <%end%>
-
           <%end%>
         </td>
       </tr>

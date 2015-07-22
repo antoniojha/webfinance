@@ -86,7 +86,7 @@ $(function(){
   $( ".btn-upload" ).button().on( "click", function() {    
       upload_dialog.dialog("open");
   });
-  create_financial_dialog = $( "#create_story_form" ).dialog({
+  create_financial_story = $( "#create_story_form" ).dialog({
     autoOpen: false,
     height: 550,
     width: 800,
@@ -94,6 +94,15 @@ $(function(){
   });
   $(".create_finance_story").on("click",function(){
 
-    create_financial_dialog.dialog("open");
+    create_financial_story.dialog("open");
   });
+  create_financial_testimony = $( "#create_testimony_form" ).dialog({
+    autoOpen: false,
+    height: 550,
+    width: 800,
+    modal: true
+  });
+  $(".create_finance_testimony").on("click",function(){
+    create_financial_testimony.dialog("open");
+  });  
 });

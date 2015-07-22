@@ -1,4 +1,4 @@
-<div style="float:left; width:40%;" align="left">
+<div style="float:left; width:30%;" align="left">
 <% if !@user.image_url.to_s.empty?%> 
   <%= content_tag "div", id: "picture_form", data: {picture_file_name: @user.image_url.to_s,user_pic_large_width:@user.image.get_geometry[0],user_pic_large_height:@user.image.get_geometry[1],crop:@crop}, align:"left" do %>
   <%=render "users/picture_form"%>
@@ -16,34 +16,37 @@
   </div>
 </div>
 <div style="clear:both;"></div>
-<table width="100%">
-  <tr>
-    <td width="65%" class="panel panel-default">
-      <div class="panel-body" align="left">
-        <div id="abouts" style="padding:5px;">
-          <%=render "users/abouts"%>
-        </div>
-      </div>
-    </td>
-    <td width="35%" class="panel panel-default" style="vertical-align:top;">
-      <div class="panel-body" align="left">
-        <h4>Financial Testimonies</h4>
-      </div>
-    </td>
-  </tr>
-</table><br>
+
 <table width="100%" style="border-spacing: 5px;">
   <tr>
     <td width="65%" align="left" style="padding:5px;border: 1px ridge;vertical-align:top;">
+     
+      <div id="financial_interest">
+         <%=render "financial_interest"%>
+      </div>      
+      <div id="abouts">
+         <%=render "users/abouts"%>
+      </div>
       <div id="financial_goal">
-        <%=render "financial_goal"%>
+        <%=render "users/financial_goal"%>
       </div>
     </td>
     <td width="35%" align="left" style="padding:5px;vertical-align:top;border: 1px ridge;">
-      <%=render "error_small"%>
-      <div id="financial_interest">
-        <%=render "financial_interest"%>
-      </div>
+       <div style="font-size:1.1em;"><b>Financial Testimonies</b></div><br> 
+       <div style="font-size:1.1em;">
+         <%=link_to "#", class:"create_finance_testimony" do%>
+         <span class="glyphicon glyphicon-plus"></span> Create Testimony
+         <%end%>
+       </div><br>
+       <div id="financial_testimonies">
+         <%=render "users/financial_testimonies"%>
+       </div>
+       <% if @testimony.nil?%>
+         <%@testimony=FinancialTestimony.new%>
+       <%end%>
+       <div id="create_testimony_form" align="center" title="Write a Financial Testimony">
+         <%=render partial:"financial_testimonies/testimony_form", locals:{testimony:@testimony}%> 
+       </div>  
     </td>
   </tr>
 </table>

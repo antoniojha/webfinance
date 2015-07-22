@@ -1,42 +1,32 @@
+<div style="float:left; width:30%;" align="left">
 
-<% if !@broker.image_url.to_s.empty?%> 
-  <%= content_tag "div", id: "picture_form", data: {picture_file_name: @broker.image_url.to_s,broker_pic_large_width:@broker.image.get_geometry[0],broker_pic_large_height:@broker.image.get_geometry[1],crop:@crop}, style:"float:left; width:40%;",align:"left" do %>
-  <%=render "brokers/picture_form"%>
+  <% if !@broker.image_url.to_s.empty?%> 
+    <%= content_tag "div", id: "picture_form", data: {picture_file_name: @broker.image_url.to_s,broker_pic_large_width:@broker.image.get_geometry[0],broker_pic_large_height:@broker.image.get_geometry[1],crop:@crop}, style:"float:left; width:40%;",align:"left" do %>
+    <%=render "brokers/picture_form"%>
 
-  <% end %>
-<%else%>
-  <div id="picture_form" style="float:left; width:40%;" align="left">
-    <%=render "brokers/picture_form"%>  
-  </div>
-<%end%>
+    <% end %>
+  <%else%>
+    <div id="picture_form">
+      <%=render "brokers/picture_form"%>  
+    </div>
+  <%end%>
+</div>
 <div id="personal_info">
   <div id ="profile_infos" align="left" style="overflow: auto;padding:5px;">
     <%=render "brokers/profile_infos"%>
   </div>
   <div style="clear:both;"></div>
-  <table width="100%">
-    <tr>
-      <td width="65%" class="panel panel-default">
-        <div class="panel-body" align="left">
-          <div id="abouts" style="padding:5px;">
-            <%=render "brokers/abouts"%>
-          </div>
-          <div id="skills" style="padding:5px;">
-            <%=render "brokers/skills"%>
-          </div>
-        </div>
-      </td>
-      <td width="35%" class="panel panel-default" style="vertical-align:top;">
-        <div class="panel-body" align="left">
-          <h4>Recommendations</h4>
-          <h4>Financial Stories</h4>
-        </div>
-      </td>
-    </tr>
-  </table><br>
+
   <table width="100%" style="border-spacing: 5px;">
-    <tr>
+    <tr>   
       <td width="65%" align="left" style="padding:5px;border: 1px ridge;vertical-align:top;">
+
+        <div id="abouts">
+          <%=render "brokers/abouts"%>
+        </div>
+        <div id="skills">
+          <%=render "brokers/skills"%>
+        </div>
         <div id="licenses">
           <%=render "brokers/licenses"%>
         </div>
@@ -51,6 +41,7 @@
         </div>           
       </td>
       <td width="35%" align="left" style="padding:5px;vertical-align:top;border: 1px ridge;">
+        
         <div style="float:left;font-size:1.1em;"><b>Financial Stories</b></div>    
 
         <div style="float:right;font-size:1.1em;">

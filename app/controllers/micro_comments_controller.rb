@@ -2,12 +2,20 @@ class MicroCommentsController < ApplicationController
   before_action :set_comment, only:[:update,:edit,:destroy]
   def create
     @comment=MicroComment.new(financial_story_params)
-    @story=FinancialStory.find(params[:micro_comment][:financial_story_id])
+    if params[:micro_comment][:financial_story_id]
+      @story=FinancialStory.find(params[:micro_comment][:financial_story_id])
+    elsif params[:micro_comment][:financial_testimony_id]
+      @testimony=FinancialTestimony.find(params[:micro_comment][:financial_testimony_id])
+    end
     @vote=Vote.new
     respond_to do |format|
       if @comment.save
-        format.html{redirect_to @story}
-        
+       
+        if params[:micro_comment][:financial_story_id]
+          format.html{redirect_to @story}
+        elsif params[:micro_comment][:financial_testimony_id]
+          format.html{redirect_to @testimony}
+        end        
         format.js{}
       else
         format.js{}
@@ -16,25 +24,45 @@ class MicroCommentsController < ApplicationController
     end
   end
   def update
-    respond_to do |format|
+    if @comment.financial_story
       @story=@comment.financial_story
+    elsif @comment.financial_testimony
+      @testimony=@comment.financial_testimony
+    end   
+    respond_to do |format|
       if @comment.update(financial_story_params)
-        format.js{}
-        format.html{redirect_to @story}      
+        if @comment.financial_story
+          format.html{redirect_to @story}
+        elsif @comment.financial_testimony
+          format.html{redirect_to @testimony}
+        end
+        format.js{}    
       else
         format.js{}
-        format.html{render "financial_stories/show"}
+        if @comment.financial_story
+          format.html{render "financial_stories/show"}
+        elsif @comment.financial_testimony
+          format.html{render "financial_testimonies/show"}
+        end
+        
       end
     end
   end
   def destroy
-   
-    respond_to do |format|
+    if @comment.financial_story
       @story=@comment.financial_story
+    elsif @comment.financial_testimony
+      @testimony=@comment.financial_testimony
+    end     
+    respond_to do |format|
+      
       @vote=Vote.new
       @comment.destroy
-
-      format.html{redirect_to @story}
+      if @comment.financial_story
+        format.html{redirect_to @story}
+      elsif @comment.financial_testimony
+        format.html{redirect_to @testimony}
+      end
       format.js{}
     end    
   end
@@ -43,6 +71,6 @@ class MicroCommentsController < ApplicationController
     @comment=MicroComment.find(params[:id])
   end
   def financial_story_params
-    params.require(:micro_comment).permit(:user_id,:broker_id,:financial_story_id,:description)
+    params.require(:micro_comment).permit(:user_id,:broker_id,:financial_story_id,:financial_testimony_id,:description)
   end
 end

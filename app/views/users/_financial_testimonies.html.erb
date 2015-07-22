@@ -1,0 +1,51 @@
+<p><%=@user.first_name%> has posted <%=pluralize(@user.financial_testimonies.count, "financial testimony")%></p>
+<%@user.financial_testimonies.order(created_at: :desc).each do |testimony|%>
+<div class="panel panel-default">
+  <div class="panel-body" align="left">
+    <h4><%=link_to "Title:#{testimony.title}", testimony%></h4>
+    <p>
+      Posted at <%=testimony.created_at.strftime("%b,%y at %l:%M %P")%>
+    </p>
+    <p>Financial Vehicle:<span class="label label-success"><%=testimony.product.name%></span></p>
+    <p>Category: <span class="label label-success"><%=Order::FINANCIAL_CATEGORIES_HASH[testimony.financial_category]%></span></p>
+ 
+    <div style="float:right;">
+      <%=link_to "Edit",user_path(id:@user,financial_testimony_id:testimony.id,method:"edit"), remote:true%>
+      <%=link_to "Delete",user_path(id:@user,financial_testimony_id:testimony.id,method:"delete"), remote:true%>
+
+    </div>
+  </div>
+</div>
+<%end%>
+
+
+<% if @edit_testimony%>
+<script>
+  console.log("test");
+  edit_testimony_dialog = $( "#edit_testimony_<%=@edit_testimony.id%>" ).dialog({
+                        autoOpen: true,
+                        height: 550,
+                        width: 800,
+                        modal: true
+                        });   
+</script>
+<div id= "edit_testimony_<%=@edit_testimony.id%>" class="edit_testimony_form" align="center" title="Edit Financial Testimony">
+
+  <%=render partial:"financial_testimonies/testimony_form", locals:{testimony:@edit_testimony}%>
+</div>  
+<%end%>
+<% if @delete_testimony%>
+<script>
+  delete_testimony_dialog = $( "#delete_testimony_<%=@delete_testimony.id%>" ).dialog({
+                        autoOpen: true,
+                        height: 200,
+                        width: 400,
+                        modal: true
+                        });   
+</script>
+<div id= "delete_testimony_<%=@delete_testimony.id%>" class="delete_testimony_form" align="center" title="Remove Financial Testimony">
+  <p>Testimony Title: <%=@delete_testimony.title%></p>
+  <p>Are you sure you want to delete this testimony?</p>
+  <%=link_to "OK", {controller:"financial_testimonies",action:"destroy", id:@delete_testimony.id},{method: :delete, remote:true, class:"btn btn-default"}%>
+</div>  
+<%end%>

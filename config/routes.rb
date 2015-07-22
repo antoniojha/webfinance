@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   resources :financial_goal_story_rels
   resources :micro_comments
+  resources :financial_testimonies
   resources :financial_stories
   resources :financial_products
   resources :licenses
@@ -129,6 +130,7 @@ Rails.application.routes.draw do
     get 'signup'=> :new
     get 'crop'=> :crop
     get 'user/home/:id'=> :home, as: 'user_home'
+    get 'user/story/:id'=> :story, as: 'user_story'
   end
   resources :setups
   controller :setups do

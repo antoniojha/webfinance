@@ -1,0 +1,21 @@
+<% if @testimony_error%>
+$( "#create_testimony_form" ).dialog('destroy'); 
+$("#create_testimony_form").html("<%=escape_javascript render partial:"financial_testimonies/testimony_form", locals:{testimony:@testimony}%>");
+  create_financial_testimony = $( "#create_testimony_form" ).dialog({
+    autoOpen: true,
+    height: 550,
+    width: 800,
+    modal: true
+  });
+<%else%>
+$( "#create_testimony_form" ).dialog('destroy'); 
+<%@testimony=FinancialTestimony.new%>
+$( "#create_testimony_form" ).html("<%=escape_javascript render partial:"financial_testimonies/testimony_form", locals:{testimony:@testimony}%>")
+$("#financial_testimonies").html("<%=escape_javascript render('users/financial_testimonies')%>");
+  create_financial_testimony = $( "#create_testimony_form" ).dialog({
+    autoOpen: false,
+    height: 550,
+    width: 800,
+    modal: true
+  });
+<%end%>

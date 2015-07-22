@@ -33,43 +33,4 @@
 //= require jquery-ui
 //= require jquery-ui/tooltip
 //= require_tree .
-ready=function(){
-//   $('#bank_login').validate();
-  //**important- $field will be used in controller/backgrounds/add_assoc.js.erb
- 
-  if ($('#bank_login').length>0){
-  $('#bank_login').validate({
-    rules: {
-      LOGIN: {
-        required:true
-      },
-      PASSWORD:{
-        required:true
-      }
-    },
-    messages: {
-      LOGIN:{
-        required: "Please specify your name"
-      },
-      PASSWORD:{
-        required: "Please enter password"                    
-      }
-    }
-  });
-  }
-  if ($('new_user').length>0){
-  $('#new_user').validate({
-    rules: {
-      user_username:{
-        required:true
-      }
-    },
-    messages: {
-      user_username:{
-        required: "Please specify your name"
-      }
-    }
-  });
-  }
-  // initiates map jquery
-}
+

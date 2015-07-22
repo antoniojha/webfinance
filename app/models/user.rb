@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   attr_writer :phone_1, :phone_2, :phone_3
   serialize :interests
+  has_many :financial_testimonies, dependent: :destroy
   has_many :votes, dependent: :destroy
   has_many :accounts, dependent: :destroy
   has_many :backgrounds, dependent: :destroy 

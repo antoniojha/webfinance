@@ -1,24 +1,27 @@
+<div class="panel panel-default">
+  <div class="panel-body" align="left">
+  <%if @edit=="about"%>
+    <h4>About me 
+      <%=link_to broker_path(id:@broker),id:"about_edit", remote:true do%>
+      <span class="glyphicon glyphicon-edit"></span>
+      <%end%>
+    </h4>
+    <%=form_for @broker, remote:true do |f|%>
+    <%=f.text_area :ad_statement, {class:"form-control"}%>
+    <%=f.submit "Edit", class:"btn btn-default"%>
+    <%end%>
 
-<%if @edit=="about"%>
+  <%else%>
   <h4>About me 
-    <%=link_to broker_path(id:@broker),id:"about_edit", remote:true do%>
+    <%=link_to broker_path(id:@broker,edit:"about"),id:"about_edit", remote:true do%>
     <span class="glyphicon glyphicon-edit"></span>
     <%end%>
   </h4>
-  <%=form_for @broker, remote:true do |f|%>
-  <%=f.text_area :ad_statement, {class:"form-control"}%>
-  <%=f.submit "Edit", class:"btn btn-default"%>
+    <%if @broker.ad_statement%>
+    <%=@broker.ad_statement%>
+    <%else%>
+    None.
+    <%end%>
   <%end%>
-
-<%else%>
-<h4>About me 
-  <%=link_to broker_path(id:@broker,edit:"about"),id:"about_edit", remote:true do%>
-  <span class="glyphicon glyphicon-edit"></span>
-  <%end%>
-</h4>
-  <%if @broker.ad_statement%>
-  <%=@broker.ad_statement%>
-  <%else%>
-  None.
-  <%end%>
-<%end%>
+  </div>
+</div>

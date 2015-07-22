@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150716224941) do
+ActiveRecord::Schema.define(version: 20150722001732) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -378,6 +378,20 @@ ActiveRecord::Schema.define(version: 20150716224941) do
   add_index "financial_stories", ["broker_id"], name: "index_financial_stories_on_broker_id"
   add_index "financial_stories", ["product_id"], name: "index_financial_stories_on_product_id"
 
+  create_table "financial_testimonies", force: true do |t|
+    t.integer  "user_id"
+    t.string   "financial_category"
+    t.text     "description"
+    t.integer  "votes",              default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "title"
+    t.integer  "product_id"
+  end
+
+  add_index "financial_testimonies", ["product_id"], name: "index_financial_testimonies_on_product_id"
+  add_index "financial_testimonies", ["user_id"], name: "index_financial_testimonies_on_user_id"
+
   create_table "firms", force: true do |t|
     t.string   "name"
     t.text     "description"
@@ -470,10 +484,12 @@ ActiveRecord::Schema.define(version: 20150716224941) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "financial_testimony_id"
   end
 
   add_index "micro_comments", ["broker_id"], name: "index_micro_comments_on_broker_id"
   add_index "micro_comments", ["financial_story_id"], name: "index_micro_comments_on_financial_story_id"
+  add_index "micro_comments", ["financial_testimony_id"], name: "index_micro_comments_on_financial_testimony_id"
   add_index "micro_comments", ["user_id"], name: "index_micro_comments_on_user_id"
 
   create_table "optional_expenses", force: true do |t|
@@ -801,10 +817,12 @@ ActiveRecord::Schema.define(version: 20150716224941) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "description"
+    t.integer  "financial_testimony_id"
   end
 
   add_index "votes", ["broker_id"], name: "index_votes_on_broker_id"
   add_index "votes", ["financial_story_id"], name: "index_votes_on_financial_story_id"
+  add_index "votes", ["financial_testimony_id"], name: "index_votes_on_financial_testimony_id"
   add_index "votes", ["user_id"], name: "index_votes_on_user_id"
 
 end

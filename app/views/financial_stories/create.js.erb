@@ -2,7 +2,7 @@
 
 <% if @story_error%>
 $( "#create_story_form" ).dialog('destroy'); 
-$("#create_story_form").html("<%=escape_javascript render partial:"financial_stories/create_story_form", locals:{story:@story}%>");
+$("#create_story_form").html("<%=escape_javascript render partial:"financial_stories/story_form", locals:{story:@story}%>");
   create_financial_dialog = $( "#create_story_form" ).dialog({
     autoOpen: true,
     height: 550,

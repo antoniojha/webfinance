@@ -50,14 +50,9 @@
   magin: 3px;
 }
 .vehicle-heading{
-  a:hover{
-      color: white;
-      text-decoration: none;
-  }
-  a{
-    color: white;
-  }
-  a:visited{
+  a, a:visited, a:hover {
     color:white;
+    text-decoration: none;
   }
-}  
+}
+

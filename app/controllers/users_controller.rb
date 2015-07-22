@@ -2,7 +2,7 @@ class UsersController < User::AuthenticatedController
   skip_before_action :redirect_to_user_setup, only:[:new,:edit,:create,:update,:destroy]
   skip_before_action :redirect_to_complete_user_profile, only:[:new,:edit,:remove,:create,:update,:destroy]
   skip_before_action :authorize_user_login, only: [:new,:create]
-  before_action :set_user, only: [:show, :edit, :remove,:update,:home, :destroy]
+  before_action :set_user, only: [:show, :edit, :remove,:update,:home,:story, :destroy]
 
   before_action :correct_user, only:[:edit,:update,:destroy]
   include ProfilesHelper
@@ -13,6 +13,12 @@ class UsersController < User::AuthenticatedController
     else
       @interest=params[:interest]
     end    
+    
+  end
+  def story
+    @interest=params[:interest]
+    @product=Product.find(params[:product_id])    
+    @stories=@product.financial_stories.order(votes: :desc).paginate(:page => params[:page], :per_page => 10)
   end
   def index
     @users = User.order(:username).paginate(:page => params[:page])
@@ -31,6 +37,12 @@ class UsersController < User::AuthenticatedController
       @delete_goal=Goal.find(params[:goal_id])
     end
     @edit=params[:edit]
+    if params[:method]=="edit"
+      @edit_testimony=FinancialTestimony.find(params[:financial_testimony_id])
+ 
+    elsif params[:method]=="delete"
+      @delete_testimony=FinancialTestimony.find(params[:financial_testimony_id])
+    end
     @goal=Goal.new #needed for financial_goal_add partial template
     @plan=current_month_plan
     respond_to do |format|

@@ -1,0 +1,19 @@
+ <div style="font-size:0.5em;">
+   Votes:<%=@testimony.votes%> &nbsp&nbsp
+   Posted at <%=@testimony.created_at.strftime("%b,%y at %l:%M %P")%>
+   <div style="float:right;">
+
+     <% vote= @author.votes.where(financial_testimony_id:@testimony.id).first%>
+
+     <% if vote%>
+       <%=link_to financial_testimony_path(id:@testimony.id,cancel_upvote:true,user_id:current_user,broker_id:current_broker),method: :patch,remote:true do%>
+       Cancel Upvote
+       <%end%>
+     <%else%>
+       <%=link_to financial_testimony_path(id:@testimony.id,upvote:true,user_id:current_user,broker_id:current_broker),method: :patch,remote:true do%>
+       Upvote
+       <%end%>
+     <%end%>
+
+   </div>
+</div>

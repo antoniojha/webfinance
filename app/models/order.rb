@@ -7,7 +7,7 @@ class Order <ActiveRecord::Base
   DEBT_TYPES=[["Student Loan",1],["Mortgage Loan",2],["Other Loan",3],["Credit Card",4]]
 
   FINANCIAL_CATEGORIES=[["Protection",1],["Debt Management",2],["Retirement",3],["Investment",4],["Education Fund",5],["Estate Planning",6],["Tax Saving",7]]
-  FINANCIAL_CATEGORIES_HASH={"1"=>"Protection","2"=>"Debt Management","3"=>"Retirement","4"=>"Investment","5"=>"Education Fund","6"=>"Eatate Planning","7"=>"Tax Saving"}  
+  FINANCIAL_CATEGORIES_HASH={"1"=>"Protection","2"=>"Debt Management","3"=>"Retirement","4"=>"Investment","5"=>"Education Fund","6"=>"Estate Planning","7"=>"Tax Saving"}  
   PROTECTION_TYPES=[["Life Insurance",1],["Disability Insurnace",2]]
   RISKS=[["NA"],["Low"],["Medium"],["High"],["Low to unknown"],["Medium to unknown"],["Low to medium"],["Medium to high"]]
   LICENSE_TYPES=[["Life Insurance License",1],["Health Insurance License",2],["Series 3",3],["Series 6",4],["Series 7",5], ["Series 65",6]]

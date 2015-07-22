@@ -1,25 +1,30 @@
 <%story_count=product.financial_stories.count%>
-<h4><%=pluralize(story_count,"Top Financial Story")%></h4>
+<div style="float:left;padding:10px;">
+  <b><span style="font-size:1.1em;">Top Financial Story</span></b>
+</div>
+<div style="overflow:auto;text-align:right;padding:10px;">
+  <%=link_to "View All #{pluralize(story_count,"Story")}",user_story_url(product_id:product.id,interest:interest) %>
+</div>
 <div width="100%" align="left">
   <%financial_stories=product.financial_stories.order(votes: :desc).first(5)%>  
   <table width="100%">
     <%financial_stories.each do |story|%>
     <tr>
-      <td width="20%" style="vertical-align:top;">
+      <td width="30%" style="vertical-align:top;">
+        <div style="font-size:1.2em;">
+         <span class="label label-success">Upvotes:<%=story.votes%></span>
+        </div><br>
         <%=link_to story.broker do %>
         <%=smart_image(story.broker,4)%>
         <%end%>
       </td>
-      <td width="80%">    
+      <td width="70%">    
         <div class="panel panel-default">
-          <div class="panel-heading">
-            <div style="font-size:0.7em;">
-              <h4><%=link_to story.title, story%></h4>
-
-              <span class="label label-success">Upvotes:<%=story.votes%></span>
-            </div>
+          <div class="panel-heading">           
+            <h4><%=link_to story.title, story%></h4>
           </div>
           <div class="panel-body" style="vertical-align:top;">
+           
             Posted by <%=link_to full_name(story.broker), story.broker%><br>
             Posted on <%=story.created_at.strftime("%b,%y at %l:%M %P")%><br> 
           </div>

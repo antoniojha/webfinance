@@ -1,6 +1,6 @@
- <%vehicle_type=Order::FINANCIAL_CATEGORIES_HASH.key(g.titleize)%>
+<%vehicle_type=Order::FINANCIAL_CATEGORIES_HASH.key(interest.titleize)%>
   <%products=Product.where(vehicle_type:vehicle_type)%>
-  <%=render partial:"home_goal_intro", locals:{g:g, products:products}%>
+  <%=render partial:"home_goal_intro", locals:{interest:interest, products:products}%>
     <div class="panel panel-default">
       <div class="panel-body" align="left">
         <table width="100%" style="text-align:center;">
@@ -10,13 +10,14 @@
             <tr>
               <td width="50%" class="panel panel-primary" style="margin:5px;">
                 <h3>
-                  <span class="label label-info vehicle-heading">
+                  <span class="label label-primary vehicle-heading">
+             
                     <%=content_tag(:a,product.name.titleize,name:"#{product.name}", title:product.description)%>
                   </span>
                 </h3>
                 <div class="panel-body home_display" align="left">
 
-                  <%=render partial:"stories_home", locals:{product:product}%>
+                  <%=render partial:"stories_home", locals:{product:product, interest:interest}%>
                 </div>
               </td>
             <%elsif index%2==1%>
@@ -28,7 +29,7 @@
                 </h3>
                 <div class="panel-body" align="left" width="100%">
                
-                  <%=render partial:"stories_home", locals:{product:product}%>
+                  <%=render partial:"stories_home", locals:{product:product, interest:interest}%>
                 </div>
               </td>
             </tr>
@@ -42,7 +43,7 @@
                 </h3>
                 <div class="panel-body" align="left">
               
-                  <%=render partial:"stories_home", locals:{product:product}%>
+                  <%=render partial:"stories_home", locals:{product:product, interest:interest}%>
                 </div>
               </td>
               <td width="50%"></td>

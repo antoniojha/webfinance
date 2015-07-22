@@ -1,0 +1,17 @@
+<% if @change_vote%>
+$("#testimony_heading").html("<%=escape_javascript render('financial_testimonies/testimony_heading')%>");
+<%else%>
+  <% if @testimony_error%>
+$( "#edit_testimony_<%=@testimony_id%>" ).dialog('destroy'); 
+  $("#financial_testimonies").html("<%=escape_javascript render('brokers/financial_testimonies')%>");
+    edit_testimony_dialog = $( "#edit_testimony_<%=@testimony_id%>" ).dialog({
+    autoOpen: true,
+    height: 550,
+    width: 800,
+    modal: true
+  });  
+  <%else%>
+  $( "#edit_testimony_<%=@testimony_id%>" ).dialog('destroy'); 
+  $("#financial_testimonies").html("<%=escape_javascript render('users/financial_testimonies')%>");
+  <%end%>
+<%end%>

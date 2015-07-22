@@ -12,40 +12,28 @@
   <%=render "brokers/profile_info_show"%>
 </div>
 <div style="clear:both;"></div>
-<table width="100%">
-  <tr>
-    <td width="50%" class="panel panel-default">
-        <div class="panel-body" align="left">
-          <div id="about" style="padding:5px;">
-            <h4>About me</h4>
-            <%if @broker.ad_statement%>
-            <%=@broker.ad_statement%>
-            <%else%>
-            None.
-            <%end%>
-          </div>
-          <div id="skills" style="padding:5px;">
-            <h4>Skills & Specialties</h4>
-            <%if @broker.skills%>
-            <%=@broker.skills%>
-            <%else%>
-            None.
-            <%end%>
-          </div>
-        </div>
-    </td>
-    <td width="50%" class="panel panel-default" style="vertical-align:top;">
-        <div class="panel-body" align="left">
-          <h4>Recommendations</h4>
-          <h4>Financial Stories</h4>
-        </div>
-    </td>
-  </tr>
-</table><br>
 
 <table width="100%" style="border-spacing: 5px;">
   <tr>
     <td width="65%" align="left" style="padding:5px;border: 1px ridge;vertical-align:top;">
+
+      <div id="about" style="padding:5px;">
+        <h4>About me</h4>
+        <%if @broker.ad_statement%>
+        <%=@broker.ad_statement%>
+        <%else%>
+        None.
+        <%end%>
+      </div>
+      <div id="skills" style="padding:5px;">
+        <h4>Skills & Specialties</h4>
+        <%if @broker.skills%>
+        <%=@broker.skills%>
+        <%else%>
+        None.
+        <%end%>
+      </div>
+
       <div class="panel panel-default">
         <div class="panel-body" align="left">
           <h4>License(s)</h4>

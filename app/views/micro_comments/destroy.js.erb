@@ -1,1 +1,5 @@
+<% if @story%>
 $('#micro_comments').html("<%=escape_javascript(render('financial_stories/micro_comments'))%>");
+<%elsif @testimony%>
+$('#micro_comments').html("<%=escape_javascript(render('financial_testimonies/micro_comments'))%>");
+<%end%>

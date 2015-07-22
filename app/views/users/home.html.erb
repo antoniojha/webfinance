@@ -6,12 +6,12 @@
 <div align="left">
   <ul class="nav nav-pills">
     <%Order::FINANCIAL_CATEGORIES_HASH.values.each do |interest|%>
-    <%if interest==@interest%>
+    <%if interest==@interest.titleize%>
     <li role="presentation" class="active"><%=link_to "#{interest.titleize}",user_home_url(interest:interest) %></li>
       <%else%>
     <li role="presentation"><%=link_to "#{interest.titleize}",user_home_url(interest:interest) %></li>
       <%end%>
     <%end%>
   </ul>
-  <%=render partial:"home_goal", locals:{g:@interest}%>
+  <%=render partial:"home_goal", locals:{interest:@interest}%>
 </div>
