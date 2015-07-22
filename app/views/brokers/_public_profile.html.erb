@@ -15,23 +15,26 @@
 
 <table width="100%" style="border-spacing: 5px;">
   <tr>
-    <td width="65%" align="left" style="padding:5px;border: 1px ridge;vertical-align:top;">
-
-      <div id="about" style="padding:5px;">
-        <h4>About me</h4>
-        <%if @broker.ad_statement%>
-        <%=@broker.ad_statement%>
-        <%else%>
-        None.
-        <%end%>
+    <td width="55%" align="left" style="padding:5px;border: 1px ridge;vertical-align:top;">
+      <div class="panel panel-default">
+        <div id="about" style="padding:5px;" class="panel-body" align="left">
+          <h4>About me</h4>
+          <%if @broker.ad_statement%>
+          <%=@broker.ad_statement%>
+          <%else%>
+          None.
+          <%end%>
+        </div>
       </div>
-      <div id="skills" style="padding:5px;">
-        <h4>Skills & Specialties</h4>
-        <%if @broker.skills%>
-        <%=@broker.skills%>
-        <%else%>
-        None.
-        <%end%>
+      <div class="panel panel-default">
+        <div id="skills" style="padding:5px;" class="panel-body" align="left">
+          <h4>Skills & Specialties</h4>
+          <%if @broker.skills%>
+          <%=@broker.skills%>
+          <%else%>
+          None.
+          <%end%>
+        </div>
       </div>
 
       <div class="panel panel-default">
@@ -94,7 +97,7 @@
         </div>
       </div>
     </td>
-    <td width="35%" align="left" style="padding:5px;vertical-align:top;border: 1px ridge;">
+    <td width="45%" align="left" style="padding:5px;vertical-align:top;border: 1px ridge;">
       <div style="font-size:1.1em;"><p><b>Financial Stories</b></p></div>   
      
       <p><%=@broker.first_name%> has posted <%=pluralize(@broker.financial_stories.count, "financial story")%></p>
