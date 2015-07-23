@@ -41,8 +41,8 @@
 <table width="100%">
   <tr>
     <td width="55%" align="left" style="padding:5px;border: 1px ridge;vertical-align:top;">
-      <div class="panel-body" align="left">
-        <div id="financial_interest" style="padding:5px;">
+      <div class="panel panel-default" align="left">
+        <div class="panel-body" align="left" id="financial_interest">
           <h4>Financial Interest(s):</h4> 
           <ul>
             <% if @user.interests%>
@@ -53,8 +53,8 @@
           </ul>
         </div>
       </div>
-      <div class="panel-body" align="left">
-        <div id="abouts" style="padding:5px;">
+      <div class="panel panel-default" align="left">
+        <div class="panel-body" align="left" id="abouts">
           <h4>About me </h4>
           <%if @user.about_statement%>
             <%=@user.about_statement%>
@@ -63,39 +63,41 @@
           <%end%>
         </div>
       </div>
-      <div id="financial_goal">
-        <h4>Financial Goal</h4>
-        <% @user.goals.each_with_index do |goal, index|%>
-          <div class="panel panel-default">
-            <div class="panel-body" align="left">
-              <div style="float:left;">
-                <h4><%=index+1%>. <%= goal.description %></h4>
-              </div>
+      <div class="panel panel-default">
+        <div class="panel-body" align="left" id="financial_goal">
+          <h4>Financial Goal</h4>
+          <% @user.goals.each_with_index do |goal, index|%>
+            <div class="panel panel-default">
+              <div class="panel-body" align="left">
+                <div style="float:left;">
+                  <h4><%=index+1%>. <%= goal.description %></h4>
+                </div>
 
-              <div style="clear:both;"></div>
-              <p>You have saved <%=pluralize(goal.financial_stories.count, "story")%>.</p>
-              <%goal.financial_stories.order(title: :desc).each do |story|%>
-                <table width="100%;">
-                  <tr>
-                    <td style="width:55%;">
-                      <%=link_to story.title, story%>
-                    </td>
-                    <td style="width:40%;vertical-align:top;padding:5px;">
-                      <div class="financial_story_summary">
-                        <%rels=FinancialGoalStoryRel.where(goal_id:goal.id, financial_story:story.id)%>
-                        <%rel=rels.first%>
-                        <%=rel.summary%>
-                      </div>
-                    </td>
-                    <td style="width:5%;vertical-align:bottom;">
+                <div style="clear:both;"></div>
+                <p>You have saved <%=pluralize(goal.financial_stories.count, "story")%>.</p>
+                <%goal.financial_stories.order(title: :desc).each do |story|%>
+                  <table width="100%;">
+                    <tr>
+                      <td style="width:55%;">
+                        <%=link_to story.title, story%>
+                      </td>
+                      <td style="width:40%;vertical-align:top;padding:5px;">
+                        <div class="financial_story_summary">
+                          <%rels=FinancialGoalStoryRel.where(goal_id:goal.id, financial_story:story.id)%>
+                          <%rel=rels.first%>
+                          <%=rel.summary%>
+                        </div>
+                      </td>
+                      <td style="width:5%;vertical-align:bottom;">
 
-                    </td>
-                  </tr>
-              </table>
-              <%end%>
-             </div>
-          </div>
-        <%end%>
+                      </td>
+                    </tr>
+                </table>
+                <%end%>
+               </div>
+            </div>
+          <%end%>
+        </div>
       </div>
     </td>
     <td width="45%" align="left" style="padding:5px;vertical-align:top;border: 1px ridge;">
