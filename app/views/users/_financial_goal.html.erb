@@ -1,9 +1,11 @@
 
 <div class="panel panel-default">
   <div class="panel-body" align="left">
-    <h4>Financial Goal</h4>
+    <h4>Financial Goal(s)</h4>
     <%=render "users/financial_goal_add"%> 
-
+    <% if @user.goals.count ==0%>
+    <p>None.</p>
+    <%end%>
     <% @user.goals.each_with_index do |goal, index|%>
     <div class="panel panel-default">
       <div class="panel-body" align="left">
