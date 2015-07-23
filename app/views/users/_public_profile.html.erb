@@ -40,7 +40,19 @@
 <div style="clear:both;"></div>
 <table width="100%">
   <tr>
-    <td width="55%" class="panel panel-default">
+    <td width="55%" align="left" style="padding:5px;border: 1px ridge;vertical-align:top;">
+      <div class="panel-body" align="left">
+        <div id="financial_interest" style="padding:5px;">
+          <h4>Financial Interest(s):</h4> 
+          <ul>
+            <% if @user.interests%>
+              <%@user.interests.each do |interest|%>
+              <li><%=smart_label(interest)%></li>
+              <%end%>
+            <%end%>
+          </ul>
+        </div>
+      </div>
       <div class="panel-body" align="left">
         <div id="abouts" style="padding:5px;">
           <h4>About me </h4>
@@ -51,17 +63,6 @@
           <%end%>
         </div>
       </div>
-    </td>
-    <td width="45%" class="panel panel-default" style="vertical-align:top;">
-      <div class="panel-body" align="left">
-        <h4>Financial Testimonies</h4>
-      </div>
-    </td>
-  </tr>
-</table><br>
-<table width="100%" style="border-spacing: 5px;">
-  <tr>
-    <td width="55%" align="left" style="padding:5px;border: 1px ridge;vertical-align:top;">
       <div id="financial_goal">
         <h4>Financial Goal</h4>
         <% @user.goals.each_with_index do |goal, index|%>
@@ -98,17 +99,22 @@
       </div>
     </td>
     <td width="45%" align="left" style="padding:5px;vertical-align:top;border: 1px ridge;">
-      <%=render "error_small"%>
-      <div id="financial_interest">
-        <h4>Financial Interest(s):</h4> 
-        <ul>
-          <% if @user.interests%>
-            <%@user.interests.each do |interest|%>
-            <li><%=smart_label(interest)%></li>
-            <%end%>
-          <%end%>
-        </ul>
+      <p><%=@user.first_name%> has posted <%=pluralize(@user.financial_testimonies.count, "financial testimony")%></p>
+      <%@user.financial_testimonies.order(created_at: :desc).each do |testimony|%>
+      <div class="panel panel-default">
+        <div class="panel-body" align="left">
+          <h4>
+            <span class="label label-success">Upvote: <%=testimony.votes%></span>
+            <%=link_to "Title:#{testimony.title}", testimony%>
+          </h4>
+          <p>
+            Posted at <%=testimony.created_at.strftime("%b,%y at %l:%M %P")%>
+          </p>
+          <p>Financial Vehicle: <%=testimony.product.name%></p>
+          <p>Category: <%=Order::FINANCIAL_CATEGORIES_HASH[testimony.financial_category]%></p>
+        </div>
       </div>
+      <%end%>
     </td>
   </tr>
 </table>

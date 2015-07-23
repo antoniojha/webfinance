@@ -2,12 +2,13 @@
 <%@broker.financial_stories.order(created_at: :desc).each do |story|%>
 <div class="panel panel-default">
   <div class="panel-body" align="left">
-    <h4><%=link_to "Title:#{story.title}", story%></h4>
-    <p>
-      Posted at <%=story.created_at.strftime("%b,%y at %l:%M %P")%>
-    </p>
-    <p>Financial Vehicle:<span class="label label-success"><%=story.product.name%></span></p>
-    <p>Category: <span class="label label-success"><%=Order::FINANCIAL_CATEGORIES_HASH[story.financial_category]%></span></p>
+    <h4>
+      <span class="label label-success">Upvote: <%=story.votes%></span>
+      <%=link_to "Title:#{story.title}", story%>
+    </h4>
+    <p>Posted at <%=story.created_at.strftime("%b,%y at %l:%M %P")%></p>
+    <p>Financial Vehicle: <%=story.product.name%></p>
+    <p>Category:<%=Order::FINANCIAL_CATEGORIES_HASH[story.financial_category]%></p>
  
     <div style="float:right;">
       <%=link_to "Edit",broker_path(id:@broker,financial_story_id:story.id,method:"edit"), remote:true%>
