@@ -82,7 +82,8 @@
                   <table width="100%;">
                     <tr>
                       <td style="width:55%;">
-                        <%=link_to story.title, story%>
+                        <%=link_to story.title, story%><br>
+                        Posted by <%=link_to full_name(story.broker), story.broker%>
                       </td>
                       <td style="width:40%;vertical-align:top;padding:5px;">
                         <div class="financial_story_summary">

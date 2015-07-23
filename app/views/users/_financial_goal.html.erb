@@ -17,11 +17,13 @@
         </div>
         <div style="clear:both;"></div>
         <p>You have saved <%=pluralize(goal.financial_stories.count, "story")%>.</p>
+        <table width="100%" style="border-collapse: collapse;">
         <%goal.financial_stories.order(title: :desc).each do |story|%>
-          <table width="100%;">
-            <tr>
-              <td style="width:55%;">
-                <%=link_to story.title, story%>
+          
+            <tr style="border:1px ridge;">
+              <td style="width:55%;padding:5px;">
+                <%=link_to story.title, story%><br>
+                Posted by <%=link_to full_name(story.broker), story.broker%>
               </td>
               <td style="width:40%;vertical-align:top;padding:5px;">
                 <div class="financial_story_summary">
@@ -34,8 +36,9 @@
               <%=link_to '<i class="glyphicon glyphicon-remove"></i>'.html_safe, {controller:"financial_goal_story_rels",action:"destroy",id:rel.id},method: :delete,:remote => true, id:"financial_goal_story_remove_#{rel.id}" %>
               </td>
             </tr>
-        </table>
+        
         <%end%>
+        </table>
        </div>
     </div>
     <%end%>

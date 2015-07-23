@@ -11,8 +11,8 @@
           </td>
           <td width="85%" style="vertical-align:top;">
             <div class="panel panel-default">
-              <div class="panel-heading" align="left">
-                <div style="font-size:0.5em;">
+              <div class="panel-heading clearfix" align="left">
+                <h5>
                   <%=link_to full_name(author), author%> &nbsp&nbsp
                   Posted at <%=comment.created_at.strftime("%b,%y at %l:%M %P")%>
                   <%if ((comment.user==current_user)&&(!current_user.nil?)) || ((comment.broker==current_broker)&&(!current_broker.nil?))%>
@@ -31,7 +31,7 @@
                     </table>
                   </div>
                   <%end%>
-                </div>
+                </h5>
               </div>
               <div class="panel-body" align="left" style="vertical-align:top;">
                 <%if @edit=="micro_comment_edit_#{comment.id}"%>

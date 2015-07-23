@@ -19,7 +19,7 @@
       <%product=Product.find(product_id)%>
       <%if product%>
       <div class="panel panel-default">
-        <div class="panel-heading">
+        <div class="panel-heading clearfix">
           <h3 class="panel-title">
             <%=render partial:"brokers/financial_product_add", locals:{product:product,index:index}%>   
           </h3>
