@@ -29,6 +29,26 @@ module ApplicationHelper
       return "col-md-2"
     end
   end
+  def user_activities(user_owner)
+    activities=Activity.where(story_owner_type:"User",story_owner_id:user_owner.id).order(updated_at: :desc).first(10)
+  end
+  def broker_activities(broker_owner)
+    activities=Activity.where(story_owner_type:"Broker",story_owner_id:broker_owner.id).order(updated_at: :desc).first(10)
+  end
+  def commented_article(micro_comment)
+    if micro_comment.financial_story
+      micro_comment.financial_story
+    elsif micro_comment.financial_testimony
+      micro_comment.financial_testimony
+    end
+  end
+  def trackable_author(trackable)
+    if trackable.user
+      trackable.user
+    elsif trackable.broker
+      trackable.broker
+    end
+  end
   def asterisk_html
     "<span class='asterisk'>*</span>".html_safe
   end

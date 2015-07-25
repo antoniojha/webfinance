@@ -18,6 +18,8 @@ class Broker < ActiveRecord::Base
   has_many :financial_stories, dependent: :destroy
   has_many :broker_product_rels, dependent: :destroy
   has_many :products, through: :broker_product_rels
+  has_many :activities, as: :author
+
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   # the following uses Regex (lookahead assertion) to ensure there is at least a lower case and upper case letter, a digit, and a special character (non-word character)
   VALID_PASSWORD_REGEX= /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)/

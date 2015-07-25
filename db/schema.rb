@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150722001732) do
+ActiveRecord::Schema.define(version: 20150725122824) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -38,6 +38,22 @@ ActiveRecord::Schema.define(version: 20150722001732) do
 
   add_index "accounts", ["bank_id"], name: "index_accounts_on_bank_id"
   add_index "accounts", ["user_id"], name: "index_accounts_on_user_id"
+
+  create_table "activities", force: true do |t|
+    t.integer  "author_id"
+    t.string   "author_type"
+    t.string   "action"
+    t.integer  "trackable_id"
+    t.string   "trackable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "story_owner_id"
+    t.string   "story_owner_type"
+  end
+
+  add_index "activities", ["author_id"], name: "index_activities_on_author_id"
+  add_index "activities", ["story_owner_id"], name: "index_activities_on_story_owner_id"
+  add_index "activities", ["trackable_id"], name: "index_activities_on_trackable_id"
 
   create_table "advance_searches", force: true do |t|
     t.string   "keyword"

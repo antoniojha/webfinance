@@ -18,7 +18,12 @@
         <div style="clear:both;"></div>
         <p>You have saved <%=pluralize(goal.financial_stories.count, "story")%>.</p>
         <table width="100%" style="border-collapse: collapse;">
-        <%goal.financial_stories.order(title: :desc).each do |story|%>
+        <% if goal.financial_stories.count >0%>
+          <tr>
+            <th>Story Title</th>
+            <th>Summary</th>
+          </tr>
+          <%goal.financial_stories.order(title: :desc).each do |story|%>
           
             <tr style="border:1px ridge;">
               <td style="width:55%;padding:5px;">
@@ -37,7 +42,9 @@
               </td>
             </tr>
         
+          <%end%>
         <%end%>
+        
         </table>
        </div>
     </div>

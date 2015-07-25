@@ -4,13 +4,16 @@ class MicroCommentsController < ApplicationController
     @comment=MicroComment.new(financial_story_params)
     if params[:micro_comment][:financial_story_id]
       @story=FinancialStory.find(params[:micro_comment][:financial_story_id])
+      story_owner=@story.broker
     elsif params[:micro_comment][:financial_testimony_id]
       @testimony=FinancialTestimony.find(params[:micro_comment][:financial_testimony_id])
+      story_owner=@testimony.user
     end
     @vote=Vote.new
     respond_to do |format|
       if @comment.save
-       
+        author=trackable_author(@comment)
+        track_activity @comment, author, story_owner
         if params[:micro_comment][:financial_story_id]
           format.html{redirect_to @story}
         elsif params[:micro_comment][:financial_testimony_id]

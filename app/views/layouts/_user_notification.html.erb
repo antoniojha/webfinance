@@ -1,0 +1,10 @@
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+  <%@activities=user_activities(current_user)%>
+  <span class="badge"><%=@activities.count%></span> Notification <b class="caret"></b>
+  <ul class="dropdown-menu dropdown-menu-notification">
+    <%@activities.each do |activity|%>
+    <li style="padding:20px;border-bottom: 1px ridge;"><%=ActivityPresenter.new(activity,self).render_activity%></li>
+
+    <%end%>
+  </ul>
+</a>        

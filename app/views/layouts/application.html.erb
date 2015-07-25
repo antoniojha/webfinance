@@ -20,13 +20,32 @@
   
 </head>
 <body data-no-turbolink="true">
-  <%if params[:controller]=="static_pages"%>
+  <%unless user_logged_in? || broker_logged_in?%>
   	<header class="navbar-default navbar-static-top navbar-inverse" role="navigation">  
-		  <%=render 'layouts/header'%>
+      <div class="navbar-inner">
+        <div class="container">		
+          <ul class="navbar-nav nav pull-left">
+            <li class="navbar-text"><span class="logo"><%=image_tag("company_logo.png", size:"60x30")%></span></li>
+          </ul>
+          <%=render 'layouts/general_header'%>
+        </div>
+      </div>
 	  </header>
   <%else%>
+    
 	  <header class="navbar-default navbar-static-top" role="navigation">  
-		  <%=render 'layouts/header'%>
+      <div class="navbar-inner">
+        <div class="container">		
+          <ul class="navbar-nav nav pull-left">
+            <li class="navbar-text"><span class="logo"><%=image_tag("company_logo.png", size:"60x30")%></span></li>
+          </ul>
+          <% if user_logged_in?%>
+            <%=render 'layouts/user_header'%>
+          <%elsif broker_logged_in?%>
+            <%=render 'layouts/broker_header'%>
+          <%end%>
+        </div>
+      </div>
 	  </header>
   <%end%>
   <%if user_logged_in?%>

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :activities
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -86,7 +88,6 @@ Rails.application.routes.draw do
     resources :brokers
     controller :brokers do
       get 'signup'=> :new
-      
       get "status/:id"=> :status, as:"broker_status"
       get "finish/:id"=> :finish, as:"broker_finish"
       get "close_finish"=> :close_finish
@@ -112,9 +113,10 @@ Rails.application.routes.draw do
       post "signin"=> :create
       delete "logout"=> :destroy
     end
-    controller :brokers do
-      get 'signup'=> :new
-    end
+
+  end
+  controller :brokers do
+    get 'broker/signup'=> :new
   end
 
   resources :quote_relations

@@ -1,7 +1,7 @@
 class BrokersController < Broker::AuthenticatedController
   skip_before_action :redirect_to_broker_setup, only:[:index]
   skip_before_action :redirect_to_complete_broker_profile, only:[:new,:edit,:remove,:create,:update,:destroy,:index]
-  skip_before_action :authorize_broker_login, only:[:show,:index]
+  skip_before_action :authorize_broker_login, only:[:show,:index,:new]
   before_action :set_broker, only:[:show,:edit,:remove,:home,:update,:destroy,:products,:licenses]
   def new
     @broker=Broker.new

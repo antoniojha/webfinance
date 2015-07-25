@@ -7,6 +7,7 @@ class FinancialStoriesController < ApplicationController
     
     respond_to do |format|
       if @story.save
+        track_activity @story, @broker, nil
         format.js{}
         format.html{redirect_to @broker}
       else

@@ -8,7 +8,9 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-
+  def track_activity(trackable, author, story_owner, action=params[:action])
+    Activity.create!(trackable:trackable,author:author, story_owner:story_owner, action:action)
+  end
   def authorize_admin
     
     unless ((current_user.nil? == false) && (current_user.admin == true))

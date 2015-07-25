@@ -1,8 +1,8 @@
 class UsersController < User::AuthenticatedController
   skip_before_action :redirect_to_user_setup, only:[:new,:edit,:create,:update,:destroy]
   skip_before_action :redirect_to_complete_user_profile, only:[:new,:edit,:remove,:create,:update,:destroy]
-  skip_before_action :authorize_user_login, only: [:new,:create]
-  before_action :set_user, only: [:show, :edit, :remove,:update,:home,:story, :destroy]
+  skip_before_action :authorize_user_login, only: [:show,:new,:create]
+  before_action :set_user, only: [:show, :edit, :remove,:supdate,:home,:story, :destroy]
 
   before_action :correct_user, only:[:edit,:update,:destroy]
   include ProfilesHelper
