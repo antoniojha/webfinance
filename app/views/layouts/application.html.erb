@@ -50,12 +50,12 @@
   <%end%>
   <%if user_logged_in?%>
     <div class="navbar-default navbar-custom2 navbar-static-top" role="navigation">  
-      <%=render partial:"profiles/top_menu",locals:{object:current_user,type:"users"} %>
+      <%=render partial:"layouts/top_menu",locals:{object:current_user,type:"users"} %>
 	  </div>     
   <%end%>   
   <%if broker_logged_in?%>
     <div class="navbar-default navbar-custom2 navbar-static-top" role="navigation">
-      <%=render partial:"profiles/top_menu",locals:{object:current_broker,type:"brokers"} %>
+      <%=render partial:"layouts/top_menu",locals:{object:current_broker,type:"brokers"} %>
 	  </div>     
   <%end%>   
   <div align="center" class="body1">

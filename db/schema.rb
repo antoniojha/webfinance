@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150725122824) do
+ActiveRecord::Schema.define(version: 20150726140621) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -536,6 +536,19 @@ ActiveRecord::Schema.define(version: 20150725122824) do
   end
 
   add_index "plans", ["goal_id"], name: "index_plans_on_goal_id"
+
+  create_table "private_messages", force: true do |t|
+    t.integer  "sender_id"
+    t.string   "sender_type"
+    t.integer  "receiver_id"
+    t.string   "receiver_type"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "private_messages", ["receiver_id"], name: "index_private_messages_on_receiver_id"
+  add_index "private_messages", ["sender_id"], name: "index_private_messages_on_sender_id"
 
   create_table "product_fin_category_rels", force: true do |t|
     t.string   "vehicle_type"

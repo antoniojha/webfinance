@@ -1,0 +1,10 @@
+<h3>Recent Activities</h3>
+<table width="75%">
+<%@activities.each do |activity|%>
+  <tr>
+    <td style="border:1px ridge;padding:15px;">
+    <%=ActivityPresenter.new(activity,self).render_activity_with_pic%>
+    </td>
+  </tr>
+<%end%>
+</table>

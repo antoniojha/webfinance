@@ -85,6 +85,9 @@ class FinancialStoriesController < ApplicationController
     end
   end
   def index
+    @interest=params[:interest]
+    @product=Product.find(params[:product_id])    
+    @stories=@product.financial_stories.order(votes: :desc).paginate(:page => params[:page], :per_page => 10)
   end
   private
   def financial_story_params

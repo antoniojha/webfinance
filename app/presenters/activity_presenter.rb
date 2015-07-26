@@ -16,9 +16,18 @@ class ActivityPresenter
     end    
     
   end
+  def render_activity_with_pic
+    author=activity.author
+    h.div_for activity do
+      h.raw("<div style='float:left;'>")+h.smart_image(author,4)+h.raw("</div>") + h.raw("<div style='overflow:auto;padding:5px;'>")+h.link_to(full_name(activity.author), activity.author) + " " + render_partial + time+ h.raw("</div>") 
+    end    
+    
+  end
   private
   def time
-    h.raw("<br>")+activity.trackable.updated_at.strftime("%m-%d-%y at %l:%M %P UTC")
+      h.raw("<br>")+"On "+activity.trackable.updated_at.strftime("%-m-%d-%y at %l:%M %P")
+  #    " on "+activity.trackable.updated_at.strftime("%m-%d-%y at %l:%M %P UTC")
+
   end
   def render_partial
     locals={activity:activity}

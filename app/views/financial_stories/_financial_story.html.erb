@@ -18,11 +18,16 @@
           
         </td>
         <td width="30%">
-          <div style="float:right">
-            <button type="button" class="btn btn-success" id="save_story">
-            Save Story
-            </button>
-          </div>
+          <% if user_logged_in?%>
+            <div style="float:right">
+              <button type="button" class="btn btn-success" id="save_story">
+              Save Story
+              </button>
+            </div>
+            <%= content_tag "div", id: "save_story_form", data: {error:@rel_error} do%>
+              <%=render "financial_stories/save_story_form"%>
+            <%end%>
+          <%end%>
         </td>
       </tr>
     </table>
@@ -42,6 +47,3 @@
   <%=render "micro_comments"%>
 </div>
 
-<%= content_tag "div", id: "save_story_form", data: {error:@rel_error} do%>
-  <%=render "financial_stories/save_story_form"%>
-<%end%>

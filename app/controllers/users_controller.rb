@@ -5,7 +5,6 @@ class UsersController < User::AuthenticatedController
   before_action :set_user, only: [:show, :edit, :remove,:supdate,:home,:story, :destroy]
 
   before_action :correct_user, only:[:edit,:update,:destroy]
-  include ProfilesHelper
 
   def home
     unless params[:interest]
@@ -15,11 +14,7 @@ class UsersController < User::AuthenticatedController
     end    
     
   end
-  def story
-    @interest=params[:interest]
-    @product=Product.find(params[:product_id])    
-    @stories=@product.financial_stories.order(votes: :desc).paginate(:page => params[:page], :per_page => 10)
-  end
+
   def index
     @users = User.order(:username).paginate(:page => params[:page])
   end
@@ -44,7 +39,7 @@ class UsersController < User::AuthenticatedController
       @delete_testimony=FinancialTestimony.find(params[:financial_testimony_id])
     end
     @goal=Goal.new #needed for financial_goal_add partial template
-    @plan=current_month_plan
+
     respond_to do |format|
       format.html
       format.js

@@ -1,2 +1,6 @@
-
-commented on <%= link_to commented_article(micro_comment).title, commented_article(micro_comment) %>
+<%if commented_article(micro_comment).class.name == "FinancialStory"%>
+<%posted_material="story"%>
+<%elsif commented_article(micro_comment).class.name == "FinancialTestimony"%>
+<%posted_material="testimony"%>
+<%end%>
+commented on your <%=posted_material%> "<%= link_to commented_article(micro_comment).title, commented_article(micro_comment) %>".

@@ -15,7 +15,9 @@ class User < ActiveRecord::Base
   has_many :brokers, through: :schedules
   has_many :goals
   has_many :activities, as: :author
-
+  has_many :private_messages, as: :sender, dependent: :destroy
+  has_many :private_messages, as: :receiver
+  has_many :receivers, through: :private_messages
 #  has_many :temp_budget_plans, dependent: :destroy
   has_attached_file :picture, :styles => { :medium => "200x200#", :large=>"400x400>", :original=>"600x600>"},:processors => [:cropper]
   validates_attachment_content_type :picture, :content_type=> ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/pjpeg"]

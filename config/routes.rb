@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :activities
+  resources :private_messages
+
+  controller :activities do
+    get "news" => :index
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -132,7 +136,6 @@ Rails.application.routes.draw do
     get 'signup'=> :new
     get 'crop'=> :crop
     get 'user/home/:id'=> :home, as: 'user_home'
-    get 'user/story/:id'=> :story, as: 'user_story'
   end
   resources :setups
   controller :setups do

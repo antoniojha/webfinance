@@ -3,7 +3,7 @@
   <b><span style="font-size:1.1em;">Top Financial Story</span></b>
 </div>
 <div style="overflow:auto;text-align:right;padding:10px;">
-  <%=link_to "View All #{pluralize(story_count,"Story")}",user_story_url(product_id:product.id,interest:interest) %>
+  <%=link_to "View All #{pluralize(story_count,"Story")}",financial_stories_url(product_id:product.id,interest:interest) %>
 </div>
 <div width="100%" align="left">
   <%financial_stories=product.financial_stories.order(votes: :desc).first(5)%>  

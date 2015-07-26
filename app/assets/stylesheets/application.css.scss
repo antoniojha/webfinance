@@ -13,7 +13,6 @@
  *
  
  *= require_tree .
- *= require profiles
  *= require users
  *= require brokers
  *= require sessions
@@ -105,6 +104,10 @@ html, body {
    margin: 0 !important;
 }
 .dropdown-menu-notification {
+    width: 300px !important;
+ 
+}
+.dropdown-menu-message {
     width: 300px !important;
  
 }
