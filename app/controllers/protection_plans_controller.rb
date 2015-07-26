@@ -1,6 +1,5 @@
 class ProtectionPlansController < ApplicationController
-  
-  include ProfilesHelper
+
   before_action :set_protection_plan, only: [:edit, :show]
   def index
     @background=current_month_plan
