@@ -12,6 +12,7 @@
 //
 
 //= require jquery
+
 //= require jquery.turbolinks
 
 //= require jquery_ujs
@@ -31,6 +32,5 @@
 //= require jquery.Jcrop.min
 //= require bootstrap
 //= require jquery-ui
-//= require jquery-ui/tooltip
 //= require_tree .
 

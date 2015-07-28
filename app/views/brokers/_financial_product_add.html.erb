@@ -1,4 +1,8 @@
-
+<script>
+  $(".financial_product_name").autocomplete({
+    source: $(".financial_product_name").data('autocomplete-source')
+  });
+</script>
 <%if @edit=="financial_product_add_#{index}"%>
 <%=render "brokers/error_financial_product_add"%>
   <%=product.name%>
@@ -18,7 +22,7 @@
     </tr>
     <tr>
       <td>Name:</td>
-      <td><%=f.text_field :name, {style:"width:100%;", class:"financial_product_name", data:{autocomplete_source:financial_products_url}}%></td>
+      <td><%=f.text_field :name, {style:"width:100%;", class:"financial_product_name", data: {autocomplete_source: financial_products_path}}%></td>
     </tr>
 
     <tr>

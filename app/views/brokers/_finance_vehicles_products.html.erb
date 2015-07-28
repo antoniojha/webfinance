@@ -26,13 +26,20 @@
         </div>        
         <%if @broker.financial_products.where(product_id:product.id).count>0%>  
         <div class="panel-body">
-          <%@broker.financial_products.where(product_id:product.id).includes(:company).order("companies.name DESC").each do |financial_product|%> 
-
-          <span class="label label-primary">
-            <%="#{financial_product.company.name} #{financial_product.name}"%>
-          </span>
-          <%=link_to '<i class="glyphicon glyphicon-remove"></i>'.html_safe, {controller:"financial_products",action:"destroy",id:financial_product.id,broker_id:@broker.id},method: :delete,:remote => true, id:"remove_product_#{financial_product.id}" %>
-          <%end%>
+          <table width="100%" style="border-collapse: collapse;">
+            <tr>
+              <th>Company</th>
+              <th>Product Name</th>
+            </tr>
+            <%@broker.financial_products.where(product_id:product.id).includes(:company).order("companies.name DESC").each do |financial_product|%> 
+            <tr style="border:1px ridge;">
+              <td width="45%"><%=financial_product.company.name%></td>
+              <td width="50%"><%=financial_product.name%></td>
+              <td width="5%"><%=link_to '<i class="glyphicon glyphicon-remove"></i>'.html_safe, {controller:"financial_products",action:"destroy",id:financial_product.id,broker_id:@broker.id},method: :delete,:remote => true, id:"remove_product_#{financial_product.id}" %>
+              </td>
+            </tr>          
+            <%end%>
+          </table>
         </div>
         <%end%>      
       </div>

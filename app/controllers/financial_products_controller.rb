@@ -24,9 +24,10 @@ class FinancialProductsController < ApplicationController
   end
   def index
     respond_to do |format|
+    #  raise "error"
       @financial_products = FinancialProduct.order(:name).where("name like ?", "%#{params[:term]}%")
       format.json do
-        render json: @financial_products.map(&:name).uniq!
+        render json: @financial_products.map(&:name)
       end
     end
   end

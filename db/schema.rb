@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150726140621) do
+ActiveRecord::Schema.define(version: 20150728215051) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -85,6 +85,15 @@ ActiveRecord::Schema.define(version: 20150726140621) do
   add_index "advices", ["advice_category_id"], name: "index_advices_on_advice_category_id"
   add_index "advices", ["broker_id"], name: "index_advices_on_broker_id"
   add_index "advices", ["question_id"], name: "index_advices_on_question_id"
+
+  create_table "all_customers", force: true do |t|
+    t.integer  "customer_id"
+    t.string   "customer_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "all_customers", ["customer_id"], name: "index_all_customers_on_customer_id"
 
   create_table "application_comment_relations", force: true do |t|
     t.integer  "broker_id"
@@ -545,6 +554,7 @@ ActiveRecord::Schema.define(version: 20150726140621) do
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "title"
   end
 
   add_index "private_messages", ["receiver_id"], name: "index_private_messages_on_receiver_id"

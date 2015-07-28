@@ -1,0 +1,24 @@
+<h3>New Message</h3>
+<div style="float:left;">
+  <%=render "side_menu"%>
+</div>
+<div style="overflow:auto;">
+  <%=form_for @message do |f|%>
+    <table width="70%">
+      <tr>
+        <td width="20%"><%=f.label "To"%></td>
+        <td width="80%"><%=f.text_field :sender_id,{:class=>'form-control'}%>
+          <%=f.hidden_field :sent_type, value:""%>
+        </td>
+      </tr>
+      <tr>
+        <td><%=f.label "Subject"%></td>
+        <td><%=f.text_field :title,{:class=>'form-control'}%></td>
+      </tr>
+      <tr>
+        <td><%=f.label "Content"%></td>
+        <td><%=f.text_area :content, {row:"5",:class=>'form-control'}%></td>
+      </tr>
+    </table>
+  <%end%>
+</div>

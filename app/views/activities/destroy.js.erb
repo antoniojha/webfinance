@@ -1,0 +1,5 @@
+<% if user_logged_in?%>
+$('#user_notification').html("<%=escape_javascript(render('layouts/user_notification'))%>");
+<%elsif broker_logged_in?%>
+$('#broker_notification').html("<%=escape_javascript(render('layouts/broker_notification'))%>");
+<%end%>

@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
   resources :private_messages
 
+  resources :activities
   controller :activities do
     get "news" => :index
+    
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -40,8 +42,7 @@ Rails.application.routes.draw do
   resources :advices
   resources :advice_categories
   resources :advance_search
-  resources :broker_search
-  resources :protection_plans
+  resources :broker_search  
   resources :schedules
   resources :plans
   controller :plans do

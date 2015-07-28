@@ -12,7 +12,7 @@ class ActivityPresenter
    
     h.div_for activity do
       
-      h.link_to(full_name(activity.author), activity.author) + " " + render_partial + time 
+      h.link_to(full_name(activity.author), activity.author) + " " + render_partial + time + remove_link
     end    
     
   end
@@ -28,6 +28,9 @@ class ActivityPresenter
       h.raw("<br>")+"On "+activity.trackable.updated_at.strftime("%-m-%d-%y at %l:%M %P")
   #    " on "+activity.trackable.updated_at.strftime("%m-%d-%y at %l:%M %P UTC")
 
+  end
+  def remove_link
+    h.raw("<div style='float:right;'>")+h.link_to('remove', {controller:"activities",action:"destroy",id:activity.id},method: :delete,:remote => true)+h.raw("</div>")
   end
   def render_partial
     locals={activity:activity}
