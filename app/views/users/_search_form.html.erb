@@ -1,0 +1,25 @@
+<% content_for :right do%>
+
+<div width="100%" style="padding:10px;">
+<h3>I'm Looking for...</h3>
+  <p>Enter any one of the criteria to search for RichRly Users.</p>
+  <%= form_for(@user_search,url:{controller:"user_searches",action:"create"},method:"post") do |f| %>
+  <table width="100%">
+    <tr>
+       <td colspan=4><%=f.label :name, "Name:"%></td>
+    </tr>
+    <tr>
+      <td colspan=4><%=f.text_field :name,:class=>"form-control"%></td>
+    </tr>
+    <tr class="blank_row"></tr>
+    <tr>
+      <td width="30%" colspan=2><%=f.label :state, "State:"%></td>
+      <td width="70%" colspan=2><%=f.select :state, Order::US_STATES, {prompt:"Select State", :include_blank => true},{:class=>"form-control"}%></td>   
+      <td colspan=2></td>
+    </tr>
+    <tr class="blank_row"></tr>
+  </table>
+  <%= f.submit "Search", :class=>'btn btn-success'%>
+  <% end %>
+</div>
+<%end%>

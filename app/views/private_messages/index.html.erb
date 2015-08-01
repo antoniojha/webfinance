@@ -1,6 +1,11 @@
-<h3>Inbox</h3>
+
 <div style="float:left;">
   <%=render "side_menu"%>
 </div>
 <div style="overflow:auto;">
+  <h3>Inbox</h3>
+  <%=render "layouts/flash_message"%>
+  <div id="messages">
+    <%=render "messages"%>
+  </div>
 </div>

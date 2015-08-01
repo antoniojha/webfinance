@@ -1,30 +1,11 @@
 <% provide(:title,'|All Brokers')%>
-<% content_for :head do%>
 
-<%end%>
-<script>
-  $(document).ready(function(){
-    $(document).delegate("button[data-toggle='modal']","click", function(){
-      var broker_id=$(this).data('broker-id');
-      $("#broker_id").attr("value",broker_id);
-    }); 
-  /*  $("button[data-toggle='modal']").click(function(){
-      var broker_id=$(this).data('broker-id');
-      $("#broker_id").attr("value",broker_id);
-    });*/  
-  });
+<h1>All Financial Representatives</h1>
 
-</script>
-<div style="width:70%;float:right;">
-  
-
-  <h1><%=broker_heading(@broker_search.license_types.to_i)%></h1>
-  <div id="brokers">
-    
+<div style="width:100%; text-align:center;">   
+  <div id="brokers">  
     <%=render 'brokers'%>
   </div>
 </div>
 <%=render "search_form"%>
-<% if @broker_search.license_types%>
-<%=render "backgrounds/quotes/life_insurance_info"%>
-<%end%>
+

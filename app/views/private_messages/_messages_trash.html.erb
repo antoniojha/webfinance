@@ -1,0 +1,48 @@
+<div align="left" style="width:90%;">
+  <p align="left">You have <%=pluralize(@messages.count,"message")%></p>
+</div>
+
+  <div style="clear:both;"></div><br>
+  <ul class="list-group" style="width:90%;">
+    <%@messages.each do |message|%>
+      <li class="list-group-item">
+        <div align="left" style="float:left;width:10%; padding-top:5px;">
+          <div style="float:left; padding:2px;">
+            <%=button_to private_message_path(id:message.id,location:"trash", move_back:true),method: :put, class:"btn btn-xs", remote:true do%>
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+            <%end%>
+          </div>
+          <div style="overflow:auto; padding:2px;">
+            <%=button_to private_message_path(id:message.id,location:"trash"),method: :delete, class:"btn btn-xs", remote:true do%>
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            <%end%>
+          </div>
+        </div>
+        <div style="overflow:auto;width:90%;">
+          <%=link_to message, class:"list-group-item", style:"border:none !important;" do%>
+            <div style="float:left;width:30%; text-align:left;">
+              <% if message.sent_or_received =="sent"%>
+              To: <%=message.receiver_name%>
+              <%else%>
+              From: <%=message.sender_name%>
+              <%end%>       
+            </div>
+            <div style="float:right;width:20%;text-align:right;">
+              <% if message.created_at.to_date == Date.current%>
+                <%=message.created_at.strftime("%l:%M %P")%>
+              <%else%>
+                <%=message.created_at.strftime("%b %d,%Y")%>
+              <%end%>
+            </div>
+            <div style="float:none; width:50%;text-align:left;" class="ellipsis">
+              <b><%=message.subject%></b>-<%=abrev_display(message.content,50)%>
+
+            </div>
+            <div style="clear:both;"></div>
+          <%end%>
+
+        </div>
+        <div style="clear:both;"></div>
+      </li>
+    <%end%>
+  </ul>

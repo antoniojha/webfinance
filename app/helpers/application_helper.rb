@@ -1,39 +1,45 @@
 include ActionView::Helpers::NumberHelper
 
 module ApplicationHelper
-  def column_width_right
-    if current_controller=='brokers' && controller.action_name=="index"
+
+  def column_width_right 
+    controller=params[:controller]
+    action=params[:action]
+    if (controller=="users" || controller=="brokers")&&(action=="index") 
       return "col-md-3"
-    elsif current_controller=="static_pages"
-      return "col-md-1"
     else
       return "col-md-2"
     end
   end
   def column_width_middle
-    if current_controller=='brokers' && controller.action_name=="index"
-      return "col-md-7"
-    elsif current_controller=="static_pages"
-      return "col-md-10"
+    controller=params[:controller]
+    action=params[:action]
+    if (controller=="users" || controller=="brokers")&&(action=="index") 
+      return "col-md-6"
     else
       return "col-md-8"
     end
   end
   def column_width_left
-
-    if current_controller=='brokers' && controller.action_name=="index"
-      return "col-md-2"  
-    elsif current_controller=="static_pages"
-      return "col-md-1"
+    controller=params[:controller]
+    action=params[:action]
+    if (controller=="users" || controller=="brokers")&&(action=="index") 
+      return "col-md-3"
     else
       return "col-md-2"
     end
   end
+  def user_message_activities(user_owner)
+    activities=Activity.where(story_owner_type:"User",story_owner_id:user_owner.id).order(updated_at: :desc).where(trackable_type:"PrivateMessage").first(10)
+  end
+  def broker_message_activities(broker_owner)
+    activities=Activity.where(story_owner_type:"Broker",story_owner_id:broker_owner.id).order(updated_at: :desc).where(trackable_type:"PrivateMessage").first(10)
+  end
   def user_activities(user_owner)
-    activities=Activity.where(story_owner_type:"User",story_owner_id:user_owner.id).order(updated_at: :desc).first(10)
+    activities=Activity.where(story_owner_type:"User",story_owner_id:user_owner.id).order(updated_at: :desc).where.not(trackable_type:"PrivateMessage").first(10)
   end
   def broker_activities(broker_owner)
-    activities=Activity.where(story_owner_type:"Broker",story_owner_id:broker_owner.id).order(updated_at: :desc).first(10)
+    activities=Activity.where(story_owner_type:"Broker",story_owner_id:broker_owner.id).order(updated_at: :desc).where.not(trackable_type:"PrivateMessage").first(10)
   end
   def commented_article(micro_comment)
     if micro_comment.financial_story

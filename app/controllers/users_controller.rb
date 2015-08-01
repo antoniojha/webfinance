@@ -1,7 +1,7 @@
 class UsersController < User::AuthenticatedController
   skip_before_action :redirect_to_user_setup, only:[:new,:edit,:create,:update,:destroy]
-  skip_before_action :redirect_to_complete_user_profile, only:[:new,:edit,:remove,:create,:update,:destroy]
-  skip_before_action :authorize_user_login, only: [:show,:new,:create]
+  skip_before_action :redirect_to_complete_user_profile, only:[:new,:edit,:remove,:create,:update,:destroy, :index]
+  skip_before_action :authorize_user_login, only: [:show,:new,:create,:index]
   before_action :set_user, only: [:show, :edit, :remove,:supdate,:home,:story, :destroy]
 
   before_action :correct_user, only:[:edit,:update,:destroy]
@@ -16,7 +16,14 @@ class UsersController < User::AuthenticatedController
   end
 
   def index
-    @users = User.order(:username).paginate(:page => params[:page])
+    if params[:id]
+      @user_search=UserSearch.find(params[:id])
+      @users=@user_search.users
+      @users=@users.paginate(:page => params[:page])  
+    else     
+      @users=User.all.paginate(:page => params[:page])
+      @user_search=UserSearch.new
+    end 
   end
 
   def show

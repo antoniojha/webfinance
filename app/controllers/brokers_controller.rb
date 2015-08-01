@@ -108,21 +108,14 @@ class BrokersController < Broker::AuthenticatedController
   end
   #display broker search form
   def index
-    @user=current_user
-    if @user
-      @background=@user.backgrounds.last
-      if params[:id]
-        @broker_search=BrokerSearch.find(params[:id])
-        @brokers=@broker_search.brokers
-        @brokers=@brokers.paginate(:page => params[:page])  
-      else     
-        @brokers=Broker.all.paginate(:page => params[:page])
-        @broker_search=BrokerSearch.new
-      end 
-    else
-      @broker_search=BrokerSearch.new
+    if params[:id]
+      @broker_search=BrokerSearch.find(params[:id])
+      @brokers=@broker_search.brokers
+      @brokers=@brokers.paginate(:page => params[:page])  
+    else     
       @brokers=Broker.all.paginate(:page => params[:page])
-    end
+      @broker_search=BrokerSearch.new
+    end 
   end
 
   private

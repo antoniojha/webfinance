@@ -5,7 +5,7 @@
     <div style="float:left;">
       <h1><%=full_name(@broker)%>
         <%=link_to broker_path(id:@broker),id: "profile_info_edit", remote:true do%>
-          <span class="glyphicon glyphicon-edit"></span>
+        <span class="glyphicon glyphicon-edit"></span>
         <%end%>
       </h1> 
       <h4><%=@broker.title%> at <%=@broker.company_name%></h4>
@@ -51,10 +51,9 @@
     <div style="float:left;">
       <h1><%=full_name(@broker)%>
         <%=link_to broker_path(id:@broker,edit:"profile_info"), id: "profile_info_edit", remote:true do%>
-          <span class="glyphicon glyphicon-edit"></span>
+        <span class="glyphicon glyphicon-edit"></span>
         <%end%>
       </h1> 
-
       <h4><%=@broker.title%> at <%=@broker.company_name%></h4>
     </div>
     <div style="overflow:auto;padding:20px;">        

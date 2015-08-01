@@ -1,3 +1,27 @@
 // Place all the styles related to the private_messages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.private_messages{
+  tr{
+    border:1px ridge;
+  }
+  td{
+    padding:5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+.private_message_show{
+  td{
+    padding:10px;
+    vertical-align:top;
+    
+  }
+}
+.ellipsis {
+  text-overflow: ellipsis;
+
+  /* Required for text-overflow to do anything */
+  white-space: nowrap;
+  overflow: hidden;
+}

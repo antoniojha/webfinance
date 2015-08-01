@@ -1,0 +1,7 @@
+<%if @item=="Trash"%>
+  $("#messages_trash").html("<%=escape_javascript render('private_messages/messages_trash')%>");
+<%elsif @item=="Draft"%>
+  $("#messages_draft").html("<%=escape_javascript render('private_messages/messages_draft')%>");
+<%else%>
+  $("#messages").html("<%=escape_javascript render('private_messages/messages')%>");
+<%end%>

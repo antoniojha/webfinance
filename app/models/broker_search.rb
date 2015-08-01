@@ -16,14 +16,13 @@ class BrokerSearch < ActiveRecord::Base
   def name_conditions
     ["(brokers.first_name LIKE ? AND brokers.last_name LIKE ?) OR (brokers.first_name LIKE ? AND brokers.last_name LIKE ?)", "%#{first_name}%", "%#{last_name}%", "%#{last_name}%", "%#{first_name}%"] unless name.blank?
   end
-  def city_conditions
-    ["brokers.city LIKE ?", "%#{city}%"] unless city.blank?
-  end
+
   def state_conditions
     ["brokers.state LIKE ?", "%#{state}%"] unless state.blank?
   end  
   def license_type_conditions
-    ["brokers.license_type LIKE ?", "%#{license_types}%"] unless license_types.blank?
+   
+    ["brokers.license_type LIKE ?", "%#{Order::LICENSE_TYPES_HASH[license_types.to_i]}%"] unless license_types.blank?
   end  
   def conditions
     [conditions_clauses.join(' AND '), *conditions_options]

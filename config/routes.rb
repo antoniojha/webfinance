@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
-  resources :private_messages
+  resources :user_searches
 
+  resources :private_messages
+  controller :private_messages do
+    get "private_message/draft" => :draft, as: "private_message_draft"
+    get "private_message/trash" => :trash, as: "private_message_trash"
+    get "private_message/sent" => :sent, as: "private_message_sent"
+  end
   resources :activities
   controller :activities do
     get "news" => :index

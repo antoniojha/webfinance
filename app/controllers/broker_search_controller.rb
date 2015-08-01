@@ -1,5 +1,6 @@
 class BrokerSearchController < ApplicationController
   def create
+   
     @broker_search = BrokerSearch.new(search_params)
     if @broker_search.save
       redirect_to brokers_url(id:@broker_search)

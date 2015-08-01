@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150728215051) do
+ActiveRecord::Schema.define(version: 20150801182625) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -547,18 +547,23 @@ ActiveRecord::Schema.define(version: 20150728215051) do
   add_index "plans", ["goal_id"], name: "index_plans_on_goal_id"
 
   create_table "private_messages", force: true do |t|
-    t.integer  "sender_id"
-    t.string   "sender_type"
-    t.integer  "receiver_id"
-    t.string   "receiver_type"
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "title"
+    t.string   "subject"
+    t.integer  "all_customer_id"
+    t.integer  "receiver_customer_id"
+    t.integer  "followed_message_id"
+    t.string   "location"
+    t.string   "sender_name"
+    t.string   "receiver_name"
+    t.string   "sent_or_received"
+    t.boolean  "replied",              default: false
+    t.integer  "original_message_id"
+    t.string   "user_or_broker"
   end
 
-  add_index "private_messages", ["receiver_id"], name: "index_private_messages_on_receiver_id"
-  add_index "private_messages", ["sender_id"], name: "index_private_messages_on_sender_id"
+  add_index "private_messages", ["all_customer_id"], name: "index_private_messages_on_all_customer_id"
 
   create_table "product_fin_category_rels", force: true do |t|
     t.string   "vehicle_type"
@@ -796,6 +801,13 @@ ActiveRecord::Schema.define(version: 20150728215051) do
   add_index "temp_licenses", ["temp_broker_id"], name: "index_temp_licenses_on_temp_broker_id"
 
   create_table "transaction_imports", force: true do |t|
+  end
+
+  create_table "user_searches", force: true do |t|
+    t.string   "name"
+    t.string   "state"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|

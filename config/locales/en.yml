@@ -41,6 +41,8 @@ en:
         license_type: ""
       broker_request:
         complement_requests: ""
+      private_message:
+        receiver_customer_id: ""
     errors:
       models:
    
@@ -48,5 +50,8 @@ en:
           attributes:
             check_term_of_use:
               blank: "You have to agree to term of use condition to be registered on Richrly"     
-
+        private_message:
+          attributes:
+            receiver_customer_id:
+              blank: "You need to specify whom you want to send message to."
         

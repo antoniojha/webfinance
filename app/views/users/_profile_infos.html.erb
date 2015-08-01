@@ -1,10 +1,19 @@
 
 <%if @edit=="profile_info"%>
-<h1><%=full_name(@user)%>
-  <%=link_to user_path(id:@user),id: "profile_info_edit", remote:true do%>
-  <span class="glyphicon glyphicon-edit"></span>
-  <%end%>
-</h1>
+  <table>
+    <tr>
+      <td>
+        <h1><%=full_name(@user)%>
+          <%=link_to user_path(id:@user), id: "profile_info_edit", remote:true do%>
+          <span class="glyphicon glyphicon-edit"></span>
+          <%end%>
+        </h1> 
+      </td>
+      <td style="padding-left:5px;">
+        <h3>RichRly User</h3>  
+      </td>
+    </tr>
+  </table>
   <%=form_for @user, remote:true do |f|%>
   <table width="100%">
     <tr>
@@ -32,13 +41,22 @@
     </tr>
   </table>
   <%end%>
-
 <%else%>
-  <h1><%=full_name(@user)%>
-      <%=link_to user_path(id:@user,edit:"profile_info"), id: "profile_info_edit", remote:true do%>
-      <span class="glyphicon glyphicon-edit"></span>
-      <%end%>
-  </h1> 
+  <table>
+    <tr>
+      <td>
+        <h1><%=full_name(@user)%>
+          <%=link_to user_path(id:@user,edit:"profile_info"), id: "profile_info_edit", remote:true do%>
+          <span class="glyphicon glyphicon-edit"></span>
+          <%end%>
+        </h1> 
+      </td>
+      <td style="padding-left:5px;">
+        <h3>RichRly User</h3>  
+      </td>
+    </tr>
+  </table>
+
   <table width="100%">
     <tr>
       <td width="90%">

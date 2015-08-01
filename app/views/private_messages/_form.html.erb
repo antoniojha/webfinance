@@ -1,0 +1,45 @@
+ <%=form_for @message do |f|%>
+    <table width="70%">
+      <tr>
+        <td></td>
+        <% if @message.new_record?%>
+        <td align="center"><h3>New Message</h3></td>
+        <%else%>
+        <td align="center"><h3>Draft Message</h3></td>
+        <%end%>
+      </tr>
+      <tr>
+        <td width="20%"><%=f.label "To:"%></td>
+        <td width="80%"><%=f.text_field :receiver_customer_id,{:class=>'form-control'}%></td>
+      </tr>
+      <tr class="blank_row"></tr>
+      <tr>
+        <td><%=f.label "Subject:"%></td>
+        <td><%=f.text_field :subject,{:class=>'form-control'}%></td>
+      </tr>
+      <tr class="blank_row"></tr>
+      <tr>
+        <td style="vertical-align:top;"><%=f.label "Content:"%></td>
+        <td><%=f.text_area :content, {rows:"10",:class=>'form-control'}%></td>
+      </tr>
+      <tr class="blank_row"></tr>
+      <tr>
+        <td></td>
+        <td>
+          <div style="float:left">
+            <%=f.submit "Save Draft", class:"btn btn-lg btn-primary", name:"save_draft"%>
+          </div>
+          <div style="overflow:auto" align="right">
+  
+            <%=f.hidden_field :all_customer_id, value: @sender.id%>  
+            <%=f.hidden_field :sender_name, value: full_name(@sender.customer)%>
+            <% if @message.new_record?%>
+            <%=f.submit "Send Message", class:"btn btn-lg btn-primary", name:"send_message"%>
+            <%else%>
+            <%=f.submit "Send Message", class:"btn btn-lg btn-primary", name:"send_draft"%>
+            <%end%>
+          </div>
+        </td>
+      </tr>
+    </table>
+  <%end%>

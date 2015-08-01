@@ -22,7 +22,7 @@ class Order <ActiveRecord::Base
     }
   
   #based on http://www.investopedia.com/articles/financialcareers/07/securities_licenses.asp
-  LICENSE_TYPES_HASH={"1"=>"Life Insurance Agent","2"=>"Health Insurance Agent","3"=>"Series 6","4"=>"Series 7"}
+  LICENSE_TYPES_HASH=LICENSE_TYPES.to_h.invert
   LENGTH_UNITS=[["mile",1],["kilometer",2]]
   INCOME_LEVELS=[["0 to $30,000",1],["$30,000 to $70,000",2],["$70,000 and above",3]]
   AGE_LEVELS=[["20-39 years old", "young generation"],["40-59 years old","middle generation"],["60 years old and up","late generation"]]
@@ -82,6 +82,7 @@ class Order <ActiveRecord::Base
       ['Wisconsin', 'WI'],
       ['Wyoming', 'WY']
     ]
+  
   def self.return_fixed_expense(background,category)
     objs=background.fixed_expenses
     desc=cat_id=[]

@@ -1,0 +1,78 @@
+<div style="float:left;">
+  <%=render "side_menu"%>
+</div>
+<div style="overflow:auto;">
+  <%sender=@sent_from.customer%>
+  <table class="private_message_show" style="width:80%;">
+
+    <tr>
+      <td width="20%"><%=smart_image(sender,4)%></td>
+      <td width="80%"> 
+        <% if sender.class.name =="User"%>
+          <b>RichRly User</b><br>
+          <%=link_to full_name(sender), sender%><br>
+        <%elsif sender.class.name=="Broker"%>
+          <b><%=sender.title%> at <%=sender.company_name%></b><br>
+          <%=link_to full_name(sender), sender%> <br>
+        <%end%>
+        
+        <%=@original_message.created_at.strftime("%B %d,%Y, %l:%M %P")%><br>
+        
+      </td>
+    </tr>
+    <tr>
+      <td colspan=2 style="border:1px ridge;">
+        <b>Subject:</b> <%=@original_message.subject%><br>
+        <%=simple_format(@original_message.content)%>
+      </td>
+    </tr>
+    
+
+    <%if @messages.count >0%>
+      <% @messages.each do |message|%>
+      <%sender=AllCustomer.find(message.all_customer_id).customer%>
+      <tr>
+        <td width="20%"><%=smart_image(sender,4)%></td>
+        <td width="80%"> 
+          <% if sender.class.name =="User"%>
+            <b>RichRly User</b><br>
+            <%=link_to full_name(sender), sender%><br>
+          <%elsif sender.class.name=="Broker"%>
+            <b><%=sender.title%> at <%=sender.company_name%></b><br>
+            <%=link_to full_name(sender), sender%> <br>
+          <%end%>
+
+          <%=message.created_at.strftime("%B %d,%Y, %l:%M %P")%><br>
+          
+        </td>
+      </tr>
+      <tr>
+        <td colspan=2 style="border:1px ridge;">
+          <b>Subject:</b> <%=message.subject%><br>
+          <%=simple_format(message.content)%>
+        </td>
+      </tr>
+      <%end%>
+    <%end%>
+  </table>
+  
+  <br>
+  <%if @message.sent_or_received=="received"%>
+  <div style="width:80%;text-align:left;">
+    <%= form_for @new_message do |f|%>
+      <%=f.hidden_field :receiver_customer_id, value:@sent_from.id%>
+      <%=f.hidden_field :all_customer_id, value: @sender.id%>  
+      <%=f.hidden_field :sender_name, value: full_name(sender)%> 
+      <% if @messages.count >0%>
+        <%=f.hidden_field :followed_message_id, value: @messages.last.id%> 
+      <%else%>
+        <%=f.hidden_field :followed_message_id, value: @message.id%> 
+      <%end%>
+      <%=f.hidden_field :original_message_id, value: @original_message.id%> 
+      <%=f.hidden_field :subject, value:"Re:"+@message.subject%>
+      <%=f.text_area :content, rows:"5", style:"width:100%;",placeholder:"Enter to reply"%><br>
+      <%=f.submit "Reply",name:"send_message", class:"btn btn-default"%>
+    <%end%>
+  </div>
+  <%end%>
+</div>

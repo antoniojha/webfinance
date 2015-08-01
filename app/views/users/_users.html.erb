@@ -1,16 +1,12 @@
-<%= will_paginate @users, inner_window:1, outer_window:1%>
-<table class='index-table'>
-  <% @users.each do |user|%>
-  <tr>
-    <td width='15%'><%= smart_image(user)%></td>
-    <td width='55%'><a href=<%=user_path(user)%>><%=user.first_name%> <%=user.last_name%></a>&nbsp &nbsp
-      <% if user_logged_in?%>
-        <% if current_user.admin? && !current_user?(user)%>
-          <%=link_to 'delete', admin_remove_path(user)%>
-        <%end%>
+<%= will_paginate @users%><br>
+<% @users.each_with_index do |user,index|%>
+  <div style="display: inline-block;width:30%;padding-bottom:5px;">
+    <%=link_to full_name(user), user%><br>
+    <%= smart_image(user)%>
+    <% if user_logged_in?%>
+      <% if current_user.admin? && !current_user?(user)%>
+      <br><%=link_to 'delete', admin_remove_path(user)%>
       <%end%>
-    </td>  
-  </tr>
-  <%end%>
-</table> 
-<%= will_paginate @users, inner_window:1, outer_window:1%>
+    <%end%>
+  </div>
+<%end%>

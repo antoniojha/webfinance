@@ -1,0 +1,5 @@
+<% flash.each do|message_type, message|%>
+  <%unless message_type=="notice"%>
+    <div style="width:80%;" class="alert alert-<%=message_type%> <%=message_type%>"><%=message%></div>
+  <%end%>
+<%end%>
