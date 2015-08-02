@@ -81,6 +81,11 @@ class FinancialTestimoniesController < ApplicationController
       format.html{redirect_to @user}
     end
   end
+  def index
+    @interest=params[:interest]
+    @product=Product.find(params[:product_id])    
+    @testimonies=@product.financial_testimonies.order(votes: :desc).paginate(:page => params[:page], :per_page => 10)
+  end
   private
   def financial_testimony_params
     params.require(:financial_testimony).permit(:title,:financial_category,:product_id,:description)

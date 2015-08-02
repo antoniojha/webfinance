@@ -21,11 +21,9 @@
 //= require jquery.remotipart
 //= require turbolinks
 //= require personal_profile
-//= require save_financial_story
 //= require add_association
 //= require remove_association
 //= require pagination
-//= require edit_broker
 //= require protection_plans
 //= require raphael
 //= require jquery.usmap

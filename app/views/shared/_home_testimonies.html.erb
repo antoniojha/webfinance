@@ -1,0 +1,42 @@
+<div class="financial_testimonies" style="display:none;">
+  <%testimony_count=product.financial_testimonies.count%>
+  <div style="float:left;padding:10px;">
+    <b><span style="font-size:1.1em;">Top Financial Testimony</span></b>
+  </div>
+  <div style="overflow:auto;text-align:right;padding:10px;">
+    <%=link_to "View All #{pluralize(testimony_count,"Testimony")}",financial_testimonies_url(product_id:product.id,interest:interest) %>
+  </div>
+  <div width="100%" align="left">
+    <%if testimony_count >0%>
+      <%financial_testimonies=product.financial_testimonies.order(votes: :desc).first(5)%>  
+      <table width="100%">
+        <%financial_testimonies.each do |testimony|%>
+        <tr>
+          <td width="30%" style="vertical-align:top;">
+            <div style="font-size:1.2em;">
+             <span class="label label-success">Upvotes:<%=testimony.votes%></span>
+            </div><br>
+            <%=link_to testimony.user do %>
+            <%=smart_image(testimony.user,4)%>
+            <%end%>
+          </td>
+          <td width="70%">    
+            <div class="panel panel-default">
+              <div class="panel-heading clearfix">           
+                <h4><%=link_to testimony.title, testimony%></h4>
+              </div>
+              <div class="panel-body" style="vertical-align:top;">
+
+                Posted by <%=link_to full_name(testimony.user), testimony.user%><br>
+                Posted on <%=testimony.created_at.strftime("%b,%y at %l:%M %P")%><br> 
+              </div>
+            </div>
+          </td>
+        </tr>
+        <%end%>
+      </table>
+    <%else%>
+      None.
+    <%end%>
+  </div>
+</div>

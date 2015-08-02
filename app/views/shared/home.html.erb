@@ -1,0 +1,28 @@
+<div with=50%>
+  <% if user_logged_in?%>
+  <div style="float:left;width:110px;"><%=smart_image(@user,1)%></div>
+  <div style="overflow:auto;" align="left"><h3><%=full_name(@user)%></h3></div>
+  <% elsif broker_logged_in?%>
+  <div style="float:left;width:110px;"><%=smart_image(@broker,1)%></div>
+  <div style="overflow:auto;" align="left"><h3><%=full_name(@broker)%></h3></div>  
+  <%end%>
+</div>
+<div style="clear:both;"></div>
+<div align="left">
+  <ul class="nav nav-pills">
+    <%Order::FINANCIAL_CATEGORIES_HASH.values.each do |interest|%>
+      <% if user_logged_in?%>
+        <%url=user_home_url(interest:interest)%>  
+      <%elsif broker_logged_in?%>
+        <%url=broker_home_url(interest:interest)%>  
+      <%end%>
+      <%if interest==@interest.titleize%>
+      <li role="presentation" class="active"><%=link_to "#{interest.titleize}",url %></li>
+      <%else%>
+      <li role="presentation"><%=link_to "#{interest.titleize}",url %></li>
+      <%end%>
+    <%end%>
+  </ul>
+
+  <%=render partial:"shared/home_goals_with_stories", locals:{interest:@interest}%>
+</div>

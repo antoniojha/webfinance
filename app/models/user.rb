@@ -6,13 +6,7 @@ class User < ActiveRecord::Base
   serialize :interests
   has_many :financial_testimonies, dependent: :destroy
   has_many :votes, dependent: :destroy
-  has_many :accounts, dependent: :destroy
-  has_many :backgrounds, dependent: :destroy 
-  has_many :spendings, dependent: :destroy
-  has_many :quote_relations,dependent: :destroy
-  has_many :brokers, through: :quote_relations
-  has_many :schedules,dependent: :destroy
-  has_many :brokers, through: :schedules
+  has_many :financial_stories, dependent: :destroy
   has_many :goals
   has_many :activities, as: :author, dependent: :destroy
   has_one :all_customer, as: :customer, dependent: :destroy

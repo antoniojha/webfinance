@@ -12,7 +12,7 @@ class UsersController < User::AuthenticatedController
     else
       @interest=params[:interest]
     end    
-    
+    render :template=>"shared/home"
   end
 
   def index
@@ -59,13 +59,11 @@ class UsersController < User::AuthenticatedController
     @user = User.new
   end
 
-  # GET /users/1/edit
   def edit
   end
   def remove
   end
-  # POST /users
-  # POST /users.json
+
   def create
     @user = User.new(user_params)
 

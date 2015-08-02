@@ -1,6 +1,6 @@
 module SessionsHelper
   def user_personal_profile?(user)
-    if current_user.id==user.id
+    if current_user && (current_user.id==user.id)
       return true
     else
       return false
@@ -16,33 +16,40 @@ module SessionsHelper
     end
   end
   def user_profile_completed?
-    user=current_user
-    if user.username && user.email && (user.email_authen==true)
-      return true
-    else
-      false
+    if user_logged_in?
+      user=current_user
+      if user.username && user.email && (user.email_authen==true)
+        return true
+      else
+        false
+      end
     end
   end
   def redirect_to_complete_user_profile
-    user=current_user
-    unless user_profile_completed? 
-      redirect_to edit_user_url(user), notice: "Please complete your profile (username and email) first."
+    if user_logged_in?
+      user=current_user
+      unless user_profile_completed? 
+        redirect_to edit_user_url(user), notice: "Please complete your profile (username and email) first."
+      end
     end
   end
   def broker_profile_completed?
-    broker=current_broker
-    if broker&&broker.username && broker.email && (broker.email_authen==true)
-      return true
-    else
-      false
+    if broker_logged_in?
+      broker=current_broker
+      if broker&&broker.username && broker.email && (broker.email_authen==true)
+        return true
+      else
+        false
+      end
     end
   end
   def redirect_to_complete_broker_profile
- 
-    broker=current_broker
-    if broker
-      unless broker_profile_completed? 
-        redirect_to edit_broker_url(broker), notice: "Please complete your profile (username and email) first."
+    if broker_logged_in?   
+      broker=current_broker
+      if broker
+        unless broker_profile_completed? 
+          redirect_to edit_broker_url(broker), notice: "Please complete your profile (username and email) first."
+        end
       end
     end
   end  
