@@ -60,8 +60,8 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
   def get_geometry
     if (@file.url)
-      img = ::MiniMagick::Image::read(@file.url).first
-      @geometry = [ img.columns, img.rows ]
+      img = MiniMagick::Image::open(@file.url)
+      @geometry = [ img['width'], img['height'] ]
     end
   end
   # Add a white list of extensions which are allowed to be uploaded.
