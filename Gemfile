@@ -43,7 +43,7 @@ gem 'omniauth-linkedin-oauth2'
 # Paperclip, used to upload pictures to Amazon S3
 gem 'paperclip'
 gem 'aws-sdk'
-gem 'rmagick'
+gem 'mini_magick'
 gem 'paperclip-compression'
 #Carrierwave, used to upload pictures to Amazon S3
 gem 'carrierwave'
