@@ -25,7 +25,7 @@ class ActivityPresenter
   end
   private
   def time
-      h.raw("<br>")+"On "+activity.trackable.updated_at.strftime("%-m-%d-%y at %l:%M %P")
+    h.raw("<br>")+"On "+activity.trackable.created_at.strftime("%-m-%d-%y at %l:%M %P")
   #    " on "+activity.trackable.updated_at.strftime("%m-%d-%y at %l:%M %P UTC")
 
   end

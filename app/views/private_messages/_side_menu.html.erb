@@ -1,5 +1,5 @@
 <div style="padding-top:20px;">
-  <% links={"New Message"=>new_private_message_path, "Inbox"=>private_messages_path, "Draft"=> private_message_draft_path, "Sent"=>private_message_sent_path, "Trash"=> private_message_trash_path}%>
+  <% links={"New Message"=>new_private_message_path, "Inbox"=>private_messages_path, "Sent"=>private_message_sent_path}%>
   <ul class="list-group">
     <% for item in @menus%>
       <% if item==@item%>
