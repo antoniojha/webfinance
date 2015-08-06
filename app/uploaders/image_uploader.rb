@@ -8,7 +8,8 @@ class ImageUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   #include CarrierWave::RMagick
    include CarrierWave::MiniMagick
-
+    include CarrierWave::MimeTypes
+    process :set_content_type
   # Choose what kind of storage to use for this uploader:
   # storage :file
   
@@ -54,7 +55,16 @@ class ImageUploader < CarrierWave::Uploader::Base
         y = model.crop_y.to_i
         w = model.crop_w.to_i
         h = model.crop_h.to_i
-        img.crop!(x, y, w, h)
+    #        crop_params = "#{params[:w]}x#{params[:h]}+#{params[:x]}+#{params[:y]}"
+  #  image.crop(crop_params)
+        crop_params="#{w}x#{h}+#{x}+#{y}"
+        
+    #    crop_params='64x64+18+26'
+        puts "crop_params #{crop_params}"
+        img.crop(crop_params)
+        img = yield(img) if block_given?
+        
+        img
       end
     end
   end
