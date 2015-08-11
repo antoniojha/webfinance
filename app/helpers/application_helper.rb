@@ -91,46 +91,21 @@ module ApplicationHelper
     if !user.image_url.to_s.empty?
       if scenario == 1
         if user.image.thumb_200.file.exists?
-          if user.image.get_geometry[1] > 100
-            image_tag user.image_url(:thumb_200).to_s,style: 'width:auto;height:100px;', class: "img-thumbnail"
-          else
-            image_tag user.image_url.to_s, class:"img-thumbnail"
-          end
+          image_tag user.image_url(:thumb_200).to_s,style: 'width:auto;height:100px;', class: "img-thumbnail"
         else
-          if user.image.get_geometry[1] > 100
-            image_tag user.image_url.to_s,style: 'width:auto;height:100px;', class: "img-thumbnail"
-          else
-            image_tag user.image_url.to_s, class:"img-thumbnail"
-          end
+          image_tag user.image_url.to_s,style: 'width:auto;height:100px;', class: "img-thumbnail"
         end
       elsif scenario ==2
         if user.image.thumb_200.file.exists?
-        
-          if user.image.get_geometry[1] > 150
-            image_tag user.image_url(:thumb_200).to_s,size:"150x150", class: "img-thumbnail"
-          else
-            image_tag user.image_url.to_s, class:"img-thumbnail"
-          end
+          image_tag user.image_url(:thumb_200).to_s,size:"150x150", class: "img-thumbnail"
         else        
-          if user.image.get_geometry[1] > 150
-            image_tag user.image_url.to_s,style: 'width:auto;height:150px;', class: "img-thumbnail"
-          else
-            image_tag user.image_url.to_s, class:"img-thumbnail"
-          end
+          image_tag user.image_url.to_s,style: 'width:auto;height:150px;', class: "img-thumbnail"
         end
       elsif scenario ==4
         if user.image.thumb_200.file.exists?
-          if user.image.get_geometry[1] > 65
-            image_tag user.image_url(:thumb_200).to_s,size:"65x65", class: "img-thumbnail"
-          else
-            image_tag user.image_url.to_s, class:"img-thumbnail"
-          end
+          image_tag user.image_url(:thumb_200).to_s,size:"65x65", class: "img-thumbnail"
         else
-          if user.image.get_geometry[1] > 65
-            image_tag user.image_url.to_s,style: 'width:auto;height:65px;', class: "img-thumbnail"
-          else
-            image_tag user.image_url.to_s, class:"img-thumbnail"
-          end
+          image_tag user.image_url.to_s,style: 'width:auto;height:65px;', class: "img-thumbnail"
         end
       end
     else
