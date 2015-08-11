@@ -48,20 +48,15 @@ class ImageUploader < CarrierWave::Uploader::Base
    end
   def crop
     if model.crop_x.present?
-      puts "model crop_x #{model.crop_x}"
+
       resize_to_limit(400, 0)   
-      puts "url: #{model.remote_image_url}"
       url=model.remote_image_url
-      url=url.chomp("thumb_200_") 
-      puts "url2: #{url}"
-      
-     # img = MiniMagick::Image.open(url)
+
       x = model.crop_x.to_i
       y = model.crop_y.to_i
       w = model.crop_w.to_i
       h = model.crop_h.to_i
       crop_params="#{w}x#{h}+#{x}+#{y}"
-      puts "crop_params #{crop_params}"
       
       manipulate! do |img|
         img = MiniMagick::Image.open(url)
