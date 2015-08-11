@@ -14,13 +14,12 @@ class ImageUploader < CarrierWave::Uploader::Base
   # Choose what kind of storage to use for this uploader:
  #  storage :file
   
-   storage :fog
+ #  storage :fog
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
    def store_dir    
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}"
-  #   "uploads/"
    end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
@@ -48,40 +47,28 @@ class ImageUploader < CarrierWave::Uploader::Base
      process :resize_to_limit => [400, 0]
    end
   def crop
-  #  raise "error"
     if model.crop_x.present?
       puts "model crop_x #{model.crop_x}"
-      resize_to_limit(400, 0)
-      
+      resize_to_limit(400, 0)   
       puts "url: #{model.remote_image_url}"
-      puts "url2: #{current_path}"
-      img = MiniMagick::Image.open(model.remote_image_url)
+      url=model.remote_image_url
+      url=url.chomp("thumb_200_") 
+      puts "url2: #{url}"
+      
+     # img = MiniMagick::Image.open(url)
       x = model.crop_x.to_i
       y = model.crop_y.to_i
       w = model.crop_w.to_i
       h = model.crop_h.to_i
       crop_params="#{w}x#{h}+#{x}+#{y}"
       puts "crop_params #{crop_params}"
-      img.crop(crop_params)
-
-      if false
-        manipulate! do |img|
-          x = model.crop_x.to_i
-          y = model.crop_y.to_i
-          w = model.crop_w.to_i
-          h = model.crop_h.to_i
-      #        crop_params = "#{params[:w]}x#{params[:h]}+#{params[:x]}+#{params[:y]}"
-    #  image.crop(crop_params)
-          crop_params="#{w}x#{h}+#{x}+#{y}"
-          puts "crop_params #{crop_params}"
-          img.crop(crop_params)
-          img = yield(img) if block_given?
-
-          img
-        end
-      end
-      img
       
+      manipulate! do |img|
+        img = MiniMagick::Image.open(url)
+        img.crop(crop_params)
+        img = yield(img) if block_given?
+        img
+      end
     end
   end
   def get_geometry
