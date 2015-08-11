@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 class ImageUploader < CarrierWave::Uploader::Base
+  
   include CarrierWaveDirect::Uploader
   #This will set the MIME type for the image in case it’s incorrect.
 
@@ -8,18 +9,19 @@ class ImageUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   #include CarrierWave::RMagick
    include CarrierWave::MiniMagick
-    include CarrierWave::MimeTypes
-    process :set_content_type
+  #  include CarrierWave::MimeTypes
+  #  process :set_content_type
   # Choose what kind of storage to use for this uploader:
-  # storage :file
+ #  storage :file
   
- #  storage :fog
+   storage :fog
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
-#  def store_dir
-#    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
-#  end
+   def store_dir    
+    "uploads/#{model.class.to_s.underscore}/#{mounted_as}"
+  #   "uploads/"
+   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url
@@ -35,8 +37,8 @@ class ImageUploader < CarrierWave::Uploader::Base
   # def scale(width, height)
   #   # do something
   # end
-  include CarrierWave::MimeTypes
-  process :set_content_type
+  # include CarrierWave::MimeTypes
+  # process :set_content_type
   # Create different versions of your uploaded files:
    version :thumb_200 do
      process :crop
@@ -50,35 +52,50 @@ class ImageUploader < CarrierWave::Uploader::Base
     if model.crop_x.present?
       puts "model crop_x #{model.crop_x}"
       resize_to_limit(400, 0)
-      manipulate! do |img|
-        x = model.crop_x.to_i
-        y = model.crop_y.to_i
-        w = model.crop_w.to_i
-        h = model.crop_h.to_i
-    #        crop_params = "#{params[:w]}x#{params[:h]}+#{params[:x]}+#{params[:y]}"
-  #  image.crop(crop_params)
-        crop_params="#{w}x#{h}+#{x}+#{y}"
-        
-    #    crop_params='64x64+18+26'
-        puts "crop_params #{crop_params}"
-        img.crop(crop_params)
-        img = yield(img) if block_given?
-        
-        img
+      
+      puts "url: #{model.remote_image_url}"
+      puts "url2: #{current_path}"
+      img = MiniMagick::Image.open(model.remote_image_url)
+      x = model.crop_x.to_i
+      y = model.crop_y.to_i
+      w = model.crop_w.to_i
+      h = model.crop_h.to_i
+      crop_params="#{w}x#{h}+#{x}+#{y}"
+      puts "crop_params #{crop_params}"
+      img.crop(crop_params)
+
+      if false
+        manipulate! do |img|
+          x = model.crop_x.to_i
+          y = model.crop_y.to_i
+          w = model.crop_w.to_i
+          h = model.crop_h.to_i
+      #        crop_params = "#{params[:w]}x#{params[:h]}+#{params[:x]}+#{params[:y]}"
+    #  image.crop(crop_params)
+          crop_params="#{w}x#{h}+#{x}+#{y}"
+          puts "crop_params #{crop_params}"
+          img.crop(crop_params)
+          img = yield(img) if block_given?
+
+          img
+        end
       end
+      img
+      
     end
   end
   def get_geometry
     if (@file.url)
       img = MiniMagick::Image::open(@file.url)
       @geometry = [ img['width'], img['height'] ]
+
     end
   end
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
-  # def extension_white_list
-  #   %w(jpg jpeg gif png)
-  # end
+  def extension_white_list
+    %w(jpg jpeg gif png)
+  end
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.

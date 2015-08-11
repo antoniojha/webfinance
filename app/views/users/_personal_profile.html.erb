@@ -1,6 +1,6 @@
 <div style="float:left; width:30%;" align="left">
 <% if !@user.image_url.to_s.empty?%> 
-  <%= content_tag "div", id: "picture_form", data: {picture_file_name: @user.image_url.to_s,user_pic_large_width:@user.image.get_geometry[0],user_pic_large_height:@user.image.get_geometry[1],crop:@crop}, align:"left" do %>
+  <%= content_tag "div", id: "picture_form", data: {picture_file_name: @user.image_url.to_s,crop:@crop}, align:"left" do %>
   <%=render "users/picture_form"%>
 
   <% end %>

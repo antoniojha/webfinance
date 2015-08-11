@@ -116,6 +116,7 @@ module SessionsHelper
   def user_logged_in?
     !(current_user.nil?)
   end
+
   def user_log_out
     # this order is very importatn first delete cookies and then session. Otherwise current_user would be called and session[:user_id] would be restored. 
     user_forget(current_user)
