@@ -10,10 +10,13 @@ class BrokerSearch < ActiveRecord::Base
   end
   private
   def find_brokers
+    puts conditions
     Broker.where(conditions)
+    
   end
   # the two name conditions allow user to flip first & last names when doing search
   def name_conditions
+    
     ["(brokers.first_name LIKE ? AND brokers.last_name LIKE ?) OR (brokers.first_name LIKE ? AND brokers.last_name LIKE ?)", "%#{first_name}%", "%#{last_name}%", "%#{last_name}%", "%#{first_name}%"] unless name.blank?
   end
 
