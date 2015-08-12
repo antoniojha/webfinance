@@ -3,10 +3,10 @@ class UserSearch < ActiveRecord::Base
     @users||=find_users
   end
   def first_name
-    name.split[0]
+    name.split[0].downcase
   end
   def last_name
-    name.split[1..-1].join(" ")
+    name.split[1..-1].join(" ").downcase
   end
   private
   def find_users
@@ -14,7 +14,7 @@ class UserSearch < ActiveRecord::Base
   end
   # the two name conditions allow user to flip first & last names when doing search
   def name_conditions
-    ["(users.first_name LIKE ? AND users.last_name LIKE ?) OR (users.first_name LIKE ? AND users.last_name LIKE ?)", "%#{first_name}%", "%#{last_name}%", "%#{last_name}%", "%#{first_name}%"] unless name.blank?
+    ["(lower(users.first_name) LIKE ? AND lower(users.last_name) LIKE ?) OR (lower(users.first_name) LIKE ? AND lower(users.last_name) LIKE ?)", "%#{first_name}%", "%#{last_name}%", "%#{last_name}%", "%#{first_name}%"] unless name.blank?
   end
   def state_conditions
     ["users.state LIKE ?", "%#{state}%"] unless state.blank?

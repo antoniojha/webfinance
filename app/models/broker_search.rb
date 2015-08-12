@@ -3,10 +3,10 @@ class BrokerSearch < ActiveRecord::Base
     @brokers||=find_brokers
   end
   def first_name
-    name.split[0]
+    name.split[0].downcase 
   end
   def last_name
-    name.split[1..-1].join(" ")
+    name.split[1..-1].join(" ").downcase 
   end
   private
   def find_brokers
@@ -17,7 +17,7 @@ class BrokerSearch < ActiveRecord::Base
   # the two name conditions allow user to flip first & last names when doing search
   def name_conditions
     
-    ["(brokers.first_name LIKE ? AND brokers.last_name LIKE ?) OR (brokers.first_name LIKE ? AND brokers.last_name LIKE ?)", "%#{first_name}%", "%#{last_name}%", "%#{last_name}%", "%#{first_name}%"] unless name.blank?
+    ["(lower(brokers.first_name) LIKE ? AND lower(brokers.last_name) LIKE ?) OR (lower(brokers.first_name) LIKE ? AND lower(brokers.last_name) LIKE ?)", "%#{first_name}%", "%#{last_name}%", "%#{last_name}%", "%#{first_name}%"] unless name.blank?
   end
 
   def state_conditions
