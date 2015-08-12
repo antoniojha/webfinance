@@ -10,7 +10,7 @@ class BrokerSearch < ActiveRecord::Base
   end
   private
   def find_brokers
-    puts conditions
+    puts "condition is #{conditions}..."
     Broker.where(conditions)
     
   end
