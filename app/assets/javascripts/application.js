@@ -25,8 +25,7 @@
 //= require remove_association
 //= require pagination
 //= require protection_plans
-//= require raphael
-//= require jquery.usmap
+
 //= require jquery.Jcrop.min
 //= require bootstrap
 //= require jquery-ui
