@@ -7,6 +7,8 @@ module ApplicationHelper
     action=params[:action]
     if (controller=="users" || controller=="brokers")&&(action=="index") 
       return "col-md-3"
+    elsif (controller=="static_pages" && action=="home")
+      return "col-md-1"
     else
       return "col-md-2"
     end
@@ -16,6 +18,8 @@ module ApplicationHelper
     action=params[:action]
     if (controller=="users" || controller=="brokers")&&(action=="index") 
       return "col-md-6"
+    elsif (controller=="static_pages" && action=="home")
+      return "col-md-8"
     else
       return "col-md-8"
     end
@@ -24,6 +28,8 @@ module ApplicationHelper
     controller=params[:controller]
     action=params[:action]
     if (controller=="users" || controller=="brokers")&&(action=="index") 
+      return "col-md-3"
+    elsif (controller=="static_pages" && action=="home")
       return "col-md-3"
     else
       return "col-md-2"

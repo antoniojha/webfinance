@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   resources :micro_comments
   resources :financial_testimonies
   resources :financial_stories
-  resources :financial_products
+
   resources :licenses
   
   resources :experiences
@@ -43,22 +43,10 @@ Rails.application.routes.draw do
 #  get 'auth/:provider/callback', to: 'broker/sessions#create'
 #  get '/auth/failure', :to => 'broker/sessions#failure'
   get '/logout', :to => 'user/sessions#destroy', :as => 'logout'
-  resources :advices
-  resources :advice_categories
+
+
   resources :advance_search
   resources :broker_search  
-  resources :schedules
-  resources :plans
-  controller :plans do
-
-    get "debt_2"=> :debt_2
-    get "emergency_3"=> :emergency_3
-    get "retirement_4"=> :retirement_4
-    get "education_5"=> :education_5
-    get "saving_6"=> :saving_6
-    get "start"=> :start
-  end
-  
   resources :backgrounds
   controller :backgrounds do
     get 'add_assoc'=> :add_assoc
@@ -69,8 +57,7 @@ Rails.application.routes.draw do
   end
   resources :schedule_sessions, only:[:create,:delete]
   resources :brokers
- # match'/register/brokers/new', to:'brokers#new', via:'get', as: 'new'
- # get 'register/brokers/new'=> 'brokers#new'
+
   controller :brokers do
     get "broker/home/:id" => :home, as: 'broker_home'
     get ":id/edit2"=> :edit2, as:"edit2_broker"
@@ -94,16 +81,8 @@ Rails.application.routes.draw do
   #  resources :application_comments
   #  resources :authenticated
   end
-  namespace :register do
-    resources :brokers
-    controller :brokers do
-      get 'signup'=> :new
-      get "status/:id"=> :status, as:"broker_status"
-      get "finish/:id"=> :finish, as:"broker_finish"
-      get "close_finish"=> :close_finish
-    end
-  end
-  resources :temp_brokers
+
+
   namespace :user do
     resources :authenticated
     controller :sessions do
@@ -162,26 +141,12 @@ Rails.application.routes.draw do
   root 'static_pages#home'
   
   resources :logs
-  
-  resources :select_banks
-  controller :select_banks do
-    get 'next_page1' => :next_page1
-    get 'next_page2' => :next_page2
-    get 'bank_login'=> :bank_login
-    get 'account' => :account
-  end
-#    match '/bank_login',  to: 'select_banks#bank_login', via: :get
-#  match '/account',  to: 'select_banks#account', via: :get
 
-  match '/confirmation', to:'email_confirmation#new',via:'get'
-  resources :email_confirmation
-  get 'profiles/home'
-  match '/profile', to: 'profiles#new', via: 'get'
   resources :spendings
   resources :transaction_imports
   controller :transaction_imports do
     get 'import' => :new
     get 'template' => :template
   end
-  resources :broker_imports
+
 end

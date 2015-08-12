@@ -30,6 +30,18 @@ html, body {
     overflow-x: hidden;
     text-align: center;
 }
+
+.company_logo{
+  font: 3em sans-serif;
+  font-weight: bold;
+  background-color:white;
+  padding-left:5px;
+  padding-right:5px;
+  border-radius: 10px;
+  a, a:visited, a:hover {
+    text-decoration: none;
+  }
+}
 .home_background{
   height:275px;
   background-image: url("banner.jpg");

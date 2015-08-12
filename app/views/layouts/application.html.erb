@@ -24,13 +24,7 @@
       <div class="navbar-inner">
         <div class="container">		
           <ul class="navbar-nav nav pull-left">
-            <li class="navbar-text"><span class="logo"><%=image_tag("company_logo.png", size:"60x30")%></span></li>
-            <li><%= link_to 'Home', home_path %></li>
-            <li><%= link_to 'About', about_path %></li>
-            <li><%= link_to 'Contact', contact_path%></li>
-            <li><%= link_to 'Blog', blog_path%></li>
-            <li><%= link_to 'Quick Demo', demo_path%></li>
-            <li><%= link_to 'FAQ', faq_path%></li>
+            <li class="navbar-text"><%=render "layouts/logo"%></li>
           </ul>
           <%=render 'layouts/general_header'%>
         </div>
@@ -42,7 +36,7 @@
       <div class="navbar-inner">
         <div class="container">		
           <ul class="navbar-nav nav pull-left">
-            <li class="navbar-text"><span class="logo"><%=image_tag("company_logo.png", size:"60x30")%></span></li>
+            <li class="navbar-text"><%=render "layouts/logo"%></li>
             <li><%= link_to 'Home', home_path %></li>
             <li><%= link_to 'About', about_path %></li>
             <li><%= link_to 'Contact', contact_path%></li>
@@ -69,6 +63,7 @@
       <%=render partial:"layouts/top_menu",locals:{object:current_broker,type:"brokers"} %>
 	  </div>     
   <%end%>   
+  <%= yield(:banner)%>
   <div align="center" class="body1">
     <div id='col_left' class=<%=column_width_left%> align="center">
       <%=yield :left%>
@@ -85,6 +80,8 @@
     </div>  
 
 	</div>    
-      
+  <%if (params[:controller]=="static_pages" && params[:action]=="home")%>
+    <%=render "layouts/footer"%>
+  <%end%>      
 </body>
 </html>

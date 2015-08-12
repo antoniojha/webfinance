@@ -1,2 +1,0 @@
-class OptionalExpensesController < ApplicationController
-end

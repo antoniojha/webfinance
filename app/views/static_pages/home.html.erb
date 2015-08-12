@@ -1,58 +1,76 @@
 
 <%content_for :title do%>|Home<%end%>
-<div width="100%">
-  <div style="float:left;">
-    <%=image_tag "company_logo.png", size: "150x128"%>
-  </div>
-  <div style="overflow:auto;" align="center">
-    <div style="padding-top:10px;">
-      <h1>Get Financial Planning Ideas, Get Connected</h1>
-    </div>
-  </div>
-</div>
-<div style="clear:both;"></div>
+
+
+<% content_for :banner do %>
 <div class="home_background" style="overflow:auto;">
 </div>
+<div width="100%" align="center">
+  <table width="90%">
+    <tr>
+      <td width="25%" style="padding-left:20px;">
+        <%=render "layouts/logo"%>
+      </td>
+      <td width="75%">
+        
+          <h1><b>Get Financial Planning Ideas, Get Connected!</b></h1>
  
-
-<div style="float:left; width:35%;">
+      </td>
+    </tr>
+  </table>
+</div>
+<%end%>
+<% content_for :left do %>
+<div style="width:100%;">
     <%@user=User.new%>
     <%=render 'form'%>
 </div>
-<div style="overflow:auto; width:65%; text-align:left; padding:10px;">
-  <h2>What RichRly Offer</h2>
-  <div style="font-size:1.4em;padding:10px;"> 
-  RichRly opens the door to welcome people getting into the financial 
-world. We provide an integrated platform present financial planning information and connecting financial representatives with general public.
+<%end%>
+
+<div style="width:100%; text-align:left; padding:10px;">
+  <h3><b>What Does RichRly Offer?</b></h2>
+  <div style="font-size:1.5em;"> 
+  There is a need for professionals who do not know how to start with their first financial plan. RichRly provides an integrated platform present financial planning information and connecting financial representatives with general public.
    
   </div>
-  <h2>Get Ideas</h2>
-  <div style="float:right;">
-    <%=image_tag "home_picture3.jpg", size: "200x200"%>
-  </div>
-  
-  <div style="font-size:1.2em;padding:10px;">   
-    There is a need for professionals who do not know how to start with their first financial plan. They don't know what they need and they don’t know they don’t know. User can gather ideas of possible financial strategy based on their financial interest on Richrly.
-    
-  </div>
-  <div style="clear:both;"></div>
-  <h2>Get Connected</h2>
-  <div style="float:right;">
-    <%=image_tag "home_picture9.jpg", size: "200x133"%>
-  </div>
-  
-  <div style="font-size:1.2em;padding:10px;">
-  RichRly connects users with financial representatives without having them to meet up. Financial representative create profile on RichRly to present their background and products. Depends on users’ preference, they can contact the advisor they like based on the profile and background information they post on the website. 
-  </div>
-  <div style="clear:both;"></div>
-  <h2>Financial Education</h2>
-  <div style="float:right; width:200px;text-align:center;">
-    <%=image_tag "home_picture1.jpg", size: "150x150"%>
-  </div>
-  <div style="font-size:1.2em;padding:10px;">
-    Users can learn basic financial terms from RichRly’s financial vehicle dictionary and related articles online. RichRly provides a new combination of existing ideas, so users will feel comfortable surfing and exploring the financial world.
-  </div>
-  <div style="clear:both;"></div>
+  <table width="100%">
+    <tr>
+      <td width="33%" style="vertical-align:top; text-align:center;">
+        <h3><b>Get Ideas</b></h2>
+        <%=image_tag "home_picture3.jpg", size: "200x180"%>
+        
+      </td>
+      <td width="33%" style="vertical-align:top; text-align:center;">
+        <h3><b>Get Connected</b></h2>
+        <%=image_tag "home_picture9.jpg", size: "200x150"%>
+
+      </td>
+      <td width="33%" style="vertical-align:top; text-align:center;">
+        <h3><b>Get Educated</b></h2>
+        <%=image_tag "home_picture1.jpg", size: "150x150"%>
+        
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:10px;">
+        <div style="font-size:1.3em;">   
+    You can gather ideas of financial strategy based on your financial interests and vehicles.
+        </div>
+      </td>
+      <td style="padding:10px;">
+        <div style="font-size:1.3em;">
+  You can connect with financial representatives on RichRly and view their background. 
+        </div>
+      </td>
+      <td style="padding:10px;">
+        <div style="font-size:1.3em;">
+        You can learn about various financial vehicles and its uses. 
+        </div>
+      </td>
+    </tr>
+  </table>  
+
+
 </div>
 
 
