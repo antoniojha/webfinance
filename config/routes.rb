@@ -83,6 +83,7 @@ Rails.application.routes.draw do
   
   namespace :admin do
     resources :product_relations, controller: 'product_fin_category_rels'
+    resources :activities
     resources :companies
     resources :products
     resources :broker_requests

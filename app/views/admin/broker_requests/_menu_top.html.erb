@@ -1,14 +1,27 @@
 <div class="navbar-inner" width="100%">
 	<div class="container-fluid" >		
-    <ul class="nav navbar-nav">
+    <ul class="nav nav-pills">
+      <% if @page == "pending_application"%>
+
+      <li role="presentation" class="active"><%= link_to 'Pending Application', admin_broker_requests_path(page:"pending_application")%></li>
+      <%else%>
       <li><%= link_to 'Pending Application', admin_broker_requests_path(page:"pending_application")%></li>
-      <li>
-        <%= link_to 'Approved Application',admin_broker_requests_path(page:"approved_application")%>
-      </li>
-      <li>
-        <%= link_to 'Disapproved Application',admin_broker_requests_path(page:"disapproved_application")%>
-      </li>
+      <%end%>
+      <% if @page == "approved_application"%>
+      <li role="presentation" class="active"><%= link_to 'Approved Application',admin_broker_requests_path(page:"approved_application")%></li>
+      <%else%>
+      <li><%= link_to 'Approved Application',admin_broker_requests_path(page:"approved_application")%></li>
+      <%end%>
+      <% if @page == "disapproved_application"%>
+      <li role="presentation" class="active"><%= link_to 'Disapproved Application',admin_broker_requests_path(page:"disapproved_application")%></li>
+      <%else%>
+      <li><%= link_to 'Disapproved Application',admin_broker_requests_path(page:"disapproved_application")%></li>
+      <%end%>
+      <% if @page == "application_search"%>
+      <li role="presentation" class="active"><%= link_to 'Application Search', '#'%></li>
+      <%else%>
       <li><%= link_to 'Application Search', '#'%></li>
+      <%end%>
     </ul>
   </div>
 </div>
