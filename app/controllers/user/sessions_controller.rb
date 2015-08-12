@@ -9,19 +9,25 @@ class User::SessionsController < User::AuthenticatedController
   end
 
   def password_prompt
-    
+      
   end
+
   def edit
-    if params[:id]
-      @user=User.find_by(id: params[:id])
-      @email=@user.email
+    name_or_email=params[:session][:name_or_email].downcase
+    user=User.find_by(username: name_or_email) || User.find_by(email: name_or_email)  
+    if user
+      @user=user
+    else
+      flash[:danger]="Username/email can't be found!"
+      render "password_prompt"  
     end  
   end
   def update
     @user=User.find_by(id: params[:id])
     @user.send_new_password
     if @user.save
-      redirect_to user_login_url, notice: "New Password has been sent to #{@user.email}."
+      flash[:success]="New Password has been sent to #{@user.email}."
+      redirect_to user_login_url
     else
       render "edit"
     end

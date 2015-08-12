@@ -1,5 +1,8 @@
-<div align="left">
+<div align="left" style="font-size:1.3em;">
 <p>A new password will be sent to the following email address:</p>
-  <p><%=@email%></p>
-<%=button_to "Send New Password", {action: "update", id: @user.id },method: :patch  %>
+  <div class="well" style="width:55%;">
+  <p><%=@user.email%></p>
+  </div>
+
+  <%=button_to "Send New Password", {action: "update", id: @user.id },method: :patch, class:"btn btn-default"  %>
 </div>

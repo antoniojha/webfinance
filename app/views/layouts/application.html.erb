@@ -76,11 +76,7 @@
     </div>
     <div id='col_middle' class=<%=column_width_middle%> align="center">
 
-      <% flash.each do|message_type, message|%>
-        <% if message_type=="notice"%>
-          <%=message%>
-        <%end%>
-      <%end%>
+      <%=render "layouts/flash_message"%>
       <%=yield %>
     </div>
 

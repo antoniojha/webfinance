@@ -111,7 +111,7 @@ Rails.application.routes.draw do
     get 'password_prompt'=> :password_prompt
     get 'password_lookup/:id'=> :edit, as:"password_lookup"
     post 'signin'=> :create
-    patch 'send_validation'=> :update
+    patch 'send_password'=> :update
     delete 'logout'=> :destroy
 
    end
