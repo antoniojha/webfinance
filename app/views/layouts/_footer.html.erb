@@ -1,13 +1,23 @@
 <footer class="navbar-default navbar-static-bottom navbar-inverse" role="navigation">  
   <div class="navbar-inner">
-    <div class="container">		
+    <div class="container">	
 
-      <p><%= link_to 'Home', home_path %></p>
-      <p><%= link_to 'About', about_path %></p>
-      <p><%= link_to 'Contact', contact_path%></p>
-      <p><%= link_to 'Blog', blog_path%></p>
-      <p><%= link_to 'Quick Demo', demo_path%></p>
-      <p><%= link_to 'FAQ', faq_path%></p>
+      <table width="50%">
+        <tr>
+          <td width="50%" style="vertical-align:top;">
+            <h4>Company</h4>
+            <p><%= link_to 'Home', home_path %></p>
+            <p><%= link_to 'About', about_path %></p>
+            <p><%= link_to 'Contact', contact_path%></p>
+            <p><%= link_to 'FAQ', faq_path%></p>
+            <p><%= link_to 'Announcement', faq_path%></p>
+          </td>
+          <td width="50%" style="vertical-align:top;">
+            <h4>Why RichRly?</h4>
+            <p><%= link_to "Why it's for you?", home_path %></p>
+          </td>
+        </tr>
+      </table>
 
     </div>
   </div>

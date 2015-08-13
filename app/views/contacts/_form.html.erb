@@ -1,6 +1,3 @@
-<% content_for :title do %>|Contact<%end%>
-<h1>Contact</h1>
-
 <%= form_for(@contact) do |f| %>
   <% if @contact.errors.any? %>
     <div id="error_explanation">
@@ -19,7 +16,7 @@
     <%= f.text_field :title %>
   </div>
   <div class="field">
-    <%= f.label "Issue" %><br>
+    <%= f.label :issue_content %><br>
     <%= f.text_area :issue_content %>
   </div>
   <div class="field">
@@ -30,5 +27,3 @@
     <%= f.submit %>
   </div>
 <% end %>
-
-

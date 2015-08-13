@@ -1,2 +1,0 @@
-class FirmsController < ApplicationController
-end

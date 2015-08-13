@@ -1,3 +1,9 @@
-EmailNotice#application_rejection
+<%= @greeting %>,
 
-<%= @greeting %>, find me in app/views/email_notice/application_rejection.text.erb
+Your application has been denied. One of your licenses has been denied.
+
+<% @complement_requests.each do |c|%>
+<%license=License.find(c.license_id)%>
+<%=license.license_number%>
+<%=c.admin_reply%>
+<%end%>

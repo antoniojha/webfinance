@@ -1,3 +1,0 @@
-module StatusSessionsHelper
-
-end

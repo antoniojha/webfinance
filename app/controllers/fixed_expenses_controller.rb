@@ -1,2 +1,0 @@
-class FixedExpensesController < ApplicationController
-end

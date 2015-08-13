@@ -1,12 +1,11 @@
 class StaticPagesController < ApplicationController
   def about
   end
-  def blog
-  end
+
   def contact
+    @contact=Contact.new
   end
-  def demo
-  end
+
   def faq
   end
   def home

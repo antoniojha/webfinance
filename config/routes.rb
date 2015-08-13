@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :contacts, only:[:create]
+
   resources :user_searches
 
   resources :private_messages
@@ -27,7 +29,6 @@ Rails.application.routes.draw do
   get 'licenses/:id' => 'setup_brokers#download', :as => :download
   resources :setup_brokers
 
-  resources :identities
   controller :authentication_out do
     get 'facebook'=> :facebook
     get 'linkedin'=> :linkedin
@@ -55,7 +56,6 @@ Rails.application.routes.draw do
     get 'direct_to'=> :direct_to
 
   end
-  resources :schedule_sessions, only:[:create,:delete]
   resources :brokers
 
   controller :brokers do
@@ -66,8 +66,7 @@ Rails.application.routes.draw do
     get "brokers/licenses/:id" => :licenses, as:"broker_licenses"
     get "brokers/products/:id" => :products, as:"broker_products"
   end
-
-  
+ 
   namespace :admin do
     resources :product_relations, controller: 'product_fin_category_rels'
     resources :activities
@@ -77,11 +76,7 @@ Rails.application.routes.draw do
     controller :admin_pages do
       get "home" => :index
     end
-  #  resources :brokers
-  #  resources :application_comments
-  #  resources :authenticated
   end
-
 
   namespace :user do
     resources :authenticated
@@ -94,7 +89,6 @@ Rails.application.routes.draw do
     delete 'logout'=> :destroy
 
    end
-   # resources :sessions, only:[:new,:create]
   end
   namespace :broker do
     controller :sessions do
@@ -107,13 +101,6 @@ Rails.application.routes.draw do
   controller :brokers do
     get 'broker/signup'=> :new
   end
-
-  resources :quote_relations
-  controller :quote_relations do
-    get 'quote_lists'=> :quote_lists
-  end
-  resources :status_sessions, only: [:new,:create,:destroy]
-  
   resources :goals
 
   resources :users
@@ -131,17 +118,13 @@ Rails.application.routes.draw do
   match'/admin/remove/:id', to:'users#admin_remove', via:'get', as: 'admin_remove'
   
   controller :static_pages do
-    get "demo" => :demo
     get "contact" => :contact
     get "about" => :about
     get "home" => :home
     get "faq" => :faq
-    get "blog" => :blog
   end
   root 'static_pages#home'
   
-  resources :logs
-
   resources :spendings
   resources :transaction_imports
   controller :transaction_imports do

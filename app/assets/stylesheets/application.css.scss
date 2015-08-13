@@ -42,6 +42,15 @@ html, body {
     text-decoration: none;
   }
 }
+footer {
+  a, a:visited, a:hover {
+    color:white;
+    text-decoration: none;
+  }
+  h4{
+    color:white;
+  }
+}
 .home_background{
   height:275px;
   background-image: url("banner.jpg");

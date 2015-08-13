@@ -40,8 +40,6 @@
             <li><%= link_to 'Home', home_path %></li>
             <li><%= link_to 'About', about_path %></li>
             <li><%= link_to 'Contact', contact_path%></li>
-            <li><%= link_to 'Blog', blog_path%></li>
-            <li><%= link_to 'Quick Demo', demo_path%></li>
             <li><%= link_to 'FAQ', faq_path%></li>
           </ul>
           <% if user_logged_in?%>
@@ -78,10 +76,12 @@
     <div id='col_right' class=<%=column_width_right%> align="center">
       <%=yield :right%>
     </div>  
-
-	</div>    
-  <%if (params[:controller]=="static_pages" && params[:action]=="home")%>
-    <%=render "layouts/footer"%>
-  <%end%>      
+    
+  </div> 
+  <div align="center">
+    <%if (params[:controller]=="static_pages")%>
+      <%=render "layouts/footer"%>
+    <%end%>  
+  </div>
 </body>
 </html>
