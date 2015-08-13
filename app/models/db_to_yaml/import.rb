@@ -1,5 +1,5 @@
 require 'yaml'
-require 'bank'
+
 module DbToYaml
   class Import
 
