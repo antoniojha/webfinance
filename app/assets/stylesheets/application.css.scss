@@ -30,7 +30,9 @@ html, body {
     overflow-x: hidden;
     text-align: center;
 }
-
+a:hover{
+  background-color: none;
+}
 .company_logo{
   font: 3em sans-serif;
   font-weight: bold;
