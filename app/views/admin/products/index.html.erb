@@ -4,7 +4,7 @@
     <h3>Financial Vehicle Categories</h3>
       <div align="left">
           <ol>
-            <%=Order::FINANCIAL_CATEGORIES.each do |vehicle|%>
+            <%Order::FINANCIAL_CATEGORIES.each do |vehicle|%>
             <li> <%=link_to vehicle[0],{vehicle_type:vehicle[1]} %></li>
             <%end%>
           </ol>
