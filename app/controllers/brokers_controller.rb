@@ -91,7 +91,7 @@ class BrokersController < Broker::AuthenticatedController
     @edit=params[:edit]
     @education=Education.new #needed for education_add partial template
     @experience=Experience.new #needed for experience_add partial template
-
+    @financial_product=FinancialProduct.new
     @story=FinancialStory.new
     if params[:method]=="edit"
       @edit_story=FinancialStory.find(params[:financial_story_id])

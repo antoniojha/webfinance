@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :financial_products
+
   resources :contacts, only:[:create]
 
   resources :user_searches
