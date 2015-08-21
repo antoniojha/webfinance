@@ -57,7 +57,7 @@
         <%temp=Order::FINANCIAL_CATEGORIES_HASH[c.vehicle_type]%>
         <tr>
           <td><%=link_to temp,admin_products_url(vehicle_type:c.vehicle_type)%></td>
-          <td><%=c.description%></td>
+          <td style="border-bottom:1px solid;"><%=c.description%></td>
           <td>
             <div class="product_relation">
             <%=button_to "Edit", edit_admin_product_relation_path(c),{method: :get, class: "btn btn-default"}%>
