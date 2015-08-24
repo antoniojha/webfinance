@@ -25,11 +25,10 @@
         <div class="container">		
           <ul class="navbar-nav nav pull-left">
             <li class="navbar-text"><%=render "layouts/logo"%></li>
-            <li><span id="siteseal"><script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=T522pYzrd40zVEcwZOzOdRHDm2ieRNeXkI35ajYF5rFTJLSfKuTCdr7VJNz4"></script></span>
-          <%=render 'layouts/general_header'%>
-            </li>
+            <li style="paddin-top:10px;"><span id="siteseal"><script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=T522pYzrd40zVEcwZOzOdRHDm2ieRNeXkI35ajYF5rFTJLSfKuTCdr7VJNz4"></script></span></li>
           </ul>
           
+          <%=render 'layouts/general_header'%>
         </div>
       </div>
 	  </header>
@@ -40,7 +39,7 @@
         <div class="container">		
           <ul class="navbar-nav nav pull-left">
             <li class="navbar-text"><%=render "layouts/logo"%></li>
-            <li><span id="siteseal"><script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=T522pYzrd40zVEcwZOzOdRHDm2ieRNeXkI35ajYF5rFTJLSfKuTCdr7VJNz4"></script></span>              </li>
+            <li style="paddin-top:10px;"><span id="siteseal"><script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=T522pYzrd40zVEcwZOzOdRHDm2ieRNeXkI35ajYF5rFTJLSfKuTCdr7VJNz4"></script></span>              </li>
             <li><%= link_to 'Home', home_path %></li>
             <li><%= link_to 'About', about_path %></li>
             <li><%= link_to 'Contact', contact_path%></li>
@@ -83,7 +82,7 @@
     
   </div> 
   <div align="center">
-    <%if (params[:controller]=="static_pages")%>
+    <%unless user_logged_in? || broker_logged_in?%>
       <%=render "layouts/footer"%>
     <%end%>  
   </div>
