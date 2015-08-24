@@ -45,8 +45,8 @@ Rails.application.configure do
     enable_starttls_auto: true,
     authentication: 'plain',
     user_name: "richrly@gmail.com",
-    password: "60046004Aj???",
+    password: "60046004Aj??",
     
   }
-  # need to turn on less secure app option in Google Setting https://www.google.com/settings/security/lesssecureapps
+  # need to turn on less secure app option at Gmail ****
 end
