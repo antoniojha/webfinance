@@ -19,3 +19,7 @@ Ignore all yml file
 Ignore all jpeg file
 /*.jpg
 /*.env
+Ignore all csr documents
+/*.csr
+/*.key
+/*.pass.key
