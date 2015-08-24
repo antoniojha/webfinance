@@ -14,7 +14,7 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -31,19 +31,22 @@ Rails.application.configure do
   # Checks for improperly declared sprockets dependencies.
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
+  config.action_mailer.delivery_method = :smtp
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
   config.action_mailer.default_url_options={:host=>"http://ruby-on-rails-100386.nitrousapp.com:3000/"}
+  config.action_mailer.perform_deliveries = true 
   #Set up for Gmail for SMTP
   config.action_mailer.smtp_settings={
     address: 'smtp.gmail.com',
     port: 587,
-    domain: 'gmail.com',
+    domain: "gmail.com",
     enable_starttls_auto: true,
     authentication: 'plain',
-    user_name: 'antoniojha@gmail.com',
-    password: '6004Aj??'
+    user_name: "richrly@gmail.com",
+    password: "60046004Aj???",
+    
   }
-
+  # need to turn on less secure app option in Google Setting https://www.google.com/settings/security/lesssecureapps
 end

@@ -39,7 +39,7 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
- #  config.force_ssl = true
+   config.force_ssl = true
 
   # Set to :debug to see everything in the log.
   config.log_level = :info
@@ -81,24 +81,24 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
   config.action_mailer.default_url_options={:host=>"richrly.herokuapp.com/"}
   
- # config.action_mailer.smtp_settings={
- #   address: 'smtp.gmail.com',
- #   port: 587,
- #   domain: 'gmail.com',
- #   enable_starttls_auto: true,
- #   authentication: 'plain',
- #   user_name: 'antoniojha@gmail.com',
- #   password: '6004Aj??'
- # }
-  
-  ActionMailer::Base.smtp_settings = {
-    :port =>           '587',
-    :address =>        'smtp.mandrillapp.com',
-    :user_name =>      ENV['MANDRILL_USERNAME'],
-    :password =>       ENV['MANDRILL_APIKEY'],
-    :domain =>         'heroku.com',
-    :authentication => :plain
+  config.action_mailer.smtp_settings={
+    address: 'smtp.gmail.com',
+    port: 587,
+    domain: "gmail.com",
+    enable_starttls_auto: true,
+    authentication: 'plain',
+    user_name: ENV["GMAIL_USERNAME"],
+    password: ENV["GMAIL_PASSWORD"]
   }
+  
+ # ActionMailer::Base.smtp_settings = {
+ #   :port =>           '587',
+ #   :address =>        'smtp.mandrillapp.com',
+ #   :user_name =>      ENV['MANDRILL_USERNAME'],
+ #   :password =>       ENV['MANDRILL_APIKEY'],
+ #   :domain =>         'heroku.com',
+ #   :authentication => :plain
+ # }
   ActionMailer::Base.delivery_method = :smtp
   config.paperclip_defaults = {
   :storage => :s3,

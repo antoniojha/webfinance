@@ -108,14 +108,16 @@ class UsersController < User::AuthenticatedController
           render "show"
         end
       elsif @user.update(user_params)
+        
         if params[:user][:picture].blank?
-    
+          
           if @user.cropping?
             
             @user.update_attributes(image_cropped:false)
             @user.crop_image
           end
           if @user.validate_email_bool && (@user.email_authen!=true)
+        
             @user.send_email_confirmation
           end
           format.js
