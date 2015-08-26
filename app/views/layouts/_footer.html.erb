@@ -2,9 +2,9 @@
   <div class="navbar-inner">
     <div class="container">	
 
-      <table width="50%">
+      <table width="80%">
         <tr>
-          <td width="50%" style="vertical-align:top;">
+          <td width="25%" style="vertical-align:top;">
             <h4>Company</h4>
             <p><%= link_to 'Home', home_path %></p>
             <p><%= link_to 'About', about_path %></p>
@@ -12,9 +12,21 @@
             <p><%= link_to 'FAQ', faq_path%></p>
             <p><%= link_to 'Announcement', faq_path%></p>
           </td>
-          <td width="50%" style="vertical-align:top;">
+          <td width="25%" style="vertical-align:top;">
             <h4>Why RichRly?</h4>
             <p><%= link_to "Why it's for you?", home_path %></p>
+          </td>
+          <td width="25%" style="vertical-align:top;">
+            <h4>Term of Condition</h4>
+            <p><%= link_to "User Agreement", user_agreement_path %></p>
+            <p><%= link_to "Privacy Policy", privacy_policy_path %></p>
+            <p><%= link_to "Disclaimer", disclaimer_path %></p>
+            <p><%= link_to "Copyright Policy", copyright_policy_path %></p>
+          </td>
+          <td width="25%" style="vertical-align:top;">
+            <h4>Member Resource</h4>
+            <p><%= link_to "Broker Search Criteria", broker_search_criteria_path %></p>
+            <p><%= link_to "Broker Registration Criteria", broker_registration_criteria_path %></p>
           </td>
         </tr>
       </table>

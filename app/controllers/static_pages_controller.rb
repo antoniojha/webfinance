@@ -10,4 +10,8 @@ class StaticPagesController < ApplicationController
   end
   def home
   end
+  def broker_search_criteria
+  end
+  def broker_registration_criteria
+  end
 end

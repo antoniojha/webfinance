@@ -1,0 +1,7 @@
+development:
+  ZOHO_USERNAME: "support@richrly.com"
+  ZOHO_PASSWORD: "6004Aj??"
+
+test:
+  ZOHO_USERNAME: "support@richrly.com"
+  ZOHO_PASSWORD: "6004Aj??"

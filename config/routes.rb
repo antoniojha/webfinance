@@ -118,14 +118,24 @@ Rails.application.routes.draw do
   match '/users/remove/:id', to:'users#remove',via:'get', as: 'user_remove'
   match '/brokers/remove/:id', to:'brokers#remove',via:'get', as: 'broker_remove'
   match'/admin/remove/:id', to:'users#admin_remove', via:'get', as: 'admin_remove'
-  
+  root 'static_pages#home'
   controller :static_pages do
     get "contact" => :contact
     get "about" => :about
     get "home" => :home
     get "faq" => :faq
+    get "broker_search_criteria" => :broker_search_criteria
+    get "broker_registration_criteria" => :broker_registration_criteria
   end
-  root 'static_pages#home'
+  scope '/legal' do
+    controller :legal do
+      get "user_agreement" => :user_agreement
+      get "privacy_policy" => :privacy_policy
+      get "disclaimer" => :disclaimer
+      get "copyright_policy" => :copyright_policy
+    end
+  end
+  
   
   resources :spendings
   resources :transaction_imports

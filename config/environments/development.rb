@@ -38,15 +38,26 @@ Rails.application.configure do
   config.action_mailer.default_url_options={:host=>"http://ruby-on-rails-100386.nitrousapp.com:3000/"}
   config.action_mailer.perform_deliveries = true 
   #Set up for Gmail for SMTP
-  config.action_mailer.smtp_settings={
-    address: 'smtp.gmail.com',
-    port: 587,
-    domain: "gmail.com",
-    enable_starttls_auto: true,
-    authentication: 'plain',
-    user_name: "richrly@gmail.com",
-    password: "60046004Aj??",
+#  config.action_mailer.smtp_settings={
+#    address: 'smtp.gmail.com',
+#    port: 587,
+#    domain: "gmail.com",
+#    enable_starttls_auto: true,
+#    authentication: 'plain',
+#    user_name: "richrly@gmail.com",
+#    password: "60046004Aj??",
     
-  }
+#  }
+  load "#{Rails.root}/config/initializers/zoho.rb"
+  config.action_mailer.smtp_settings={         
+    :address              => "smtp.zoho.com", 
+    :port                 => 465,                 
+    :user_name            => ENV['ZOHO_USERNAME'],
+    :password             => ENV['ZOHO_PASSWORD'],         
+    :authentication       => :login,
+    :ssl                  => true,
+    :tls                  => true,
+    :enable_starttls_auto => true    
+  }  
   # need to turn on less secure app option at Gmail ****
 end

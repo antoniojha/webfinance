@@ -30,6 +30,12 @@ html, body {
     overflow-x: hidden;
     text-align: center;
 }
+.legal {
+  text-align:left;
+  p,li{
+    font-size: 1.1em;
+  }
+}
 a:hover{
   background-color: transparent;
 }

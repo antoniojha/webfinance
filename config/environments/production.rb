@@ -83,15 +83,16 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options={:host=>"richrly.herokuapp.com/"}
   
-  config.action_mailer.smtp_settings={
-    address: 'smtp.gmail.com',
-    port: 587,
-    domain: "gmail.com",
-    enable_starttls_auto: true,
-    authentication: 'plain',
-    user_name: "richrly@gmail.com",
-    password: "60046004Aj??"
-  }
+  config.action_mailer.smtp_settings={         
+    :address              => "smtp.zoho.com", 
+    :port                 => 465,                 
+    :user_name            => ENV['ZOHO_USERNAME'],
+    :password             => ENV['ZOHO_PASSWORD'],         
+    :authentication       => :login,
+    :ssl                  => true,
+    :tls                  => true,
+    :enable_starttls_auto => true    
+  }  
   
  # ActionMailer::Base.smtp_settings = {
  #   :port =>           '587',
