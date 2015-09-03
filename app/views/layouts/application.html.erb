@@ -54,33 +54,35 @@
       </div>
 	  </header>
   <%end%>
-  <%if user_logged_in?%>
-    <div class="navbar-default navbar-custom2 navbar-static-top" role="navigation">  
-      <%=render partial:"layouts/top_menu",locals:{object:current_user,type:"users"} %>
-	  </div>     
-  <%end%>   
-  <%if broker_logged_in?%>
-    <div class="navbar-default navbar-custom2 navbar-static-top" role="navigation">
-      <%=render partial:"layouts/top_menu",locals:{object:current_broker,type:"brokers"} %>
-	  </div>     
-  <%end%>   
-  <%= yield(:banner)%>
-  <div align="center" class="body1">
-    <div id='col_left' class=<%=column_width_left%> align="center">
-      <%=yield :left%>
+  <div style="min-height:500px;">
+    <%if user_logged_in?%>
+      <div class="navbar-default navbar-custom2 navbar-static-top" role="navigation">  
+        <%=render partial:"layouts/top_menu",locals:{object:current_user,type:"users"} %>
+      </div>     
+    <%end%>   
+    <%if broker_logged_in?%>
+      <div class="navbar-default navbar-custom2 navbar-static-top" role="navigation">
+        <%=render partial:"layouts/top_menu",locals:{object:current_broker,type:"brokers"} %>
+      </div>     
+    <%end%>   
+    <%= yield(:banner)%>
+    <div align="center" class="body1">
+      <div id='col_left' class=<%=column_width_left%> align="center">
+        <%=yield :left%>
 
-    </div>
-    <div id='col_middle' class=<%=column_width_middle%> align="center">
+      </div>
+      <div id='col_middle' class=<%=column_width_middle%> align="center">
 
-      <%=render "layouts/flash_message"%>
-      <%=yield %>
-    </div>
+        <%=render "layouts/flash_message"%>
+        <%=yield %>
+      </div>
 
-    <div id='col_right' class=<%=column_width_right%> align="center">
-      <%=yield :right%>
-    </div>  
-    
-  </div> 
+      <div id='col_right' class=<%=column_width_right%> align="center">
+        <%=yield :right%>
+      </div>  
+
+    </div> 
+  </div>                                                              
   <div align="center">
     
     <%=render "layouts/footer"%>
