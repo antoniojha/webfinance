@@ -124,7 +124,7 @@ Rails.application.routes.draw do
     get "about" => :about
     get "home" => :home
     get "faq" => :faq
-    get "broker_search_criteria" => :broker_search_criteria
+    get "broker_background_check" => :broker_background_check
     get "broker_registration_criteria" => :broker_registration_criteria
   end
   scope '/legal' do
