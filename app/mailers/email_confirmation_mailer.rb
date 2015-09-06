@@ -6,6 +6,7 @@ class EmailConfirmationMailer < ActionMailer::Base
   #
   #   en.alert_notifier.alert.subject
   #
+
   def send_email_remind(user)
     @greeting = "Hi"
 

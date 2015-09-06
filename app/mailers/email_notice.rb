@@ -24,4 +24,5 @@ class EmailNotice < ActionMailer::Base
     @complement_requests=BrokerRequest.where(broker_id:broker.id,complement:true)
     mail to: broker.email
   end
+
 end

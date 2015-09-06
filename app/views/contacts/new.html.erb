@@ -1,5 +1,55 @@
-<h1>New contact</h1>
+<% content_for :title do %>|Contact<%end%>
+<h1>Contact</h1>
 
-<%= render 'form' %>
+<%= form_for(@contact) do |f| %>
+  <% if @contact.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@contact.errors.count, "error") %> prohibited this contact from being saved:</h2>
 
-<%= link_to 'Back', contacts_path %>
+      <ul>
+      <% @contact.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div> 
+  <% end %>
+  <div class="static-page" style="float:left; width:40%; padding:10px;">
+    <p>If you have any suggestion, comment or question, please fill out and submit the form.</p>
+      
+    <p>You can also email us at support@richrly.com</p>
+  </div>
+  <div style="overflow:auto;width:60%;">
+     <table width="100%">
+      <tr>
+        <td width="47%">
+          <h4>Your Name</h4>
+          <%= f.text_field :name, class:"form-control" %>     
+        </td>
+        <td width="6%"></td>
+        <td width="47%">
+          <h4>Your Email</h4>
+          <%= f.text_field :email, class:"form-control" %>      
+        </td>
+      </tr>
+      <tr>
+        <td colspan=3>
+          <h4>Subject</h4>
+          <%= f.text_field :subject, class:"form-control" %>      
+        </td>
+      </tr>
+      <tr>
+        <td colspan=3>
+          <h4>Message</h4>
+          <%= f.text_area :message, rows:10,class:"form-control"%>
+        </td>
+      </tr>
+      <tr class="blank_row">
+      </tr>
+      <tr>
+        <td colspan=3>
+          <%= f.submit "Send Your Message Now", class:"btn btn-primary", style:"width:100%;" %>
+        </td>
+      </tr>
+    </table>   
+  </div>
+<% end %>

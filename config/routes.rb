@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :financial_products
 
-  resources :contacts, only:[:create]
+  resources :contacts
 
   resources :user_searches
 
@@ -120,12 +120,14 @@ Rails.application.routes.draw do
   match'/admin/remove/:id', to:'users#admin_remove', via:'get', as: 'admin_remove'
   root 'static_pages#home'
   controller :static_pages do
-    get "contact" => :contact
+    
     get "about" => :about
     get "home" => :home
     get "faq" => :faq
+    get "announcement" => :announcement
     get "broker_background_check" => :broker_background_check
     get "broker_registration_criteria" => :broker_registration_criteria
+    get "why_richrly" => :why_richrly
   end
   scope '/legal' do
     controller :legal do

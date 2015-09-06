@@ -5,7 +5,10 @@ class StaticPagesController < ApplicationController
   def contact
     @contact=Contact.new
   end
-
+  def why_richrly
+  end
+  def announcement
+  end
   def faq
   end
   def home

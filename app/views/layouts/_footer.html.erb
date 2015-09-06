@@ -9,15 +9,20 @@
           </td>
           <td width="20%" style="vertical-align:top;">
             <h4>Company</h4>
+            <p><%= link_to "Why RichRly?", why_richrly_path %></p>
             <p><%= link_to 'Home', home_path %></p>
             <p><%= link_to 'About', about_path %></p>
-            <p><%= link_to 'Contact', contact_path%></p>
-            <p><%= link_to 'FAQ', faq_path%></p>
-            <p><%= link_to 'Announcement', faq_path%></p>
+            <p><%= link_to 'Contact', new_contact_path%></p>
+           
+            <p><%= link_to 'Announcement', announcement_path%></p>
+            
           </td>
-          <td width="20%" style="vertical-align:top;">
-            <h4>Why RichRly?</h4>
-            <p><%= link_to "Why it's for you?", home_path %></p>
+          <td width="25%" style="vertical-align:top;">
+            <h4>Member Resource</h4>
+            <p><%= link_to 'FAQ', faq_path%></p>
+            <p><%= link_to "Broker Background Check Guide", broker_background_check_path %></p>
+            <p><%= link_to "Broker Registration Criteria", broker_registration_criteria_path %></p>
+    
           </td>
           <td width="20%" style="vertical-align:top;">
             <h4>Term of Condition</h4>
@@ -26,10 +31,8 @@
             <p><%= link_to "Disclaimer", disclaimer_path %></p>
             <p><%= link_to "Copyright Policy", copyright_policy_path %></p>
           </td>
-          <td width="20%" style="vertical-align:top;">
-            <h4>Member Resource</h4>
-            <p><%= link_to "Broker Background Check Guide", broker_background_check_path %></p>
-            <p><%= link_to "Broker Registration Criteria", broker_registration_criteria_path %></p>
+          <td width="15%" style="vertical-align:top;">
+
           </td>
         </tr>
       </table>
