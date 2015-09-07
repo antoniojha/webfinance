@@ -6,6 +6,15 @@ class BrokersController < Broker::AuthenticatedController
   def new
     @broker=Broker.new
   end
+  def create
+    
+    @broker=Broker.new(broker_params)
+    if @broker.save
+      redirect_to edit_setup_broker_path(@broker)
+    else
+      render "brokers/new"
+    end
+  end
   def home
     unless params[:interest]
       @interest="protection"

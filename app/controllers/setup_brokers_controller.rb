@@ -6,14 +6,19 @@ class SetupBrokersController < ApplicationController
       @broker=Broker.find(params[:setup_broker][:broker_id])
       @setup_broker=@broker.setup_broker
       unless @setup_broker
-
-        @setup_broker=@broker.build_setup_broker(license_params)
-        if @setup_broker.save
-          @broker.next_step
+        if params[:back]
+          @broker.prev_step
           @broker.save
           redirect_to edit_setup_broker_path(@broker)
-        else 
-          render "edit"
+        else
+          @setup_broker=@broker.build_setup_broker(license_params)
+          if @setup_broker.save
+            @broker.next_step
+            @broker.save
+            redirect_to edit_setup_broker_path(@broker)
+          else 
+            render "edit"
+          end
         end
       end
   end
@@ -33,14 +38,14 @@ class SetupBrokersController < ApplicationController
   end
 
   def update   
- #   raise "error"
-
+  
     if params[:back]
 
       @broker.prev_step
       @broker.save
       redirect_to edit_setup_broker_path(@broker)
     else    
+      
       if params[:send_validation] || params[:validate_email]
         @broker.validate_email_bool=true
 
@@ -71,6 +76,7 @@ class SetupBrokersController < ApplicationController
             render "edit"
           end
       else
+        
         if @broker.update(broker_params)
           
           if params[:send_validation]

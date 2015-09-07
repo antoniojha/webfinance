@@ -28,19 +28,29 @@ class Broker < ActiveRecord::Base
   mount_uploader :image, ImageUploader
   validates :username, presence: true, on: :create, if: :password_signup?
   validates :password, :password_confirmation, presence: true, on: :create, if: :password_signup?
-  def password_signup?
-    (provider!=nil) ? false : true
-  end
+  
+
   validate :check_passwords_match, on: :create, if: :password_signup?
   def check_passwords_match
     if password !=password_confirmation
       errors.add(:password,"passwords do not match")
     end
   end
+  # return true if it's not signed up through provider
+  def password_signup?
+    
+    (provider==nil) ? true : false
+  end
   validates :email, allow_blank:true, format: {with:VALID_EMAIL_REGEX}
   validates :password, allow_blank:true, length: { in: 7..40 }, format:{with:VALID_PASSWORD_REGEX}  
-  validates_uniqueness_of :username, :case_sensitive => false
-  validates_uniqueness_of :email, :case_sensitive => false
+  validates_uniqueness_of :username, :case_sensitive => false, if: :username?
+  def username?
+    (username!=nil) ? true : false
+  end  
+  validates_uniqueness_of :email, :case_sensitive => false, if: :email?
+  def email?
+    (email!=nil) ? true : false
+  end
   before_save do
     if username
       self.username=username.downcase
