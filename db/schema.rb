@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150906121756) do
+ActiveRecord::Schema.define(version: 20150910105525) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -248,24 +248,16 @@ ActiveRecord::Schema.define(version: 20150906121756) do
     t.string   "city"
     t.string   "state"
     t.string   "country"
-    t.string   "picture_file_name"
-    t.string   "picture_content_type"
-    t.integer  "picture_file_size"
-    t.datetime "picture_updated_at"
-    t.boolean  "approved",                    default: false
+    t.boolean  "approved",                   default: false
     t.string   "username"
     t.string   "license_type"
-    t.boolean  "submitted",                   default: false
+    t.boolean  "submitted",                  default: false
     t.string   "confirmation_number"
     t.datetime "submitted_at"
     t.string   "web"
     t.string   "work_ext"
     t.integer  "firm_id"
     t.string   "register_current_step"
-    t.string   "identification_file_name"
-    t.string   "identification_content_type"
-    t.integer  "identification_file_size"
-    t.datetime "identification_updated_at"
     t.string   "status"
     t.string   "auth_token_digest"
     t.string   "edit_current_step"
@@ -290,6 +282,7 @@ ActiveRecord::Schema.define(version: 20150906121756) do
     t.string   "image"
     t.string   "aws_image_path"
     t.boolean  "image_cropped"
+    t.string   "id_image"
   end
 
   add_index "brokers", ["confirmation_number"], name: "index_brokers_on_confirmation_number"
@@ -487,15 +480,13 @@ ActiveRecord::Schema.define(version: 20150906121756) do
     t.integer  "broker_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "picture_file_name"
-    t.string   "picture_content_type"
-    t.integer  "picture_file_size"
-    t.datetime "picture_updated_at"
     t.string   "license_type"
     t.string   "license_number"
-    t.boolean  "approved",             default: false
+    t.boolean  "approved",        default: false
     t.string   "states"
     t.integer  "setup_broker_id"
+    t.date     "expiration_date"
+    t.string   "license_image"
   end
 
   add_index "licenses", ["broker_id"], name: "index_licenses_on_broker_id"
@@ -840,10 +831,6 @@ ActiveRecord::Schema.define(version: 20150906121756) do
     t.string   "last_name"
     t.boolean  "admin",                      default: false
     t.string   "time_zone"
-    t.string   "picture_file_name"
-    t.string   "picture_content_type"
-    t.integer  "picture_file_size"
-    t.datetime "picture_updated_at"
     t.string   "address"
     t.float    "longitude"
     t.float    "latitude"

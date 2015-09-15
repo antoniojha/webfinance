@@ -1,0 +1,24 @@
+<h1>Term of Condition (8 of 8)</h1>
+<div style="text-align:left;width:85%;">
+<p>Please read the following Term of Condition:</p>
+  <div style="height:300px;overflow:auto;border:ridge 1px;">
+    <%=render "term_of_use_text"%>
+  </div><br>
+<%= form_for :broker, :url => setup_broker_path(@broker), :html => { :method => :put} do|f|%>
+  
+  <div class="alert alert-success" role="alert">
+    <p>By checking "Term of Use" I agree that I have read and accepted the <%=content_tag(:a,"User Agreement",href:"#User Agreement")%> and <%=content_tag(:a,"Privacy Policy",href:"#Privacy Policy")%>.</p>
+    
+  </div>
+  <div style="float:left;width:10%;"><%=f.check_box :check_term_of_use%></div>
+  <div style="overflow:auto;width:90%;">I agree with the term of use.</div>
+  <table width="100%" style="text-align:left;">
+    <tr class="blank_row"></tr>
+    <tr>
+      <td width="48%"><%=f.submit "Previous", name:"back", :class=>"btn btn-lg btn-success", style:"width:100%;"%></td>
+      <td width="4%"></td>
+      <td width="48%"><%=f.submit "Submit",name:"submit",:class=>"btn btn-lg btn-success", style:"width:100%;"%></td>
+    </tr>
+  </table>
+<%end%>
+</div>

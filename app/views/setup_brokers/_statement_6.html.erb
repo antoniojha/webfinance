@@ -1,0 +1,19 @@
+<h1>Your Skills and Statement (6 of 8)</h1>
+<div align="left" style="width:85%;padding-top:10px;">
+<%= form_for :broker, :url => setup_broker_path(@broker), :html => { :method => :put} do|f|%>
+
+  <h4>Enter Your Skills and Specialty</h4>(<i>separated by comma</i>)<br>
+  <%=f.text_area :skills,{rows:"4",:class=>'form-control'}%>
+  <h4>Enter a brief statement about yourself regarding your skills</h4>(<i>150 character max</i>)<br>
+<%=f.text_area :ad_statement,{rows:"7",:class=>'form-control'}%><br>
+  <table width="100%">
+    <tr class="blank_row"></tr>
+    <tr>
+      <td width="48%"><%=f.submit "Previous", name:"back", :class=>"btn btn-lg btn-success", style:"width:100%;"%></td>
+      <td width="4%"></td>
+      <td width="48%"><%=f.submit "Next",name:"next",:class=>"btn btn-lg btn-success", style:"width:100%;"%></td>
+    </tr>
+  </table>
+
+<%end%>
+</div>

@@ -1,12 +1,11 @@
 class Broker < ActiveRecord::Base
 
-  attr_accessor :name_or_email, :password, :password_confirmation,:validate_email_bool, :validation_code, :licensetype_bool, :products_bool, :story_bool, :term_of_use_bool,:basic_info_bool
-  attr_accessor :financial_category,:product_id, :story, :image
+  attr_accessor :name_or_email, :password, :password_confirmation,:validate_email_bool, :validation_code, :licensetype_bool, :products_bool, :story_bool, :term_of_use_bool,:basic_info_bool, :id_image_bool, :licenses_upload_bool
+  attr_accessor :financial_category,:product_id, :story, :image, :license_info_4_error
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   serialize :license_type #used during setup, this will not be updated after setup all licenses will be accessed via @broker.setup_broker.licenses
   serialize :product_ids
-  has_attached_file :picture, :styles => { :medium => "200x200#", :large=>"400x400>", :original=>"600x600>"},:processors => [:cropper]
-  validates_attachment_content_type :picture, :content_type=> ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/pjpeg"]
+
   # broker has the following dependents: SetupBroker=>License, FinancialStory, :Experiences, :Educations
   has_many :votes, dependent: :destroy
   has_many :financial_product_rels, dependent: :destroy
@@ -15,17 +14,41 @@ class Broker < ActiveRecord::Base
   has_one :setup_broker, dependent: :destroy
   has_many :educations, dependent: :destroy
   has_many :experiences, dependent: :destroy
+  
   has_many :financial_stories, dependent: :destroy
+  accepts_nested_attributes_for :financial_stories
   has_many :broker_product_rels, dependent: :destroy
   has_many :products, through: :broker_product_rels
   has_many :activities, as: :author, dependent: :destroy
   has_one :all_customer, as: :customer, dependent: :destroy  
-
+  
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   # the following uses Regex (lookahead assertion) to ensure there is at least a lower case and upper case letter, a digit, and a special character (non-word character)
   VALID_PASSWORD_REGEX= /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)/
   
   mount_uploader :image, ImageUploader
+  
+  mount_uploader :id_image, IdImageUploader
+  validate :check_all_licenses_uploaded, if: :licenses_uploaded?
+  def check_all_licenses_uploaded
+    licenses=self.setup_broker.licenses
+    license_types=self.license_type
+    unless licenses.count == license_types.count
+      errors[:license_info_4_error] << "All licenses should be uploaded."
+    end
+  end
+  def licenses_uploaded?
+    @licenses_upload_bool == true
+  end
+  validates_presence_of :id_image, if: :id_image?
+
+  def id_image?
+    @id_image_bool == true
+  end
+  validate :id_image_size_validation
+  def id_image_size_validation
+    errors[:id_image] << "should be less than 5MB" if id_image.size > 5.megabytes
+  end
   validates :username, presence: true, on: :create, if: :password_signup?
   validates :password, :password_confirmation, presence: true, on: :create, if: :password_signup?
   
@@ -84,10 +107,12 @@ class Broker < ActiveRecord::Base
   end
 
   def check_licensetype_not_empty
-    self.license_type=license_type.reject(&:empty?)
-    if license_type.empty? 
-      errors.add(:licensetype_bool, "Need to select a license")
-    end 
+    if license_type
+      self.license_type=license_type.reject(&:empty?)
+      if license_type.empty? 
+        errors.add(:licensetype_bool, "You need to select a license")
+      end
+    end
   end
   validate :check_products_not_empty, on: :update, if: :products_bool?
   def products_bool?
@@ -99,24 +124,12 @@ class Broker < ActiveRecord::Base
   #  puts "here"
     if product_ids.empty? 
       
-      errors.add(:products_bool, "Need to select a Vehicle")
+      errors.add(:products_bool, "You need to select a vehicle")
     end 
   end
   before_save :encrypt_password
 
   validates :ad_statement, allow_blank:true, length: { maximum: 150 }  
-  validates :financial_category,:product_id, :story, presence:true, on: :update, if: :story_bool?
-  def story_bool?
-    @story_bool==true
-  end
-  after_update do
-    #create Financial Story during the application
-    if story_bool?
-      self.financial_stories.create(product_id:@product_id, financial_category: @financial_category,description: @story)
-      
-      @story_bool=false # this variable prevents the story object to be saved twice since there is a @broker.next_step and @broker.save following @broker.update(params)
-    end
-  end
 
   validates :check_term_of_use, presence:true, on: :update, if: :term_of_use_bool?
   def term_of_use_bool?
@@ -190,7 +203,7 @@ class Broker < ActiveRecord::Base
     end
   end
   def steps
-    %w[basic_info_1 license_2 license_info_3 vehicle_4 statement_5 register_approve_info_6 term_of_use_7]
+    %w[basic_info_1 id_2 license_3 license_info_4 vehicle_5 statement_6 financial_story_7 term_of_use_8]
   end
   def current_field
     unless step
@@ -220,10 +233,12 @@ class Broker < ActiveRecord::Base
       # create new license objects to be filled out in user checks a new license type in page 2
       self.license_type.each do |l|
         unless ex_license_types.include?(l)
+          
           @setup_broker.licenses.build(license_type:l)
         end
       end
       #delete existing license object if user unchecks an existing license type in page 2
+    #  raise "#{ex_license_types}"
       ex_license_types.each do |l|
         unless self.license_type.include?(l)
          @setup_broker.licenses.find_by(license_type:l).destroy
@@ -270,6 +285,7 @@ class Broker < ActiveRecord::Base
   end
   private
 
+
   def generate_token(column)
     begin
        # update_attribute(column,SecureRandom.urlsafe_base64)
@@ -298,7 +314,9 @@ class Broker < ActiveRecord::Base
   def ex_license_types(setup_broker)
     array=[]
     setup_broker.licenses.each do |f|
+      if f.license_type
       array<< f.license_type
+      end
     end
     return array
   end

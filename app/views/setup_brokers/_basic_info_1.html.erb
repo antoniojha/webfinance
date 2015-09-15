@@ -1,5 +1,5 @@
-<h1>Enter Your Background Information</h1>
-<div style="width:30%;text-align:left;">
+<h1>Your Background Information (1 of 8)</h1>
+<div style="width:60%;text-align:left;padding-top:10px;">
   <%= form_for :broker, :url=> setup_broker_path(@broker), :html => { :method => :put} do|f|%>
   <p><%=f.label "First Name"%></p>
   <p><%=f.text_field :first_name,{:class=>'form-control'}%></p>
@@ -27,6 +27,6 @@
   <p><%=f.text_field :company_name,{:class=>'form-control'}%></p>
   <p><%=f.label "Company Location"%></p>
   <p><%=f.text_area :company_location,{:class=>'form-control'}%></p>
-  <%=f.submit "Next",name:"next_from_pg1", :class=>"btn btn-lg btn-default"%>
+  <%=f.submit "Next",name:"next_from_pg1", :class=>"btn btn-lg btn-success", style:"width:100%;"%>
 <%end%>
 </div>

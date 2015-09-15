@@ -48,6 +48,7 @@ gem 'paperclip-compression'
 #Carrierwave, used to upload pictures to Amazon S3
 gem 'carrierwave'
 gem 'fog'
+
 gem 'carrierwave_direct'
 
 

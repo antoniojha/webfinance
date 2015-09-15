@@ -5,7 +5,7 @@ module ApplicationHelper
   def column_width_right 
     controller=params[:controller]
     action=params[:action]
-    if (controller=="users" || controller=="brokers")&&(action=="index") 
+    if (controller=="users" || controller=="brokers")&&(action=="index") || controller=="setup_brokers" || controller=="licenses"
       return "col-md-3"
     elsif (controller=="static_pages" && action=="home")
       return "col-md-1"
@@ -16,7 +16,7 @@ module ApplicationHelper
   def column_width_middle
     controller=params[:controller]
     action=params[:action]
-    if (controller=="users" || controller=="brokers")&&(action=="index") 
+    if (controller=="users" || controller=="brokers")&&(action=="index") || controller=="setup_brokers" || controller=="licenses"
       return "col-md-6"
     elsif (controller=="static_pages" && action=="home")
       return "col-md-8"
@@ -27,7 +27,7 @@ module ApplicationHelper
   def column_width_left
     controller=params[:controller]
     action=params[:action]
-    if (controller=="users" || controller=="brokers")&&(action=="index") 
+    if (controller=="users" || controller=="brokers")&&(action=="index") || controller=="setup_brokers" || controller=="licenses"
       return "col-md-3"
     elsif (controller=="static_pages" && action=="home")
       return "col-md-3"

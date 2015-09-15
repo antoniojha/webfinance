@@ -1,0 +1,63 @@
+<h1>Your Financial Story (7 of 8)</h1>
+<div style="width:85%;text-align:left;" class="financial_story_7">
+  <div class="panel panel-primary">
+    <div class="panel-heading" style="font-size:1.2em;">
+      Please read the instruction below carefully before starting on your financial story:
+    </div>
+    <div class="panel-body">
+      <p>Please write a story about how you helped your client in a financial category and vehiicle. <b>You should keep the name anonymous</b>.</p> 
+      <p>An example could be that I helped my client to get a life insurance to help with his retirement. In this case, the category is "Retirement" and vehicle is "Life Insurance".</p>
+      <p> A good story should include the following points:</p>
+      <ul>
+        <li>What's your client's financial need?</li>
+        <li>What vehicle did you recommend to your client in response to that need?</li>
+        <li>How did your service benefit and change the life of your client?</li>
+      </ul>
+      <p>RichRly does not check content of your financial story- We trust that you will provide good story for our community.</p><br>
+    </div>
+  </div>
+ 
+  <%= form_for @broker, :url => setup_broker_path(@broker), :html => { :method => :put} do|f|%>
+
+  <%=f.fields_for :financial_stories do |builder|%>
+    <table width="100%">
+      <tr>
+        <td><b>Financial Category</b></td>
+        <td>
+          <%=builder.select :financial_category, Order::FINANCIAL_CATEGORIES, {prompt:"Please Select Category"},{:class=>"form-control"}%>
+        </td>
+      </tr>
+      <tr class="blank_row"></tr>
+      <tr>
+        <td><b>Financial Vehicle</b></td>
+        <td>
+          <%=builder.select :product_id, Product.all.collect {|p| [ p.name, p.id ] }, {prompt:"Please Select Vehicle"},{:class=>"form-control"}%>
+        </td>
+      </tr>
+      <tr class="blank_row"></tr>
+      <tr>
+        <td><b>Story Title</b></td>
+        <td>
+          <%=builder.text_field :title,{:class=>"form-control"}%>
+        </td>
+      </tr>
+      <tr class="blank_row"></tr>
+      <tr>
+        <td colspan=2>
+           <h4> Enter your story below</h4>
+          <%=builder.text_area :description, {rows:"25", class:"form-control"}%>
+        </td>
+      </tr>
+
+    </table>
+  <%end%>
+  <table width="100%">
+    <tr class="blank_row"></tr>
+    <tr>
+      <td width="48%"><%=f.submit "Previous", name:"back", :class=>"btn btn-lg btn-success", style:"width:100%;"%></td>
+      <td width="4%"></td>
+      <td width="48%"><%=f.submit "Next",name:"next",:class=>"btn btn-lg btn-success", style:"width:100%;"%></td>
+    </tr>
+  </table>
+<%end%>
+</div>

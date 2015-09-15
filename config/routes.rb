@@ -28,9 +28,13 @@ Rails.application.routes.draw do
   
   resources :experiences
   resources :educations
-  get 'licenses/:id' => 'setup_brokers#download', :as => :download
-  resources :setup_brokers
-
+  get 'remove_id/:id' => 'setup_brokers#remove_id', :as => :remove_id
+  get 'broker_licenses/:id' => 'setup_brokers#download_broker_license', :as => :download_broker_license
+  get 'driver_licenses/:id' => 'setup_brokers#download_driver_license', :as => :download_driver_license
+  resources :setup_brokers, only:[:create,:update]
+  controller "setup_brokers" do
+    get 'registration/:id'=> 'setup_brokers#edit', :as => :edit_setup_broker
+  end
   controller :authentication_out do
     get 'facebook'=> :facebook
     get 'linkedin'=> :linkedin

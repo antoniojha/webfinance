@@ -1,6 +1,11 @@
-<%=render "error"%>
-
-<%=render @broker.current_field%>
-<div class="alert alert-info" style="text-align:left;">
-  <p>This is your application. After you submit your application, we will review your licenses attachments. You are free to login and use the website after submission but until we approve your application, your profile, financial stories won't be shown to the public.    </p>
+<div style="width:85%;">
+  <%=render partial:"shared/error_message", locals:{object:@broker}%>
 </div>
+<%=render "setup_brokers/#{@broker.current_field}"%>
+<% content_for :right do%>
+<div style="padding-top:20px;">
+  <div class="alert alert-info" style="width:100%;text-align:left;">
+    <p style="font-size:1.5em;line-height:150%;">This is your application. After you submit your application, we will review your licenses attachments. You are free to login and use the website after submission. But until we approve your application, your profile, financial stories won't be shown to the public. For more information about criteria for successful registration, please refer to <span style="text-decoration:underline;"><%=link_to "Broker Registration Criteria", broker_registration_criteria_path, :target => '_blank'%></span>.</p>
+  </div>
+</div>
+<%end%>

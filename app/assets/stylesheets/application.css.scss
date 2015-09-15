@@ -46,6 +46,10 @@ html, body {
     font-family: "Times New Roman", Times, serif;
     line-height: 120%
   }  
+  li{
+     padding-top:10px;
+  
+  }
 }
 .static-page {
   text-align:left;
@@ -56,6 +60,18 @@ html, body {
   li{
     padding:5px;
   }
+}
+.financial_story_7 {
+  text-align:left;
+  p,li{
+    font-size: 1.1em;
+    line-height: 120%
+  }  
+}
+.customize-title{
+  h1,h2,h3,h4{
+    font-family: "Times New Roman", Times, serif;
+  }  
 }
 a:hover{
   background-color: transparent;

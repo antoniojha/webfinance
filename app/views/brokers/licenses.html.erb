@@ -22,8 +22,10 @@
         <td><%=l.license_type%></td>
         <td><%=l.license_number%></td>
         <td>
-          <%=l.picture_file_name%>
-          <%=link_to "View", l.picture.url(:original, false), :target => "_blank"%>
+          <% if l.license_image.file%>
+          <%=l.license_image.file.filename%>
+          <%=link_to "View", l.license_image.url(:original, false), :target => "_blank"%>
+          <%end%>
         </td>
         <td>
         <%if request%>

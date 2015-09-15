@@ -20,6 +20,9 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  errors:
+    messages:
+      extension_white_list_error: "can only be one of the following types: jpg, jpeg, gif, png, pdf"  
   activerecord:
     attributes:
       vote:
@@ -29,27 +32,33 @@ en:
       user:
         interests: ""
       broker:
-        license_type_bool: ""
+        id_image: "Driver license attachment"
+        licensetype_bool: ""
         product_names_bool: ""
         product_id: "Vehicle"
         check_term_of_use: ""
+        license_info_4_error: ""
+        products_bool: ""
       licenses:
     #    base: ""
         picture: "Attachment(s)"
         license_number: "License number(s)"
       license:
         license_type: ""
+        license_number: ""
       broker_request:
         complement_requests: ""
       private_message:
         receiver_customer_id: ""
     errors:
+ 
       models:
    
         broker:
           attributes:
             check_term_of_use:
-              blank: "You have to agree to term of use condition to be registered on Richrly"     
+              blank: "You have to agree to term of use condition to be registered on RichRly."
+            
         private_message:
           attributes:
             receiver_customer_id:

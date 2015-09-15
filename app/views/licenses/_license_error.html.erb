@@ -1,0 +1,11 @@
+<% if license.errors.any? %>
+
+<div class="alert alert-danger error-message" style="width:100%;">
+  <ul>
+    <% license.errors.full_messages.each do |msg| %>
+    <li><%=license.license_type%> <%= msg %></li>
+    <% end %>
+  </ul>
+</div>
+
+<% end %>
