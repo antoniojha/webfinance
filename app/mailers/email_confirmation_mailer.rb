@@ -9,11 +9,12 @@ class EmailConfirmationMailer < ActionMailer::Base
 
   def send_email_remind(user)
     @greeting = "Hi"
-
+    @warning= "This is an automatically generated email, please do not reply."
     mail to: user.email, subject: 'Alert'
   end
   def send_email_confirm(user)
     @greeting="Dear Customer,"
+    @warning= "This is an automatically generated email, please do not reply."
     @user=user
     mail to: user.email, subject: 'Welcome to Richrly'
   end
@@ -21,6 +22,7 @@ class EmailConfirmationMailer < ActionMailer::Base
     @greeting="Dear Customer,"
     @user=user
     @password=password
+    @warning= "This is an automatically generated email, please do not reply."
     mail to: user.email, subject: 'Your new temporary password'    
   end
 end

@@ -28,11 +28,14 @@ class SetupBrokersController < ApplicationController
     if @broker.step=="license_info_4"
       unless @broker.setup_broker
         @setup_broker=@broker.build_setup_broker
+        @setup_broker.save
         @broker.license_type.each do |l|        
-          @licenses=@setup_broker.licenses.build(license_type:l)        
-        end    
+          @setup_broker.licenses.build(license_type:l)        
+        end
+        @licenses=@setup_broker.licenses
       else
         @setup_broker=@broker.setup_broker
+        @setup_broker.save
         @broker.add_or_remove_license
         @licenses=@setup_broker.licenses
       end
@@ -45,84 +48,69 @@ class SetupBrokersController < ApplicationController
   end
 
   def update   
-
+  #  raise "error"
     if params[:back]
       @broker.prev_step
       @broker.save
       redirect_to edit_setup_broker_path(@broker)
     else   
-      if params[:validate_email]
-        @broker.validate_email_bool=true
-      end
       if (@broker.current_field=="basic_info_1")
-        
-        @broker.basic_info_bool=true
-      end
-      if @broker.current_field=="id_2"
+        if params[:send_validation]
+          @broker.send_email_validation_bool=true
+          @validate_email_error=true
+          previous_email=@broker.email
+        elsif params[:validate_email]
+          @broker.validate_email_bool=true 
+          
+        else
+          @broker.basic_info_bool=true
+        end
+      elsif @broker.current_field=="id_2"
         @broker.id_image_bool=true
-      end
-      if (@broker.current_field=="license_3")
+      elsif (@broker.current_field=="license_3")
         @broker.licensetype_bool=true
-      end
-      if (@broker.current_field=="license_info_4")
+      elsif (@broker.current_field=="license_info_4")
         @broker.licenses_upload_bool=true
-      end
-      if (@broker.current_field=="vehicle_5")
+      elsif (@broker.current_field=="vehicle_5")
         @broker.products_bool=true
-      end
-
-      if (@broker.current_field=="term_of_use_8")
+      elsif (@broker.current_field=="term_of_use_8")
         @broker.term_of_use_bool=true
       end
       if params[:upload_license]
          @setup_broker=@broker.setup_broker
          if @setup_broker.update(license_params)
-         #  @broker.next_step
-         #  @broker.save
            redirect_to edit_setup_broker_path(@broker)
           else
            render "setup_brokers/edit"
           end
-      else
-    
+      elsif params[:validate_email]
+        if @broker.confirm_email?(params[:broker][:validation_code])        
+          redirect_to edit_setup_broker_path(@broker)
+        else
+          render "edit"
+        end
+      else       
         if @broker.update(broker_params)
-          if params[:send_validation]
-
-            @broker.send_email_confirmation
-            @broker.evaluate_and_reset_email_authen(params[:broker][:email])
-          end
-          if params[:validate_email]
-          #  raise "#{params[:broker][:validation_code]}"
-            broker=Broker.find_by_email_confirmation_token(params[:broker][:validation_code])
-            if broker == @broker
-              @broker.update_attribute(:email_authen, true)
+          if params[:send_validation]    
+            if @broker.evaluate_and_reset_email_authen(previous_email)           
+              @broker.send_email_confirmation
+              notice="Validation code has been sent to your email."
             end
-          end 
-          if params[:next_from_pg1]
-            
-            title=params[:broker][:title]
-            company=params[:broker][:company_name]
-            location=params[:broker][:company_location]
-            @broker.experiences.create(title:title,company:company,location:location,current_experience:true, begin_date: Date.today)
-          end
-          if params[:next_from_pg3]
-            
-          #  @broker.add_or_remove_license
-          end
-          unless params[:send_validation] || params[:validate_email] || params[:upload_id] || params[:upload_license]
-            @broker.next_step
-            @broker.save
-          end
-          if params[:submit]
+          elsif params[:submit]
+            @broker.experiences.create(title:@broker.title,company:@broker.company_name,location:@broker.company_location,current_experience:true, begin_date: Date.today)
             @broker.update_attribute(:setup_completed?, true)
             @broker.broker_requests.create(request_type:"create account",complement:false)
             @broker.setup_broker.licenses.each do |l|
               @broker.broker_requests.create(request_type:"create license", license_id:l.id,complement:true)
             end
+          else
+            unless params[:upload_id]
+              @broker.next_step
+              @broker.save
+            end
           end
-          unless @broker.setup_completed?
-            
-            redirect_to edit_setup_broker_path(@broker)
+          unless @broker.setup_completed?       
+            redirect_to edit_setup_broker_path(@broker), notice:notice
             
           else
             redirect_to broker_path(@broker), notice:"Your registration has been submitted and is being reviewed."
@@ -133,8 +121,7 @@ class SetupBrokersController < ApplicationController
             @broker.add_or_remove_license
             @licenses=@setup_broker.licenses
           end
-       #   @uploader = @broker.id_image
-       #   @uploader.success_action_redirect = edit_setup_broker_url(@broker)
+          
           render "edit"
         end
       end

@@ -1,4 +1,7 @@
 <div style="width:85%;">
+  <%if @validate_email_error%>
+    <%@broker.addition_error_msg=" when sending validation code."%>
+  <%end%>
   <%=render partial:"shared/error_message", locals:{object:@broker}%>
 </div>
 <%=render "setup_brokers/#{@broker.current_field}"%>

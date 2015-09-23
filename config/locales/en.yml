@@ -32,6 +32,7 @@ en:
       user:
         interests: ""
       broker:
+        addition_error_msg: ""
         id_image: "Driver license attachment"
         licensetype_bool: ""
         product_names_bool: ""

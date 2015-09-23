@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150910105525) do
+ActiveRecord::Schema.define(version: 20150917021720) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -266,7 +266,7 @@ ActiveRecord::Schema.define(version: 20150910105525) do
     t.string   "time_zone"
     t.string   "provider"
     t.string   "uid"
-    t.boolean  "email_authen"
+    t.boolean  "email_authen",               default: false
     t.string   "email_confirmation_token"
     t.string   "email_confirmation_sent_at"
     t.string   "salt"

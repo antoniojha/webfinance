@@ -10,7 +10,13 @@ class IdImageUploader < CarrierWave::Uploader::Base
   # Choose what kind of storage to use for this uploader:
   # storage :file
   if Rails.env.test?
+    
     storage :file
+    
+    CarrierWave.configure do |config|
+      config.enable_processing = false
+    end
+
   else
     storage :fog
   end

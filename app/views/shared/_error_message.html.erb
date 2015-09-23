@@ -7,7 +7,7 @@
       <% end %>
     </ul>
     <%else%>
-      <%=object.errors.full_messages.first%>
+    <%=object.errors.full_messages.first%><%=object.addition_error_msg%>
     <%end%>
   </div>
 <% end %>

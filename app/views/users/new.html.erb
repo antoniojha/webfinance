@@ -2,6 +2,30 @@
 <h2>User Sign Up</h2>
 <%=render "error"%>
 
-<%=render 'form'%>
+<%= form_for @user do |f| %>
+  <table width="70%">
+    <tr class="blank_row"></tr>
+    <tr>
+      <td width="50%"><%= f.label "Username" %> <span style="color:red"><i>(case insensitive)</i></span><%=asterisk_html%></td>
+      <td width="50%"><%= f.text_field :username,{:class=>'form-control'} %></td>
+    </tr>
+    <tr class="blank_row"></tr>
+    <tr>
+      <td><%= f.label "Password" %><%=asterisk_html%></td>
+      <td><%= f.password_field :password,{:class=>'form-control', title:"must contain at least 7 characters."} %></td>
+    </tr>
+    <tr class="blank_row"></tr>
+    <tr>
+      <td><%= f.label "Password Confirmation" %><%=asterisk_html%></td>
+      <td><%= f.password_field :password_confirmation,{:class=>'form-control'} %></td>
+    </tr>
+    <tr class="blank_row"></tr>
+    <tr>
+      <td></td>
+      <td align="left"><%= f.submit 'Create Account', :class=>"btn btn-primary", style:"width:100%;" %></td>  
+    </tr>
+  </table>
+
+<%end%>
 
 

@@ -22,6 +22,7 @@ FactoryGirl.define do
     email_authen false
     setup_completed? false
   end
+
   factory :broker do
     username "testing"
     password "SecretPassword1?"
@@ -34,18 +35,27 @@ FactoryGirl.define do
     company_location "39-07 Prince St, Suite 6A-3"
     title "Associate"
     setup_completed? true
-    license_type ["Life Insurance","Series 3"]
-    product_ids ["1","2","3"]
+ #   license_type ["Life Insurance","Series 3"]
+ #   product_ids ["1","2","3"]
     
   end
-  factory :incomplete_broker, class:Broker do
-
+  factory :complete_broker, class:Broker do
     username "testing"
-  #  email "antoniojha@gmail.com"
     password "SecretPassword1?"
     password_confirmation "SecretPassword1?"
-  #  first_name "Broker First Name"
-  #  last_name "Broker Last Name"
+    email "antoniojha@gmail.com"
+    email_authen true
+    first_name "Broker First Name"
+    last_name "Broker Last Name"
+    company_name "World Financial Group"
+    company_location "39-07 Prince St, Suite 6A-3"
+    title "Associate"
+    setup_completed? false   
+  end
+  factory :incomplete_broker, class:Broker do
+    username "testing"
+    password "SecretPassword1?"
+    password_confirmation "SecretPassword1?"
     email_authen false 
     setup_completed? false
   end  
@@ -74,33 +84,7 @@ FactoryGirl.define do
     password "SecretPassword1?"
     password_confirmation "SecretPassword1?"
   end
-  factory :bank, class: Bank do 
-    id 13041
-    content_service_id 3190
-    content_service_display_name '1st Bank (US)'
-    site_id 3048
-    site_display_name '1st Bank (US)'
-    mfa 'none'
-    home_url 'http://www.efirstbank.com/'
-    container 'bank'
-  end
-  factory :chasebank, class: Bank do 
-    id 13061
-    content_service_id 663
-    content_service_display_name 'Chase (US) - Bank'
-    site_id 643
-    site_display_name 'Chase (US)'
-    mfa 'none'
-    home_url 'http://www.chase.com/'
-    container 'bank'
-  end
-  factory :spending do
-    transaction_date_string "2014-12-16"
-    description "Lunch"
-    amount "100"
-    category "1"
-    picture (Rails.root+"spec/fixtures/images/Ruby_on_Rails.jpg").open
-  end
+
   factory :background, class: Background do
     dob_string "09/18/1987"
     married "true"
@@ -109,48 +93,10 @@ FactoryGirl.define do
     month "1"
     year "2015"
   end
-  factory :saving, class: Saving do
-    institution_name "Chase"
-    description "checking"
-    amount "1000"
-    category "1"
-    association :background
-  end
-  factory :debt, class: Debt do
-    institution_name "Student Loan"
-    description "loan"
-    amount "1000"
-    interest_rate "10"
-    category "1"
-    association :background
-  end
-  factory :income, class: Income do
-    description "DEP"
-    amount "1000"
-    category "1"
-    association :background
-  end
-  factory :fixed_expense, class: FixedExpense do
-    description "mortgage"
-    amount "1000"
-    company "Pennymac"
-    transaction_date_string "01/02/2015"
-    category "1"
-    association :background
-  end
-  factory :optional_expense, class: OptionalExpense do
-    description "movies"
-    amount "100"
-    category "1"
-  end
-  factory :propertee, class: Propertee do
-    description "house"
-    amount "10000"
-    category "1"
-  end
+
   
   factory :license, class: License do
-    picture (Rails.root+"spec/fixtures/pdfs/example_license.pdf").open
+    picture (Rails.root+"spec/fixtures/test_files/example_license.pdf").open
     license_type "1"
     license_number "123456789"
     
@@ -160,7 +106,7 @@ FactoryGirl.define do
     license_number "123456789"  
   end
   factory :doc_license, class: License do
-    picture (Rails.root+"spec/fixtures/pdfs/test.docx").open
+    picture (Rails.root+"spec/fixtures/test_files/test.docx").open
     license_type "1"
     license_number "123456789"
     

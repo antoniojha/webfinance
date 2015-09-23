@@ -1,7 +1,7 @@
 class Broker < ActiveRecord::Base
 
-  attr_accessor :name_or_email, :password, :password_confirmation,:validate_email_bool, :validation_code, :licensetype_bool, :products_bool, :story_bool, :term_of_use_bool,:basic_info_bool, :id_image_bool, :licenses_upload_bool
-  attr_accessor :financial_category,:product_id, :story, :image, :license_info_4_error
+  attr_accessor :name_or_email, :password, :password_confirmation,:validate_email_bool, :validation_code, :licensetype_bool, :products_bool, :story_bool, :term_of_use_bool,:basic_info_bool, :id_image_bool, :licenses_upload_bool, :send_email_validation_bool
+  attr_accessor :financial_category,:product_id, :story, :image, :license_info_4_error, :addition_error_msg
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   serialize :license_type #used during setup, this will not be updated after setup all licenses will be accessed via @broker.setup_broker.licenses
   serialize :product_ids
@@ -56,7 +56,7 @@ class Broker < ActiveRecord::Base
   validate :check_passwords_match, on: :create, if: :password_signup?
   def check_passwords_match
     if password !=password_confirmation
-      errors.add(:password,"passwords do not match")
+      errors.add(:addition_error_msg,"Passwords do not match")
     end
   end
   # return true if it's not signed up through provider
@@ -86,19 +86,39 @@ class Broker < ActiveRecord::Base
   end
 
 
-  validates :first_name, :last_name, :email, :company_name, :company_location, :title, presence:true, on: :update, if: :info_bool?
-  def info_bool?
-    if @validate_email_bool
-
+  validates :first_name, :last_name, :email, :company_name, :company_location, :title, presence:true, on: :update, if: :basic_info_bool?
+  validates :email, presence:true, on: :update, if: :send_email_validation?
+  def send_email_validation?
+    @send_email_validation_bool==true
+  end
+  def basic_info_bool?
+    if @validate_email_bool==true
+      #when validating email, will not validate when update Broker
       return false
     else
       @basic_info_bool==true
     end
   end
-  validate :ensure_email_validated, on: :update, if: :info_bool?
+  def confirm_email?(validation_code)
+    if !validation_code.empty? 
+      broker=Broker.find_by_email_confirmation_token(validation_code)
+      if broker && (broker.id == self.id)
+        update_attribute(:email_authen, true)
+        success=true
+      end
+    end
+    unless success
+      errors[:addition_error_msg]="Validation code does not match! Email failed to validate."
+      return false
+    else
+      return true
+    end
+
+  end
+  validate :ensure_email_validated, on: :update, if: :basic_info_bool?
   def ensure_email_validated 
     unless email_authen==true
-      errors.add(:email, "Need to validate email")
+      errors.add(:addition_error_msg, "You need to validate your email.")
     end
   end
   validate :check_licensetype_not_empty, on: :update, if: :licensetype_bool?
@@ -121,10 +141,8 @@ class Broker < ActiveRecord::Base
 
   def check_products_not_empty
     self.product_ids=product_ids-[""]
-  #  puts "here"
-    if product_ids.empty? 
-      
-      errors.add(:products_bool, "You need to select a vehicle")
+    if product_ids.empty?     
+      errors.add(:addition_error_msg, "You need to select a vehicle")
     end 
   end
   before_save :encrypt_password
@@ -197,9 +215,15 @@ class Broker < ActiveRecord::Base
   def evaluate_and_reset_email_authen(email)
   # reset email authen if a new email is set
     if email
-      unless self.email == email
+      if self.email == email
+        return false
+      else
         self.email_authen=false
+        return true
       end
+    else
+      self.email_authen=false
+      return true
     end
   end
   def steps

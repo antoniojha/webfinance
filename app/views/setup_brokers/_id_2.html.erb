@@ -1,3 +1,4 @@
+<%provide :title, "|Register Page 2"%>
 <h1>Upload Your ID (2 of 8)</h1>
 
 <div style="width:85%;text-align:left;padding-top:10px;">
@@ -7,18 +8,16 @@
   <p><%=f.label "Driver License Upload"%></p>
   <p><i>Only accepts (.jpg .jpeg .gif .png .pdf) file.</i></p>
   <%=f.hidden_field :id_image%>
-  <p><%=f.file_field :id_image, class:"form-control"%></p>
-  
-  <% if @broker.id_image.file.filename && !@broker.errors.any?%>
-      
-        <b>Uploaded:</b>
-        <%= link_to "View License", download_driver_license_path(@broker)%>
-        <div style="float:right;">
-          <%=link_to "remove", remove_id_path(@broker)%>
-        </div>
+  <p><%=f.file_field :id_image, class:"form-control"%></p> 
+    <% if (!@broker.id_image.file.blank?) && !@broker.errors.any?%>
+    <b>Uploaded:</b>
+    <%= link_to "View License", download_driver_license_path(@broker)%>
+    <div style="float:right;">
+      <%=link_to "remove", remove_id_path(@broker)%>
+    </div>
     <%else%>
-  
-  <%=f.submit "Upload", name:"upload_id", :class=>"btn btn-lg btn-default"%>
+      
+      <%=f.submit "Upload", name:"upload_id", :class=>"btn btn-lg btn-default"%>
     <%end%>
   <%end%><br><br>
   <%= form_for :broker, :url=> setup_broker_path(@broker), :html => { :method => :put} do|f|%>
@@ -27,7 +26,7 @@
     <tr>
       <td width="48%"><%=f.submit "Previous", name:"back", :class=>"btn btn-lg btn-success", style:"width:100%;"%></td>
       <td width="4%"></td>
-      <td width="48%"><%=f.submit "Next",name:"next_from_pg2",:class=>"btn btn-lg btn-success", style:"width:100%;"%></td>
+      <td width="48%"><%=f.submit "Next",name:"next",:class=>"btn btn-lg btn-success", style:"width:100%;"%></td>
     </tr>
   </table>
   <%end%>
