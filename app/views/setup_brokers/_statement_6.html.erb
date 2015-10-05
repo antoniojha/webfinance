@@ -1,5 +1,8 @@
 <%provide :title, "|Register Page 6"%>
-<h1>Your Skills and Statement (6 of 8)</h1>
+<h1>Your Skills and Introduction (6 of 8)</h1>
+<div class="alert alert-info">
+  <p>The following two fields are not required (You may skip this page if you want).</p>
+</div>
 <div align="left" style="width:85%;padding-top:10px;">
 <%= form_for :broker, :url => setup_broker_path(@broker), :html => { :method => :put} do|f|%>
 

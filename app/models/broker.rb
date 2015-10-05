@@ -20,7 +20,8 @@ class Broker < ActiveRecord::Base
   has_many :broker_product_rels, dependent: :destroy
   has_many :products, through: :broker_product_rels
   has_many :activities, as: :author, dependent: :destroy
-  has_one :all_customer, as: :customer, dependent: :destroy  
+  has_one :all_customer, as: :customer, dependent: :destroy
+ 
   
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   # the following uses Regex (lookahead assertion) to ensure there is at least a lower case and upper case letter, a digit, and a special character (non-word character)
@@ -142,7 +143,7 @@ class Broker < ActiveRecord::Base
   def check_products_not_empty
     self.product_ids=product_ids-[""]
     if product_ids.empty?     
-      errors.add(:addition_error_msg, "You need to select a vehicle")
+      errors.add(:addition_error_msg, "You need to select at lease one vehicle")
     end 
   end
   before_save :encrypt_password

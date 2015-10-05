@@ -14,7 +14,11 @@ class Broker::SessionsController < Broker::AuthenticatedController
       respond_to do |format|
         if broker && broker.has_password?(params[:session][:password])
           broker_log_in(broker)
-          format.html{ friendly_redirect broker}
+          if broker.setup_completed? 
+            format.html{ friendly_redirect broker}
+          else
+            format.html{ redirect_to edit_setup_broker_path(broker)}
+          end
         else
           @broker=Broker.new
           flash.now[:danger]="Invalid username or email/password combination"

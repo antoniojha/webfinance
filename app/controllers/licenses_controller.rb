@@ -3,9 +3,9 @@ class LicensesController < ApplicationController
   before_action :set_license, only:[:destroy]
   def create
     @license=@broker.setup_broker.licenses.build(license_params)
-    @license.license_type_display="test"
 
     if @license.save
+   
       if params[:registration]
         redirect_to edit_setup_broker_path(@broker)
       else

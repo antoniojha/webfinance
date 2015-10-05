@@ -1,16 +1,15 @@
 <% content_for :title do %>|Broker Login<%end%>
-<h3>Financial Rep Login</h3>
-
+<h1>Financial Rep Login</h1>
+<br>
 <%=render "broker/sessions/error"%>
 <%= form_for :session, url:broker_signin_path do |f|%>
-	
 <table width="100%">
     <tr>
-      <td width="60%">
-        <table width="90%">
+      <td width="60%" style="padding:10px;">
+        <table width="95%">
           <tr>
-            <td width="30%"><%= f.label :name_or_email, "Username or Email"%></td>
-            <td width="70%"><%= f.text_field :name_or_email, {:class=>'form-control'}%></td>
+            <td width="40%"><%= f.label :name_or_email, "Username or Email"%></td>
+            <td width="60%"><%= f.text_field :name_or_email, {:class=>'form-control'}%></td>
           </tr>
           <tr class="blank_row"></tr>
           <tr>
@@ -19,32 +18,38 @@
           </tr>
           <tr class="blank_row"></tr>
         </table>
-        <table width="90%">
+        <table width="95%">
           <tr>
-            <td width="30%"><%= f.submit "Login", :class=>'btn btn-primary'%></td>
-            <td width="70%"><%= f.check_box(:remember) %> &nbsp Remember login on this computer?</td>
+            <td width="40%" style="padding:10px;"></td>
+            <td width="60%"><%= f.submit "Login", class:"btn btn-primary", style:"width:100%;"%></td>
           </tr>
           <tr class="blank_row"></tr>
           <tr>
-            <td></td>
-            <td>New User? <%= link_to 'Sign Up Now!', broker_signup_path%></td>
+            <td colspan=2><%= f.check_box(:remember) %> &nbsp <span style="font-size:1.2em;">Remember login on this computer?</span></td>
+          </tr>
+          <tr class="blank_row"></tr>
+          <tr>
+            <td colspan=2><span style="font-size:1.4em;">New User? <%= link_to 'Sign Up Now!', broker_signup_path%></span></td>
           </tr>
         </table>
       </td>
       <td style="vertical-align: text-top;" width="40%">
         <table>
           <tr>
-            <td><b>Or sign in through Linkedin</b></td>
+            <td><span style="font-size:1.3em;">Or sign in through the following social media:</span></td>
           </tr>
           <tr class="blank_row"></tr>
           <tr>
             <td>
               <table>
                 <tr>
-                  <td><%= link_to image_tag("twitter_icon.png"), twitter_path(broker:true)%></td>
-                  <td><%= link_to image_tag("googleplus_icon.png"), googleplus_path(broker:true)%></td>
-                  <td><%= link_to image_tag("fb_icon.jpg"), facebook_path(broker:true)%></td>
-                  <td><%= link_to image_tag("linkedin_icon.png"), linkedin_path(broker:true)%></td>
+                  <td style="padding:5px;">
+                    <%= link_to image_tag("twitter_icon.png", size:"40x40"), twitter_path(broker:true)%>
+                  </td>
+                  <td style="padding:5px;"><%= link_to image_tag("googleplus_icon.png", size:"40x40"), googleplus_path(broker:true)%>
+                  </td>
+                  <td style="padding:5px;"><%= link_to image_tag("fb_icon.png", size:"40x40"), facebook_path(broker:true), size:"20x20"%></td>
+                  <td style="padding:5px;"><%= link_to image_tag("linkedin_icon.png", size:"40x40"), linkedin_path(broker:true)%></td>
                 </tr>
               </table>
             </td>

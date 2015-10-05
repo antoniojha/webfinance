@@ -40,21 +40,19 @@ en:
         check_term_of_use: ""
         license_info_4_error: ""
         products_bool: ""
-      licenses:
-    #    base: ""
-        picture: "Attachment(s)"
-        license_number: "License number(s)"
+        ad_statement: "Introduction statement"
+      financial_stories:
+        title: "Title"
+        description: "Story content"
       license:
-        license_type: ""
-        license_number: ""
+        license_image: "Attachment"
+        license_number: "License number"
       broker_request:
         complement_requests: ""
       private_message:
         receiver_customer_id: ""
     errors:
- 
       models:
-   
         broker:
           attributes:
             check_term_of_use:

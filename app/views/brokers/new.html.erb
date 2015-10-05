@@ -32,3 +32,17 @@
   </tr>
 </table>
 <%end%>
+<div style="text-align:left; padding-top:20px; width:70%;">
+  <p style="font-size:1.3em;">Or sign up through the following social media:</p>
+  <table>
+    <tr>
+      <td style="padding:5px;">
+        <%= link_to image_tag("twitter_icon.png", size:"40x40"), twitter_path(broker:true)%>
+      </td>
+      <td style="padding:5px;"><%= link_to image_tag("googleplus_icon.png", size:"40x40"), googleplus_path(broker:true)%>
+      </td>
+      <td style="padding:5px;"><%= link_to image_tag("fb_icon.png", size:"40x40"), facebook_path(broker:true), size:"20x20"%></td>
+      <td style="padding:5px;"><%= link_to image_tag("linkedin_icon.png", size:"40x40"), linkedin_path(broker:true)%></td>
+    </tr>
+  </table>
+</div>

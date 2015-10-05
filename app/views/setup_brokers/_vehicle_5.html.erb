@@ -3,13 +3,13 @@
 <div style="width:85%;text-align:left;">
 <%= form_for :broker, :url => setup_broker_path(@broker), :html => { :method => :put} do|f|%>
 <%= hidden_field_tag "broker[product_ids][]", nil %>
-  <%Order::FINANCIAL_CATEGORIES_HASH.each do |category|%>
+  <%Order::FINANCIAL_CATEGORIES_HASH.each do |type, category|%>
 
     <table width="100%">
       <tr>
-        <td colspan=4><h3><%=category[1]%></h3></td>
+        <td colspan=4><h3><%=category%></h3></td>
       </tr>
-      <% Product.where(vehicle_type:category[0]).each_with_index do |p,index|%>
+      <% Product.where(vehicle_type:type).each_with_index do |p,index|%>
         <% if index%2 ==0%>
           <tr>
             <td width="10%"><%=f.check_box("product_ids", {:multiple => true, size:"25x25"}, p.id, nil)%></td>

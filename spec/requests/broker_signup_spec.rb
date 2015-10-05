@@ -1,5 +1,5 @@
 require 'rails_helper'
-if false
+
 describe "broker sign up and 1st Register Page" do
   before do
     visit broker_signup_path
@@ -165,6 +165,7 @@ describe "at 2nd page" do
     @broker=FactoryGirl.create(:complete_broker)
     @broker.step="id_2"
     @broker.save
+    set_broker_id_session(@broker)
     visit edit_setup_broker_path(@broker)
   end
   it "should be at 2nd page" do
@@ -243,12 +244,12 @@ describe "at 2nd page" do
     end
   end
 end
-end
 describe "at 3rd page" do
   before do
     @broker=FactoryGirl.create(:complete_broker)
     @broker.step="license_3"
     @broker.save
+    set_broker_id_session(@broker)
     visit edit_setup_broker_path(@broker)
   end
   it "should be at 3rd page" do
@@ -281,19 +282,21 @@ describe "at 4th page" do
     @broker.license_type=["Life Insurance"]
     @broker.save
     @broker.reload
+    set_broker_id_session(@broker)
     visit edit_setup_broker_path(@broker)
   end  
-  it "should proceed to the next page" do
+  it "should be at 4th page" do
     expect(page).to have_content("Edit Your Licenses")
   end  
   describe "if no license is uploaded for either license" do
-    it "should render error" do
-      click_button "Upload"
+    it "should render error when clicking Upload" do
+      expect{click_button "Upload"}.to change(License, :count).by(0)
       expect(page).to have_selector(:css,'div.alert.alert-danger')
     end
-    it "should render error" do
-      click_button "Next"
+    it "should render error when clicking Next and not all licenses are uploaded" do
+      expect{click_button "Next"}.to change(License, :count).by(0)
       expect(page).to have_selector(:css,'div.alert.alert-danger')
+      expect(page).to have_content("All licenses should be uploaded.")
     end
   end
   it "license image shouldn't be valid" do
@@ -312,45 +315,195 @@ describe "at 4th page" do
       expect{click_button "Upload"}.to change(License, :count).by(1)
       expect(@broker.setup_broker.licenses.first).not_to eq nil 
     end
+    
+    it "should have remove and view license link" do
+      click_button "Upload"
+      expect(page).to have_link("remove")
+      expect(page).to have_link("View License")
+    end
+    it "should be able to remove license" do
+      click_button "Upload"
+      expect{click_link "remove"}.to change(License, :count).by(-1)
+    end
+    it "should proceed to page 5" do
+      click_button "Upload"
+      click_button "Next"
+      expect(page).to have_content("Select Your Financial Vehicle")
+    end
+    describe "if go back to previous page and select different vehicle" do
+      before do
+        click_button "Upload"
+        click_button "Previous"
+        @license=License.last
+      end
+      it "check license is valid before unchecking license type" do
+        expect(@license).not_to eq nil
+      end
+      it "should delete the previous license" do
+        uncheck "broker_license_type_life_insurance_license"
+        check "broker_license_type_series_7"
+        click_button "Next"
+        expect { License.find(@license.id) }.to raise_error
+      end
+        
+    end
   end
 end
-if false
-describe "Broker Signup" do
-  describe " valid signup" do
-    let(:broker){ FactoryGirl.build(:broker)}
+describe "at 5th page" do
+  before do
+    @broker=FactoryGirl.create(:complete_broker)
+    @broker.step="vehicle_5"
+    @broker.save
+    @broker.reload
+    set_broker_id_session(@broker)
+    # create Product
+    index=1
+    (1..7).each do |t|
+      3.times do                   
+        Product.create(name:"name#{index}",description:"description#{index}", vehicle_type:t.to_s)
+        index=index+1
+      end
+    end
+    visit edit_setup_broker_path(@broker)
+  end  
+  it "should be at 5th page" do
+    expect(page).to have_content("Select Your Financial Vehicle")
+  end  
+  it "should go to statement_6 page" do
+    check "broker_product_ids_2"
+    click_button "Next"
+    expect(page).to have_content("Your Skills and Introduction")
+  end
+  it "should show error if no vehicle is selected" do
+    click_button "Next"
+    expect(page).to have_content("You need to select at lease one vehicle")
+  end
+end
+describe "at 6th page" do
+  before do
+    @broker=FactoryGirl.create(:complete_broker)
+    @broker.step="statement_6"
+    @broker.save
+    @broker.reload
+    set_broker_id_session(@broker)
+    visit edit_setup_broker_path(@broker)
+  end   
+  it "should not show error if none of the field is filled" do
+    click_button "Next"
+    expect(page).not_to have_selector(:css,'div.alert.alert-danger')
+    expect(page).to have_content("Your Financial Story")
+  end 
+  it "should show error if introduction statement is more than 150 characters" do
+    string="x"*151
+    fill_in "broker_ad_statement", with: string
+    click_button "Next"
+    expect(page).to have_selector(:css,'div.alert.alert-danger')
+  end
+end
+describe "at 7th page" do
+  before do
+    @broker=FactoryGirl.create(:complete_broker)
+    @broker.step="financial_story_7"
+    @broker.save
+    @broker.reload
+    set_broker_id_session(@broker)
+    Product.create(name:"name1",description:"description1", vehicle_type:1)
+    visit edit_setup_broker_path(@broker)
+  end 
+  it "should be at 7th page" do
+    expect(page).to have_content("Your Financial Story")
+  end  
+  it "should show error if none of the field is filled" do
+    click_button "Next"
+    expect(page).to have_selector(:css,'div.alert.alert-danger')
+    expect(page).to have_content("Title can't be blank")
+    expect(page).to have_content("Story content can't be blank")
+  end
+  it "should proceed to 8th page if all fields are filled" do
+    select("Protection",from:"broker_financial_stories_attributes_0_financial_category")
+    select("name1",from:"broker_financial_stories_attributes_0_product_id")       
+    fill_in "broker_financial_stories_attributes_0_title", with: "example title"
+    fill_in "broker_financial_stories_attributes_0_description", with: "example story"  
+    expect{click_button "Next"}.to change(FinancialStory, :count).by(1)
+    expect(page).to have_content("Term of Condition")
+  end
+end
+describe "at 8th page" do
+  before do
+    @broker=FactoryGirl.create(:complete_broker)
+    @broker.step="term_of_use_8"
+    @broker.save
+    @broker.reload
+    @setup_broker=@broker.build_setup_broker
+    @setup_broker.save
+    set_broker_id_session(@broker)
+    @setup_broker.licenses.create(license_type:1)
+    visit edit_setup_broker_path(@broker)
+  end 
+  it "should be at 8th page" do
+    expect(page).to have_content("Term of Condition")
+  end 
+  it "should show error if term of use checkbox is not checked" do
+    click_button "Submit"
+    expect(page).to have_selector(:css,'div.alert.alert-danger')
+  end
+  it "should proceed to broker profile after successful submission" do
+    check "broker_check_term_of_use"
+    click_button "Submit"
+    @broker.reload
+    expect(@broker.setup_completed?).to eq true
+    expect(page.title).to eq ("RichRly|Broker Profile") 
+  end
+end
+describe "access other's registration" do
+  before do 
+    @broker=FactoryGirl.create(:complete_broker)
+    @other_broker=FactoryGirl.create(:complete_broker_other)
+    @broker.step="term_of_use_8"
+    @broker.save
+    @broker.reload
+    set_broker_id_session(@broker)
+  end
+  it "the two brokers shouldn't be equal to each other" do
+    expect(@broker.id).not_to eq @other_broker.id
+  end
+  it "should be able to access your own register page" do
+    visit edit_setup_broker_path(@broker)
+    expect(page).to have_content("Term of Condition")
+  end
+  it "shouldn't be able to access other's register page" do
+    visit edit_setup_broker_path(@other_broker)
+  #  expect(page).not_to have_content("Term of Condition")
+    expect(page).to have_content("Unauthorized access!")
+  end
+  
+end
+describe "when logging in given registration setup is not completed" do
+  before do
+    @broker=FactoryGirl.create(:complete_broker)
+    @broker.step="term_of_use_8"
+    @broker.save
+    @broker.reload
+    visit broker_login_path
+  end
+  it "should direct to regisration page" do
+    fill_in "session_name_or_email", with:@broker.email
+    fill_in "session_password", with:@broker.password
+    click_button "Login"
+    expect(page).to have_content("Term of Condition")
+  end
+  it "shouldn't allow access to broker register page if not login" do
+    visit edit_setup_broker_path(@broker)
+    expect(page).to have_content("Unauthorized access!")
+  end
+  describe "to access to other part of the profile without registering first" do
     before do
-      visit register_signup_path
-      fill_in "broker_username", :with=>broker.username
-      fill_in "broker_password", :with=>broker.password
-      fill_in "broker_password_confirmation", :with=>broker.password 
-    end   
-    it "should visit signup page" do
-      expect(page).to have_content('Sign Up')
+      set_broker_id_session(@broker)
+      visit broker_path(@broker)
     end
-    it "should create broker" do
-      expect { click_button "Create Account" }.to change(Broker, :count).by(1)  
-    end
-    it "should redirect to broker edit page to prompt broker to complete profile after sign up" do 
-      click_button "Create Account"
-      expect(page).to have_content("Update Profile")
-    end    
-  end
-  describe "invalid signup" do
-    let(:broker){ FactoryGirl.build(:broker)}
-    before {visit register_signup_path}
-    it "should display validation error" do
-      expect(page).to have_content('Sign Up')
-      click_button "Create Account"
-      expect(page).to have_content('error')
-      expect(page).to have_selector(:css,'div.alert.alert-danger', :text=>'The form contains')
-    end
-    it "should display error if password don't match" do
-      fill_in "broker_password", with: broker.username
-      fill_in "broker_password_confirmation", with: "random"
-      click_button "Create Account"
-      expect(page).to have_content('error')
-      expect(page).to have_content("passwords do not match")
+    it "should redirect to registration page" do
+      expect(page).to have_content("Please finish registering.")
+      expect(page).to have_content("Term of Condition")
     end
   end
-end
 end

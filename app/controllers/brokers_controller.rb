@@ -10,6 +10,7 @@ class BrokersController < Broker::AuthenticatedController
     
     @broker=Broker.new(broker_params)
     if @broker.save
+      session[:broker_id]=@broker.id
       redirect_to edit_setup_broker_path(@broker)
     else
       render "brokers/new"

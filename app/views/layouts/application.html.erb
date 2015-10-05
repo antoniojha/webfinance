@@ -45,8 +45,8 @@
           </ul>
           <% if user_logged_in?%>
             <%=render 'layouts/user_header'%>
-          <%elsif broker_logged_in?%>
-            <%=render 'layouts/broker_header'%>
+          <%elsif broker_logged_in?%> 
+            <%=render 'layouts/broker_header'%>       
           <%end%>
         </div>
       </div>
@@ -59,9 +59,11 @@
       </div>     
     <%end%>   
     <%if broker_logged_in?%>
+      <% if current_broker.setup_completed?%>
       <div class="navbar-default navbar-custom2 navbar-static-top" role="navigation">
         <%=render partial:"layouts/top_menu",locals:{object:current_broker,type:"brokers"} %>
-      </div>     
+      </div>    
+      <%end%>
     <%end%>   
     <%= yield(:banner)%>
     <div align="center" class="body1">

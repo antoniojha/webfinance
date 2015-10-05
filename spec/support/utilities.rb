@@ -26,6 +26,12 @@ def setup_broker_requests(broker)
     end
 
 end
+def set_broker_id_session(broker)
+  visit broker_login_path
+  fill_in "Username", with: broker.username
+  fill_in "Password", with: broker.password
+  click_button "Login"
+end
 def broker_login(broker)
   visit broker_login_path
   fill_in "Username", with: broker.username
@@ -45,7 +51,7 @@ def background_nav_link(i)
   names[i-1]
 end
 
- def full_name(person)
-   name=person.first_name.capitalize+ " "+person.last_name.capitalize
-   return name
- end
+def full_name(person)
+  name=person.first_name.capitalize+ " "+person.last_name.capitalize
+  return name
+end

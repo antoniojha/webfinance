@@ -32,7 +32,11 @@ module AuthenticationInHelper
       broker=Broker.from_omniauth(env['omniauth.auth'])
       if broker.save
         broker_log_in(broker)
-        friendly_redirect(broker,"Signed in.")
+        unless broker.setup_completed?
+          redirect_to broker_setup_path(broker)
+        else
+          friendly_redirect(broker,"Signed in.")
+        end
       else
         @broker=broker
         render "broker/sessions/new"

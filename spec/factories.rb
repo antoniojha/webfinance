@@ -35,8 +35,8 @@ FactoryGirl.define do
     company_location "39-07 Prince St, Suite 6A-3"
     title "Associate"
     setup_completed? true
- #   license_type ["Life Insurance","Series 3"]
- #   product_ids ["1","2","3"]
+    license_type ["Life Insurance","Series 3"]
+    product_ids [1,2,3]
     
   end
   factory :complete_broker, class:Broker do
@@ -52,6 +52,19 @@ FactoryGirl.define do
     title "Associate"
     setup_completed? false   
   end
+  factory :complete_broker_other, class:Broker do
+    username "testing_other"
+    password "SecretPassword1?_other"
+    password_confirmation "SecretPassword1?_other"
+    email "antoniojha_other@gmail.com"
+    email_authen true
+    first_name "Broker First Name"
+    last_name "Broker Last Name"
+    company_name "World Financial Group"
+    company_location "39-07 Prince St, Suite 6A-3"
+    title "Associate"
+    setup_completed? false   
+  end  
   factory :incomplete_broker, class:Broker do
     username "testing"
     password "SecretPassword1?"

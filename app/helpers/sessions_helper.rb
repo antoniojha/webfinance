@@ -162,6 +162,7 @@ module SessionsHelper
   def redirect_to_broker_setup
     if current_broker
       unless current_broker.setup_completed?
+        flash[:danger]="Please finish registering."
         redirect_to edit_setup_broker_path(current_broker)
       end
     end

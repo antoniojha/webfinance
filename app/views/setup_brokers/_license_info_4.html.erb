@@ -4,57 +4,58 @@
   <div style="width:100%;" class="alert alert-info error-message">To remove or add licenses go to the previous page to check or uncheck license types.</div>
  
   <% @broker.license_type.each do |l|%>
-  <%@licenses.each do |t|%>
-    <%if t.license_type==l%>
-      <%@license=t%>
-    <%end%>
-  <%end%>
-    <%=render partial: "licenses/license_error", locals:{license:@license}%>
-    <%= form_for @license do|f|%>
-      <table width="100%">
-        <tr>
-          <td colspan=2>
-            <h4><%=f.object.license_type%></h4>
-            <%=f.hidden_field :license_type, value:f.object.license_type%>
-            <%=hidden_field_tag :broker_id, @broker.id%>
-          </td>
-        </tr>
-        <tr>
-          <td width="40%"><%= f.label "License Number" %></td>
-          <td width="60%"><%= f.text_field :license_number,{class:'form-control'} %></td>
-        </tr>
-        <tr class="blank_row"></tr>
-        <tr>
-          <td><%= f.label "Expiration Date" %></td>
+    <%@licenses.each do |t|%>
+      <%if t.license_type==l%>
+        <%@license=t%>
+        <%=render partial: "licenses/license_error", locals:{license:@license}%>
+        <%= form_for @license do|f|%>
+          <table width="100%">
+            <tr>
+              <td colspan=2>
+                <h4><%=f.object.license_type%></h4>
+                <%=f.hidden_field :license_type, value:f.object.license_type%>
+                <%=hidden_field_tag :broker_id, @broker.id%>
+              </td>
+            </tr>
+            <tr>
+              <td width="40%"><%= f.label "License Number" %></td>
+              <td width="60%"><%= f.text_field :license_number,{class:'form-control'} %></td>
+            </tr>
+            <tr class="blank_row"></tr>
+            <tr>
+              <td><%= f.label "Expiration Date" %></td>
 
-          <td><%= f.date_select :expiration_date,{start_year:Date.current.year, end_year:2020,order: [:day, :month, :year]}, {style:"width:32%;"} %></td>
-        </tr>
-        <tr class="blank_row"></tr>
-        <tr>
-          <td><%= f.label "Upload License" %></td>
-          <td><%= f.hidden_field :license_image%>
-            <%= f.file_field :license_image, {class:'form-control'} %></td>
-        </tr>
-        <tr class="blank_row"></tr>
-        <% if f.object.license_image.file && f.object.license_image.file.filename && !f.object.errors.any?%>
-        <tr>
-          <td>
-            <b>File Uploaded:</b>
-            <%= link_to "View License", download_broker_license_path(f.object.id)%>
-          </td>
-          <td>
-            <%= link_to "remove", license_path(id:f.object.id,broker_id:@broker.id,registration:true),method: :delete%>
-          </td>
-        </tr>
-        <%else%>
-        <tr>
-          <td><%=f.submit "Upload", name:"registration", :class=>"btn btn-primary"%></td>
-          <td></td>
-        </tr>
+              <td><%= f.date_select :expiration_date,{start_year:Date.current.year, end_year:2020,order: [:day, :month, :year]}, {style:"width:32%;"} %></td>
+            </tr>
+            <tr class="blank_row"></tr>
+            <tr>
+              <td><%= f.label "Upload License" %></td>
+              <td><%= f.hidden_field :license_image%>
+                <%= f.file_field :license_image, {class:'form-control'} %></td>
+            </tr>
+            <tr class="blank_row"></tr>
+            <% if f.object.license_image.file && f.object.license_image.file.filename && !f.object.errors.any?%>
+            <tr>
+              <td>
+                <b>File Uploaded:</b>
+                <%= link_to "View License", download_broker_license_path(f.object.id)%>
+              </td>
+              <td>
+                <%= link_to "remove", license_path(id:f.object.id,broker_id:@broker.id,registration:true),method: :delete%>
+              </td>
+            </tr>
+            <%else%>
+            <tr>
+              <td><%=f.submit "Upload", name:"registration", :class=>"btn btn-primary"%></td>
+              <td></td>
+            </tr>
+            <%end%>
+            <tr class="blank_row"></tr>
+          </table>
         <%end%>
-        <tr class="blank_row"></tr>
-      </table>
+      <%end%>
     <%end%>
+    
   <%end%>
   <%= form_for :broker, :url=> setup_broker_path(@broker), :html => { :method => :put} do|f|%>
     <%=f.hidden_field :id_image%>

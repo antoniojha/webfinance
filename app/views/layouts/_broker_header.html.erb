@@ -1,3 +1,4 @@
+<% if current_broker.setup_completed?%>
 <ul class="navbar-nav nav pull-right">
  
   <li class="dropdown" id="broker_message">
@@ -19,3 +20,10 @@
     </ul>
   </li>  
 </ul>
+<%else%>
+<ul class="navbar-nav nav pull-right">
+  <li class="dropdown">
+    <%= link_to 'Log Out',broker_logout_path, method: "delete", id:"log_out"%>
+  </li>
+</ul>
+<%end%>

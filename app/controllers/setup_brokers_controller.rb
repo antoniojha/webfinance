@@ -1,6 +1,7 @@
 class SetupBrokersController < ApplicationController
   before_action :set_broker, only:[:edit,:update]
-
+  before_action :authorize_broker, only:[:edit]
+  before_action :redirect_if_registered, only:[:edit]
   def create 
   #  raise "error"
     # this breaks the MVC model but is used to create licenses during broker setup. A dummy variable @setup_broker is used to generate forms that will have the accepted nested attributes. However, no SetupBroker object is created or store in database at all.
@@ -35,7 +36,6 @@ class SetupBrokersController < ApplicationController
         @licenses=@setup_broker.licenses
       else
         @setup_broker=@broker.setup_broker
-        @setup_broker.save
         @broker.add_or_remove_license
         @licenses=@setup_broker.licenses
       end
@@ -144,6 +144,18 @@ class SetupBrokersController < ApplicationController
     redirect_to edit_setup_broker_url(@broker)
   end
   private
+  def authorize_broker
+    @broker=Broker.find(params[:id])
+    unless session[:broker_id]==@broker.id
+      flash[:danger]="Unauthorized access!" 
+      redirect_to broker_login_path
+    end
+  end
+  def redirect_if_registered
+    if (@broker.setup_completed? == true)
+      redirect_to @broker, notice: "Your registration has been submitted. Please wait for it to be processed."
+    end
+  end
   def set_broker
     if params[:setup_broker] && params[:setup_broker][:broker_id]
       @broker=Broker.find(params[:setup_broker][:broker_id])
