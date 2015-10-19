@@ -9,7 +9,12 @@ Rails.application.routes.draw do
   controller :private_messages do
     get "private_message/sent" => :sent, as: "private_message_sent"
   end
-  resources :activities
+  namespace :broker do
+    resources :activities
+  end
+  namespace :user do
+    resources :activities
+  end  
   controller :activities do
     get "news" => :index
     
