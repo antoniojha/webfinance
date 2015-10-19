@@ -1,0 +1,22 @@
+<div class="panel panel-default" id=<%="fin_story_display_#{story.id}"%>>
+  <div class="panel-body" align="left">
+    <table width="100%">
+      <tr>
+        <td width="95%">
+          <h4>
+            <span class="label label-success">Upvote: <%=story.votes%></span>
+            <%=link_to "Title:#{story.title}", story%>
+          </h4>
+        </td>
+        <td width="5%" style="text-align:right;">
+          <a href="#" class="fin_story_edit" id=<%=story.id%>>
+            <span class="glyphicon glyphicon-edit"></span>
+          </a>
+        </td>
+      </tr>
+    </table>       
+    <p><b>Financial Vehicle:</b> <%=story.product.name%></p>
+    <p><b>Category:</b> <%=Order::FINANCIAL_CATEGORIES_HASH[story.financial_category]%></p>
+    <p>Posted at <%=story.updated_at.strftime("%b,%y at %l:%M %P")%></p>
+  </div>
+</div>

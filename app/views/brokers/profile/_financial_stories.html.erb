@@ -1,0 +1,13 @@
+<div class="panel panel-default">
+  <div class="panel-body" align="left">
+    <h4>Financial Stories
+      <a href="#" class="financial_story_add">
+        <span class="glyphicon glyphicon-plus"></span>
+      </a>
+    </h4>
+    <p><%=@broker.first_name%> has posted <%=pluralize(@broker.financial_stories.count, "financial story")%></p>
+    <%@broker.financial_stories.order(created_at: :desc).each do |story|%>
+      <%=render partial:"brokers/profile/fin_story_display", locals:{story:story}%>
+    <%end%>
+  </div>
+</div>

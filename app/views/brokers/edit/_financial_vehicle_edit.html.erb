@@ -1,0 +1,30 @@
+<h3>Update Vehicles</h3>
+<div id="financial_vehicle_error_msg">
+
+</div>
+
+<%= form_for @broker, html:{id:"vehicle_form"} do|f|%>
+  <%= hidden_field_tag "broker[product_ids][]", nil %>
+  <%= hidden_field_tag "edit_products", true%>
+  <%Order::FINANCIAL_CATEGORIES_HASH.each do |category|%>
+    <table width="100%">
+      <tr>
+        <td colspan=4><h3><%=category[1]%></h3></td>
+      </tr>
+      <% Product.where(vehicle_type:category[0]).each_with_index do |p,index|%>
+        <% if index%2 ==0%>
+          <tr>
+            <td width="10%"><%=f.check_box("product_ids", {:multiple => true, size:"25x25"}, p.id, nil)%></td>
+            <td width="40%"><%=p.name%></td>
+        <%else%>
+            <td width="10%"><%=f.check_box("product_ids", {:multiple => true, size:"25x25"}, p.id, nil)%></td>
+            <td width="40%"><%=p.name%></td>
+          </tr>
+        <%end%>
+      <%end%>
+    </table>
+  <%end%>
+
+  <br>
+  <%=f.submit "Update Vehicles",:class=>"btn btn-lg btn-default"%>
+<%end%>

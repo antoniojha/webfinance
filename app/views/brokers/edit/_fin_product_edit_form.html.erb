@@ -1,0 +1,39 @@
+
+  <div style="text-align:left;">
+    <p>Add financial products you are licensed to sell to be displayed on your profile.</p>
+  </div>
+
+  <table width="100%" style="text-align:left;">
+    <%=form_for @fin_product do |f|%>  
+    <tr>
+      <td>Company:</td>
+      <td><%=f.select :company_id,Company.all.collect {|c| [ c.name, c.id ] },{},{style:"width:100%;"}%></td>
+    </tr>
+    <tr class="blank_row"></tr>
+    <tr>
+      <td>Financial Vehicle:</td>
+      <td><%=f.select :product_id, @broker.products.collect{|p| [p.name,p.id]},{},{style:"width:100%;"}%></td>
+    </tr>  
+    <tr class="blank_row"></tr>
+    <tr>
+      <td>Name:</td>
+      <td><%=f.text_field :name, {style:"width:100%;"}%></td>
+    </tr>
+    <tr class="blank_row"></tr>
+    <tr>
+      <td>Description:</td>
+      <td><%=f.text_area :description, rows:"5", style:"width:100%;"%></td>
+    </tr>  
+    <tr class="blank_row"></tr>
+    <tr>
+      <td><%=f.submit "Edit"%></td>
+      <td><%=f.hidden_field :broker_id, value: @broker.id%></td>
+    </tr>
+    <%end%>
+    <tr>
+      <td></td>
+      <td><div style="position:relative;top:-25px;"><%=button_to "Delete", {controller:"financial_products",action:"destroy", id:@fin_product.id},method: :delete, form_class:"delete_fin_product_form"%></div></td>
+    </tr>
+  </table>
+
+

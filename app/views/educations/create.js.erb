@@ -1,1 +1,7 @@
-$("#educations").html("<%=escape_javascript render('brokers/educations')%>");
+<% unless @error==true%>
+$("#education_add_dialog_form").html("<%=escape_javascript render('brokers/modal/education_add_form')%>");
+$("#education_add_dialog_form").dialog("close");
+$("#educations").html("<%=escape_javascript render('brokers/profile/educations')%>");
+<%else%>
+$("#education_add_dialog_form #education_error_msg").html("<%=escape_javascript render partial:'brokers/profile/error', locals:{object:@education}%>");
+<%end%>

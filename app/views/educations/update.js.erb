@@ -1,1 +1,8 @@
-$("#educations").html("<%=escape_javascript render('brokers/educations')%>");
+<% unless @error==true%>
+$("#educations").html("<%=escape_javascript render('brokers/profile/educations')%>");
+$("#education_display_<%=@education.id%>").css({'background-color':'#C8C8C8'}).
+animate({'background-color':'white'},1000);
+$("#education_edit_dialog_form").dialog("close");  
+<%else%>
+$("#education_edit_dialog_form #education_error_msg").html("<%=escape_javascript render partial:'brokers/profile/error', locals:{object:@education}%>");
+<%end%>

@@ -1,0 +1,36 @@
+<div id="fin_story_error_msg">
+
+</div>
+<%@fin_story=FinancialStory.new%>
+<%=form_for @fin_story, html:{id:"fin_story_add_form"} do |f|%>
+<table width="100%" style="text-align:left;">
+  <tr>
+    <td>
+      <%=f.text_field :title,{placeholder: "Title", :style=>"width:100%;"}%>
+    </td>
+  </tr>
+  <tr class="blank_row_small"></tr>
+  <tr>
+    <td>
+      <%=f.select :financial_category, Order::FINANCIAL_CATEGORIES, {prompt:"Please Select Category"},{:style=>"width:100%;"}%>
+    </td>
+  </tr>
+  <tr class="blank_row_small"></tr>
+  <tr>
+    <td>
+      <%=f.select :product_id, Product.all.collect {|p| [ p.name, p.id ] }, {prompt:"Please Select Vehicle"},{:style=>"width:100%;"}%>
+    </td>
+  </tr>
+  <tr class="blank_row_small"></tr>
+  <tr>
+    <td>
+      <%=f.text_area :description, {placeholder: "Story Content", rows:"12", :style=>"width:100%;"}%>
+    </td>
+  </tr>
+  <tr>
+    <td><%=f.submit "Create Story"%>
+      <%=hidden_field_tag :broker_id, @broker.id%>
+    </td>
+  </tr>
+</table>
+<%end%>

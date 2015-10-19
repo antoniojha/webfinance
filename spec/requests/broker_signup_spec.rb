@@ -30,6 +30,7 @@ describe "broker sign up and 1st Register Page" do
     it "should redirect to broker edit page to prompt broker to setup" do
       expect(page).to have_content("Your Background Information")    
     end  
+
     describe "at 1st page" do
       describe "when no fields information are entered" do
         before do
@@ -45,7 +46,6 @@ describe "broker sign up and 1st Register Page" do
           expect(page).to have_content("Company name can't be blank")   
           expect(page).to have_content("Company location can't be blank") 
         end
-    
         describe "email validation" do
           describe "invalid validation- when no email is entered" do
             before do
@@ -160,6 +160,7 @@ describe "broker sign up and 1st Register Page" do
     end
   end
 end
+
 describe "at 2nd page" do
   before do
     @broker=FactoryGirl.create(:complete_broker)
@@ -437,8 +438,11 @@ describe "at 8th page" do
     @setup_broker=@broker.build_setup_broker
     @setup_broker.save
     set_broker_id_session(@broker)
-    @setup_broker.licenses.create(license_type:1)
+    @license=@setup_broker.licenses.build(license_type:1)
+    @license.save(validate: false)
     visit edit_setup_broker_path(@broker)
+    @license_num=@setup_broker.licenses.count
+    @request_num=@license_num+1
   end 
   it "should be at 8th page" do
     expect(page).to have_content("Term of Condition")
@@ -452,7 +456,16 @@ describe "at 8th page" do
     click_button "Submit"
     @broker.reload
     expect(@broker.setup_completed?).to eq true
-    expect(page.title).to eq ("RichRly|Broker Profile") 
+    expect(page.title).to eq ("RichRly|Broker Profile|Personal") 
+  end
+  it "should create current experience after successful submission" do
+    check "broker_check_term_of_use"
+    expect{click_button "Submit"}.to change(Experience, :count).by(1)   
+  end
+  it "should create one app request plus #{@license_num} license requests, a total of #{@request_num} requests" do
+    check "broker_check_term_of_use"
+    expect{click_button "Submit"}.to change(BrokerRequest, :count).by(2)      
+    
   end
 end
 describe "access other's registration" do
@@ -505,5 +518,10 @@ describe "when logging in given registration setup is not completed" do
       expect(page).to have_content("Please finish registering.")
       expect(page).to have_content("Term of Condition")
     end
+    it "should be able to log out" do
+      click_link "log_out"
+      expect(page.title).to eq "RichRly|Broker Login"
+    end
   end
 end
+

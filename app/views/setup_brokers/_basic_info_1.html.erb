@@ -2,15 +2,23 @@
 <h1>Your Background Information (1 of 8)</h1>
 <div style="width:60%;text-align:left;padding-top:10px;">
   <%= form_for :broker, :url=> setup_broker_path(@broker), :html => { :method => :put} do|f|%>
-
+  <% if @broker.uid%>
+  <%=hidden_field_tag :signup_provider_bool, true%>
+  <p><%=f.label "Username"%></p>
+  <p><%=f.text_field :username,{:class=>'form-control'}%></p>
+  <p><%=f.label "Password"%></p>
+  <p><%=f.password_field :password,{:class=>'form-control'}%></p>
+  <p><%= f.label "Password Confirmation" %></p>
+  <p><%= f.password_field :password_confirmation,{:class=>'form-control'} %></p>
+  <%end%>
   <p><%=f.label "Email"%></p>
   <p><%=f.text_field :email,{:class=>'form-control'}%></p>
-  <%=f.submit 'send validation code', name: "send_validation", class:"btn btn-primary"%>
+  <p><%=f.submit 'send validation code', name: "send_validation", class:"btn btn-primary"%></p>
   <%unless @broker.email && (@broker.email_authen==true)%>
   <p><%=f.label "Validation Code"%></p>
   <p><%=f.text_field :validation_code,{:class=>'form-control'}%>    
   </p>   
-  <%=f.submit "validate email", name:"validate_email", class:"btn btn-primary"%>
+  <p><%=f.submit "validate email", name:"validate_email", class:"btn btn-primary"%></p>
   <%else @broker.email && (@broker.email_authen==true)%>
   <div class="alert alert-success" role="alert">
     Email address is successfully validated.  

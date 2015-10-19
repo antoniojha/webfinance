@@ -1,17 +1,15 @@
 class FinancialStoriesController < ApplicationController
   before_action :set_story, only:[:show, :edit,:update,:destroy]
+  before_action :set_broker
   def create
-    @broker=Broker.find(params[:broker_id])
-    @story=FinancialStory.new(financial_story_params)
-    @story.broker_id=@broker.id
-    
+    @fin_story=@broker.financial_stories.build(financial_story_params) 
     respond_to do |format|
-      if @story.save
-        track_activity @story, @broker, nil
+      if @fin_story.save
+        track_activity @fin_story, @broker, nil
         format.js{}
         format.html{redirect_to @broker}
       else
-        @story_error=true
+        @error=true
         format.js{}
         format.html{render "brokers/show"}
       end
@@ -24,13 +22,13 @@ class FinancialStoriesController < ApplicationController
       @author=Broker.find(params[:broker_id])
     end
     if params[:upvote]
-      @vote=@author.votes.new(financial_story_id:@story.id,description:"up")
+      @vote=@author.votes.new(financial_story_id:@fin_story.id,description:"up")
     end 
     if params[:cancel_upvote]
-      @vote=@author.votes.where(financial_story_id:@story.id).first
+      @vote=@author.votes.where(financial_story_id:@fin_story.id).first
       @vote.destroy
-      @story.votes=@story.votes-1
-      @story.save
+      @fin_story.votes=@fin_story.votes-1
+      @fin_story.save
     end
     respond_to do |format|
       #this is to vote up or cancel vote by both user and broker
@@ -38,9 +36,9 @@ class FinancialStoriesController < ApplicationController
         @change_vote=true
         if params[:upvote]
           if @vote.save
-            @story.votes=@story.votes+1
-            @story.save
-            format.html{redirect_to @story}
+            @fin_story.votes=@fin_story.votes+1
+            @fin_story.save
+            format.html{redirect_to @fin_story}
             format.js{}
           else
             format.html{render "financial_stories/show"}
@@ -52,13 +50,13 @@ class FinancialStoriesController < ApplicationController
         end
       else
         # this is to update financial story by broker
-        @broker=@story.broker
-        @story_id=@story.id
-        if @story.update(financial_story_params)
-          format.html{redirect_to @story.broker}
+        @broker=@fin_story.broker
+        @story_id=@fin_story.id
+        if @fin_story.update(financial_story_params)
+          format.html{redirect_to @broker}
           format.js{}
         else
-          @story_error=true
+          @error=true
           format.html{render "brokers/show"}
           format.js{}
         end
@@ -66,18 +64,20 @@ class FinancialStoriesController < ApplicationController
     end
   end
   def edit
+    respond_to do |format|
+      format.js{}
+      format.html{redirect_to @broker}
+    end
   end
   def show
     @vote=Vote.new
-    @financial_goal_story_rel=FinancialGoalStoryRel.new
     @edit=params[:edit]
     @author= current_user || current_broker
 
   end
   def destroy
-    @broker=@story.broker
-    @story_id=@story.id
-    @story.destroy
+    @story_id=@fin_story.id
+    @fin_story.destroy
     
     respond_to do |format|
       format.js{}
@@ -93,8 +93,11 @@ class FinancialStoriesController < ApplicationController
   def financial_story_params
     params.require(:financial_story).permit(:title,:financial_category,:product_id,:description)
   end
+  def set_broker
+    @broker=current_broker
+  end
   def set_story
-    @story=FinancialStory.find(params[:id])
+    @fin_story=FinancialStory.find(params[:id])
   end
 
 end

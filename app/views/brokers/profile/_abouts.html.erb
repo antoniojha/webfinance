@@ -1,0 +1,36 @@
+<div class="panel panel-default">
+  <div class="panel-body" align="left">
+
+    <div class="about_form" style="display: none;">
+      <%=form_for @broker, html:{id:"about_form"} do |f|%>
+      <table width="100%">
+        <tr>
+          <td style="width:50%;">         
+            <h4>About me 
+              <a href="#" class="about_edit">
+                <span class="glyphicon glyphicon-edit"></span>
+              </a>
+            </h4>     
+          </td>
+          <td style="width:50%;text-align:right;">
+            <%=f.submit "Edit"%>
+          </td>
+        </tr>
+      </table>    
+      <%=f.text_area :ad_statement, style:"width:100%;"%>    
+    <%end%>
+    </div>
+    <div class="about_display">
+      <h4>About me 
+        <a href="#" class="about_edit">
+          <span class="glyphicon glyphicon-edit"></span>
+        </a>
+      </h4>  
+        <%if @broker.ad_statement%>
+        <%=@broker.ad_statement%>
+        <%else%>
+        None.
+        <%end%>
+    </div>
+  </div>
+</div>

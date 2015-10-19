@@ -1,0 +1,100 @@
+<div>
+  <div style="float:left;">
+    <h1><%=full_name(@broker)%></h1> 
+    <h4><%=@broker.title%> at <%=@broker.company_name%></h4>    
+  </div>
+
+  <div style="float:right;overflow:auto;padding:20px;">        
+    <h4><span class="label label-primary">0 Total Upvotes</span></h4>
+  </div>
+  <div style="clear:both;"></div>
+  <div class="profile_info_form" style="display: none;">
+          
+    <%=form_for @broker, html:{id:"profile_info_form"} do |f|%>
+      <table width="100%">
+        <tr>
+          <td width="30%">Email:</td>
+          <td width="60%"><%=@broker.email%>
+           <i>(edited in profile setting)</i>
+          </td>
+          <td width="10%" style="vertical-align:top;" rowspan="2">
+            <a class="profile_info_edit" href="#" style="font-size:20px;">
+              <span class="glyphicon glyphicon-edit"></span>
+              </a>
+          </td>
+        </tr>
+        <tr>
+          <td>Title:</td>
+          <td><%=f.text_field :title, {style:"width:100%;"}%></td>
+        </tr>
+        <tr>
+          <td>Company:</td>
+          <td><%=f.text_field :company_name, {style:"width:100%;"}%></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Location:</td>
+          <td><%=f.text_field :company_location, {style:"width:100%;"}%></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Phone Number (Work):</td>
+          <td><%=f.text_field :phone_number_work, {style:"width:100%;"}%></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Phone Number (Cell):</td>
+          <td><%=f.text_field :phone_number_cell, {style:"width:100%;"}%></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>URL:</td>
+          <td><%=f.text_field :web, {style:"width:100%;"}%></td>
+          <td style="text-align:right;"><%=f.submit "Edit", class:"edit_form"%></td>
+        </tr>
+      </table> 
+    <%end%>
+  </div>
+  <div class="profile_info_display">
+    <table width="100%">
+      <tr>
+        <td width="30%">Email:</td>
+        <td width="60%"><%=@broker.email%></td>
+        <td width="10%" style="vertical-align:top;" rowspan="2" >
+          <a class="profile_info_edit" href="#" style="font-size:20px;">
+            <span class="glyphicon glyphicon-edit"></span>
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td>Title:</td>
+        <td><%=@broker.title%></td>
+      </tr>
+      <tr>
+        <td>Company:</td>
+        <td><%=@broker.company_name%></td>
+        <td></td>
+      </tr>  
+      <tr>
+        <td>Location:</td>
+        <td><%=@broker.company_location%></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Phone Number (Work):</td>
+        <td><%=phone_num_display(@broker.phone_number_work)%></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Phone Number (Cell):</td>
+        <td><%=phone_num_display(@broker.phone_number_cell)%></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>URL:</td>
+        <td><%= @broker.web%></td>
+        <td></td>
+      </tr>
+    </table>
+  </div>
+</div>

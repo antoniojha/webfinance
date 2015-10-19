@@ -1,0 +1,35 @@
+<div class="panel panel-default">
+  <div class="panel-body" align="left">
+    <div class="skills_form" style="display: none;">
+      <%=form_for @broker, html:{id:"skills_form"} do |f|%>
+        <table width="100%">
+          <tr>
+            <td style="width:50%;">         
+              <h4>Skills & Specialties
+                <a href="#" class="skills_edit">
+                  <span class="glyphicon glyphicon-edit"></span>
+                </a>
+              </h4>     
+            </td>
+            <td style="width:50%;text-align:right;">
+              <%=f.submit "Edit"%>
+            </td>
+          </tr>
+        </table>    
+        <%=f.text_area :skills, style:"width:100%;"%>      
+      <%end%>
+    </div>
+    <div class="skills_display">  
+      <h4>Skills & Specialties
+        <a href="#" class="skills_edit">
+          <span class="glyphicon glyphicon-edit"></span>
+        </a>
+      </h4> 
+      <%if @broker.skills%>
+        <%=@broker.skills%>
+      <%else%>
+        None.
+      <%end%>
+    </div>
+  </div>
+</div>

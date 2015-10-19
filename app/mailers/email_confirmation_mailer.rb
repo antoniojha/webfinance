@@ -7,22 +7,21 @@ class EmailConfirmationMailer < ActionMailer::Base
   #   en.alert_notifier.alert.subject
   #
 
-  def send_email_remind(user)
+  def send_email_remind(member)
     @greeting = "Hi"
     @warning= "This is an automatically generated email, please do not reply."
-    mail to: user.email, subject: 'Alert'
+    mail to: member.email, subject: 'Alert'
   end
-  def send_email_confirm(user)
+  def send_email_confirm(member)
     @greeting="Dear Customer,"
     @warning= "This is an automatically generated email, please do not reply."
-    @user=user
-    mail to: user.email, subject: 'Welcome to Richrly'
+    @member=member
+    mail to: member.email, subject: 'Welcome to Richrly'
   end
-  def send_password(user,password)
+  def send_password_reset(member)
     @greeting="Dear Customer,"
-    @user=user
-    @password=password
+    @member=member
     @warning= "This is an automatically generated email, please do not reply."
-    mail to: user.email, subject: 'Your new temporary password'    
+    mail to: member.email, subject: 'To reset your password'    
   end
 end

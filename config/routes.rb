@@ -63,12 +63,10 @@ Rails.application.routes.draw do
   resources :brokers
 
   controller :brokers do
+    get 'broker/signup'=> :new
     get "broker/home/:id" => :home, as: 'broker_home'
-    get ":id/edit2"=> :edit2, as:"edit2_broker"
     get "add_license" => :add_license
     get 'crop'=> :crop
-    get "brokers/licenses/:id" => :licenses, as:"broker_licenses"
-    get "brokers/products/:id" => :products, as:"broker_products"
   end
  
   namespace :admin do
@@ -97,14 +95,18 @@ Rails.application.routes.draw do
   namespace :broker do
     controller :sessions do
       get 'login'=> :new
+      get 'password_prompt'=> :password_prompt_1, as:"password_prompt"
+      get 'password_lookup/:id'=> :password_lookup_2, as: "password_lookup"
+      get 'enter_new_password/:id'=> :enter_new_password_3, as: "enter_new_password"
+      get 'search'=> :search, as:"password_lookup_search"
+      patch 'send_password/:id'=> :update, as: "send_password"
+      patch 'reset_password/:id'=> :update, as: "reset_password"
       post "signin"=> :create
       delete "logout"=> :destroy
     end
 
   end
-  controller :brokers do
-    get 'broker/signup'=> :new
-  end
+
   resources :goals
 
   resources :users
@@ -118,7 +120,7 @@ Rails.application.routes.draw do
     get 'setup/:id'=> :edit, as: 'custom_edit_setup'
   end
   match '/users/remove/:id', to:'users#remove',via:'get', as: 'user_remove'
-  match '/brokers/remove/:id', to:'brokers#remove',via:'get', as: 'broker_remove'
+
   match'/admin/remove/:id', to:'users#admin_remove', via:'get', as: 'admin_remove'
   root 'static_pages#home'
   controller :static_pages do

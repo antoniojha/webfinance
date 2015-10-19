@@ -3,15 +3,14 @@ class User::SessionsController < User::AuthenticatedController
   skip_before_action :redirect_to_user_setup
   skip_before_action :authorize_user_login
   skip_before_action :remember_location_user, only:[:new]
+  def password_prompt
+      
+  end
   def new
     # serves as blank user object for @user.error.
     @user=User.new
   end
-
-  def password_prompt
-      
-  end
-
+  #password_lookup
   def edit
     name_or_email=params[:session][:name_or_email].downcase
     user=User.find_by(username: name_or_email) || User.find_by(email: name_or_email)  

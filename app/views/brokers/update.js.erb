@@ -1,1 +1,17 @@
+<% unless @error==true%>
+$("#profile_infos").html("<%=escape_javascript render('brokers/profile/profile_infos')%>");
+$("#abouts").html("<%=escape_javascript render('brokers/profile/abouts')%>");
+$("#skills").html("<%=escape_javascript render('brokers/profile/skills')%>");
+$("#licenses").html("<%=escape_javascript render('brokers/profile/licenses')%>");
+$("#financial_vehicles").html("<%=escape_javascript render('brokers/profile/financial_vehicles')%>");
+$("#experiences").html("<%=escape_javascript render('brokers/profile/experiences')%>");
+$("#financial_vehicle_dialog_form").dialog("close");
+$("#financial_vehicle_dialog_form").html("<%=escape_javascript render('brokers/edit/financial_vehicle_edit')%>");
+<%else%>
 
+$("#financial_vehicle_dialog_form #financial_vehicle_error_msg").html("<%=escape_javascript render partial:'brokers/profile/error', locals:{object:@broker}%>");
+$("#financial_vehicle_dialog_form").scrollTop(0);
+
+<%end%>
+
+          

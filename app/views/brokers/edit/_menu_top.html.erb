@@ -1,0 +1,14 @@
+<div class="navbar-inner">
+	<div class="container-fluid pull-left" >		
+    <ul class="nav navbar-nav">
+      <li><%= link_to 'Update Profile', edit_broker_path(current_broker)%></li>
+      <li>
+        <%= link_to 'My License',edit_broker_path(page:"license_edit")%>
+      </li>
+      <li>
+        <%= link_to 'My Product',edit_broker_path(page:"financial_vehicle_edit")%>
+      </li>
+      <li><%= link_to 'Remove Profile', edit_broker_path(page:"form_remove")%></li>
+    </ul>
+  </div>
+</div>

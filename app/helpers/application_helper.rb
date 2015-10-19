@@ -91,36 +91,36 @@ module ApplicationHelper
       name=name.titleize
     end
   end
-  def smart_image(user,scenario=1)
+  def smart_image(member,scenario=1)
     
     place_holder_url='http://www.clker.com/cliparts/C/N/O/F/T/X/blank-profile-th.png'
-    if !user.image_url.to_s.empty?
+    if !member.image_url.to_s.empty?
       if scenario == 1
-        if user.image.thumb_200.file.exists?
-          image_tag user.image_url(:thumb_200).to_s,style: 'width:auto;height:100px;', class: "img-thumbnail"
+        if member.image.thumb_200.file.exists?
+          image_tag member.image_url(:thumb_200).to_s,style: 'width:auto;height:100px;', class: "img-thumbnail"
         else
-          image_tag user.image_url.to_s,style: 'width:auto;height:100px;', class: "img-thumbnail"
+          image_tag member.image_url.to_s,style: 'width:auto;height:100px;', class: "img-thumbnail"
         end
       elsif scenario ==2
-        if user.image.thumb_200.file.exists?
-          image_tag user.image_url(:thumb_200).to_s,size:"150x150", class: "img-thumbnail"
+        if member.image.thumb_200.file.exists?
+          image_tag member.image_url(:thumb_200).to_s,size:"150x150", class: "img-thumbnail"
         else        
-          image_tag user.image_url.to_s,style: 'width:auto;height:150px;', class: "img-thumbnail"
+          image_tag member.image_url.to_s,style: 'width:auto;height:150px;', class: "img-thumbnail"
         end
       elsif scenario ==4
-        if user.image.thumb_200.file.exists?
-          image_tag user.image_url(:thumb_200).to_s,size:"65x65", class: "img-thumbnail"
+        if member.image.thumb_200.file.exists?
+          image_tag member.image_url(:thumb_200).to_s,size:"65x65", class: "img-thumbnail"
         else
-          image_tag user.image_url.to_s,style: 'width:auto;height:65px;', class: "img-thumbnail"
+          image_tag member.image_url.to_s,style: 'width:auto;height:65px;', class: "img-thumbnail"
         end
       end
     else
       if scenario ==4
         image_tag place_holder_url,style: 'width:65px;height:65px;', class: "img-thumbnail", alt:"Please upload picture"        
       elsif scenario ==3
-        image_tag place_holder_url,style: 'width:300px;height:300px;', class: "img-thumbnail", alt:"Please upload picture"  
+        image_tag place_holder_url,style: 'width:250px;height:250px;', class: "img-thumbnail", alt:"Please upload picture"  
       elsif scenario ==2
-        image_tag place_holder_url,style: 'width:200px;height:200px;', class: "img-thumbnail", alt:"Please upload picture"
+        image_tag place_holder_url,style: 'width:150px;height:150px;', class: "img-thumbnail", alt:"Please upload picture"
       else
         image_tag place_holder_url,style: 'width:100px;height:100px;', class: "img-thumbnail", alt:"Please upload picture"
       end

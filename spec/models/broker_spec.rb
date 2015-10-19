@@ -34,17 +34,24 @@ describe Broker do
       end
     end    
     describe "when password is not entered" do
-      before {@broker.password=""}
+      before do 
+        @broker.password=""
+        @broker.non_signup_provider_bool=true
+      end
       it {should_not be_valid}      
     end
     describe "when password confirmation is not entered" do
-      before {@broker.password_confirmation=""}
+      before do
+        @broker.password_confirmation=""
+        @broker.non_signup_provider_bool=true
+      end
       it {should_not be_valid}        
     end
     describe "when password is different from password_confirmation" do 
       before do
         @broker3=@broker.dup
         @broker3.password_confirmation= ""
+        @broker3.non_signup_provider_bool=true
       end 
       it "should not be valid" do
         @broker3.save

@@ -1,1 +1,7 @@
-$("#experiences").html("<%=escape_javascript render('brokers/experiences')%>");
+<% unless @error==true%>
+$("#experience_add_dialog_form").html("<%=escape_javascript render('brokers/modal/experience_add_form')%>");
+$("#experience_add_dialog_form").dialog("close");
+$("#experiences").html("<%=escape_javascript render('brokers/profile/experiences')%>");
+<%else%>
+$("#experience_add_dialog_form #experience_error_msg").html("<%=escape_javascript render partial:'brokers/profile/error', locals:{object:@experience}%>");
+<%end%>

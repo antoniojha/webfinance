@@ -1,4 +1,7 @@
 module SessionsHelper
+   
+
+  # all method related to user
   def user_personal_profile?(user)
     if current_user && (current_user.id==user.id)
       return true
@@ -6,15 +9,7 @@ module SessionsHelper
       return false
     end 
   end
-  def broker_personal_profile?(broker)
-    if current_broker
-      if current_broker.id==broker.id
-        return true
-      else
-        return false
-      end 
-    end
-  end
+
   def user_profile_completed?
     if user_logged_in?
       user=current_user
@@ -33,44 +28,6 @@ module SessionsHelper
       end
     end
   end
-  def broker_profile_completed?
-    if broker_logged_in?
-      broker=current_broker
-      if broker&&broker.username && broker.email && (broker.email_authen==true)
-        return true
-      else
-        false
-      end
-    end
-  end
-  def redirect_to_complete_broker_profile
-    if broker_logged_in?   
-      broker=current_broker
-      if broker
-        unless broker_profile_completed? 
-          redirect_to edit_broker_url(broker), notice: "Please complete your profile (username and email) first."
-        end
-      end
-    end
-  end  
-  def remember_broker(broker_id)
-    session[:broker_id_schedule]=broker_id.to_i
-  end
-  def schedule_broker
-    if session[:broker_id_schedule]
-      if @schedule_broker.nil?
-        @schedule_broker=Broker.find_by(id:session[:broker_id_schedule])
-      else
-        @schedule_broker
-      end
-    end
-  end
-  def broker_log_in(broker)
-    if user_logged_in?
-      user_log_out
-    end
-    session[:broker_id]=broker.id
-  end
   def user_log_in(user)
     if broker_logged_in?
       broker_log_out
@@ -82,15 +39,7 @@ module SessionsHelper
     cookies.permanent.signed[:user_id]=user.id
     cookies.permanent.signed[:auth_token]=user.auth_token
   end
-  def current_broker
-    if session[:broker_id]
-      if @current_broker.nil?
-        @current_broker=Broker.find_by(id:session[:broker_id])
-      else
-        @current_broker
-      end
-    end
-  end
+
   def current_user
     if session[:user_id]
       if @current_user.nil?
@@ -110,9 +59,7 @@ module SessionsHelper
   def current_user?(user)
     user==current_user ? true : false
   end
-  def broker_logged_in?
-    !(current_broker.nil?)
-  end
+
   def user_logged_in?
     !(current_user.nil?)
   end
@@ -125,12 +72,7 @@ module SessionsHelper
     session[:broker_id_schedule]=nil
     @current_user=nil
   end
-  def broker_log_out
-    broker_forget(current_broker)
-    session[:broker_id]=nil
-    session[:return_to]=nil
-    @current_broker=nil    
-  end
+
   def user_forget(user)
     if user_logged_in?
       user.forget
@@ -138,13 +80,7 @@ module SessionsHelper
     cookies.delete(:user_id)
     cookies.delete(:auth_token)
   end
-  def broker_forget(broker)
-    if broker_logged_in?
-      broker.forget
-    end
-    cookies.delete(:broker_id)
-    cookies.delete(:auth_token)
-  end
+
   def friendly_redirect(default, notice=nil)
     redirect_to (session[:return_to] || default), notice:notice 
     session[:return_to]=nil
@@ -159,12 +95,93 @@ module SessionsHelper
       end
     end
   end
-  def redirect_to_broker_setup
-    if current_broker
-      unless current_broker.setup_completed?
-        flash[:danger]="Please finish registering."
-        redirect_to edit_setup_broker_path(current_broker)
+
+  # all methods related to broker
+
+  def current_broker
+    if session[:broker_id]
+      if @current_broker.nil?
+        @current_broker=Broker.find_by(id:session[:broker_id])
+      else
+        @current_broker
+      end
+    elsif cookies.signed[:broker_id]
+      broker=Broker.find_by(id:cookies.signed[:broker_id])
+      if broker && broker.authenticated?(cookies.signed[:auth_token])
+        log_in broker
+        @current_broker=broker 
       end
     end
   end
+  def broker_personal_profile?(broker)
+    if current_broker
+      if current_broker.id==broker.id
+        return true
+      else
+        return false
+      end 
+    end
+  end
+
+  def remember(member)
+    #member can be either a User or Broker
+    
+    cookies.permanent.signed[:auth_token]=member.remember_token  
+    if (member.class.to_s=="Broker")
+      cookies.permanent.signed[:broker_id]=member.id 
+    elsif (member.class.to_s=="User")
+      cookies.permanent.signed[:user_id]=member.id
+    end
+  end
+  def forget(member)
+    #member can be either a User or Broker
+    if (member.class.to_s=="Broker")
+      if broker_logged_in?
+        member.forget_token
+      end      
+      cookies.delete(:broker_id)
+    elsif (member.class.to_s=="User")
+      if user_logged_in?
+        member.forget_token
+      end   
+      cookies.delete(:user_id)
+    end
+    
+    cookies.delete(:auth_token)    
+  end
+
+  def log_in(member)
+    if (member.class.to_s=="Broker")
+      if user_logged_in?
+        log_out(current_user)
+      end 
+      session[:broker_id]=member.id
+    elsif (member.class.to_s=="User")
+      if broker_logged_in?
+        log_out(current_broker)
+      end 
+      session[:user_id]=member.id
+    end  
+  end
+  def log_out(member)
+    forget(member)
+    if (member.class.to_s=="Broker")    
+      session[:broker_id]=nil
+      session[:return_to]=nil
+      cookies.delete(:broker_id)
+      cookies.delete(:auth_token)
+      @current_broker=nil    
+    elsif (member.class.to_s=="User")
+      session[:user_id]=nil
+      session[:return_to]=nil
+      cookies.delete(:user_id)
+      cookies.delete(:auth_token)
+      @current_user=nil          
+    end
+  end  
+  def broker_logged_in?
+    !(current_broker.nil?)
+  end
+
+
 end

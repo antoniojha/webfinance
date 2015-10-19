@@ -1,0 +1,16 @@
+<div class="panel panel-default">
+  <div class="panel-body" align="left">
+    <h4>License(s)
+      <a href="#" class="licenses_edit">
+      <span class="glyphicon glyphicon-edit"></span>
+      </a>
+    </h4>
+    <%@broker.setup_broker.licenses.each_with_index do |l,index|%>
+      <%if index==0%>
+      <%=l.license_type%>
+      <%else%>
+      ,<%=l.license_type%>
+      <%end%>
+    <%end%>
+  </div>
+</div>

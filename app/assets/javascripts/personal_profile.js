@@ -4,9 +4,6 @@ $(function(){
    var crop=$('#picture_form').data('crop');
   
    if (picture_file_name!="null"){ 
-
-   //   var pic_large_width=parseInt($('#picture_form').data('broker-pic-large-width'));
-   //   var pic_large_height=parseInt($('#picture_form').data('broker-pic-large-height'));
       var pic_large_width=$('#cropbox').width();
       var pic_large_height=$('#cropbox').height();
      console.log("width:"+pic_large_width);
@@ -45,35 +42,38 @@ $(function(){
         $('#user_crop_w').val(Math.floor(coords.w));
         $('#user_crop_h').val(Math.floor(coords.h));          
         }
+       console.log("crop_x:"+Math.floor(coords.x));
+       console.log("crop_y:"+Math.floor(coords.y));
+       console.log("crop_w:"+Math.floor(coords.w));
+       console.log("crop_h:"+Math.floor(coords.h));
       };
    }
   
   console.log("crop:"+crop);
   console.log("picture file name:"+picture_file_name);
+  //three cases for loading dialog form: 1- Load modal form to crop picture when it's first open; 2- Immediately load modal form to show cropped picture after picture is loaded; 3- Load modal form to upload picture when no picture has been uploaded.
   if((typeof picture_file_name!="undefined") && (crop!=true)){
-    console.log("test1");
     change_dialog = $( "#change_dialog-form" ).dialog({
       autoOpen: false,
-      height: 550,
-      width: 800,
+      height: 500,
+      width: 700,
       modal: true
       
     });
   }
   else if((typeof picture_file_name!="undefined") && (crop==true)){
-    console.log("test2");
     change_dialog = $( "#change_dialog-form" ).dialog({
       autoOpen: true,
-      height: 550,
-      width: 800,
+      height: 500,
+      width: 700,
       modal: true
     });  
   }
   else{
     upload_dialog = $( "#upload_dialog-form" ).dialog({
       autoOpen: false,
-      height: 550,
-      width: 800,
+      height: 500,
+      width: 700,
       modal: true
     });
   }
@@ -83,23 +83,4 @@ $(function(){
   $( ".btn-upload" ).button().on( "click", function() {    
       upload_dialog.dialog("open");
   });
-  create_financial_story = $( "#create_story_form" ).dialog({
-    autoOpen: false,
-    height: 550,
-    width: 800,
-    modal: true
-  });
-  $(".create_finance_story").on("click",function(){
-
-    create_financial_story.dialog("open");
-  });
-  create_financial_testimony = $( "#create_testimony_form" ).dialog({
-    autoOpen: false,
-    height: 550,
-    width: 800,
-    modal: true
-  });
-  $(".create_finance_testimony").on("click",function(){
-    create_financial_testimony.dialog("open");
-  });  
 });

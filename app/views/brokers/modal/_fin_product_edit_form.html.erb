@@ -1,0 +1,42 @@
+<div style="text-align:left;">
+  <p>Add financial products you are licensed to sell to be displayed on your profile.</p>
+</div>
+<div id="fin_product_error_msg">
+
+</div>
+<%=form_for @fin_product, html:{class:"fin_product_edit_form"} do |f|%>  
+<table width="100%" style="text-align:left;">
+  <tr>
+    <td width="40%">Company:</td>
+    <td width="60%"><%=f.select :company_id,Company.all.collect {|c| [ c.name, c.id ] },{},{style:"width:100%;"}%></td>
+  </tr>
+  <tr class="blank_row"></tr>
+  <tr>
+    <td>Financial Vehicle:</td>
+    <td><%=f.select :product_id, @broker.products.collect{|p| [p.name,p.id]},{},{style:"width:100%;"}%></td>
+  </tr>  
+  <tr class="blank_row"></tr>
+  <tr>
+    <td>Name:</td>
+    <td><%=f.text_field :name, {style:"width:100%;"}%></td>
+  </tr>
+  <tr class="blank_row"></tr>
+  <tr>
+    <td>Description:</td>
+    <td><%=f.text_area :description, rows:"5", style:"width:100%;"%></td>
+  </tr>  
+  <tr class="blank_row"></tr>
+  <tr>
+    <td><%=f.submit "Update"%></td>
+    <td><%=f.hidden_field :broker_id, value: @broker.id%></td>
+  </tr>
+</table>
+<%end%>
+<table width="100%" style="text-align:left;">
+  <tr>
+    <td width="40%"></td>
+    <td width="60%"><div style="position:relative;top:-25px;"><%=button_to "Delete", {controller:"financial_products",action:"destroy", id:@fin_product.id},method: :delete, form_class:"delete_fin_product_form"%></div></td>
+  </tr>
+</table>
+
+

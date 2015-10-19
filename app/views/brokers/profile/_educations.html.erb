@@ -1,0 +1,18 @@
+<div class="panel panel-default">
+  <div class="panel-body" align="left">
+    <h4>Education
+      <a href="#" class="education_add">
+        <span class="glyphicon glyphicon-plus"></span>
+      </a>
+    </h4>
+    <%unless @broker.educations.count >0%>
+    None.
+    <%else%>
+      <% @broker.educations.order(end_date: :desc).each do |e|%>
+        <% unless e.new_record?%>
+          <%=render partial:"brokers/profile/education_display", locals:{e:e}%>
+        <%end%>
+      <%end%>
+    <%end%>
+  </div>
+</div>  

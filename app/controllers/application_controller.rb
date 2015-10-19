@@ -26,7 +26,13 @@ class ApplicationController < ActionController::Base
       cookies.delete(:temp_broker_id)
     end
   end
-
+  #used to prevent non-member, either user or broker, from accessing pages such as financial articles or financial stories
+  def authorize_member_login
+    unless (user_logged_in? && broker_logged_in?)
+      flash[:danger]="Please login"
+      redirect_to user_login_url      
+    end
+  end
   def authorize_user_login
     unless user_logged_in?
       flash[:danger]="Please login"
@@ -45,6 +51,11 @@ class ApplicationController < ActionController::Base
       redirect_to user_login_url
     end
   end
+  def remember_location_member
+    unless user_logged_in? && broker_logged_in?
+      remember_desired_location
+    end
+  end
   def remember_location_user
     unless user_logged_in?
       remember_desired_location
@@ -55,6 +66,15 @@ class ApplicationController < ActionController::Base
       remember_desired_location
     end
   end
+  def redirect_to_broker_setup
+    if current_broker
+      unless current_broker.setup_completed?
+        flash[:danger]="Please finish registering."
+        redirect_to edit_setup_broker_path(current_broker)
+      end
+    end
+  end 
+
   def current_controller
     params[:controller]
   end

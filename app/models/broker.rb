@@ -1,6 +1,6 @@
 class Broker < ActiveRecord::Base
 
-  attr_accessor :name_or_email, :password, :password_confirmation,:validate_email_bool, :validation_code, :licensetype_bool, :products_bool, :story_bool, :term_of_use_bool,:basic_info_bool, :id_image_bool, :licenses_upload_bool, :send_email_validation_bool
+  attr_accessor :name_or_email, :password, :password_confirmation,:validate_email_bool, :validation_code, :licensetype_bool, :products_bool, :story_bool, :term_of_use_bool,:basic_info_bool, :id_image_bool, :licenses_upload_bool, :send_email_validation_bool, :signup_provider_bool, :non_signup_provider_bool
   attr_accessor :financial_category,:product_id, :story, :image, :license_info_4_error, :addition_error_msg
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   serialize :license_type #used during setup, this will not be updated after setup all licenses will be accessed via @broker.setup_broker.licenses
@@ -8,8 +8,7 @@ class Broker < ActiveRecord::Base
 
   # broker has the following dependents: SetupBroker=>License, FinancialStory, :Experiences, :Educations
   has_many :votes, dependent: :destroy
-  has_many :financial_product_rels, dependent: :destroy
-  has_many :financial_products, through: :financial_product_rels
+  has_many :financial_products 
   has_many :broker_requests, dependent: :destroy
   has_one :setup_broker, dependent: :destroy
   has_many :educations, dependent: :destroy
@@ -50,11 +49,10 @@ class Broker < ActiveRecord::Base
   def id_image_size_validation
     errors[:id_image] << "should be less than 5MB" if id_image.size > 5.megabytes
   end
-  validates :username, presence: true, on: :create, if: :password_signup?
-  validates :password, :password_confirmation, presence: true, on: :create, if: :password_signup?
   
-
-  validate :check_passwords_match, on: :create, if: :password_signup?
+  validates :username, presence: true, if: :password_signup?
+  validates :password, :password_confirmation, presence: true, if: :password_signup?
+  validate :check_passwords_match, if: :password_signup?
   def check_passwords_match
     if password !=password_confirmation
       errors.add(:addition_error_msg,"Passwords do not match")
@@ -62,9 +60,11 @@ class Broker < ActiveRecord::Base
   end
   # return true if it's not signed up through provider
   def password_signup?
-    
-    (provider==nil) ? true : false
+    bool1=(@non_signup_provider_bool == true)
+    bool2=(@signup_provider_bool == true)
+    bool1||bool2
   end
+
   validates :email, allow_blank:true, format: {with:VALID_EMAIL_REGEX}
   validates :password, allow_blank:true, length: { in: 7..40 }, format:{with:VALID_PASSWORD_REGEX}  
   validates_uniqueness_of :username, :case_sensitive => false, if: :username?
@@ -141,6 +141,7 @@ class Broker < ActiveRecord::Base
   end
 
   def check_products_not_empty
+    
     self.product_ids=product_ids-[""]
     if product_ids.empty?     
       errors.add(:addition_error_msg, "You need to select at lease one vehicle")
@@ -166,10 +167,12 @@ class Broker < ActiveRecord::Base
         broker.last_name=auth["info"]["name"].split.last
       elsif auth["provider"]=="google_oauth2"
         broker.email=auth["info"]["email"]
+        broker.email_authen=true
         broker.first_name=auth["info"]["first_name"]
         broker.last_name=auth["info"]["last_name"]
       elsif auth["provider"]=="facebook"
         broker.email=auth["info"]["email"]
+        broker.email_authen=true
         broker.first_name=auth["info"]["first_name"]
         broker.last_name=auth["info"]["last_name"]   
       elsif auth["provider"]=="linkedin"
@@ -177,21 +180,23 @@ class Broker < ActiveRecord::Base
         broker.first_name=auth["info"]["name"].split.first
         broker.last_name=auth["info"]["name"].split.last  
         broker.email=auth["info"]["email"]
+        broker.email_authen=true
       end
     end
     return broker
   end 
-
+  # used to authenticate cookie session
   def authenticated?(auth_token)
-    return false if confirmation_digest_digest.nil?
-    BCrypt::Password.new(confirmation_number_digest).is_password? (auth_token)
+    return false if auth_token_digest.nil?
+    BCrypt::Password.new(auth_token_digest).is_password? (auth_token)
   end
  
-  def remember
-    self.auth_token=SecureRandom.urlsafe_base64
-    update_attribute(:auth_token_digest, Broker.digest(auth_token))
+  def remember_token
+    auth_token=SecureRandom.urlsafe_base64
+    update_attribute(:auth_token_digest, encrypt(auth_token))
+    return auth_token
   end
-  def forget
+  def forget_token
     update_attribute(:auth_token_digest,nil)
   end
   def has_password?(submitted_password)
@@ -271,22 +276,17 @@ class Broker < ActiveRecord::Base
       end
     end
   end
-  #used for cropping pictures => :cropping?, :reprocess_picture, :picture_geometry
+  def save_and_process_image(options = {})  
+    self.remote_image_url = image.direct_fog_url(:with_path => true)
+    save
+  end
   def cropping?
     !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
   end
-
-  def picture_geometry(style = :original)
-    @geometry ||= {}
-    picture_path = (picture.options[:storage] == :s3) ? picture.url(style) : picture.path(style)
-    @geometry[style] ||= Paperclip::Geometry.from_file(picture_path)
-  end
- # after_save :enqueue_image
-
   def crop_image
     puts "crop image"
+  #  raise "#{crop_x},#{crop_y},#{crop_w},#{crop_h}"
     ImageWorker.perform_async(id,key,"crop",crop_x,crop_y,crop_w,crop_h)
-    
   end
 
   class ImageWorker
@@ -300,16 +300,40 @@ class Broker < ActiveRecord::Base
         broker.crop_y=crop_y
         broker.crop_w=crop_w
         broker.crop_h=crop_h
-      #  broker.image.recreate_versions!
       end
       broker.key=key 
       broker.remote_image_url = broker.image.direct_fog_url(with_path: true)
       broker.image_cropped=true
       broker.save!
+      puts "finish cropping"
+    end
+  end
+  def send_reset_password_msg
+    update_attribute(:password_confirmation_token,SecureRandom.urlsafe_base64)
+    update_attribute(:password_reset_send_at, Time.zone.now)
+    EmailConfirmationMailer.send_password_reset(self).deliver
+  end
+  def change_experience?(params)
+    puts "#{params["title"]}"
+    puts "#{params["company_name"]}"
+    puts "#{params["company_location"]}"
+    if (self.title == params["title"]) && (self.company_name==params["company_name"]) && (self.company_location==params["company_location"])
+      return false
+    else
+      return true
+    end
+  end
+  def set_assoc_experience
+    unless current_experience_id
+      experience=self.experiences.create(title:title,company:company_name,location:company_location,current_experience:true, begin_date: Date.today)
+      update_attribute(:current_experience_id, experience.id)
+    else
+      experience=Experience.find(current_experience_id)
+      puts "#{title}, #{company_name}, #{company_location}"
+      experience.update_attributes(title:title,company:company_name, location:company_location)
     end
   end
   private
-
 
   def generate_token(column)
     begin

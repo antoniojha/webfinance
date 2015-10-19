@@ -9,14 +9,11 @@ class IdImageUploader < CarrierWave::Uploader::Base
   process :set_content_type
   # Choose what kind of storage to use for this uploader:
   # storage :file
-  if Rails.env.test?
-    
+  if Rails.env.test?    
     storage :file
-    
     CarrierWave.configure do |config|
       config.enable_processing = false
     end
-
   else
     storage :fog
   end
@@ -51,13 +48,5 @@ class IdImageUploader < CarrierWave::Uploader::Base
   # For images you might use something like this:
   def extension_white_list
     %w(jpg jpeg gif png pdf)
-
   end
-
-  # Override the filename of the uploaded files:
-  # Avoid using model.id or version_name here, see uploader/store.rb for details.
-  # def filename
-  #   "something.jpg" if original_filename
-  # end
-
 end

@@ -1,0 +1,52 @@
+<div class="panel panel-default" id=<%="experience_display_#{e.id}"%>>
+  <div class="panel-body" align="left">
+    <table width="100%" style="text-align:left;">
+      <tr>
+        <td width="30%">Company:</td>
+        <td width="70%"><%=e.company%>
+          <div style="float:right;">
+            <a href="#" class="experience_edit" id=<%=e.id%>>
+              <span class="glyphicon glyphicon-edit"></span>
+            </a>
+          </div>
+        </td>
+      </tr>
+      <%unless e.title.blank?%>
+      <tr>
+        <td>Title:</td>
+        <td><%=e.title%></td>
+      </tr>
+      <%end%>
+      <% if e.begin_date && e.end_date%>
+      <tr>
+        <td>Work Time:</td>
+        <td><%=e.begin_date.strftime("%b, %Y")%>
+          to 
+          <%if e.current_experience%>
+          Present
+          <%else%>
+          <%=e.end_date.strftime('%b, %Y')%>
+          <%end%>
+          <% if e.current_experience%>
+          <%=display_time_difference(e.begin_date, Date.today)%>
+          <%else%>
+          <%=display_time_difference(e.begin_date, e.end_date)%>
+          <%end%>
+        </td>
+      </tr>
+      <%end%>
+      <%unless e.location.blank?%>
+      <tr>
+        <td>Location:</td>
+        <td><%=e.location%></td>
+      </tr>
+      <%end%>
+      <%unless e.description.blank?%>
+      <tr>
+        <td>Description:</td>
+        <td><%=e.description%></td>
+      </tr>
+      <%end%>
+    </table>
+  </div>
+</div>

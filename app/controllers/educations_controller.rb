@@ -1,54 +1,51 @@
 class EducationsController < ApplicationController
-  before_action :set_education, only:[:update,:destroy]
+  before_action :set_education, only:[:update,:destroy, :edit]
+  before_action :set_broker
 
-  def new
-  end
   def create
-    @broker=Broker.find(params[:education][:broker_id])
     @education=@broker.educations.build(education_params)
     
     respond_to do |format|
       if @education.save
-
-        format.js
+        format.js{}
         format.html{redirect_to @broker}
       else
-        @edit=params[:education][:edit]
-        format.js
-        format.json { render json: @education.errors, status: :unprocessable_entity }
+        @error=true
+        format.js{}
         format.html{render "brokers/show"}
       end
     end
   end
   def edit
+    respond_to do |format|
+      format.js{}
+    end    
   end
   def update
-    @broker=Broker.find(params[:education][:broker_id])
     respond_to do |format|
       if @education.update(education_params)
-        format.js
+        format.js{}
         format.html{redirect_to @broker}
       else
-        @edit=params[:education][:edit] 
-        format.js
+        @error=true
+        format.js{}
         format.html{render "brokers/show"}
       end
     end
   end
-  def index
-  end
+
   def destroy
     @education.destroy
-    @broker=Broker.find(params[:broker_id])
     respond_to do |format|
       format.js
       format.html{render "brokers/show"}    
     end
   end
-  def show
-  end
-  private
 
+  private
+  def set_broker
+    @broker=current_broker
+  end
   def set_education
     @education=Education.find(params[:id])
   end

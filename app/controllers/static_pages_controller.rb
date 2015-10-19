@@ -1,4 +1,6 @@
 class StaticPagesController < ApplicationController
+  before_action :remember_location_member, only:[:home]
+  before_action :authorize_member_login, only: [:home]
   def about
   end
 

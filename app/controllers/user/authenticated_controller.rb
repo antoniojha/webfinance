@@ -8,10 +8,4 @@ class User::AuthenticatedController < ApplicationController
     logger.error "Attempt to access user id#{session[:user_id]} that's not existing"
     redirect_to user_login_url, notice: "Invalid User"
   end
-  def create
-    remember_broker(params[:broker_id])
-    
-    redirect_to new_schedule_url
-  end
-
 end

@@ -9,12 +9,12 @@ module AuthenticationInHelper
   private
 
   def user_create
-#    raise env['omniauth.auth'].to_yaml
+    raise env['omniauth.auth'].to_yaml
    
     if env['omniauth.auth']
     user=User.from_omniauth(env['omniauth.auth'])
       if user.save
-        user_log_in(user)
+        log_in(user)
         unless user.setup_completed?
           redirect_to_setup
         else
@@ -30,10 +30,14 @@ module AuthenticationInHelper
   #  raise env['omniauth.auth'].to_yaml
     if env['omniauth.auth']
       broker=Broker.from_omniauth(env['omniauth.auth'])
+      
       if broker.save
-        broker_log_in(broker)
+        log_in(broker)
         unless broker.setup_completed?
-          redirect_to broker_setup_path(broker)
+          if broker.step.nil?
+            flash[:info]="Your #{broker.provider.capitalize} Account has been linked!"
+          end
+          redirect_to edit_setup_broker_path(broker)
         else
           friendly_redirect(broker,"Signed in.")
         end

@@ -1,9 +1,15 @@
 <%provide(:title,"|Edit Broker")%>
-<%= render 'menu_top'%>
+<%= render 'brokers/edit/menu_top'%>
 <div style="clear:both;border-top:2px solid;"></div>
-
-
-<h3>Update Account</h3>
-<%=render "error"%>
-
-<%=render "form_edit1"%>
+<div style="width:70%;">
+  <%=render partial:"shared/error_message", locals:{object:@broker}%>
+  <% if @page =="form_edit" || @page.nil?%>
+  <%=render "brokers/edit/form_edit"%>
+  <%elsif @page =="license_edit"%>
+  <%= render "brokers/edit/license_edit"%>
+  <%elsif @page=="financial_vehicle_edit"%>
+  <%= render "brokers/edit/financial_vehicle_edit"%>
+  <%elsif @page=="form_remove"%>
+  <%=render "brokers/edit/form_remove"%>
+  <%end%>
+</div>

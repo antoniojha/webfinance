@@ -25,7 +25,15 @@
           </tr>
           <tr class="blank_row"></tr>
           <tr>
-            <td colspan=2><%= f.check_box(:remember) %> &nbsp <span style="font-size:1.2em;">Remember login on this computer?</span></td>
+            <td colspan=2><%= f.check_box(:remember) %> &nbsp <span style="font-size:1.2em;">Keep me logged in</span></td>
+          </tr>
+          <tr class="blank_row"></tr>
+          <tr>
+            <td colspan=2>
+              <span style="font-size:1.4em;">
+                <%= link_to 'Forgot your password?', broker_password_prompt_path %>
+              </span>
+            </td>
           </tr>
           <tr class="blank_row"></tr>
           <tr>
@@ -44,12 +52,12 @@
               <table>
                 <tr>
                   <td style="padding:5px;">
-                    <%= link_to image_tag("twitter_icon.png", size:"40x40"), twitter_path(broker:true)%>
+                    <%= link_to image_tag("twitter_icon.png", size:"40x40"), twitter_path(broker:true), id:"twitter"%>
                   </td>
-                  <td style="padding:5px;"><%= link_to image_tag("googleplus_icon.png", size:"40x40"), googleplus_path(broker:true)%>
+                  <td style="padding:5px;"><%= link_to image_tag("googleplus_icon.png", size:"40x40"), googleplus_path(broker:true), id:"google_plus"%>
                   </td>
-                  <td style="padding:5px;"><%= link_to image_tag("fb_icon.png", size:"40x40"), facebook_path(broker:true), size:"20x20"%></td>
-                  <td style="padding:5px;"><%= link_to image_tag("linkedin_icon.png", size:"40x40"), linkedin_path(broker:true)%></td>
+                  <td style="padding:5px;"><%= link_to image_tag("fb_icon.png", size:"40x40"), facebook_path(broker:true), id:"facebook"%></td>
+                  <td style="padding:5px;"><%= link_to image_tag("linkedin_icon.png", size:"40x40"), linkedin_path(broker:true), id:"linkedin"%></td>
                 </tr>
               </table>
             </td>

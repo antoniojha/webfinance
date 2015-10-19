@@ -78,7 +78,7 @@ gem 'gon'
 
 # Install library to use Yellow Fade Technique to highlight ajax change
 gem 'jquery-ui-rails'
-#User ActiveModel has_secure_password
+#ActiveModel has_secure_password
 gem 'bcrypt-ruby', '3.1.2'
 
 # Used for CSS

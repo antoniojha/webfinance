@@ -294,7 +294,6 @@ class User < ActiveRecord::Base
         user.crop_y=crop_y
         user.crop_w=crop_w
         user.crop_h=crop_h
-      #  broker.image.recreate_versions!
       end
       user.key=key 
       user.remote_image_url = user.image.direct_fog_url(with_path: true)

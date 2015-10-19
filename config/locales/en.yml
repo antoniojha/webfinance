@@ -44,6 +44,10 @@ en:
       financial_stories:
         title: "Title"
         description: "Story content"
+      financial_product:
+        name: "Product name"
+        company_id: "Company"
+        product_id: "Financial Vehicle"
       license:
         license_image: "Attachment"
         license_number: "License number"

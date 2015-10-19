@@ -1,0 +1,34 @@
+
+<div class="panel panel-default" style="width:70%;">
+  <div class="panel-body" align="left">
+    
+    <%=render "licenses/error"%>
+    <h4>Add License</h4>
+    <%@license=License.new%>
+    <%=form_for @license, :html => { :multipart => true } do |f|%>
+    <table width="100%">
+      <tr>
+        <td><%=f.label "License Type"%></td>
+        <td>
+          <%=f.select :license_type, Order::LICENSE_TYPES.to_h.keys,{prompt:"Select License Type"}, {:class=>'form-control'}%> 
+        </td>
+      </tr>
+      <tr class="blank_row"></tr>
+      <tr>
+        <td><%=f.label "License Number"%></td>
+        <td><%=f.text_field :license_number,{class:'form-control'}%></td>
+      </tr>
+      <tr class="blank_row"></tr>
+      <tr>
+        <td><%=f.label "Upload Attachment"%></td>
+        <td><%=f.file_field :picture, {class:'form-control'}%></td>
+      </tr>    
+      <tr class="blank_row"></tr>
+      <tr>
+        <td><%=f.submit "Upload License", class:"btn btn-default"%></td>
+        <td><%=hidden_field_tag :broker_id, @broker.id%></td>
+      </tr>
+    </table>
+    <%end%>
+  </div>
+</div>

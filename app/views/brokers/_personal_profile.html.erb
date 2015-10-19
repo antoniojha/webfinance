@@ -1,9 +1,9 @@
+<% content_for :title do %>|Personal<%end%>
 <div style="float:left; width:30%;" align="left">
 
   <% if !@broker.image_url.to_s.empty?%> 
-    <%= content_tag "div", id: "picture_form", data: {picture_file_name: @broker.image_url.to_s,broker_pic_large_width:@broker.image.get_geometry[0],broker_pic_large_height:@broker.image.get_geometry[1],crop:@crop}, style:"float:left; width:40%;",align:"left" do %>
-    <%=render "brokers/picture_form"%>
-
+    <%= content_tag "div", id: "picture_form", data: {picture_file_name: @broker.image_url.to_s,crop:@crop}, style:"float:left; width:40%;",align:"left" do %>
+      <%=render "brokers/picture_form"%>
     <% end %>
   <%else%>
     <div id="picture_form">
@@ -13,54 +13,80 @@
 </div>
 <div id="personal_info">
   <div id ="profile_infos" align="left" style="overflow: auto;padding:5px;">
-    <%=render "brokers/profile_infos"%>
+    <%=render "brokers/profile/profile_infos"%>
   </div>
   <div style="clear:both;"></div>
 
   <table width="100%" style="border-spacing: 5px;">
     <tr>   
-      <td width="55%" align="left" style="padding:5px;border: 1px ridge;vertical-align:top;">
+      <td width="70%" align="left" style="padding:5px;border: 1px ridge;vertical-align:top;">
 
         <div id="abouts">
-          <%=render "brokers/abouts"%>
+          <%=render "brokers/profile/abouts"%>
         </div>
         <div id="skills">
-          <%=render "brokers/skills"%>
+          <%=render "brokers/profile/skills"%>
         </div>
         <div id="licenses">
-          <%=render "brokers/licenses"%>
+          <%=render "brokers/profile/licenses"%>
         </div>
-        <div id="finance_vehicles_products">
-          <%=render "brokers/finance_vehicles_products"%>
-        </div>       
+        <div id="financial_vehicles">
+          <%=render "brokers/profile/financial_vehicles"%>
+        </div>      
         <div id="educations">
-          <%=render "brokers/educations"%>
+          <%=render "brokers/profile/educations"%>
         </div>           
         <div id="experiences">
-          <%=render "brokers/experiences"%>
-        </div>           
-      </td>
-      <td width="45%" align="left" style="padding:5px;vertical-align:top;border: 1px ridge;">
-        
-        <div style="float:left;font-size:1.1em;"><b>Financial Stories</b></div>    
-
-        <div style="float:right;font-size:1.1em;">
-          <%=link_to "#", class:"create_finance_story" do%>
-          <span class="glyphicon glyphicon-plus"></span> Create Story
-          <%end%>
-        </div>
-        <div style="clear:both;"></div>
-        <div id="financial_stories">
-          <%=render "brokers/financial_stories"%>
-        </div>
-        <% if @story.nil?%>
-          <%@story=FinancialStory.new%>
-        <%end%>
-        <div id="create_story_form" align="center" title="Create Financial Story">
-          <%=render partial:"financial_stories/story_form", locals:{story:@story}%>
+          <%=render "brokers/profile/experiences"%>
+        </div>   
+        <div id="financial_stories">   
+          <%=render "brokers/profile/financial_stories"%>
         </div>  
+      </td>
+      <td width="30%" align="left" style="padding:5px;vertical-align:top;border: 1px ridge;">
 
       </td>
     </tr>
   </table>
+</div>
+<div class="dialog-forms">
+  <div id="license_dialog_form" title="Edit License" style="text-align:center;">
+    <%=render "brokers/edit/license_edit"%>
+  </div>  
+  <div id="financial_vehicle_dialog_form" title="Edit Financial Vehicle">
+    <%=render "brokers/edit/financial_vehicle_edit"%>
+  </div>
+  <div id="fin_product_add_dialog_form" title="Add Financial Product">
+    <%=render "brokers/modal/fin_product_add_form"%>
+  </div>
+  <div id="fin_product_edit_dialog_form" title="Edit Financial Product">
+
+  </div>
+  <div id="education_add_dialog_form" title="Add Education">
+    <%=render "brokers/modal/education_add_form"%>
+  </div>
+  <div id="education_edit_dialog_form" title="Edit Education">
+
+  </div>  
+  <div id="experience_add_dialog_form" title="Add Experience">
+    <%=render "brokers/modal/experience_add_form"%>
+  </div>
+  <div id="experience_edit_dialog_form" title="Edit Experience">
+
+  </div>  
+  <div id="fin_story_add_dialog_form" title="Create a Financial Story">
+    <%=render "brokers/modal/fin_story_add_form"%>
+  </div>    
+  <div id="fin_story_edit_dialog_form" title="Edit Experience">
+
+  </div>    
+  <%if !@broker.image_url.to_s.empty?%>
+    <div id="change_dialog_form">
+    <%=render "brokers/change_dialog_form"%>
+    </div>
+  <%else%>
+    <div id="upload_dialog_form">
+    <%=render "brokers/upload_dialog_form"%>
+    </div>
+  <%end%>  
 </div>

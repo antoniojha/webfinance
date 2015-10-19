@@ -1,7 +1,8 @@
 class Experience < ActiveRecord::Base
   belongs_to :broker
-  validates :company, :title, presence:true
   validates :begin_date, :end_date, presence:true, if: :not_current_experience?
+  validates :company, :title, presence:true
+  
   
   def not_current_experience?
     current_experience!=true

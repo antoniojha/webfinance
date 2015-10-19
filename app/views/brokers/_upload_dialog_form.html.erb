@@ -3,16 +3,17 @@
   <div style="float:left; width=50%;">
     <h4>Your Picture</h4>  
     <%=smart_image(@broker,3)%>
-
   </div>     
   <div style="clear:both;"></div>
   <div style="float:left; width=50%;">
     <table width="100%">
+      <tr class="blank_row"></tr>
       <tr>
-        <td width="100%"><%=f.file_field :image, class: "form-control", style:"width:300px;"%></td>
+        <td width="100%"><%=f.file_field :image, class: "form-control", style:"width:250px;"%></td>
       </tr>
+      <tr class="blank_row"></tr>
       <tr>
-        <td style="text-align:left;"><%=f.submit "Post Picture", class: "btn btn-default btn-lg"%></td>
+        <td style="text-align:left;"><%=f.submit "Post Picture", class: "btn btn-primary btn-lg"%></td>
       </tr>
     </table>
   </div>

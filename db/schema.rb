@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150917021720) do
+ActiveRecord::Schema.define(version: 20151013002136) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -248,10 +248,10 @@ ActiveRecord::Schema.define(version: 20150917021720) do
     t.string   "city"
     t.string   "state"
     t.string   "country"
-    t.boolean  "approved",                   default: false
+    t.boolean  "approved",                    default: false
     t.string   "username"
     t.string   "license_type"
-    t.boolean  "submitted",                  default: false
+    t.boolean  "submitted",                   default: false
     t.string   "confirmation_number"
     t.datetime "submitted_at"
     t.string   "web"
@@ -266,7 +266,7 @@ ActiveRecord::Schema.define(version: 20150917021720) do
     t.string   "time_zone"
     t.string   "provider"
     t.string   "uid"
-    t.boolean  "email_authen",               default: false
+    t.boolean  "email_authen",                default: false
     t.string   "email_confirmation_token"
     t.string   "email_confirmation_sent_at"
     t.string   "salt"
@@ -283,6 +283,9 @@ ActiveRecord::Schema.define(version: 20150917021720) do
     t.string   "aws_image_path"
     t.boolean  "image_cropped"
     t.string   "id_image"
+    t.string   "password_confirmation_token"
+    t.datetime "password_reset_send_at"
+    t.integer  "current_experience_id"
   end
 
   add_index "brokers", ["confirmation_number"], name: "index_brokers_on_confirmation_number"
@@ -387,8 +390,10 @@ ActiveRecord::Schema.define(version: 20150917021720) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "product_id"
+    t.integer  "broker_id"
   end
 
+  add_index "financial_products", ["broker_id"], name: "index_financial_products_on_broker_id"
   add_index "financial_products", ["company_id"], name: "index_financial_products_on_company_id"
 
   create_table "financial_stories", force: true do |t|

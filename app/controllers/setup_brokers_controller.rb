@@ -90,6 +90,9 @@ class SetupBrokersController < ApplicationController
           render "edit"
         end
       else       
+        if params[:signup_provider_bool] =="true"
+          @broker.signup_provider_bool=true
+        end
         if @broker.update(broker_params)
           if params[:send_validation]    
             if @broker.evaluate_and_reset_email_authen(previous_email)           
@@ -97,7 +100,7 @@ class SetupBrokersController < ApplicationController
               notice="Validation code has been sent to your email."
             end
           elsif params[:submit]
-            @broker.experiences.create(title:@broker.title,company:@broker.company_name,location:@broker.company_location,current_experience:true, begin_date: Date.today)
+            @broker.set_assoc_experience
             @broker.update_attribute(:setup_completed?, true)
             @broker.broker_requests.create(request_type:"create account",complement:false)
             @broker.setup_broker.licenses.each do |l|
@@ -110,8 +113,7 @@ class SetupBrokersController < ApplicationController
             end
           end
           unless @broker.setup_completed?       
-            redirect_to edit_setup_broker_path(@broker), notice:notice
-            
+            redirect_to edit_setup_broker_path(@broker), notice:notice         
           else
             redirect_to broker_path(@broker), notice:"Your registration has been submitted and is being reviewed."
           end
@@ -121,7 +123,6 @@ class SetupBrokersController < ApplicationController
             @broker.add_or_remove_license
             @licenses=@setup_broker.licenses
           end
-          
           render "edit"
         end
       end

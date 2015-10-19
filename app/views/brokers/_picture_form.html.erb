@@ -1,33 +1,29 @@
-  <table style=" text-align:left;width:100%;">
-    <tr>
-      <td>
-        <%=smart_image(@broker,2)%>
-        <%if @broker.image_cropped==false%>
-        <p><i>Processing Image...</i></p>
-        <%end%>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <% if ((@crop !="true") && !@broker.image_url.to_s.empty?) %>
-        <button type="button" class="btn btn-default btn-change" style="width:150px;">
-          Change Photo
-          <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
-        </button>
-        <%else%>
-        <button type="button" class="btn btn-default btn-upload" style="width:150px;">
-          Upload Photo
-          <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
-        </button>     
+<table style=" text-align:left;width:100%;">
+  <tr>
+    <td>
+      <%=smart_image(@broker,2)%>
+      <%if @broker.image_cropped==false%>
+      <p><i>Processing Image...</i></p>
+      <%end%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <% if ((@crop !="true") && !@broker.image_url.to_s.empty?) %>
+      <button type="button" class="btn btn-primary btn-change" style="width:150px;">
+        Change Photo
+        <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+      </button>
+      <%else%>
+      <button type="button" class="btn btn-primary btn-upload" style="width:150px;">
+        Upload Photo
+        <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+      </button>     
 
-        <%end%>
-      </td>
-    </tr>
-  </table>
+      <%end%>
+    </td>
+  </tr>
+</table>
 
-<%if !@broker.image_url.to_s.empty?%>
-  <%=render "brokers/change_dialog_form"%>
-<%else%>
-  <%=render "brokers/upload_dialog_form"%>
-<%end%>
+
 

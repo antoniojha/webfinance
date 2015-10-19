@@ -1,6 +1,5 @@
 class BrokersController < Broker::AuthenticatedController
   skip_before_action :redirect_to_broker_setup, only:[:index]
-  skip_before_action :redirect_to_complete_broker_profile, only:[:new,:edit,:remove,:create,:update,:destroy,:index]
   skip_before_action :authorize_broker_login, only:[:show,:index,:new,:create]
   before_action :set_broker, only:[:show,:edit,:remove,:home,:update,:destroy,:products,:licenses]
   def new
@@ -9,6 +8,7 @@ class BrokersController < Broker::AuthenticatedController
   def create
     
     @broker=Broker.new(broker_params)
+    @broker.non_signup_provider_bool=true
     if @broker.save
       session[:broker_id]=@broker.id
       redirect_to edit_setup_broker_path(@broker)
@@ -25,13 +25,14 @@ class BrokersController < Broker::AuthenticatedController
     render :template=>"shared/home"
   end
   def edit
-
-  end
-  def remove
-    
+    @page=params[:page]
+    if @page=="license_edit"
+      set_licenses
+    end
   end
 
   def update
+
     if params[:send_validation]
       @broker.validate_email_bool=true
       @broker.evaluate_and_reset_email_authen(params[:broker][:email])
@@ -43,7 +44,6 @@ class BrokersController < Broker::AuthenticatedController
       end
     end
     respond_to do |format|
-  
       if params[:edit_products]
         @broker.products_bool=true
       end
@@ -57,33 +57,31 @@ class BrokersController < Broker::AuthenticatedController
           format.html{render "show"}
         end
       else  
+        if @broker.change_experience?(broker_params)
+          change_experience=true
+        end
         if @broker.update(broker_params)
 
           if params[:broker][:image].blank?     
             if @broker.cropping?
-          #    @broker.image.recreate_versions!
               @broker.update_attributes(image_cropped:false)
               @broker.crop_image
-          #    @broker.reload
-              
-          #    @broker.remote_image_url = @broker.image.direct_fog_url(with_path: true)
-          #    @broker.save!
-          #    @broker.image.recreate_versions!
-
-            end
-            if @broker.validate_email_bool && (@broker.email_authen!=true)
-              @broker.send_email_confirmation
-            end
-
-            format.html { redirect_to @broker,notice:'Broker was successfully updated.'}
-          else
-            format.html{
-              redirect_to :controller => 'brokers', :action => 'show', :id => @broker.id}
+            end     
           end
-        else
-          format.html { render action: 'edit' }
+          if @broker.validate_email_bool && (@broker.email_authen!=true)
+              @broker.send_email_confirmation
+          end   
+          #update current experience based on broker's title, company name, and location
+          if change_experience
+            @broker.set_assoc_experience
+          end
+          set_licenses
           format.js{}
-          format.json { render json: @broker.errors, status: :unprocessable_entity }
+          format.html { redirect_to @broker,notice:'Broker was successfully updated.'}
+        else
+          @error=true
+          format.js{}
+          format.html { render action: 'edit' }      
         end  
       end
     end
@@ -91,35 +89,23 @@ class BrokersController < Broker::AuthenticatedController
   #display individual broker
   def show
     unless params[:key]
-      @uploader = Broker.new.image
+      @uploader = @broker.image
       @uploader.success_action_redirect = broker_url(@broker)
     else      
+      #saves broker association with image after redirect from aws s3 after direct image upload
       @crop=true
       @broker.key=params[:key]
-      @broker.save
+      @broker.save_and_process_image
+    
     end
-    @edit=params[:edit]
-    @education=Education.new #needed for education_add partial template
-    @experience=Experience.new #needed for experience_add partial template
-    @financial_product=FinancialProduct.new
-    @story=FinancialStory.new
-    if params[:method]=="edit"
-      @edit_story=FinancialStory.find(params[:financial_story_id])
-    elsif params[:method]=="delete"
-      @delete_story=FinancialStory.find(params[:financial_story_id])
-    end
+    
+    @licenses=@broker.setup_broker.licenses
     respond_to do |format|
       format.html{}
       format.js
     end    
   end
-  def licenses
-    @licenses=@broker.setup_broker.licenses
-    @license=License.new
-  end
-  def products
-    
-  end
+
   #display broker search form
   def index
     if params[:id]
@@ -133,12 +119,17 @@ class BrokersController < Broker::AuthenticatedController
   end
 
   private
+  def set_licenses
+    @licenses=@broker.setup_broker.licenses
+    @license=License.new
+    @financial_product=FinancialProduct.new
+  end
   def set_broker
     @broker=Broker.find(params[:id])
   end
 
   def broker_params       
-    params.require(:broker).permit(:first_name, :last_name, :street, :city, :state, :email,:username, :password, :password_confirmation,:picture, :crop_x,:crop_y,:crop_w,:crop_h, :skills, :ad_statement, :phone_number_work, :phone_number_cell, :web,{:product_ids => []},:image)
+    params.require(:broker).permit(:first_name, :last_name, :street, :city, :state, :email,:username, :password, :password_confirmation, :crop_x,:crop_y,:crop_w,:crop_h, :skills, :ad_statement, :phone_number_work, :phone_number_cell, :web,{:product_ids => []},:image, :company_location, :company_name, :title)
 
   end
 end

@@ -1,7 +1,5 @@
 <% content_for :title do %>|Broker Profile<%end%>
-<% content_for :head do%>
 
-<%end%>
 <% if broker_personal_profile?(@broker)%>
 <div id="personal_profile_js">
   <%=javascript_include_tag "personal_profile"%>

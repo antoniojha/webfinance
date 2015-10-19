@@ -1,0 +1,41 @@
+<div id="fin_story_error_msg">
+
+</div>
+
+<%=form_for @fin_story, html:{class:"fin_story_edit_form"} do |f|%>
+<table width="100%" style="text-align:left;">
+  <tr>
+    <td>
+      <%=f.text_field :title,{placeholder: "Title", :style=>"width:100%;"}%>
+    </td>
+  </tr>
+  <tr class="blank_row_small"></tr>
+  <tr>
+    <td>
+      <%=f.select :financial_category, Order::FINANCIAL_CATEGORIES, {prompt:"Please Select Category"},{:style=>"width:100%;"}%>
+    </td>
+  </tr>
+  <tr class="blank_row_small"></tr>
+  <tr>
+    <td>
+      <%=f.select :product_id, Product.all.collect {|p| [ p.name, p.id ] }, {prompt:"Please Select Vehicle"},{:style=>"width:100%;"}%>
+    </td>
+  </tr>
+  <tr class="blank_row_small"></tr>
+  <tr>
+    <td>
+      <%=f.text_area :description, {placeholder: "Story Content", rows:"12", :style=>"width:100%;"}%>
+    </td>
+  </tr>
+  <tr>
+    <td><%=f.submit "Update Story"%>
+    </td>
+  </tr>
+</table>
+<%end%>
+<table width="100%" style="text-align:left;">
+  <tr>
+    <td width="40%"></td>
+    <td width="60%" style="text-align:right;"><div style="position:relative;top:-25px;"><%=button_to "Delete", {controller:"financial_stories",action:"destroy", id:@fin_story.id},method: :delete, form_class:"delete_fin_story_form"%></div></td>
+  </tr>
+</table>

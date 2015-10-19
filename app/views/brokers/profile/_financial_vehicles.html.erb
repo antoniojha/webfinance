@@ -1,0 +1,46 @@
+<div class="panel panel-default">
+  <div class="panel panel-body">
+    <table width="100%">
+      <tr>
+        <th style="50%;vertical-align:top;font-size:1.2em;">
+          Financial Vehicle(s)
+          <a href="#" class="financial_vehicle_edit">
+            <span class="glyphicon glyphicon-edit"></span>
+          </a>  
+        </th>
+        <th style="50%;vertical-align:top;font-size:1.2em;">
+          Financial Product(s)
+          <a href="#" class="fin_product_add">  
+            <span class="glyphicon glyphicon-plus"></span>
+          </a>
+        </th>
+      </tr>
+      <tr class="blank_row"></tr>
+      <%@broker.product_ids.each_with_index do |p,index|%>
+      <%product=Product.find(p)%>
+      <tr>
+        <td style="vertical-align:top;">
+          <%=index+1%>. <span class="label label-success" style="font-size:1em;"><%=product.name%></span>
+        </td>
+        <td style="vertical-align:top;">
+          <ul>
+            <%@broker.financial_products.where(product_id:product.id).each do |fin_product|%>  
+            <li>
+              <%company=Company.find(fin_product.company_id)%>
+              <span class="fin_product" alt="<%=fin_product.description%>" title="<%=company.name%>">
+                <%=fin_product.name%>
+              </span>
+               <a href="#" class="fin_product_edit" id=<%=fin_product.id%>> 
+                <span class="glyphicon glyphicon-edit"></span>
+              </a>
+            </li>
+            <%end%>
+          </ul>
+        </td>    
+      </tr>
+      <%end%>    
+    </table>
+  </div>
+</div>
+
+     

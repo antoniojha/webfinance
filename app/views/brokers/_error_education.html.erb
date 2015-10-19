@@ -1,9 +1,0 @@
-<% if @education && @education.errors.any? %>
-  <div class="alert alert-danger error-message" style="width:100%;">
-    <ul>
-      <% @education.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>

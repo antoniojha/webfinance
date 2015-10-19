@@ -55,3 +55,17 @@ def full_name(person)
   name=person.first_name.capitalize+ " "+person.last_name.capitalize
   return name
 end
+
+def create_complete_broker
+  for i in 0..(2)
+    Product.create(name:"name#{i}", description:"description#{i}", vehicle_type:1)
+  end
+  @broker=FactoryGirl.create(:broker)
+  @setup_broker=@broker.build_setup_broker
+  @setup_broker.save
+  for i in 0..1
+    type=@broker.license_type[i]
+    license=@setup_broker.licenses.build(license_type:type, license_number:"test")
+    license.save(validate: false)
+  end
+end

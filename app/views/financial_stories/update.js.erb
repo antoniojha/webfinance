@@ -1,17 +1,12 @@
 <% if @change_vote%>
 $("#story_heading").html("<%=escape_javascript render('financial_stories/story_heading')%>");
 <%else%>
-  <% if @story_error%>
-  $( "#edit_story_<%=@story_id%>" ).dialog('destroy'); 
-  $("#financial_stories").html("<%=escape_javascript render('brokers/financial_stories')%>");
-  edit_story_dialog = $( "#edit_story_<%=@story_id%>" ).dialog({
-    autoOpen: true,
-    height: 550,
-    width: 800,
-    modal: true
-  });  
+  <% unless @error==true%>
+  $("#financial_stories").html("<%=escape_javascript render('brokers/profile/financial_stories')%>");
+  $("#fin_story_display_<%=@fin_story.id%>").css({'background-color':'#C8C8C8'}).
+  animate({'background-color':'white'},1000);
+  $("#fin_story_edit_dialog_form").dialog("close");  
   <%else%>
-  $( "#edit_story_<%=@story_id%>" ).dialog('destroy'); 
-  $("#financial_stories").html("<%=escape_javascript render('brokers/financial_stories')%>");
+  $("#fin_story_edit_dialog_form #fin_story_error_msg").html("<%=escape_javascript render partial:'brokers/profile/error', locals:{object:@fin_story}%>");
   <%end%>
 <%end%>
