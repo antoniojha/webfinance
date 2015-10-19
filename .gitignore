@@ -24,4 +24,4 @@ Ignore all csr documents
 /*.key
 /*.pass.key
 Ignore all rspec file
-/spec/*
+/spec/*.rb
