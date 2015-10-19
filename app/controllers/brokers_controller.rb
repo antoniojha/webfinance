@@ -34,15 +34,11 @@ class BrokersController < Broker::AuthenticatedController
   def update
 
     if params[:send_validation]
-      @broker.non_signup_provider_bool =false
-      @broker.signup_provider_bool = false
       @broker.validate_email_bool=true
 
       @broker.evaluate_and_reset_email_authen(params[:broker][:email])
     end
     if params[:validate_email]
-      @broker.non_signup_provider_bool =false
-      @broker.signup_provider_bool = false
       broker=Broker.find_by_email_confirmation_token(params[:broker][:validation_code])
       if broker ==@broker
         @broker.update_attribute(:email_authen, true)

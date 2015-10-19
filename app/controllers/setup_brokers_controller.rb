@@ -94,7 +94,8 @@ class SetupBrokersController < ApplicationController
           @broker.signup_provider_bool=true
         end
         if @broker.update(broker_params)
-          if params[:send_validation]    
+          if params[:send_validation] 
+            @broker.signup_provider_bool=false
             if @broker.evaluate_and_reset_email_authen(previous_email)           
               @broker.send_email_confirmation
               notice="Validation code has been sent to your email."
