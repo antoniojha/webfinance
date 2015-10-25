@@ -1,6 +1,6 @@
 class Broker < ActiveRecord::Base
 
-  attr_accessor :name_or_email, :password, :password_confirmation,:validate_email_bool, :validation_code, :licensetype_bool, :products_bool, :story_bool, :term_of_use_bool,:basic_info_bool, :id_image_bool, :licenses_upload_bool, :send_email_validation_bool, :signup_provider_bool, :non_signup_provider_bool
+  attr_accessor :name_or_email, :password, :password_confirmation,:validate_email_bool, :validation_code, :licensetype_bool, :products_bool, :story_bool, :term_of_use_bool,:basic_info_bool, :id_image_bool, :licenses_upload_bool, :send_email_validation_bool, :signup_provider_bool, :non_signup_provider_bool, :prev_email
   attr_accessor :financial_category,:product_id, :story, :image, :license_info_4_error, :addition_error_msg
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   serialize :license_type #used during setup, this will not be updated after setup all licenses will be accessed via @broker.setup_broker.licenses
@@ -52,17 +52,22 @@ class Broker < ActiveRecord::Base
   
   validates :username, presence: true, if: :password_signup?
   validates :password, :password_confirmation, presence: true, if: :password_signup?
-  validate :check_passwords_match, if: :password_signup?
+  validate :check_passwords_match
   def check_passwords_match
     if password !=password_confirmation
       errors.add(:addition_error_msg,"Passwords do not match")
     end
   end
-  # return true if it's not signed up through provider
+  # enforces password presence validation either from signing up with or without provider
+  # doesn't enforce if password already set
   def password_signup?
-    bool1=(@non_signup_provider_bool == true)
-    bool2=(@signup_provider_bool == true)
-    bool1||bool2
+    if password_digest
+      return false
+    else
+      bool1=(@non_signup_provider_bool == true)
+      bool2=(@signup_provider_bool == true)
+      bool1||bool2
+    end
   end
 
   validates :email, allow_blank:true, format: {with:VALID_EMAIL_REGEX}
@@ -85,16 +90,22 @@ class Broker < ActiveRecord::Base
       self.email=email.downcase
     end
   end
-
-
-  validates :first_name, :last_name, :email, :company_name, :company_location, :title, presence:true, on: :update, if: :basic_info_bool?
+  validates :first_name, :email, :last_name, :company_name, :company_location, :title, presence:true, on: :update, if: :basic_info_bool?
+  
   validates :email, presence:true, on: :update, if: :send_email_validation?
+  validate :ensure_same_email, if: :basic_info_bool?
+  def ensure_same_email
+    if email!=@prev_email
+      errors.add(:addition_error_msg, "New email must be validated.")
+    end
+  end
+  
   def send_email_validation?
     @send_email_validation_bool==true
   end
   def basic_info_bool?
     if @validate_email_bool==true
-      #when validating email, will not validate when update Broker
+      #when validating email, will not trigger validation when broker attributes are updated
       return false
     else
       @basic_info_bool==true
@@ -218,18 +229,23 @@ class Broker < ActiveRecord::Base
   def send_rejection_email
     EmailNotice.application_rejection(self).deliver 
   end
-  def evaluate_and_reset_email_authen(email)
+  def evaluate_and_reset_email_authen(prev_email)
   # reset email authen if a new email is set
-    if email
-      if self.email == email
-        return false
+    unless email_authen
+      return true
+    else
+      if prev_email
+        if self.email == prev_email
+          return false
+        else
+          self.email_authen=false
+          return true
+        end
       else
+        # if there is no previous email then should always return true
         self.email_authen=false
         return true
       end
-    else
-      self.email_authen=false
-      return true
     end
   end
   def steps
@@ -277,6 +293,7 @@ class Broker < ActiveRecord::Base
     end
   end
   def save_and_process_image(options = {})  
+    #should auto orient the image 
     self.remote_image_url = image.direct_fog_url(:with_path => true)
     save
   end
@@ -285,7 +302,6 @@ class Broker < ActiveRecord::Base
   end
   def crop_image
     puts "crop image"
-  #  raise "#{crop_x},#{crop_y},#{crop_w},#{crop_h}"
     ImageWorker.perform_async(id,key,"crop",crop_x,crop_y,crop_w,crop_h)
   end
 

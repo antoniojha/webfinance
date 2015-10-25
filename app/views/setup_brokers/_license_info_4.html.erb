@@ -7,7 +7,7 @@
     <%@licenses.each do |t|%>
       <%if t.license_type==l%>
         <%@license=t%>
-        <%=render partial: "licenses/license_error", locals:{license:@license}%>
+        <%=render partial: "shared/error_message", locals:{object:@license}%>
         <%= form_for @license do|f|%>
           <table width="100%">
             <tr>
@@ -18,18 +18,18 @@
               </td>
             </tr>
             <tr>
-              <td width="40%"><%= f.label "License Number" %></td>
+              <td width="40%"><%= f.label "License Number" %><%=asterisk_html%></td>
               <td width="60%"><%= f.text_field :license_number,{class:'form-control'} %></td>
             </tr>
             <tr class="blank_row"></tr>
             <tr>
-              <td><%= f.label "Expiration Date" %></td>
+              <td><%= f.label "Expiration Date" %><%=asterisk_html%></td>
 
               <td><%= f.date_select :expiration_date,{start_year:Date.current.year, end_year:2020,order: [:day, :month, :year]}, {style:"width:32%;"} %></td>
             </tr>
             <tr class="blank_row"></tr>
             <tr>
-              <td><%= f.label "Upload License" %></td>
+              <td><%= f.label "Upload License" %><%=asterisk_html%></td>
               <td><%= f.hidden_field :license_image%>
                 <%= f.file_field :license_image, {class:'form-control'} %></td>
             </tr>

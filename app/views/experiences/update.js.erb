@@ -1,5 +1,5 @@
 <% unless @error==true%>
-$("#experiences").html("<%=escape_javascript render('brokers/profile/experiences')%>");
+$("#experiences").html("<%=escape_javascript render(partial:'brokers/profile/experiences',locals:{mode:"personal"})%>");
 $("#experience_display_<%=@experience.id%>").css({'background-color':'#C8C8C8'}).
 animate({'background-color':'white'},1000);
 $("#experience_edit_dialog_form").dialog("close");  

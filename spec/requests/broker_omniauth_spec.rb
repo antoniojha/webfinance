@@ -64,6 +64,19 @@ describe "broker social media sign up" do
         expect(page).to have_content("Password confirmation can't be blank")
        
       end
+      describe "should be able to validate email" do
+        before do
+          fill_in "broker_email", with: "antoniojha@gmail.com"
+          click_button "send validation code"
+          @broker=Broker.first
+        end
+        it "should generate validation code once validate button is clicked" do   
+          expect(@broker.email_confirmation_token).not_to eq nil
+        end
+        it "should have validate button" do
+          expect(page).to have_button("validate email")
+        end
+      end
     end
   end   
 end

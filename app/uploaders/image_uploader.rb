@@ -9,7 +9,7 @@ class ImageUploader < CarrierWave::Uploader::Base
    include CarrierWave::MiniMagick
   #This will set the MIME type for the image in case it’s incorrect.
    include CarrierWave::MimeTypes
-   
+   process :auto_orient
    process :set_content_type
   # Choose what kind of storage to use for this uploader:
   if Rails.env.test?   
@@ -31,7 +31,8 @@ class ImageUploader < CarrierWave::Uploader::Base
     resize_to_fill(200, 200)
   end
   version :thumb_400 do
-    process :resize_to_limit => [400, 0]
+    process :crop
+    resize_to_fill(400, 400)
   end
 
   def crop

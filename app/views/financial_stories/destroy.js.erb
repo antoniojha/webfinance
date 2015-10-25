@@ -1,2 +1,2 @@
-$("#financial_stories").html("<%=escape_javascript render('brokers/profile/financial_stories')%>");
+$("#financial_stories").html("<%=escape_javascript render(partial:'brokers/profile/financial_stories',locals:{mode:"personal"})%>");
 $("#fin_story_edit_dialog_form").dialog("close");  

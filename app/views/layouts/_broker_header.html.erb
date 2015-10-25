@@ -10,12 +10,17 @@
  
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      Account <b class="caret"></b>
+      <span style="font-size:1.4em;" class="glyphicon glyphicon-list" aria-hidden="true"></span>
     </a>
     <ul class="dropdown-menu">
       <li><%= link_to 'Broker Profile', current_broker %></li>
-      <li><%= link_to 'Private Setting', edit_broker_path(current_broker)%></li>
+
+      <li><%=link_to "Financial Articles", controller: "/brokers", action: "home", id: current_broker.id%></li>
+      <li><%=link_to "Financial Reps", brokers_path%></li>
+      <li><%=link_to "Users", users_path%></li>
+      <li><%=link_to "News", news_path%></li>
       <li class="divider"></li>
+      <li><%= link_to 'Private Setting', edit_broker_path(current_broker)%></li>
       <li><%= link_to 'Log Out',broker_logout_path, method: "delete"%></li>
     </ul>
   </li>  

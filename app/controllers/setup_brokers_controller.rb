@@ -58,13 +58,13 @@ class SetupBrokersController < ApplicationController
         if params[:send_validation]
           @broker.send_email_validation_bool=true
           @validate_email_error=true
-          previous_email=@broker.email
         elsif params[:validate_email]
           @broker.validate_email_bool=true 
-          
         else
           @broker.basic_info_bool=true
         end
+        #set prev_email for validating email purpose
+        @broker.prev_email=@broker.email
       elsif @broker.current_field=="id_2"
         @broker.id_image_bool=true
       elsif (@broker.current_field=="license_3")
@@ -98,7 +98,7 @@ class SetupBrokersController < ApplicationController
         
         if @broker.update(broker_params)
           if params[:send_validation] 
-            if @broker.evaluate_and_reset_email_authen(previous_email)           
+            if @broker.evaluate_and_reset_email_authen(@broker.prev_email)           
               @broker.send_email_confirmation
               notice="Validation code has been sent to your email."
             end
@@ -168,7 +168,7 @@ class SetupBrokersController < ApplicationController
     end
   end
   def broker_params
-    params.require(:broker).permit(:first_name, :last_name, :id_image, :company_name,:company_location, :email, :title,:password,:password_confirmation,{:license_type => []},{:product_ids => []}, :skills, :ad_statement, :check_term_of_use, financial_stories_attributes:[:id, :product_id,:financial_category,:description, :title])
+    params.require(:broker).permit(:first_name, :last_name, :id_image, :company_name,:company_location, :email, :title,:username,:password,:password_confirmation,{:license_type => []},{:product_ids => []}, :skills, :ad_statement, :check_term_of_use, financial_stories_attributes:[:id, :product_id,:financial_category,:description, :title])
   end
 
   def license_params

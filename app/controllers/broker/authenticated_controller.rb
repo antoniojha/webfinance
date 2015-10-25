@@ -1,5 +1,5 @@
 class Broker::AuthenticatedController < ApplicationController
-  before_action :remember_location_broker, only:[:edit] # this comes before authorize_login to be executed first. Primarily used for Broker action:edit
+  before_action :remember_location_broker, only:[:edit,:home] # this comes before authorize_login to be executed first. Primarily used for Broker action:edit
   before_action :authorize_broker_login
   before_action :redirect_to_broker_setup
   rescue_from ActiveRecord::RecordNotFound, with: :invalid_broker

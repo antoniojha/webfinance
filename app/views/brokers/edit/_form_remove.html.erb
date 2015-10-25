@@ -1,27 +1,18 @@
 <h1>Remove Account</h1>
-<%= form_for @broker,:html => { :method => :delete }  do |f|%>
-	
-	<table width="100%">
-
-		<tr>
-      <td width="20%"><%= f.label :username%></td>
-			<td width="65%"><%= f.text_field :username, {:class=>'form-control'}%></td>
-      <td width="15%"></td>
-		</tr>
-		<tr class="blank_row"></tr>
-		<tr>
-			<td><%= f.label :password, 'Password:'%></td>
-      <td><%= f.password_field :password, {:class=>'form-control'}%></td>
-      <td></td>
-		</tr>
-		<tr class="blank_row"></tr>
-		<tr>
-      <td><%= f.submit "Delete Profile", :class=>'btn btn-danger'%></td>
-      <% if @broker_delete%>
-      <%=hidden_field :remove_broker, :id, :value=>@broker_delete.id%>
-      <%end%>
-		</tr>
-
-	</table>
-
-<% end %>
+<div style="text-align:left;width:80%;">
+  <p>To remove your account, please enter your password below.</p>
+  <%= form_for @broker,:html => { :method => :delete }  do |f|%>	
+    <table width="100%">
+      <tr class="blank_row"></tr>
+      <tr>
+        <td><%= f.label :password, 'Password:'%></td>
+        <td><%= f.password_field :password, {:class=>'form-control'}%></td>
+        <td></td>
+      </tr>
+      <tr class="blank_row"></tr>
+      <tr>
+        <td><%= f.submit "Delete Profile", :class=>'btn btn-danger'%></td>
+      </tr>
+    </table>
+  <% end %>
+</div>

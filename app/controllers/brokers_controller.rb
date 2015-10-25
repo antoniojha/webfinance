@@ -1,6 +1,6 @@
 class BrokersController < Broker::AuthenticatedController
   skip_before_action :redirect_to_broker_setup, only:[:index]
-  skip_before_action :authorize_broker_login, only:[:show,:index,:new,:create]
+  skip_before_action :authorize_broker_login, only:[:show,:index,:new,:create,:home]
   before_action :set_broker, only:[:show,:edit,:remove,:home,:update,:destroy,:products,:licenses]
   def new
     @broker=Broker.new
@@ -26,28 +26,26 @@ class BrokersController < Broker::AuthenticatedController
   end
   def edit
     @page=params[:page]
-    if @page=="license_edit"
-      set_licenses
+    if @page.nil?
+      @page="form_edit"
     end
   end
 
   def update
-
     if params[:send_validation]
-      @broker.validate_email_bool=true
-
-      @broker.evaluate_and_reset_email_authen(params[:broker][:email])
+      @broker.send_email_validation_bool=true
+      @validate_email_error=true  
+    elsif params[:validate_email]
+      @broker.validate_email_bool=true 
+    else
+      @broker.basic_info_bool=true
     end
-    if params[:validate_email]
-      broker=Broker.find_by_email_confirmation_token(params[:broker][:validation_code])
-      if broker ==@broker
-        @broker.update_attribute(:email_authen, true)
-      end
-    end
-    respond_to do |format|
-      if params[:edit_products]
-        @broker.products_bool=true
-      end
+    #@page indicates which of the view it will show when rendering error.
+    @page="form_edit" 
+    #set prev_email for validating email purpose
+    @broker.prev_email=@broker.email    
+  
+    respond_to do |format|    
       if params[:delete_picture]
         @broker.image=nil
         @broker.image_cropped=nil
@@ -57,28 +55,43 @@ class BrokersController < Broker::AuthenticatedController
         else
           format.html{render "show"}
         end
-      else  
-        if @broker.change_experience?(broker_params)
-          change_experience=true
+      elsif params[:validate_email]
+        if @broker.confirm_email?(params[:broker][:validation_code])   
+          format.html{redirect_to edit_broker_path(@broker)}
+        else
+          format.html{render "edit"}
         end
-        if @broker.update(broker_params)
-
-          if params[:broker][:image].blank?     
-            if @broker.cropping?
-              @broker.update_attributes(image_cropped:false)
-              @broker.crop_image
-            end     
-          end
-          if @broker.validate_email_bool && (@broker.email_authen!=true)
+      else  
+        # this has to be before update action to check if there is a change in value of title, company_name, company_location 
+        if @broker.change_experience?(broker_params)
+          change_experience_bool=true
+        end      
+        
+        if @broker.update(broker_params)   
+          if params[:send_validation]
+            if @broker.evaluate_and_reset_email_authen(@broker.prev_email)          
               @broker.send_email_confirmation
-          end   
+              notice="Validation code has been sent to your email."
+            end
+          end
+          if @broker.cropping?
+            @broker.update_attributes(image_cropped:false)
+            @broker.crop_image
+          end     
           #update current experience based on broker's title, company name, and location
-          if change_experience
+          if change_experience_bool
             @broker.set_assoc_experience
           end
-          set_licenses
           format.js{}
-          format.html { redirect_to @broker,notice:'Broker was successfully updated.'}
+          if params[:setting]
+            unless params[:send_validation]
+              format.html { redirect_to edit_broker_path(@broker),notice:'Your profile was successfully updated.'}
+            else
+              format.html { redirect_to edit_broker_path(@broker), notice:notice}  
+            end
+          else
+            format.html { redirect_to @broker,notice:'Your profile was successfully updated.'}
+          end
         else
           @error=true
           format.js{}
@@ -97,10 +110,7 @@ class BrokersController < Broker::AuthenticatedController
       @crop=true
       @broker.key=params[:key]
       @broker.save_and_process_image
-    
     end
-    
-    @licenses=@broker.setup_broker.licenses
     respond_to do |format|
       format.html{}
       format.js
@@ -118,13 +128,17 @@ class BrokersController < Broker::AuthenticatedController
       @broker_search=BrokerSearch.new
     end 
   end
-
-  private
-  def set_licenses
-    @licenses=@broker.setup_broker.licenses
-    @license=License.new
-    @financial_product=FinancialProduct.new
+  def destroy
+    if @broker.has_password?(params[:broker][:password])
+      @broker.destroy
+      redirect_to broker_signup_path, notice:"Your profile has been removed."
+    else
+      @page="form_remove"
+      @broker.errors.add(:addition_error_msg,"Password doesn't not match")
+      render "brokers/edit"
+    end
   end
+  private
   def set_broker
     @broker=Broker.find(params[:id])
   end

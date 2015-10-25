@@ -93,7 +93,21 @@ describe "broker sign up and 1st Register Page" do
                 it "shouldn't allow validate email after successful validation" do
                   expect(page).not_to have_button("validate email")
                 end
-                describe "can enter a different email" do
+                describe "can't proceed when a new email is entered other then the one validated" do
+                  before do
+                    fill_in "broker_email", with: "other_email@yahoo.com"
+                    fill_in "broker_first_name", with: "example first name"
+                    fill_in "broker_last_name", with: "example last name"
+                    fill_in "broker_title", with: "example title"
+                    fill_in "broker_company_name", with: "example company"   
+                    fill_in "broker_company_location", with: "example location"
+                    click_button "Next"
+                  end
+                  it "should render error" do
+                    expect(page).to have_selector(:css,'div.alert.alert-danger')
+                  end
+                end
+                describe "can then validate a different email" do
                
                   describe "if it's the same email" do
                     before do
@@ -141,6 +155,7 @@ describe "broker sign up and 1st Register Page" do
         describe "proceed to 2nd page" do
           before do
             @broker.email_authen=true
+            @broker.email="example@example.com"
             @broker.save
             fill_in "broker_first_name", with: "example first name"
             fill_in "broker_last_name", with: "example last name"

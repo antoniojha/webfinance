@@ -1,2 +1,2 @@
-$("#educations").html("<%=escape_javascript render('brokers/profile/educations')%>");
+$("#educations").html("<%=escape_javascript render(partial:'brokers/profile/educations',locals:{mode:"personal"})%>");
 $("#education_edit_dialog_form").dialog("close");  

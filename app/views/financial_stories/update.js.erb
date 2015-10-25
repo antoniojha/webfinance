@@ -2,7 +2,7 @@
 $("#story_heading").html("<%=escape_javascript render('financial_stories/story_heading')%>");
 <%else%>
   <% unless @error==true%>
-  $("#financial_stories").html("<%=escape_javascript render('brokers/profile/financial_stories')%>");
+  $("#financial_stories").html("<%=escape_javascript render(partial:'brokers/profile/financial_stories',locals:{mode:"personal"})%>");
   $("#fin_story_display_<%=@fin_story.id%>").css({'background-color':'#C8C8C8'}).
   animate({'background-color':'white'},1000);
   $("#fin_story_edit_dialog_form").dialog("close");  

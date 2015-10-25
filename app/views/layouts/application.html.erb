@@ -6,8 +6,6 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
   <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true%>
-
- 
   <%= yield(:head)%>
   <%= csrf_meta_tags %>
   <!-- [if lt IE 9]>
@@ -18,30 +16,16 @@
   </style>
   
 </head>
-<body data-no-turbolink="true">
-  <%unless user_logged_in? || broker_logged_in?%>
-  	<header class="navbar-default navbar-static-top navbar-inverse" role="navigation">  
-      <div class="navbar-inner">
-        <div class="container">		
-          <ul class="navbar-nav nav pull-left">
-         
-            <li class="navbar-text"><%=render "layouts/logo"%></li>
-          </ul>
-          
-          <%=render 'layouts/general_header'%>
-        </div>
-      </div>
-	  </header>
+<body data-no-turbolink="true" style="width:100%;">
+  <%unless user_logged_in? || broker_logged_in?%>         
+    <%=render 'layouts/general_header'%>
   <%else%>
-    
-	  <header class="navbar-default navbar-static-top" role="navigation">  
+	  <header class="navbar-default navbar-static-top navbar-inverse" role="navigation">  
       <div class="navbar-inner">
         <div class="container">		
           <ul class="navbar-nav nav pull-left">
-  
             <li class="navbar-text"><%=render "layouts/logo"%></li>
             <li><%= link_to 'Home', home_path %></li>
-
           </ul>
           <% if user_logged_in?%>
             <%=render 'layouts/user_header'%>
@@ -53,40 +37,22 @@
 	  </header>
   <%end%>
   <div style="min-height:500px;">
-    <%if user_logged_in?%>
-      <div class="navbar-default navbar-custom2 navbar-static-top" role="navigation">  
-        <%=render partial:"layouts/top_menu",locals:{object:current_user,type:"users"} %>
-      </div>     
-    <%end%>   
-    <%if broker_logged_in?%>
-      <% if current_broker.setup_completed?%>
-      <div class="navbar-default navbar-custom2 navbar-static-top" role="navigation">
-        <%=render partial:"layouts/top_menu",locals:{object:current_broker,type:"brokers"} %>
-      </div>    
-      <%end%>
-    <%end%>   
-    <%= yield(:banner)%>
+    <%= yield(:banner)%>  
     <div align="center" class="body1">
       <div id='col_left' class=<%=column_width_left%> align="center">
         <%=yield :left%>
-
       </div>
       <div id='col_middle' class=<%=column_width_middle%> align="center">
-
-        <%=render "layouts/flash_message"%>
+        <%=render "layouts/flash_message"%><br>
         <%=yield %>
       </div>
-
       <div id='col_right' class=<%=column_width_right%> align="center">
         <%=yield :right%>
       </div>  
-
     </div> 
   </div>                                                              
-  <div align="center">
-    
+  <div align="center">    
     <%=render "layouts/footer"%>
-  
   </div>
 </body>
 </html>

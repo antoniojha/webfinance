@@ -5,7 +5,7 @@
   <%= form_for :broker, :url=> setup_broker_path(@broker), :html => { :method => :put} do|f|%>
  
   <p style="font-size:1.2em;"> RichRly only accepts your <span style="text-decoration:underline;">State Driver License</span> as a valid form of ID.</p>
-  <p><%=f.label "Driver License Upload"%></p>
+  <p><%=f.label "Driver License Upload"%><%=asterisk_html%></p>
   <p><i>Only accepts (.jpg .jpeg .gif .png .pdf) file.</i></p>
   <%=f.hidden_field :id_image%>
   <p><%=f.file_field :id_image, class:"form-control"%></p> 

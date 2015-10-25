@@ -58,6 +58,7 @@ class Broker::SessionsController < Broker::AuthenticatedController
     broker=Broker.find_by(username: name_or_email) || Broker.find_by(email: name_or_email)
     respond_to do |format|
       if broker && broker.has_password?(params[:session][:password])
+        log_out(current_broker)
         log_in(broker)
         if broker.setup_completed? 
           params[:session][:remember]=='1' ? remember(broker) : forget(broker)

@@ -35,7 +35,7 @@ FactoryGirl.define do
     company_location "39-07 Prince St, Suite 6A-3"
     title "Associate"
     setup_completed? true
-    license_type ["Life Insurance","Series 3"]
+    license_type ["Life Insurance License","Series 3"]
     product_ids [1,2,3]
     
   end
@@ -109,8 +109,7 @@ FactoryGirl.define do
 
   
   factory :license, class: License do
-    picture (Rails.root+"spec/fixtures/test_files/example_license.pdf").open
-    license_type "1"
+    license_type "Life Insurance License"
     license_number "123456789"
     
   end

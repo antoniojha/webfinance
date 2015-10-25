@@ -1,46 +1,44 @@
 <% content_for :title do %>|Personal<%end%>
-<div style="float:left; width:30%;" align="left">
-
+<div style="float:left; width:30%;padding-top:25px;" align="left">
   <% if !@broker.image_url.to_s.empty?%> 
     <%= content_tag "div", id: "picture_form", data: {picture_file_name: @broker.image_url.to_s,crop:@crop}, style:"float:left; width:40%;",align:"left" do %>
-      <%=render "brokers/picture_form"%>
+  <%=render "brokers/image/picture_form"%>
     <% end %>
   <%else%>
     <div id="picture_form">
-      <%=render "brokers/picture_form"%>  
+      <%=render "brokers/image/picture_form"%>  
     </div>
   <%end%>
 </div>
+<div id ="profile_infos" align="left" style="overflow: auto;padding:5px;">
+  <%=render partial:"brokers/profile/profile_infos", locals:{mode:"personal"}%>
+</div>
+<div style="clear:both;"></div>
 <div id="personal_info">
-  <div id ="profile_infos" align="left" style="overflow: auto;padding:5px;">
-    <%=render "brokers/profile/profile_infos"%>
-  </div>
-  <div style="clear:both;"></div>
-
   <table width="100%" style="border-spacing: 5px;">
     <tr>   
       <td width="70%" align="left" style="padding:5px;border: 1px ridge;vertical-align:top;">
 
         <div id="abouts">
-          <%=render "brokers/profile/abouts"%>
+          <%=render partial:"brokers/profile/abouts",locals:{mode:"personal"}%>
         </div>
         <div id="skills">
-          <%=render "brokers/profile/skills"%>
+          <%=render partial:"brokers/profile/skills",locals:{mode:"personal"}%>
         </div>
         <div id="licenses">
-          <%=render "brokers/profile/licenses"%>
+          <%=render partial:"brokers/profile/licenses",locals:{mode:"personal"}%>
         </div>
         <div id="financial_vehicles">
-          <%=render "brokers/profile/financial_vehicles"%>
+          <%=render partial:"brokers/profile/financial_vehicles",locals:{mode:"personal"}%>
         </div>      
         <div id="educations">
-          <%=render "brokers/profile/educations"%>
+          <%=render partial:"brokers/profile/educations",locals:{mode:"personal"}%>
         </div>           
         <div id="experiences">
-          <%=render "brokers/profile/experiences"%>
+          <%=render partial:"brokers/profile/experiences",locals:{mode:"personal"}%>
         </div>   
         <div id="financial_stories">   
-          <%=render "brokers/profile/financial_stories"%>
+          <%=render partial:"brokers/profile/financial_stories",locals:{mode:"personal"}%>
         </div>  
       </td>
       <td width="30%" align="left" style="padding:5px;vertical-align:top;border: 1px ridge;">
@@ -82,11 +80,11 @@
   </div>    
   <%if !@broker.image_url.to_s.empty?%>
     <div id="change_dialog_form">
-    <%=render "brokers/change_dialog_form"%>
+      <%=render "brokers/image/change_dialog_form"%>
     </div>
   <%else%>
     <div id="upload_dialog_form">
-    <%=render "brokers/upload_dialog_form"%>
+      <%=render "brokers/image/upload_dialog_form"%>
     </div>
   <%end%>  
 </div>

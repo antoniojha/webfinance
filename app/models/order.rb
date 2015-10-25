@@ -1,4 +1,5 @@
 class Order <ActiveRecord::Base
+  STRINGS=[["must contain at least 7 characters; must contain at least one number, one capital letter and lower case letter, and one special character."]]
   EXPENSE_TYPES=[["Food Expense",1],["Finance Expense",2],["Shopping Expense",3],["Transportation Expense",4],["Entertainment Expense",5],["Other Expense",6]]
   SAVING_TYPES=[["Cash and Cash Equivalent",1],["Checking Account",2],["Saving Account",3],["Annuities",4],["Bonds",5],["Life Insurance (Cash Value)",6],["Mutual Fund",6], ["Pension",7],["Stocks",8],["Retirement Plan",9],["Other",10]]
   INCOME_TYPES=[["Pay Check",1],["Rental Income",2],["Gov Benefit",3],["Investment Income",4],["Interest Income",5], ["Tax Return",6]]

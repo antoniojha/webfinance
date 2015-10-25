@@ -1,28 +1,32 @@
 <div class="panel panel-default">
   <div class="panel panel-body">
-    <table width="100%">
+    <table width="100%" style="border-collapse: collapse;">
       <tr>
         <th style="50%;vertical-align:top;font-size:1.2em;">
           Financial Vehicle(s)
+          <%if mode=="personal"%>
           <a href="#" class="financial_vehicle_edit">
             <span class="glyphicon glyphicon-edit"></span>
           </a>  
+          <%end%>
         </th>
         <th style="50%;vertical-align:top;font-size:1.2em;">
           Financial Product(s)
+          <%if mode=="personal"%>
           <a href="#" class="fin_product_add">  
             <span class="glyphicon glyphicon-plus"></span>
           </a>
+          <%end%>
         </th>
       </tr>
       <tr class="blank_row"></tr>
       <%@broker.product_ids.each_with_index do |p,index|%>
       <%product=Product.find(p)%>
-      <tr>
-        <td style="vertical-align:top;">
+      <tr style="border:1px ridge;">
+        <td style="vertical-align:top;padding:7px;">
           <%=index+1%>. <span class="label label-success" style="font-size:1em;"><%=product.name%></span>
         </td>
-        <td style="vertical-align:top;">
+        <td style="vertical-align:top;padding:7px;">
           <ul>
             <%@broker.financial_products.where(product_id:product.id).each do |fin_product|%>  
             <li>
@@ -30,9 +34,11 @@
               <span class="fin_product" alt="<%=fin_product.description%>" title="<%=company.name%>">
                 <%=fin_product.name%>
               </span>
+              <%if mode=="personal"%>
                <a href="#" class="fin_product_edit" id=<%=fin_product.id%>> 
                 <span class="glyphicon glyphicon-edit"></span>
               </a>
+              <%end%>
             </li>
             <%end%>
           </ul>

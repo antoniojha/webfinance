@@ -1,76 +1,80 @@
 <h3>Update Account</h3>
 <%=form_for @broker do |f|%>
-<table width="100%">
+<table width="85%">
   <tr>
-    <td width="30%"><%=f.label :username%><%=asterisk_html%></td>
-    <td width="70%"><%=f.text_field :username,{:class=>'form-control'}%></td>
+    <td width="35%"><b>Username</b><%=asterisk_html%></td>
+    <td width="65%"><%=f.text_field :username,{:class=>'form-control'}%></td>
   </tr> 
   <tr class="blank_row"></tr> 
-  <% unless f.object.email_authen%>
   <tr>
-    <td colspan=2>Please enter email and validate.</td>
-  </tr>
-  <%end%>
-  <tr>
-    <td width="30%"><%=f.label :email%><%=asterisk_html%></td>
-    <td width="70%"><%=f.text_field :email,{:class=>'form-control'}%></td>
-    <td>
-      <%=f.submit 'send validation code',name:"send_validation", class:"btn btn-default"%>
-    </td>
-  </tr> 
-  <% if f.object.email && (f.object.email_authen!=true)%>
-    <tr>
-      <td><%=f.label "Validation Code"%></td>
-      <td><%=f.text_field :validation_code,{:class=>'form-control'}%></td>
-      <td><%=f.submit "validate email", name:"validate_email", class:"btn btn-default"%></td>
-    </tr>    
-  <%elsif f.object.email && (f.object.email_authen==true)%>
-    <tr>
-      <td colspan=3>Email address is successfully validated.</td>
-    </tr>
-  <%end%>
-  <tr class="blank_row"></tr> 
-  <% if f.object.password_digest.present?%>
-  <tr>
-    <td colspan=2>
-      <div class="alert alert-info" role="alert">
-      Your Password has already been saved, you don't need to re-enter it unless you want to change your original password.
-      </div>
-    </td>
-  </tr>
-  <%else%>
-  <tr>
-    <td colspan=2>
-      <div class="alert alert-danger" role="alert">
-      You don't have a password yet. You can create a password and login to your account through username and password.
-      </div>
-    </td>
-  </tr>    
-  <%end%>
-  <tr>
-  	<td><%= f.label :password %></td>
+    <td><b>Password</b></td>
   	<td><%= f.password_field :password,{:class=>'form-control'} %></td>
   </tr>
   <tr class="blank_row"></tr> 
   <tr>
-    <td><%= f.label "Password Confirmation" %></td>
+    <td><b>Password Confirmation</b></td>
     <td><%= f.password_field :password_confirmation,{:class=>'form-control'} %></td>
   </tr>
-	<tr class="blank_row"></tr>
-  
+	<tr class="blank_row"></tr>  
+  <% unless f.object.email_authen%>
   <tr>
-    <td width="30%"><%=f.label :first_name, "First Name"%></td>
+    <td colspan=2>
+      <div class="alert alert-success" role="alert">
+      Please enter email and validate.
+      </div>  
+    </td>
+  </tr>
+  <%end%>
+  <tr>
+    <td width="30%"><b>Email</b><%=asterisk_html%></td>
+    <td width="70%"><%=f.text_field :email,{:class=>'form-control'}%></td>
+  </tr> 
+  <%if f.object.email && (f.object.email_authen==true)%>
+    <tr class="blank_row"></tr> 
+    <tr>
+      <td colspan=2>
+        <div class="alert alert-success" role="alert">
+        Email address was successfully validated.
+        </div>  
+      </td>
+    </tr>
+  <%end%>  
+  <tr class="blank_row"></tr>  
+  <tr>
+    <td></td>
+    <td style="text-align:left;">
+      <%=f.submit 'send validation code',name:"send_validation", class:"btn btn-primary"%>
+    </td>
+  </tr>
+  <% if f.object.email && (f.object.email_authen!=true)%>
+  <tr class="blank_row"></tr>  
+  <tr>
+    <td><b>Validation Code</b></td>
+    <td><%=f.text_field :validation_code,{:class=>'form-control'}%></td>
+  </tr>    
+  <tr class="blank_row"></tr>  
+  <tr>
+    <td></td>
+    <td style="text-align:left;">
+      <%=f.submit "validate email", name:"validate_email", class:"btn btn-primary"%>
+    </td>
+  </tr>
+  <%end%>
+
+  <tr class="blank_row"></tr> 
+  <tr>
+    <td width="30%"><b>First Name</b><%=asterisk_html%></td>
     <td width="70%"><%=f.text_field :first_name,{:class=>'form-control', :value=>cap(@broker.first_name)}%></td>
   </tr>
   <tr class="blank_row"></tr>
   <tr>
-    <td><%=f.label :last_name, "Last Name"%></td>
+    <td><b>Last Name</b><%=asterisk_html%></td>
     <td><%=f.text_field :last_name,{:class=>'form-control',:value=>cap(@broker.last_name)}%></td>
   </tr>
   <tr class="blank_row"></tr>
   <tr>
-    <td><%=f.submit "Update Account", class:"btn btn-default"%></td>
-    <td></td>
+    <td><%=f.submit "Update Account", class:"btn btn-primary"%></td>
+    <td><%=hidden_field_tag :setting, true%></td>
   </tr>
 </table>
 <%end%>

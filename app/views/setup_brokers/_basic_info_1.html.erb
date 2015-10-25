@@ -3,15 +3,20 @@
 <div style="width:60%;text-align:left;padding-top:10px;">
   <%= form_for :broker, :url=> setup_broker_path(@broker), :html => { :method => :put} do|f|%>
   <% if @broker.uid%>
-  <%=hidden_field_tag :signup_provider_bool, true%>
-  <p><%=f.label "Username"%></p>
-  <p><%=f.text_field :username,{:class=>'form-control'}%></p>
-  <p><%=f.label "Password"%></p>
-  <p><%=f.password_field :password,{:class=>'form-control'}%></p>
-  <p><%= f.label "Password Confirmation" %></p>
-  <p><%= f.password_field :password_confirmation,{:class=>'form-control'} %></p>
+    <%=hidden_field_tag :signup_provider_bool, true%>
+    <p><%=f.label "Username"%><%=asterisk_html%></p>
+    <p><%=f.text_field :username,{:class=>'form-control'}%></p>
+    <%if @broker.password_digest%>
+    <div class="alert alert-success" role="alert">
+      Password has already been set. 
+    </div>
+    <%end%>
+    <p><%=f.label "Password"%><%=asterisk_html%></p>
+    <p><%=f.password_field :password,{:class=>'form-control',title: Order::STRINGS[0]}%></p>
+    <p><%= f.label "Password Confirmation" %><%=asterisk_html%></p>
+    <p><%= f.password_field :password_confirmation,{:class=>'form-control'} %></p>
   <%end%>
-  <p><%=f.label "Email"%></p>
+  <p><%=f.label "Email"%><%=asterisk_html%></p>
   <p><%=f.text_field :email,{:class=>'form-control'}%></p>
   <p><%=f.submit 'send validation code', name: "send_validation", class:"btn btn-primary"%></p>
   <%unless @broker.email && (@broker.email_authen==true)%>
@@ -24,15 +29,15 @@
     Email address is successfully validated.  
   </div>
   <%end%>
-  <p><%=f.label "First Name"%></p>
+  <p><%=f.label "First Name"%><%=asterisk_html%></p>
   <p><%=f.text_field :first_name,{:class=>'form-control'}%></p>
-  <p><%=f.label "Last Name"%></p>
+  <p><%=f.label "Last Name"%><%=asterisk_html%></p>
   <p><%=f.text_field :last_name,{:class=>'form-control'}%></p>
-  <p><%=f.label "Title"%></p>
+  <p><%=f.label "Title"%><%=asterisk_html%></p>
   <p><%=f.text_field :title,{:class=>'form-control'}%></p>
-  <p><%=f.label "Company Name"%></p>
+  <p><%=f.label "Company Name"%><%=asterisk_html%></p>
   <p><%=f.text_field :company_name,{:class=>'form-control'}%></p>
-  <p><%=f.label "Company Location"%></p>
+  <p><%=f.label "Company Location"%><%=asterisk_html%></p>
   <p><%=f.text_area :company_location,{:class=>'form-control'}%></p>
   <%=f.submit "Next",name:"next_from_pg1", :class=>"btn btn-lg btn-success", style:"width:100%;"%>
 <%end%>

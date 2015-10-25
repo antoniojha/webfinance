@@ -1,20 +1,22 @@
 <div class="panel panel-default">
   <div class="panel-body" align="left">
     <h4>Experience
+      <%if mode=="personal"%>
       <a href="#" class="experience_add">
         <span class="glyphicon glyphicon-plus"></span>
       </a>
+      <%end%>
     </h4>
     <%unless @broker.experiences.count >0%>
     None.
     <%else%>
       <% current_experience=Experience.find(@broker.current_experience_id)%>
       <% if current_experience%> 
-        <%=render partial:"brokers/profile/experience_display", locals:{e:current_experience}%> 
+        <%=render partial:"brokers/profile/experience_display", locals:{e:current_experience,mode:mode}%> 
       <%end%>
 
       <% @broker.experiences.where(current_experience:false).order(end_date: :desc).each do |e|%>  
-        <%=render partial:"brokers/profile/experience_display", locals:{e:e}%>
+        <%=render partial:"brokers/profile/experience_display", locals:{e:e, mode:mode}%>
       <%end%>      
     <%end%>
   </div>

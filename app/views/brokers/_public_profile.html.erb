@@ -1,123 +1,42 @@
 <% content_for :title do %>|Public<%end%>
-<div align="left" style="float:left; width:30%;">  
-  <table style=" text-align:left;width:100%">
-    <tr>
-      <td>
-        <%=smart_image(@broker,2)%>
-      </td>
-    </tr>
-  </table>
-
+<div style="float:left; width:30%;padding-top:25px;" align="left"> 
+ <%=smart_image(@broker,2)%>
 </div>
-<div id ="profile_info" align="left" style="width:70%;overflow: auto;padding:5px;">
-  <%=render "brokers/profile_infos"%>
+<div id ="profile_info" align="left" style="overflow: auto;padding:5px;">
+  <%=render partial:"brokers/profile/profile_infos",locals:{mode:"public"}%>
 </div>
 <div style="clear:both;"></div>
 
-<table width="100%" style="border-spacing: 5px;">
-  <tr>
-    <td width="55%" align="left" style="padding:5px;border: 1px ridge;vertical-align:top;">
-      <div class="panel panel-default">
-        <div id="about" style="padding:5px;" class="panel-body" align="left">
-          <h4>About me</h4>
-          <%if @broker.ad_statement%>
-          <%=@broker.ad_statement%>
-          <%else%>
-          None.
-          <%end%>
-        </div>
-      </div>
-      <div class="panel panel-default">
-        <div id="skills" style="padding:5px;" class="panel-body" align="left">
-          <h4>Skills & Specialties</h4>
-          <%if @broker.skills%>
-          <%=@broker.skills%>
-          <%else%>
-          None.
-          <%end%>
-        </div>
-      </div>
+<div id="public_info">
+  <table width="100%" style="border-spacing: 5px;">
+    <tr>   
+      <td width="70%" align="left" style="padding:5px;border: 1px ridge;vertical-align:top;">
 
-      <div class="panel panel-default">
-        <div class="panel-body" align="left">
-          <h4>License(s)</h4>
-          <%@broker.setup_broker && @broker.setup_broker.licenses.each_with_index do |l,index|%>
-            <%if index==0%>
-              <%=l.license_type%>
-            <%else%>
-              ,<%=l.license_type%>
-            <%end%>
-          <%end%>
+        <div id="abouts">
+          <%=render partial:"brokers/profile/abouts",locals:{mode:"public"}%>
         </div>
-      </div>
-      <div class="panel panel-default">
-        <div class="panel-body" align="left">
-          <h4>Financial Vehicle(s)</h4>
-          <%@broker.product_ids.each_with_index do |p,index|%>
-            <%product=Product.find(p)%>
-            <%if index==0%>
-              <%=product.name%>
-            <%else%>
-              <%=", #{product.name}"%>
-            <%end%>
-          <%end%>
-          <h4>Financial Product(s)</h4>
+        <div id="skills">
+          <%=render partial:"brokers/profile/skills",locals:{mode:"public"}%>
+        </div>
+        <div id="licenses">
+          <%=render partial:"brokers/profile/licenses",locals:{mode:"public"}%>
+        </div>
+        <div id="financial_vehicles">
+          <%=render partial:"brokers/profile/financial_vehicles",locals:{mode:"public"}%>
+        </div>      
+        <div id="educations">
+          <%=render partial:"brokers/profile/educations",locals:{mode:"public"}%>
+        </div>           
+        <div id="experiences">
+          <%=render partial:"brokers/profile/experiences",locals:{mode:"public"}%>
+        </div>   
+        <div id="financial_stories">   
+          <%=render partial:"brokers/profile/financial_stories",locals:{mode:"public"}%>
+        </div>  
+      </td>
+      <td width="30%" align="left" style="padding:5px;vertical-align:top;border: 1px ridge;">
 
-          <%@broker.product_ids.each_with_index do |product_id,index|%>
-          <%product=Product.find(product_id)%>
-            <%if product%>
-              <%=render partial:"brokers/financial_product_show", locals:{product:product}%>
-            <%end%>
-          <%end%>
-        </div>
-      </div>
-      <div class="panel panel-default">
-        <div class="panel-body" align="left">
-          <h4>Education</h4>
-          <%unless @broker.educations.count >0%>
-            None.
-          <%else%>
-          <% @broker.educations.order(end_date: :desc).each do |e|%>
-              <% unless e.new_record?%>
-                <%=render partial:"brokers/education_show", locals:{e:e}%>
-              <%end%>
-            <%end%>
-          <%end%>
-        </div>
-      </div>   
-      <div class="panel panel-default">
-        <div class="panel-body" align="left">
-          <h4>Experience</h4>
-          <%unless @broker.experiences.count >0%>
-            None.
-          <%else%>      
-            <% @broker.experiences.where(current_experience:false).order(end_date: :desc).each do |e|%>
-              <%=render partial:"brokers/experience_show", locals:{e:e}%>
-            <%end%>      
-          <%end%>
-        </div>
-      </div>
-    </td>
-    <td width="45%" align="left" style="padding:5px;vertical-align:top;border: 1px ridge;">
-      <div style="font-size:1.1em;"><p><b>Financial Stories</b></p></div>   
-     
-      <p><%=@broker.first_name%> has posted <%=pluralize(@broker.financial_stories.count, "financial story")%></p>
-      <%@broker.financial_stories.order(created_at: :desc).each do |story|%>
-      <div class="panel panel-default">
-        <div class="panel-body" align="left">
-          <h4>
-            <span class="label label-success">Upvote: <%=story.votes%></span>
-            <%=link_to "Title:#{story.title}", story%>
-          </h4>
-          <p>
-            Posted at <%=story.created_at.strftime("%b,%y at %l:%M %P")%>
-          </p>
-          <p>Financial Vehicle: <%=story.product.name%></p>
-          <p>Category: <%=Order::FINANCIAL_CATEGORIES_HASH[story.financial_category]%></p>
-
-        </div>
-      </div>
-      <%end%>
-    </td>
-  </tr>
-</table>
+      </td>
+    </tr>
+  </table>
+</div>

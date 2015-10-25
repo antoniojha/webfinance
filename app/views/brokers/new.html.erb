@@ -16,7 +16,7 @@
   <tr>
     <td><%= f.label "Password" %><%=asterisk_html%><br>
     </td>
-    <td><%= f.password_field :password,{title:"must contain at least 7 characters; must contain at least one number, one capital letter and lower case letter, and one special character.",:class=>'form-control'} %></td>
+    <td><%= f.password_field :password,{title: Order::STRINGS[0],:class=>'form-control'} %></td>
   </tr>
   <tr class="blank_row"></tr> 
   

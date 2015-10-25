@@ -106,7 +106,7 @@ jQuery ->
  
   $("#licenses").on "click","a.licenses_edit", ->
     $("#license_dialog_form").dialog("open")
-  
+    
   $("#financial_vehicles").on "click","a.financial_vehicle_edit", ->
     $("#financial_vehicle_dialog_form").dialog("open")  
     

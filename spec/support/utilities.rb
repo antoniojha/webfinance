@@ -13,7 +13,7 @@ def setup_broker_requests(broker)
     @setup_broker.save
     broker.license_type.each_with_index do |l,index| 
       license=@setup_broker.licenses.create(license_type:l,license_number:"test#{index}")
-      license.picture=(Rails.root+"spec/fixtures/pdfs/example_license.pdf").open
+      license.license_image=(Rails.root+"spec/fixtures/test_files/example_license.pdf").open
       license.save
     end
     
@@ -57,15 +57,18 @@ def full_name(person)
 end
 
 def create_complete_broker
+
   for i in 0..(2)
     Product.create(name:"name#{i}", description:"description#{i}", vehicle_type:1)
-  end
+  end  
   @broker=FactoryGirl.create(:broker)
   @setup_broker=@broker.build_setup_broker
   @setup_broker.save
-  for i in 0..1
+
+  for i in 0..(@broker.license_type.size-1)
     type=@broker.license_type[i]
     license=@setup_broker.licenses.build(license_type:type, license_number:"test")
     license.save(validate: false)
+    @broker.broker_requests.create(license_id:license.id)
   end
 end

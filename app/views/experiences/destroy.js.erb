@@ -1,2 +1,2 @@
-$("#experiences").html("<%=escape_javascript render('brokers/profile/experiences')%>");
+$("#experiences").html("<%=escape_javascript render(partial:'brokers/profile/experiences',locals:{mode:"personal"})%>");
 $("#experience_edit_dialog_form").dialog("close");  

@@ -4,7 +4,7 @@ class IdImageUploader < CarrierWave::Uploader::Base
  # include CarrierWaveDirect::Uploader
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
-  # include CarrierWave::MiniMagick
+  include CarrierWave::MiniMagick
   include CarrierWave::MimeTypes
   process :set_content_type
   # Choose what kind of storage to use for this uploader:
@@ -22,7 +22,6 @@ class IdImageUploader < CarrierWave::Uploader::Base
   end
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
-
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url

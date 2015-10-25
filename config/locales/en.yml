@@ -55,6 +55,8 @@ en:
         complement_requests: ""
       private_message:
         receiver_customer_id: ""
+      financial_story:
+        product_id: "Financial vehicle"
     errors:
       models:
         broker:

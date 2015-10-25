@@ -1,5 +1,5 @@
 <% unless @error==true%>
-$("#educations").html("<%=escape_javascript render('brokers/profile/educations')%>");
+$("#educations").html("<%=escape_javascript render(partial:'brokers/profile/educations',locals:{mode:"personal"})%>");
 $("#education_display_<%=@education.id%>").css({'background-color':'#C8C8C8'}).
 animate({'background-color':'white'},1000);
 $("#education_edit_dialog_form").dialog("close");  

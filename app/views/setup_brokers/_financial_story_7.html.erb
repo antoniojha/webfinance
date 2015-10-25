@@ -25,21 +25,21 @@
   <%=f.fields_for :financial_stories do |builder|%>
     <table width="100%">
       <tr>
-        <td><b>Financial Category</b></td>
+        <td><b>Financial Category</b><%=asterisk_html%></td>
         <td>
           <%=builder.select :financial_category, Order::FINANCIAL_CATEGORIES, {prompt:"Please Select Category"},{:class=>"form-control"}%>
         </td>
       </tr>
       <tr class="blank_row"></tr>
       <tr>
-        <td><b>Financial Vehicle</b></td>
+        <td><b>Financial Vehicle</b><%=asterisk_html%></td>
         <td>
           <%=builder.select :product_id, Product.all.collect {|p| [ p.name, p.id ] }, {prompt:"Please Select Vehicle"},{:class=>"form-control"}%>
         </td>
       </tr>
       <tr class="blank_row"></tr>
       <tr>
-        <td><b>Story Title</b></td>
+        <td><b>Story Title</b><%=asterisk_html%></td>
         <td>
           <%=builder.text_field :title,{:class=>"form-control"}%>
         </td>
@@ -47,11 +47,10 @@
       <tr class="blank_row"></tr>
       <tr>
         <td colspan=2>
-           <h4> Enter your story below</h4>
+          <b> Enter your story below</b><%=asterisk_html%><br>
           <%=builder.text_area :description, {rows:"25", class:"form-control"}%>
         </td>
       </tr>
-
     </table>
   <%end%>
   <table width="100%">
