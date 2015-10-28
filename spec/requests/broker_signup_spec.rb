@@ -316,7 +316,7 @@ describe "at 4th page" do
     end
   end
   it "license image shouldn't be valid" do
-    expect(@broker.setup_broker.licenses.first).to eq nil
+    expect(@broker.licenses.first).to eq nil
   end
   describe "succesfully upload license file and enter license number" do
     before do
@@ -329,7 +329,7 @@ describe "at 4th page" do
     end
     it "should create license" do
       expect{click_button "Upload"}.to change(License, :count).by(1)
-      expect(@broker.setup_broker.licenses.first).not_to eq nil 
+      expect(@broker.licenses.first).not_to eq nil 
     end
     
     it "should have remove and view license link" do
@@ -450,13 +450,11 @@ describe "at 8th page" do
     @broker.step="term_of_use_8"
     @broker.save
     @broker.reload
-    @setup_broker=@broker.build_setup_broker
-    @setup_broker.save
     set_broker_id_session(@broker)
-    @license=@setup_broker.licenses.build(license_type:1)
+    @license=@broker.licenses.build(license_type:1)
     @license.save(validate: false)
     visit edit_setup_broker_path(@broker)
-    @license_num=@setup_broker.licenses.count
+    @license_num=@broker.licenses.count
     @request_num=@license_num+1
   end 
   it "should be at 8th page" do

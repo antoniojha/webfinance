@@ -2,43 +2,11 @@ class SetupBrokersController < ApplicationController
   before_action :set_broker, only:[:edit,:update]
   before_action :authorize_broker, only:[:edit]
   before_action :redirect_if_registered, only:[:edit]
-  def create 
-  #  raise "error"
-    # this breaks the MVC model but is used to create licenses during broker setup. A dummy variable @setup_broker is used to generate forms that will have the accepted nested attributes. However, no SetupBroker object is created or store in database at all.
-      @broker=Broker.find(params[:setup_broker][:broker_id])
-      @setup_broker=@broker.setup_broker
-      unless @setup_broker
-        if params[:back]
-          @broker.prev_step
-          @broker.save
-          redirect_to edit_setup_broker_path(@broker)
-        else
-          @setup_broker=@broker.build_setup_broker(license_params)
-          if @setup_broker.save
-            @broker.next_step
-            @broker.save
-            redirect_to edit_setup_broker_path(@broker)
-          else 
-            render "edit"
-          end
-        end
-      end
-  end
-  def edit
 
+  def edit
     if @broker.step=="license_info_4"
-      unless @broker.setup_broker
-        @setup_broker=@broker.build_setup_broker
-        @setup_broker.save
-        @broker.license_type.each do |l|        
-          @setup_broker.licenses.build(license_type:l)        
-        end
-        @licenses=@setup_broker.licenses
-      else
-        @setup_broker=@broker.setup_broker
-        @broker.add_or_remove_license
-        @licenses=@setup_broker.licenses
-      end
+      @broker.add_or_remove_license
+      @licenses=@broker.licenses
     elsif @broker.step=="financial_story_7"
       unless @broker.financial_stories.first
         @financial_story=@broker.financial_stories.build
@@ -106,7 +74,7 @@ class SetupBrokersController < ApplicationController
             @broker.set_assoc_experience
             @broker.update_attribute(:setup_completed?, true)
             @broker.broker_requests.create(request_type:"create account",complement:false)
-            @broker.setup_broker.licenses.each do |l|
+            @broker.licenses.each do |l|
               @broker.broker_requests.create(request_type:"create license", license_id:l.id,complement:true)
             end
           else
@@ -122,9 +90,8 @@ class SetupBrokersController < ApplicationController
           end
         else
           if params[:next_from_pg4]
-            @setup_broker=@broker.setup_broker
             @broker.add_or_remove_license
-            @licenses=@setup_broker.licenses
+            @licenses=@broker.licenses
           end
           render "edit"
         end

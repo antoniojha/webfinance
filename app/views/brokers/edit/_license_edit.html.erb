@@ -12,7 +12,7 @@
         <th width="10%"></th>
       </tr>
       <%@broker.reload%>
-      <%@broker.setup_broker.licenses.each do |l|%>
+      <%@broker.licenses.each do |l|%>
       <%request=BrokerRequest.find_by(license_id:l.id)%>
       <tr>
         <td><%=l.license_type%></td>

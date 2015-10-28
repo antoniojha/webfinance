@@ -66,7 +66,7 @@ describe "broker social media sign up" do
       end
       describe "should be able to validate email" do
         before do
-          fill_in "broker_email", with: "antoniojha@gmail.com"
+          fill_in "broker_email", with: "other@gmail.com"
           click_button "send validation code"
           @broker=Broker.first
         end

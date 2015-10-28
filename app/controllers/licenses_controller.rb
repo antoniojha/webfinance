@@ -2,7 +2,7 @@ class LicensesController < ApplicationController
   before_action :set_broker, only:[:create,:destroy]
   before_action :set_license, only:[:destroy]
   def create
-    @license=@broker.setup_broker.licenses.build(license_params)
+    @license=@broker.licenses.build(license_params)
     respond_to do |format|
       if @license.save
         if params[:registration]
@@ -15,9 +15,9 @@ class LicensesController < ApplicationController
         end
       else
         if params[:registration]
-          @setup_broker=@broker.setup_broker
+        
           @broker.add_or_remove_license
-          @licenses=@setup_broker.licenses
+          @licenses=@broker.licenses
           format.html{render "setup_brokers/edit"}
         else
           @error=true
@@ -29,14 +29,12 @@ class LicensesController < ApplicationController
     end
   end
   def destroy
-    unless params[:registration]
-      @license.destroy
-      @license.broker_request.destroy
-      redirect_to edit_broker_path(id:@broker.id, page:"license_edit"), notice:"License application successfully removed"
-    else
-      #only remove the license_image and not the license
-      @license.destroy
+    @license.destroy
+    @license.broker_request.destroy
+    if params[:registration]
       redirect_to edit_setup_broker_path(@broker)
+    else   
+      redirect_to edit_broker_path(id:@broker.id, page:"license_edit"), notice:"License application successfully removed"
     end
     
   end

@@ -8,19 +8,17 @@ class Broker < ActiveRecord::Base
 
   # broker has the following dependents: SetupBroker=>License, FinancialStory, :Experiences, :Educations
   has_many :votes, dependent: :destroy
-  has_many :financial_products 
+  has_many :financial_products, dependent: :destroy 
   has_many :broker_requests, dependent: :destroy
-  has_one :setup_broker, dependent: :destroy
+  has_many :licenses, dependent: :destroy
   has_many :educations, dependent: :destroy
   has_many :experiences, dependent: :destroy
-  
   has_many :financial_stories, dependent: :destroy
-  accepts_nested_attributes_for :financial_stories
   has_many :broker_product_rels, dependent: :destroy
   has_many :products, through: :broker_product_rels
   has_many :activities, as: :author, dependent: :destroy
   has_one :all_customer, as: :customer, dependent: :destroy
- 
+  accepts_nested_attributes_for :financial_stories 
   
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   # the following uses Regex (lookahead assertion) to ensure there is at least a lower case and upper case letter, a digit, and a special character (non-word character)
@@ -31,7 +29,7 @@ class Broker < ActiveRecord::Base
   mount_uploader :id_image, IdImageUploader
   validate :check_all_licenses_uploaded, if: :licenses_uploaded?
   def check_all_licenses_uploaded
-    licenses=self.setup_broker.licenses
+    licenses=self.licenses
     license_types=self.license_type
     unless licenses.count == license_types.count
       errors[:license_info_4_error] << "All licenses should be uploaded."
@@ -272,25 +270,22 @@ class Broker < ActiveRecord::Base
     end
   end
   def add_or_remove_license
-    
-    @setup_broker=self.setup_broker
-    if @setup_broker
-      ex_license_types=ex_license_types(@setup_broker)
-      # create new license objects to be filled out in user checks a new license type in page 2
-      self.license_type.each do |l|
-        unless ex_license_types.include?(l)
-          
-          @setup_broker.licenses.build(license_type:l)
-        end
-      end
-      #delete existing license object if user unchecks an existing license type in page 2
-    #  raise "#{ex_license_types}"
-      ex_license_types.each do |l|
-        unless self.license_type.include?(l)
-         @setup_broker.licenses.find_by(license_type:l).destroy
-        end
+
+    ex_license_types=ex_license_types(self)
+    # create new license objects to be filled out in user checks a new license type in page 2
+    self.license_type.each do |l|
+      unless ex_license_types.include?(l)
+        self.licenses.build(license_type:l)
       end
     end
+    #delete existing license object if user unchecks an existing license type in page 2
+    #  raise "#{ex_license_types}"
+    ex_license_types.each do |l|
+      unless self.license_type.include?(l)
+        self.licenses.find_by(license_type:l).destroy
+      end
+    end
+
   end
   def save_and_process_image(options = {})  
     #should auto orient the image 
@@ -376,9 +371,9 @@ class Broker < ActiveRecord::Base
   def secure_hash(string)
     Digest::SHA2.hexdigest(string)
   end    
-  def ex_license_types(setup_broker)
+  def ex_license_types(broker)
     array=[]
-    setup_broker.licenses.each do |f|
+    broker.licenses.each do |f|
       if f.license_type
       array<< f.license_type
       end

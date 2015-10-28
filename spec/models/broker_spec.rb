@@ -10,6 +10,30 @@ describe Broker do
     it {should respond_to(:email)}
     it {should respond_to(:password)}
     it {should respond_to(:password_confirmation)}
+    it {should respond_to(:password_digest)}
+    it {should respond_to(:salt)}
+    it {should respond_to(:password_confirmation_token)}
+    it {should respond_to(:password_reset_send_at)}
+    it {should respond_to(:current_experience_id)}
+    it {should respond_to(:email_confirmation_token)}
+    it {should respond_to(:auth_token_digest)}
+    it {should respond_to(:image)}
+    it {should respond_to(:id_image)}
+    it {should respond_to(:first_name)}
+    it {should respond_to(:last_name)}
+    it {should respond_to(:company_name)}
+    it {should respond_to(:company_location)}
+    it {should respond_to(:phone_number_work)}
+    it {should respond_to(:phone_number_cell)}
+    it {should respond_to(:title)}
+    it {should respond_to(:web)}
+    it {should respond_to(:ad_statement)}
+    it {should respond_to(:check_term_of_use)}
+    it {should respond_to(:license_type)}
+    it {should respond_to(:product_ids)}
+    it {should respond_to(:approved)}
+    it {should respond_to(:setup_completed?)}
+    
     it {should be_valid}
     describe "shouldn't save broker username is already registered" do
       before do
@@ -57,7 +81,7 @@ describe Broker do
         @broker3.save
         expect(@broker3).not_to be_valid
       end
-      it "now with the same password the user should be valid" do
+      it "now with the same password the broker should be valid" do
         @broker3.password_confirmation=@broker3.password
         expect(@broker3).to be_valid
       end

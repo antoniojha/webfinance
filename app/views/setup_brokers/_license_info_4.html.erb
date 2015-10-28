@@ -1,7 +1,13 @@
 <%provide :title, "|Register Page 4"%>
 <h1>Edit Your Licenses (4 of 8)</h1>
 <div style="width:85%;text-align:left;">
-  <div style="width:100%;" class="alert alert-info error-message">To remove or add licenses go to the previous page to check or uncheck license types.</div>
+  <div style="width:100%;" class="alert alert-info error-message">
+    <p>Please note the following:</p>
+    <ul>
+      <li>To remove or add licenses go to the previous page to check or uncheck license types.</li>
+      <li>Only licenses registered in New York state will be accepted at this moment.</li>
+    </ul>
+  </div>
  
   <% @broker.license_type.each do |l|%>
     <%@licenses.each do |t|%>
@@ -26,6 +32,11 @@
               <td><%= f.label "Expiration Date" %><%=asterisk_html%></td>
 
               <td><%= f.date_select :expiration_date,{start_year:Date.current.year, end_year:2020,order: [:day, :month, :year]}, {style:"width:32%;"} %></td>
+            </tr>
+            <tr class="blank_row"></tr>
+            <tr>
+              <td><%=f.label "State"%></td>
+              <td><%=f.hidden_field :state, value:"New York"%></td>
             </tr>
             <tr class="blank_row"></tr>
             <tr>

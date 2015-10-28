@@ -30,8 +30,7 @@
           <ul>
             <%@broker.financial_products.where(product_id:product.id).each do |fin_product|%>  
             <li>
-              <%company=Company.find(fin_product.company_id)%>
-              <span class="fin_product" alt="<%=fin_product.description%>" title="<%=company.name%>">
+              <span class="fin_product" alt="<%=fin_product.description%>" title="<%=fin_product.company.name%>">
                 <%=fin_product.name%>
               </span>
               <%if mode=="personal"%>

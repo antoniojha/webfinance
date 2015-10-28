@@ -105,22 +105,20 @@ FactoryGirl.define do
     state "NY"
     month "1"
     year "2015"
-  end
-
-  
+  end 
   factory :license, class: License do
     license_type "Life Insurance License"
-    license_number "123456789"
-    
-  end
-  factory :no_picture_license, class: License do
-    license_type "1"
     license_number "123456789"  
   end
-  factory :doc_license, class: License do
-    picture (Rails.root+"spec/fixtures/test_files/test.docx").open
-    license_type "1"
-    license_number "123456789"
-    
+  factory :product, class: Product do
+    name "Life Insurance"
+    description "test description"
+    vehicle_type "1"
+    risk_level "NA"
+  end
+  factory :company, class: Company do
+    name "TransAmerica"
+    description "test description"
+    location "test location"
   end
 end

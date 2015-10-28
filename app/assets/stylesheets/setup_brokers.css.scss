@@ -1,4 +1,4 @@
-// Place all the styles related to the setup_brokers controller here.
+// Place all the styles related to the setup_broker controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 #license_table{
@@ -10,11 +10,5 @@
   input[type='checkbox'] {
    width: 20px;
    height: 20px;
-  }
-}
-.anchor-heading{
-  a, a:visited, a:hover {
-    text-decoration: none;
-    color: black;
   }
 }

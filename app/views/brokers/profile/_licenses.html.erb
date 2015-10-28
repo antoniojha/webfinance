@@ -7,13 +7,11 @@
       </a>
       <%end%>
     </h4>
-    <% if @broker.setup_broker%>
-      <%@broker.setup_broker.licenses.each_with_index do |l,index|%>
-        <%if index==0%>
-        <%=l.license_type%>
-        <%else%>
-        ,<%=l.license_type%>
-        <%end%>
+    <%@broker.licenses.each_with_index do |l,index|%>
+      <%if index==0%>
+      <%=l.license_type%>
+      <%else%>
+      ,<%=l.license_type%>
       <%end%>
     <%end%>
   </div>

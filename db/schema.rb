@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151013002136) do
+ActiveRecord::Schema.define(version: 20151027013427) do
 
   create_table "account_items", force: true do |t|
     t.integer  "account_id"
@@ -235,35 +235,17 @@ ActiveRecord::Schema.define(version: 20151013002136) do
   create_table "brokers", force: true do |t|
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "institution_name"
     t.string   "phone_number_work"
     t.string   "email"
     t.string   "password_digest"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "phone_number_cell"
-    t.float    "longitude"
-    t.float    "latitude"
-    t.string   "street"
-    t.string   "city"
-    t.string   "state"
-    t.string   "country"
-    t.boolean  "approved",                    default: false
     t.string   "username"
     t.string   "license_type"
     t.boolean  "submitted",                   default: false
-    t.string   "confirmation_number"
     t.datetime "submitted_at"
     t.string   "web"
-    t.string   "work_ext"
-    t.integer  "firm_id"
-    t.string   "register_current_step"
-    t.string   "status"
-    t.string   "auth_token_digest"
-    t.string   "edit_current_step"
-    t.string   "license_type_edit"
-    t.string   "license_type_remove"
-    t.string   "time_zone"
     t.string   "provider"
     t.string   "uid"
     t.boolean  "email_authen",                default: false
@@ -280,16 +262,14 @@ ActiveRecord::Schema.define(version: 20151013002136) do
     t.text     "ad_statement"
     t.boolean  "check_term_of_use"
     t.string   "image"
-    t.string   "aws_image_path"
     t.boolean  "image_cropped"
     t.string   "id_image"
     t.string   "password_confirmation_token"
     t.datetime "password_reset_send_at"
     t.integer  "current_experience_id"
+    t.boolean  "approved"
+    t.string   "auth_token_digest"
   end
-
-  add_index "brokers", ["confirmation_number"], name: "index_brokers_on_confirmation_number"
-  add_index "brokers", ["firm_id"], name: "index_brokers_on_firm_id"
 
   create_table "companies", force: true do |t|
     t.text     "description"
@@ -395,6 +375,7 @@ ActiveRecord::Schema.define(version: 20151013002136) do
 
   add_index "financial_products", ["broker_id"], name: "index_financial_products_on_broker_id"
   add_index "financial_products", ["company_id"], name: "index_financial_products_on_company_id"
+  add_index "financial_products", ["product_id"], name: "index_financial_products_on_product_id"
 
   create_table "financial_stories", force: true do |t|
     t.integer  "product_id"

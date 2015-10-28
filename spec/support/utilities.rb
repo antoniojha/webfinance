@@ -8,11 +8,8 @@ def user_login(user)
 end
 #creates an instance of broker application request, create two licenses and two license requests
 def setup_broker_requests(broker)
-    
-    @setup_broker=broker.build_setup_broker
-    @setup_broker.save
     broker.license_type.each_with_index do |l,index| 
-      license=@setup_broker.licenses.create(license_type:l,license_number:"test#{index}")
+      license=broker.licenses.create(license_type:l,license_number:"test#{index}")
       license.license_image=(Rails.root+"spec/fixtures/test_files/example_license.pdf").open
       license.save
     end
@@ -21,7 +18,7 @@ def setup_broker_requests(broker)
     @license2=License.all.second
     broker.broker_requests.create(request_type:"create account",complement:false)  
     broker.reload
-    broker.setup_broker.licenses.each do |l|
+    broker.licenses.each do |l|
       broker.broker_requests.create(request_type:"create license", license_id:l.id,complement:true,admin_reply:nil)
     end
 
@@ -62,12 +59,10 @@ def create_complete_broker
     Product.create(name:"name#{i}", description:"description#{i}", vehicle_type:1)
   end  
   @broker=FactoryGirl.create(:broker)
-  @setup_broker=@broker.build_setup_broker
-  @setup_broker.save
 
   for i in 0..(@broker.license_type.size-1)
     type=@broker.license_type[i]
-    license=@setup_broker.licenses.build(license_type:type, license_number:"test")
+    license=@broker.licenses.build(license_type:type, license_number:"test")
     license.save(validate: false)
     @broker.broker_requests.create(license_id:license.id)
   end

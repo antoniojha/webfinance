@@ -1,6 +1,6 @@
 class Education < ActiveRecord::Base
   belongs_to :broker
-  validates :begin_date, :end_date, :school, :degree, presence:true
+  validates :begin_date, :end_date, :school, :degree, :broker_id, presence:true
   validate :begin_before_end
   
   def begin_before_end
