@@ -8,9 +8,7 @@ module AuthenticationInHelper
   end
   private
 
-  def user_create
-    raise env['omniauth.auth'].to_yaml
-   
+  def user_create  
     if env['omniauth.auth']
     user=User.from_omniauth(env['omniauth.auth'])
       if user.save
