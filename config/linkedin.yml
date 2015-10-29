@@ -5,7 +5,7 @@ development:
 test:
   KEY: 77rs5dtu88yp5m
   SECRET: HkNoRMFyJtJqcPEG
-
+  
 production:
   KEY: 77rs5dtu88yp5m
-  SECRET: HkNoRMFyJtJqcPEG
+  SECRET: HkNoRMFyJtJqcPEG  
