@@ -1,7 +1,9 @@
 <% content_for :title do %>|Broker Login<%end%>
 <h1>Financial Rep Login</h1>
 <br>
-<%=render "broker/sessions/error"%>
+<div style="width:70%">
+<%=render partial: "shared/error_message", locals:{object:@broker}%>
+</div>
 <%= form_for :session, url:broker_signin_path do |f|%>
 <table width="100%">
     <tr>
