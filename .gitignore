@@ -15,11 +15,11 @@
 /log/*.log
 /tmp
 Ignore all yml file
-/*.yml
+*.yml
 Ignore all jpeg file
-/*.jpg
-/*.env
+*.jpg
+*.env
 Ignore all csr documents
-/*.csr
-/*.key
-/*.pass.key
+*.csr
+*.key
+*.pass.key
